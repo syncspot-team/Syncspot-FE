@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 폰트 정보 (SUIT, Pretendard) */
+@font-face {
+  font-family: SUIT;
+  font-weight: normal;
+  src:
+    local('SUIT'),
+    url('../assets/fonts/SUIT-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: Pretendard;
+  font-weight: normal;
+  src:
+    local('Pretendard Regular'),
+    url('../assets/fonts/Pretendard-Regular.woff2') format('woff2');
+}
+
+@layer base {
+  body {
+    /* 폰트 설정 */
+    font-family: 'SUIT', 'Pretendard', sans-serif;
+
+    /* 색상 설정 */
+    --white: #ffffff;
+    --black: #000000;
+    --black-alpha-60: rgba(30, 30, 30, 0.6);
+
+    --blue-light01: #eef3ff;
+    --blue-light02: #bcd7ff;
+    --blue-normal01: #5786ff;
+    --blue-normal02: #377bff;
+    --blue-dark01: #2f5fdd;
+    --blue-dark02: #253e7f;
+    --blue-dark03: #15254d;
+
+    --gray-light: #f8f8f8;
+    --gray-normal: #b7bdcc;
+    --gray-dark: #5e6d93;
+
+    --red-light: #f9c4d4;
+    --red-normal: #ea3b70;
+
+    /* 포커스 제거 */
+    input:focus,
+    textarea:focus {
+      outline: none;
+    }
+
+    /* input type='search'의 기본 css 제거 */
+    input::-ms-clear,
+    input::-ms-reveal {
+      opacity: 0;
+    }
+    input::-webkit-search-decoration,
+    input::-webkit-search-cancel-button,
+    input::-webkit-search-results-button,
+    input::-webkit-search-results-decoration {
+      opacity: 0;
+    }
+
+    /* 트랜지션 설정 */
+    * {
+      @apply transition-all duration-200 ease-in-out;
+    }
+  }
+}
