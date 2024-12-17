@@ -158,5 +158,7 @@ export default {
         },
       });
     },
+    require('tailwind-scrollbar-hide'),
+    require('tailwind-scrollbar'),
   ],
 };

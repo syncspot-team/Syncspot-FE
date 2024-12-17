@@ -49,6 +49,8 @@ const RAW_RUNTIME_STATE =
           ["react-error-boundary", "virtual:b68bbe7122d63005d86b1c32e3116fbdcc95bdc6a608be75a81937c61b15dc73ed97a4f26949c1e5785fcc85a7edc8063d6b2cfccece50eea8580f5c2122b735#npm:4.1.2"],\
           ["react-router-dom", "virtual:b68bbe7122d63005d86b1c32e3116fbdcc95bdc6a608be75a81937c61b15dc73ed97a4f26949c1e5785fcc85a7edc8063d6b2cfccece50eea8580f5c2122b735#npm:6.28.0"],\
           ["react-toastify", "virtual:b68bbe7122d63005d86b1c32e3116fbdcc95bdc6a608be75a81937c61b15dc73ed97a4f26949c1e5785fcc85a7edc8063d6b2cfccece50eea8580f5c2122b735#npm:10.0.6"],\
+          ["tailwind-scrollbar", "virtual:b68bbe7122d63005d86b1c32e3116fbdcc95bdc6a608be75a81937c61b15dc73ed97a4f26949c1e5785fcc85a7edc8063d6b2cfccece50eea8580f5c2122b735#npm:3.1.0"],\
+          ["tailwind-scrollbar-hide", "npm:1.1.7"],\
           ["tailwindcss", "npm:3.4.14"],\
           ["typescript", "patch:typescript@npm%3A5.6.3#optional!builtin<compat/typescript>::version=5.6.3&hash=8c6c40"],\
           ["typescript-eslint", "virtual:b68bbe7122d63005d86b1c32e3116fbdcc95bdc6a608be75a81937c61b15dc73ed97a4f26949c1e5785fcc85a7edc8063d6b2cfccece50eea8580f5c2122b735#npm:8.13.0"],\
@@ -4316,6 +4318,8 @@ const RAW_RUNTIME_STATE =
           ["react-error-boundary", "virtual:b68bbe7122d63005d86b1c32e3116fbdcc95bdc6a608be75a81937c61b15dc73ed97a4f26949c1e5785fcc85a7edc8063d6b2cfccece50eea8580f5c2122b735#npm:4.1.2"],\
           ["react-router-dom", "virtual:b68bbe7122d63005d86b1c32e3116fbdcc95bdc6a608be75a81937c61b15dc73ed97a4f26949c1e5785fcc85a7edc8063d6b2cfccece50eea8580f5c2122b735#npm:6.28.0"],\
           ["react-toastify", "virtual:b68bbe7122d63005d86b1c32e3116fbdcc95bdc6a608be75a81937c61b15dc73ed97a4f26949c1e5785fcc85a7edc8063d6b2cfccece50eea8580f5c2122b735#npm:10.0.6"],\
+          ["tailwind-scrollbar", "virtual:b68bbe7122d63005d86b1c32e3116fbdcc95bdc6a608be75a81937c61b15dc73ed97a4f26949c1e5785fcc85a7edc8063d6b2cfccece50eea8580f5c2122b735#npm:3.1.0"],\
+          ["tailwind-scrollbar-hide", "npm:1.1.7"],\
           ["tailwindcss", "npm:3.4.14"],\
           ["typescript", "patch:typescript@npm%3A5.6.3#optional!builtin<compat/typescript>::version=5.6.3&hash=8c6c40"],\
           ["typescript-eslint", "virtual:b68bbe7122d63005d86b1c32e3116fbdcc95bdc6a608be75a81937c61b15dc73ed97a4f26949c1e5785fcc85a7edc8063d6b2cfccece50eea8580f5c2122b735#npm:8.13.0"],\
@@ -4323,6 +4327,37 @@ const RAW_RUNTIME_STATE =
           ["vite-tsconfig-paths", "virtual:b68bbe7122d63005d86b1c32e3116fbdcc95bdc6a608be75a81937c61b15dc73ed97a4f26949c1e5785fcc85a7edc8063d6b2cfccece50eea8580f5c2122b735#npm:5.1.0"]\
         ],\
         "linkType": "SOFT"\
+      }]\
+    ]],\
+    ["tailwind-scrollbar", [\
+      ["npm:3.1.0", {\
+        "packageLocation": "./.yarn/cache/tailwind-scrollbar-npm-3.1.0-cda5221d11-dad4d5dcc3.zip/node_modules/tailwind-scrollbar/",\
+        "packageDependencies": [\
+          ["tailwind-scrollbar", "npm:3.1.0"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:b68bbe7122d63005d86b1c32e3116fbdcc95bdc6a608be75a81937c61b15dc73ed97a4f26949c1e5785fcc85a7edc8063d6b2cfccece50eea8580f5c2122b735#npm:3.1.0", {\
+        "packageLocation": "./.yarn/__virtual__/tailwind-scrollbar-virtual-35990cc8ff/0/cache/tailwind-scrollbar-npm-3.1.0-cda5221d11-dad4d5dcc3.zip/node_modules/tailwind-scrollbar/",\
+        "packageDependencies": [\
+          ["tailwind-scrollbar", "virtual:b68bbe7122d63005d86b1c32e3116fbdcc95bdc6a608be75a81937c61b15dc73ed97a4f26949c1e5785fcc85a7edc8063d6b2cfccece50eea8580f5c2122b735#npm:3.1.0"],\
+          ["@types/tailwindcss", null],\
+          ["tailwindcss", "npm:3.4.14"]\
+        ],\
+        "packagePeers": [\
+          "@types/tailwindcss",\
+          "tailwindcss"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["tailwind-scrollbar-hide", [\
+      ["npm:1.1.7", {\
+        "packageLocation": "./.yarn/cache/tailwind-scrollbar-hide-npm-1.1.7-537baa5b75-1027ca724c.zip/node_modules/tailwind-scrollbar-hide/",\
+        "packageDependencies": [\
+          ["tailwind-scrollbar-hide", "npm:1.1.7"]\
+        ],\
+        "linkType": "HARD"\
       }]\
     ]],\
     ["tailwindcss", [\
