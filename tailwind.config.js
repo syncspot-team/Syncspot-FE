@@ -67,6 +67,12 @@ export default {
         ],
       },
       colors: {
+        white: {
+          default: 'var(--white)',
+        },
+        black: {
+          default: 'var(--black)',
+        },
         blue: {
           light01: 'var(--blue-light01)',
           light02: 'var(--blue-light02)',
@@ -90,17 +96,22 @@ export default {
         primary: 'var(--blue-normal01)',
         secondary: 'var(--blue-normal02)',
         tertiary: 'var(--blue-dark02)',
-        deactivated: 'var(--gray-normal)',
         error: {
           light: 'var(--red-light)',
           normal: 'var(--red-normal)',
+        },
+        white: {
+          default: 'var(--white)',
+        },
+        black: {
+          default: 'var(--black)',
         },
       },
       backgroundColor: {
         primary: 'var(--blue-normal01)',
         secondary: 'var(--blue-normal02)',
         tertiary: 'var(--blue-dark02)',
-        deactivated: 'var(--gray-normal)',
+        disabled: 'var(--gray-normal)',
         error: {
           light: 'var(--red-light)',
           normal: 'var(--red-normal)',
@@ -111,7 +122,7 @@ export default {
         primary: 'var(--blue-normal01)',
         secondary: 'var(--blue-normal02)',
         tertiary: 'var(--blue-dark02)',
-        deactivated: 'var(--gray-normal)',
+        disabled: 'var(--gray-normal)',
         error: {
           light: 'var(--red-light)',
           normal: 'var(--red-normal)',
@@ -124,7 +135,7 @@ export default {
         primary: 'var(--blue-normal01)',
         secondary: 'var(--blue-normal02)',
         tertiary: 'var(--blue-dark02)',
-        deactivated: 'var(--gray-normal)',
+        disabled: 'var(--gray-normal)',
         error: {
           light: 'var(--red-light)',
           normal: 'var(--red-normal)',
@@ -136,29 +147,5 @@ export default {
       },
     },
   },
-  plugins: [
-    function ({ addComponents, theme }) {
-      addComponents({
-        '.primary-btn': {
-          width: 'max-content',
-          fontSize: theme('fontSize.menu'),
-          height: '4rem',
-          backgroundColor: theme('backgroundColor.primary'),
-          borderRadius: theme('borderRadius.default'),
-          borderColor: theme('borderColor.primary'),
-          padding: '1.125rem 12.3125rem',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          color: theme('colors.white'),
-          '&:hover': {
-            backgroundColor: theme('backgroundColor.secondary'),
-            borderColor: theme('borderColor.secondary'),
-          },
-        },
-      });
-    },
-    require('tailwind-scrollbar-hide'),
-    require('tailwind-scrollbar'),
-  ],
+  plugins: [require('tailwind-scrollbar-hide'), require('tailwind-scrollbar')],
 };
