@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 
-export default function Home() {
+export default function LandingPage() {
   const handleClick = () => {
     toast('wow');
   };
