@@ -1,6 +1,6 @@
+import React, { ButtonHTMLAttributes } from 'react';
 import { cva, VariantProps } from 'class-variance-authority';
-import { mergeClassNames } from '@src/utils/mergeClassNames';
-import { ButtonHTMLAttributes } from 'react';
+import { mergeClassNames } from '../../../utils/mergeClassNames';
 
 export const ButtonVariants = cva(
   `
@@ -40,7 +40,7 @@ interface IButtonProps
   children: React.ReactNode;
 }
 
-function Button({
+export default function Button({
   buttonType,
   fontSize,
   className,
@@ -61,5 +61,3 @@ function Button({
     </button>
   );
 }
-
-export default Button;
