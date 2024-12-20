@@ -7,7 +7,7 @@ export default function PrivateRoute() {
   const isLogin = useAtomValue(loginAtom);
 
   if (!isLogin) {
-    return <Navigate to={PATH.LOGIN} replace />;
+    return <Navigate to={PATH.SING_IN} replace />;
   }
   return <Outlet />;
 }
