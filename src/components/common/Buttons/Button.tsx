@@ -40,7 +40,7 @@ interface IButtonProps
   children: React.ReactNode;
 }
 
-function Button({
+export default function Button({
   buttonType,
   fontSize,
   className,
@@ -61,5 +61,3 @@ function Button({
     </button>
   );
 }
-
-export default Button;
