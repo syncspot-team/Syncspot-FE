@@ -1,7 +1,8 @@
-export const PRIVATE_TYPE = 'PRIVATE';
+export type ROUTE_TYPE = 'PRIVATE' | 'PUBLIC';
 
 export const PATH = {
   ROOT: '/',
-  LOGIN: '/login',
+  SING_IN: '/sign_in',
+  SING_UP: '/sign_up',
   MY_PAGE: '/mypage',
 } as const;
