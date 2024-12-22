@@ -1,8 +1,10 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AppRouter } from './routes/AppRouter';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 import { getErrorData } from './utils/getErrorData';
+import { TOAST_TYPE } from './types/toastType';
+import CustomToast from './components/common/toast/customToast';
+import 'react-toastify/dist/ReactToastify.css';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -13,7 +15,11 @@ const queryClient = new QueryClient({
     mutations: {
       onError: (error: any) => {
         const errorData = getErrorData(error);
-        toast.error(`[${errorData.status}] ${errorData.message}`);
+        CustomToast({
+          type: TOAST_TYPE.ERROR,
+          status: errorData.status,
+          message: errorData.message,
+        });
       },
     },
   },
@@ -25,7 +31,7 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <AppRouter />
       </QueryClientProvider>
-      <ToastContainer />
+      <ToastContainer limit={1} />
     </>
   );
 }

@@ -1,8 +1,13 @@
-import { toast } from 'react-toastify';
+import CustomToast from '@src/components/common/toast/customToast';
+import { TOAST_TYPE } from '@src/types/toastType';
 
 export default function LandingPage() {
   const handleClick = () => {
-    toast('wow');
+    CustomToast({
+      type: TOAST_TYPE.SUCCESS,
+      status: '200',
+      message: 'wow',
+    });
   };
   return (
     <>
