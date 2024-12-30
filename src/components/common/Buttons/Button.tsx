@@ -57,7 +57,7 @@ export default function Button({
       onClick={onClick}
       disabled={disabled || isLoading}
     >
-      {children}
+      {isLoading ? '잠시만 기다려 주세요...' : children}
     </button>
   );
 }
