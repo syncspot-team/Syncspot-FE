@@ -12,7 +12,7 @@ export const APIErrorFallback = ({
   if (isAxiosError(error)) {
     const errorData = getErrorData(error);
     if (errorData.status === '401') {
-      return <Navigate to={PATH.SING_IN} replace />;
+      return <Navigate to={PATH.SIGN_IN} replace />;
     }
     return (
       <ErrorPage

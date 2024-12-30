@@ -43,11 +43,11 @@ const router = createBrowserRouter([
       },
       ...createAuthRouter('PUBLIC', [
         {
-          path: PATH.SING_IN,
+          path: PATH.SIGN_IN,
           element: <SignInPage />,
         },
         {
-          path: PATH.SING_UP,
+          path: PATH.SIGN_UP,
           element: <SignUpPage />,
         },
       ]),

@@ -39,7 +39,7 @@ const ERROR_CODE: ErrorCodeType = {
   },
 
   // 알 수 없는 에러
-  default: { status: 'ERROR', message: '알 수 없는 오류가 발생했습니다.' },
+  UNKNOWN: { status: 'ERROR', message: '알 수 없는 오류가 발생했습니다.' },
 } as const;
 
 export const getErrorData = (
@@ -59,5 +59,5 @@ export const getErrorData = (
   if (axiosErrorCode in ERROR_CODE) {
     return ERROR_CODE[axiosErrorCode as keyof typeof ERROR_CODE];
   }
-  return ERROR_CODE.default;
+  return ERROR_CODE.UNKNOWN;
 };
