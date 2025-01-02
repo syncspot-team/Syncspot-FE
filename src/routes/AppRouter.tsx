@@ -6,6 +6,7 @@ import { GlobalLoading } from '@src/components/loading/GlobalLoading';
 import { PATH, ROUTE_TYPE } from '@src/constants/path';
 import SignInPage from '@src/pages/auth/SignInPage';
 import SignUpPage from '@src/pages/auth/SignUpPage';
+import SomethingWrongErrorPage from '@src/pages/error/SomethingWrongErrorPage';
 import LandingPage from '@src/pages/landing/LandingPage';
 import MyPage from '@src/pages/mypage/MyPage';
 import { Suspense } from 'react';
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
           element: <MyPage />,
         },
       ]),
+      {
+        path: '*',
+        element: <SomethingWrongErrorPage />,
+      },
     ],
   },
 ]);
