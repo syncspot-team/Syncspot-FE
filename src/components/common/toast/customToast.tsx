@@ -1,5 +1,5 @@
 import { Slide, toast, ToastContainerProps } from 'react-toastify';
-import { TOAST_TYPE, ToastType } from '../../../types/toastType';
+import { TOAST_TYPE, ToastType } from '@src/types/toastType';
 
 interface ICustomToastProps {
   type: ToastType;
