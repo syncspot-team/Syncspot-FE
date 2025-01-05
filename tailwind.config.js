@@ -8,59 +8,58 @@ export default {
         pre: 'Pretendard',
       },
       fontSize: {
-        // 제목 - SUIT Bold 26pt
+        // 제목 - SUIT Bold 38pt
         title: [
-          '1.625rem',
+          '2.375rem',
           {
             letterSpacing: '-2.5%',
             fontWeight: '700',
           },
         ],
-        // 소제목 - SUIT Bold 22pt
+        // 소제목 - SUIT Bold 18pt
         subtitle: [
-          '1.375rem',
+          '1.125rem',
           {
             letterSpacing: '-2.5%',
             fontWeight: '700',
           },
         ],
-        // 메뉴 - SUIT Regular 22pt
+        // 메뉴 - SUIT Regular 18pt
         menu: [
-          '1.375rem',
+          '1.125rem',
           {
             letterSpacing: '-2.5%',
             fontWeight: '400',
           },
         ],
-        // 메뉴 선택 - SUIT Bold 22pt
+        // 메뉴 선택 - SUIT Bold 18pt
         'menu-selected': [
-          '1.375rem',
+          '1.125rem',
           {
             letterSpacing: '-2.5%',
             fontWeight: '700',
           },
         ],
-        // 본문 - SUIT Medium 18pt
+        // 본문 - SUIT Medium 16pt
         content: [
-          '1.125rem',
+          '1rem',
           {
             letterSpacing: 'base',
             fontWeight: '500',
           },
         ],
-        // 본문 강조 - SUIT Bold 18pt
+        // 본문 강조 - SUIT Bold 16pt
         'content-bold': [
-          '1.125rem',
+          '1rem',
           {
             letterSpacing: '-2.5%',
             fontWeight: '700',
           },
         ],
-        // 부가 설명 - SUIT Medium 16pt
+        // 부가 설명 - SUIT Medium 14pt
         description: [
-          '1rem',
+          '0.875rem',
           {
-            // 16pt
             letterSpacing: 'base',
             fontWeight: '500',
           },
@@ -128,8 +127,12 @@ export default {
           normal: 'var(--red-normal)',
         },
       },
+      borderWidth: {
+        login: '0.0625rem',
+      },
       borderRadius: {
         default: '0.875rem',
+        login: '1.875rem',
       },
       fill: {
         primary: 'var(--blue-normal01)',
