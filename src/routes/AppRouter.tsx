@@ -1,3 +1,9 @@
+import {
+  createBrowserRouter,
+  Outlet,
+  RouteObject,
+  RouterProvider,
+} from 'react-router-dom';
 import PrivateRoute from '@src/components/common/routes/PrivateRoute';
 import PublicRoute from '@src/components/common/routes/PublicRoute';
 import { APIErrorBoundary } from '@src/components/error/boundary/APIErrorBoundary';
@@ -22,12 +28,8 @@ import PlaceResultPage from '@src/pages/place/PlaceResultPage';
 import TimeCreatePage from '@src/pages/time/TimeCreatePage';
 import TimeVotePage from '@src/pages/time/TimeVotePage';
 import TimeResultPage from '@src/pages/time/TimeResultPage';
-import {
-  createBrowserRouter,
-  Outlet,
-  RouteObject,
-  RouterProvider,
-} from 'react-router-dom';
+import Layout from '@src/components/layout/Layout';
+import AboutPage from '@src/pages/about/AboutPage';
 
 const createAuthRouter = (routeType: ROUTE_TYPE, children: RouteObject[]) => {
   const authRouter = children.map((child: RouteObject) => ({
@@ -44,7 +46,9 @@ const router = createBrowserRouter([
       <UnknowErrorBoundary>
         <APIErrorBoundary>
           <Suspense fallback={<GlobalLoading />}>
-            <Outlet />
+            <Layout>
+              <Outlet />
+            </Layout>
           </Suspense>
         </APIErrorBoundary>
       </UnknowErrorBoundary>
@@ -53,6 +57,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <LandingPage />,
+      },
+      {
+        path: PATH.ABOUT,
+        element: <AboutPage />,
       },
       ...createAuthRouter('PUBLIC', [
         {

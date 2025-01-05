@@ -10,7 +10,7 @@ export const instance = axios.create({
   baseURL: BACKEND_URL,
   responseType: 'json',
   headers: { 'Content-Type': 'application/json' },
-  timeout: 4000, // LCP기준 4초 초과시 BAD이므로 4000ms로 설정
+  timeout: 4000, // LCP기준 4초 초과시 BAD
   withCredentials: true,
 });
 

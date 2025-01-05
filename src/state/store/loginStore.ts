@@ -1,14 +1,14 @@
 import { create } from 'zustand';
 
-interface LoginState {
+const ACCESS_TOKEN = 'accessToken';
+
+interface ILoginState {
   isLogin: boolean;
   login: (accessToken: string) => void;
   logout: () => void;
 }
 
-const ACCESS_TOKEN = 'accessToken';
-
-export const useLoginStore = create<LoginState>((set) => ({
+export const useLoginStore = create<ILoginState>((set) => ({
   isLogin: Boolean(localStorage.getItem(ACCESS_TOKEN)),
   login: (accessToken: string) => {
     localStorage.setItem(ACCESS_TOKEN, accessToken);

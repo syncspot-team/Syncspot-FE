@@ -1,5 +1,5 @@
 import { Slide, toast, ToastContainerProps } from 'react-toastify';
-import { TOAST_TYPE, ToastType } from '../../../types/toastType';
+import { TOAST_TYPE, ToastType } from '@src/types/toastType';
 
 interface ICustomToastProps {
   type: ToastType;
@@ -20,7 +20,7 @@ export default function CustomToast({
     pauseOnHover: false,
     draggable: false,
     transition: Slide,
-    className: 'flex items-center justify-center',
+    className: 'flex items-center',
   };
 
   switch (type) {
