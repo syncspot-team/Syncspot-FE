@@ -5,11 +5,25 @@ import { useLoginStore } from '@src/state/store/loginStore';
 import { useNavigate } from 'react-router-dom';
 import RoomList from './RoomList';
 import { useRoomIdStore } from '@src/state/store/roomIdStore';
+import CustomToast from '@src/components/common/toast/customToast';
+import { TOAST_TYPE } from '@src/types/toastType';
 
 export default function Header() {
   const navigate = useNavigate();
   const { isLogin } = useLoginStore();
   const { roomId } = useRoomIdStore();
+
+  const handleNavigateWithRoomCheck = (path: string) => {
+    if (!roomId) {
+      CustomToast({
+        type: TOAST_TYPE.ERROR,
+        status: '알림',
+        message: '모임을 선택해주세요!',
+      });
+      return;
+    }
+    navigate(path);
+  };
 
   return (
     <header className="mt-[1.5625rem]">
@@ -31,27 +45,27 @@ export default function Header() {
         <ul className="flex items-center gap-[0.625rem] text-gray-dark text-menu whitespace-nowrap *:cursor-pointer">
           <li
             onClick={() => {
-              navigate(PATH.LOCATION_ENTER(roomId));
+              handleNavigateWithRoomCheck(PATH.LOCATION_ENTER(roomId));
             }}
-            className=" hover:bg-gray-light px-3 py-2 rounded-[0.625rem] transition-colors"
+            className=" hover:bg-gray-light px-3 py-2 rounded-[0.625rem]"
           >
             중간 지점 찾기
           </li>
           <li
-            onClick={() => navigate(PATH.PLACE_VOTE(roomId))}
-            className=" hover:bg-gray-light px-3 py-2 rounded-[0.625rem] transition-colors"
+            onClick={() => handleNavigateWithRoomCheck(PATH.PLACE_VOTE(roomId))}
+            className=" hover:bg-gray-light px-3 py-2 rounded-[0.625rem]"
           >
             장소 투표
           </li>
           <li
-            onClick={() => navigate(PATH.TIME_VOTE(roomId))}
-            className=" hover:bg-gray-light px-3 py-2 rounded-[0.625rem] transition-colors"
+            onClick={() => handleNavigateWithRoomCheck(PATH.TIME_VOTE(roomId))}
+            className=" hover:bg-gray-light px-3 py-2 rounded-[0.625rem]"
           >
             시간 투표
           </li>
           <li
             onClick={() => navigate(PATH.ABOUT)}
-            className=" hover:bg-gray-light px-3 py-2 rounded-[0.625rem] transition-colors"
+            className=" hover:bg-gray-light px-3 py-2 rounded-[0.625rem]"
           >
             서비스 소개
           </li>
@@ -60,7 +74,7 @@ export default function Header() {
               onClick={() => {
                 navigate(PATH.MY_PAGE);
               }}
-              className="p-2 rounded-[0.625rem] hover:bg-gray-light"
+              className="hover:bg-gray-light px-3 py-2 rounded-[0.625rem]"
             >
               <IconUser />
             </li>

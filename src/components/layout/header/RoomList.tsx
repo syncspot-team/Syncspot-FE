@@ -43,9 +43,11 @@ export default function RoomList() {
   //   useEffect(() => {
   //     if (roomList?.data && roomList.data.length > 0) {
   //       const firstRoom = roomList.data[0];
-  //       setRoomId(String(firstRoom.roomId));
-  //       setRoomName(firstRoom.roomName);
+  //       setRoomId(firstRoom.roomId);
   //       setSelectedRoom(firstRoom.roomName);
+  //     } else {
+  //       setRoomId('');
+  //       setSelectedRoom('전체 모임 목록');
   //     }
   //   }, [roomList]);
 
@@ -92,7 +94,7 @@ export default function RoomList() {
                 ),
               )
             ) : (
-              <li className="px-4 py-2">모임이 존재하지 않습니다</li>
+              <li className="px-4 py-2">모임을 생성해주세요!</li>
             )} */}
             {dummyData.data.map((room) => (
               <li
