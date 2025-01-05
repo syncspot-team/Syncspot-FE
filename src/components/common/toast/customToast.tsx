@@ -20,7 +20,7 @@ export default function CustomToast({
     pauseOnHover: false,
     draggable: false,
     transition: Slide,
-    className: 'flex items-center justify-center',
+    className: 'flex items-center',
   };
 
   switch (type) {
