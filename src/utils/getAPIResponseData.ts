@@ -3,8 +3,8 @@ import { AxiosRequestConfig } from 'axios';
 
 const getAPIResponseData = async <T, D = T>(option: AxiosRequestConfig<D>) => {
   try {
-    const result = await instance<T>(option);
-    return result.data;
+    const { data } = await instance<T>(option);
+    return data;
   } catch (e) {
     throw e;
   }
