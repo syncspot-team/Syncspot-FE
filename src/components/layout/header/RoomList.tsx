@@ -8,6 +8,7 @@ export default function RoomList() {
   const navigate = useNavigate();
   const dropdownRef = useRef<HTMLLIElement>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState('전체 모임 목록');
   const { setRoomId } = useRoomIdStore();
   const dummyData = {
@@ -58,6 +59,11 @@ export default function RoomList() {
     navigate(PATH.LOCATION_ENTER(roomId));
   };
 
+  const handleDropdownToggle = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+    setIsAnimating(true);
+  };
+
   // 로딩 상태 처리
   //   if (isLoading) {
   //     return <li className="px-3 py-2 text-menu">로딩중...</li>;
@@ -71,17 +77,25 @@ export default function RoomList() {
   return (
     <li
       ref={dropdownRef}
-      onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+      onClick={handleDropdownToggle}
       className="relative text-menu flex items-center cursor-pointer text-blue-dark01 px-3 py-2 bg-blue-light01 rounded-[0.625rem] whitespace-nowrap gap-[0.125rem]"
     >
       <span className="min-w-[6.25rem]">{selectedRoom}</span>
       <IconDropdown
         className={`size-5 -mr-2 ${isDropdownOpen ? 'rotate-180' : ''}`}
       />
-      {isDropdownOpen && (
-        <div className="absolute left-0 w-full mt-1 border border-gray-200 rounded-lg shadow-lg top-full bg-white-default">
-          <ul>
-            {/* {roomList?.data && roomList.data.length > 0 ? (
+      <div
+        className={`absolute left-0 w-full mt-1 border border-gray-light rounded-lg shadow-lg top-full bg-white-default
+          ${isDropdownOpen ? 'animate-slideDown' : isAnimating ? 'animate-slideUp' : 'hidden'}
+        `}
+        onAnimationEnd={() => {
+          if (!isDropdownOpen) {
+            setIsAnimating(false);
+          }
+        }}
+      >
+        <ul>
+          {/* {roomList?.data && roomList.data.length > 0 ? (
               roomList.data.map(
                 (room: { roomId: string; roomName: string }) => (
                   <li
@@ -96,18 +110,17 @@ export default function RoomList() {
             ) : (
               <li className="px-4 py-2">모임을 생성해주세요!</li>
             )} */}
-            {dummyData.data.map((room) => (
-              <li
-                key={room.roomId}
-                className="px-4 py-2 truncate cursor-pointer hover:bg-gray-light"
-                onClick={() => handleRoomSelect(room.roomId, room.roomName)}
-              >
-                {room.roomName}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+          {dummyData.data.map((room) => (
+            <li
+              key={room.roomId}
+              className="px-4 py-2 truncate cursor-pointer hover:bg-gray-light"
+              onClick={() => handleRoomSelect(room.roomId, room.roomName)}
+            >
+              {room.roomName}
+            </li>
+          ))}
+        </ul>
+      </div>
     </li>
   );
 }
