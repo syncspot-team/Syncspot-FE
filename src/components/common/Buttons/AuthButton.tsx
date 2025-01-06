@@ -1,4 +1,4 @@
-import Button from '../Button';
+import Button from './Button';
 
 interface IAuthButton {
   buttonText: string;
@@ -13,7 +13,6 @@ export default function AuthButton({
 }: IAuthButton) {
   return (
     <Button
-      type="submit"
       buttonType="primary"
       fontSize="default"
       isLoading={isLoading}
