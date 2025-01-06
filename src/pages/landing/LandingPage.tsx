@@ -1,3 +1,4 @@
+import AuthButton from '@src/components/common/buttons/AuthButton';
 import { useLoginStore } from '@src/state/store/loginStore';
 import { useRoomIdStore } from '@src/state/store/roomIdStore';
 
@@ -13,6 +14,7 @@ export default function LandingPage() {
       <br />
       <button onClick={logout}>Logout</button> <br />
       <button onClick={() => setRoomId('')}>roomId 없애기</button>
+      <AuthButton buttonText="버튼" isLoading={false} disabled={false} />
     </div>
   );
 }
