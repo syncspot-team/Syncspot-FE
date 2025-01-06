@@ -8,7 +8,7 @@ import { ISignInRequest } from '@src/types/auth/SignInRequestType';
 import { useNavigate } from 'react-router-dom';
 import { PATH } from '@src/constants/path';
 import { useSignInMutation } from '@src/state/mutations/auth/useSignInMutation';
-import SignInButton from '../../components/common/buttons/SignInButton/SignInButton';
+import AuthButton from '@src/components/common/buttons/auth/AuthButton';
 
 export default function SignInPage() {
   const navigate = useNavigate();
@@ -51,7 +51,11 @@ export default function SignInPage() {
           placeholder="비밀번호 (영문 대/소문자, 숫자, 특수문자 포함)"
           className="placeholder:text-gray-normal bg-gray-light  py-[1.3125rem] px-[1.5rem] rounded-default mb-5"
         />
-        <SignInButton isLoading={formLoading} disabled={!isFormValid} />
+        <AuthButton
+          text="로그인"
+          isLoading={formLoading}
+          disabled={!isFormValid}
+        />
         <span className="flex justify-end text-gray-normal mt-[0.875rem] mb-[2.5rem]">
           아이디/비밀번호 찾기
         </span>

@@ -1,11 +1,12 @@
 import Button from '../Button';
 
-interface ISignInButton {
+interface IAuthButton {
+  text: string;
   isLoading: boolean;
   disabled: boolean;
 }
 
-export default function SignInButton({ isLoading, disabled }: ISignInButton) {
+export default function AuthButton({ isLoading, disabled, text }: IAuthButton) {
   return (
     <Button
       type="submit"
@@ -14,7 +15,7 @@ export default function SignInButton({ isLoading, disabled }: ISignInButton) {
       isLoading={isLoading}
       disabled={disabled}
     >
-      로그인
+      {text}
     </Button>
   );
 }
