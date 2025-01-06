@@ -1,4 +1,4 @@
-import Button from '@src/components/common/buttons/Button';
+import Button from './Button';
 
 interface IAuthButton {
   buttonText: string;
