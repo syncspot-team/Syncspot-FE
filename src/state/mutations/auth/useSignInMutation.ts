@@ -17,18 +17,21 @@ export const useSignInMutation = (
   return useMutation({
     mutationFn: postSignIn,
     onSuccess: (data) => {
-      if (data.data.accessToken && data.data.refreshToken) {
+      // status는 200이나 data값이 존재하지 않을 경우 사용자가 입력한 회원정보가 올바르지 않은 문제
+      if (!data.data) {
+        CustomToast({
+          type: TOAST_TYPE.ERROR,
+          message: '아이디 또는 비밀번호를 확인해주세요.',
+        });
+      }
+      // 로그인 성공시 accessToken, refreshToken 저장
+      else if (data.data.accessToken && data.data.refreshToken) {
         login(data.data.accessToken, data.data.refreshToken);
         CustomToast({
           type: TOAST_TYPE.SUCCESS,
           message: '로그인에 성공하였습니다.',
         });
         navigate(PATH.ONBOARDING);
-      } else {
-        CustomToast({
-          type: TOAST_TYPE.ERROR,
-          message: '아이디 또는 비밀번호를 확인해주세요.',
-        });
       }
     },
     ...options,
