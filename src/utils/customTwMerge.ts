@@ -6,6 +6,7 @@ export const customTwMerge = extendTailwindMerge({
       'font-size': [
         {
           text: [
+            'logo',
             'title',
             'subtitle',
             'menu',
@@ -68,12 +69,17 @@ export const customTwMerge = extendTailwindMerge({
       ],
       rounded: [
         {
-          rounded: ['default'],
+          rounded: ['default', 'login'],
         },
       ],
       shadow: [
         {
-          shadow: ['default'],
+          shadow: ['default', 'focus'],
+        },
+      ],
+      animate: [
+        {
+          animate: ['slideDown', 'slideUp'],
         },
       ],
     },
