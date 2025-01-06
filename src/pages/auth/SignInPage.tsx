@@ -2,13 +2,13 @@ import IconAntenna from '@src/assets/icons/IconAntenna.svg?react';
 import IconOauthKakao from '@src/assets/icons/IconOauthKakao.svg?react';
 import IconOauthNaver from '@src/assets/icons/IconOauthNaver.svg?react';
 import IconOauthGoogle from '@src/assets/icons/IconOauthGoogle.svg?react';
+import AuthButton from '@src/components/common/auth/AuthButton';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { ISignInRequest } from '@src/types/auth/SignInRequestType';
 import { useNavigate } from 'react-router-dom';
 import { PATH } from '@src/constants/path';
 import { useSignInMutation } from '@src/state/mutations/auth/useSignInMutation';
-import AuthButton from '@src/components/common/buttons/AuthButton';
 
 export default function SignInPage() {
   const navigate = useNavigate();
