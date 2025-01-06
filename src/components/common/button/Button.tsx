@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes } from 'react';
+import { ButtonHTMLAttributes } from 'react';
 import { cva, VariantProps } from 'class-variance-authority';
 import { mergeClassNames } from '../../../utils/mergeClassNames';
 
