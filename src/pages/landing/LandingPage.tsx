@@ -7,7 +7,10 @@ export default function LandingPage() {
   return (
     <div className="border-2 border-blue-500">
       <h1>Landing Page</h1> <br />
-      <button onClick={() => login('accessToken')}>Login</button> <br />
+      <button onClick={() => login('accessToken', 'refreshToken')}>
+        Login
+      </button>{' '}
+      <br />
       <button onClick={logout}>Logout</button> <br />
       <button onClick={() => setRoomId('')}>roomId 없애기</button>
     </div>
