@@ -8,7 +8,7 @@ import { ISignInRequest } from '@src/types/auth/SignInRequestType';
 import { useNavigate } from 'react-router-dom';
 import { PATH } from '@src/constants/path';
 import { useSignInMutation } from '@src/state/mutations/auth/useSignInMutation';
-import SignInButton from '@src/components/common/buttons/SignInButton/SignInButton';
+import SignInButton from '../../components/common/buttons/SignInButton/SignInButton';
 
 export default function SignInPage() {
   const navigate = useNavigate();
