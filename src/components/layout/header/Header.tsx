@@ -14,15 +14,18 @@ export default function Header() {
   const { roomId } = useRoomIdStore();
 
   const handleNavigateWithRoomCheck = (path: string) => {
+    if (!isLogin) {
+      navigate(PATH.SIGN_IN);
+      return;
+    }
     if (!roomId) {
       CustomToast({
         type: TOAST_TYPE.ERROR,
-        status: '알림',
         message: '모임을 선택해주세요!',
       });
-      return;
+    } else {
+      navigate(path);
     }
-    navigate(path);
   };
 
   return (
@@ -38,7 +41,7 @@ export default function Header() {
             <span>
               <IconMainLogo />
             </span>
-            <span className="-mt-2 text-title text-tertiary">syncspot</span>
+            <span className="-mt-2 text-logo text-tertiary">syncspot</span>
           </li>
           {isLogin && <RoomList />}
         </ul>
