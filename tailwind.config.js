@@ -8,9 +8,11 @@ export default {
         pre: 'Pretendard',
       },
       fontSize: {
-        // 제목 - SUIT Bold 38pt
+        // 로고 - SUIT Bold 38pt
+        logo: ['2.375rem', { letterSpacing: '-2.5%', fontWeight: '700' }],
+        // 제목 - SUIT Bold 26pt
         title: [
-          '2.375rem',
+          '1.625rem',
           {
             letterSpacing: '-2.5%',
             fontWeight: '700',
@@ -147,6 +149,20 @@ export default {
       boxShadow: {
         default: '0 0 20px 0 rgba(47, 95, 221, 0.50)',
         focus: '0 0 0 2px rgba(235, 248, 255, 1)',
+      },
+      keyframes: {
+        slideDown: {
+          '0%': { opacity: '0', transform: 'translateY(-10px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        slideUp: {
+          '0%': { opacity: '1', transform: 'translateY(0)' },
+          '100%': { opacity: '0', transform: 'translateY(-10px)' },
+        },
+      },
+      animation: {
+        slideDown: 'slideDown 0.2s ease-in-out',
+        slideUp: 'slideUp 0.2s ease-in-out',
       },
     },
   },
