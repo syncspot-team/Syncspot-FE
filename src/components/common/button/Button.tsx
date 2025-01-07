@@ -8,15 +8,18 @@ export const ButtonVariants = cva(
   disabled:cursor-not-allowed
   disabled:bg-disabled
   disabled:border-disabled
+  disabled:text-white-default
   `,
   {
     variants: {
       buttonType: {
         primary:
-          'w-max h-[4rem] bg-primary rounded-default border-primary py-[1.125rem] px-[12.3125rem] hover:bg-secondary hover:border-secondary text-white-default',
+          'w-full h-[3.75rem] bg-primary border border-primary  rounded-default py-[1.125rem] px-[12.3125rem] hover:bg-secondary text-white-default',
+        add: 'w-full h-[3.75rem] bg-white-default border border-gray-normal rounded-default py-[1.125rem] px-[12.3125rem] hover:bg-gray-light text-gray-normal hover:text-gray-dark',
       },
       fontSize: {
-        default: 'text-menu',
+        default: 'text-menu-selected',
+        small: 'text-menu',
       },
     },
     defaultVariants: {
