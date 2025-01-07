@@ -128,6 +128,11 @@ export default {
           light: 'var(--red-light)',
           normal: 'var(--red-normal)',
         },
+        gray: {
+          light: 'var(--gray-light)',
+          normal: 'var(--gray-normal)',
+          dark: 'var(--gray-dark)',
+        },
       },
       borderWidth: {
         login: '0.0625rem',
