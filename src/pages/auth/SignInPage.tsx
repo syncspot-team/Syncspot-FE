@@ -57,7 +57,19 @@ export default function SignInPage() {
           disabled={!isFormValid}
         />
         <span className="flex justify-end text-gray-normal mt-[0.875rem] mb-[2.5rem]">
-          아이디/비밀번호 찾기
+          <span
+            onClick={() => navigate(PATH.HELP_ID_INQUIRY)}
+            className="cursor-pointer"
+          >
+            아이디 찾기
+          </span>
+          <span className="mx-[0.5rem]">/</span>
+          <span
+            onClick={() => navigate(PATH.HELP_PASSWORD_INQUIRY)}
+            className="cursor-pointer"
+          >
+            비밀번호 찾기
+          </span>
         </span>
       </form>
       <div className="flex items-center gap-[1.25rem] cursor-pointer">
