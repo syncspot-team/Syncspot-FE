@@ -29,7 +29,7 @@ export default function SignInPage() {
         <IconAntenna />
       </div>
       <h1 className="mb-6 text-title text-tertiary">싱크스팟 로그인</h1>
-      <div className="flex items-center text-subtitle gap-[0.875rem] mb-11">
+      <div className="flex items-center text-menu gap-[0.875rem] mb-11">
         <span className="text-gray-dark">아직 계정이 없으신가요?</span>
         <span
           onClick={() => navigate(PATH.SIGN_UP)}

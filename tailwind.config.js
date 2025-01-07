@@ -18,9 +18,9 @@ export default {
             fontWeight: '700',
           },
         ],
-        // 소제목 - SUIT Bold 18pt
+        // 소제목 - SUIT Bold 22pt
         subtitle: [
-          '1.125rem',
+          '1.375rem',
           {
             letterSpacing: '-2.5%',
             fontWeight: '700',
