@@ -14,8 +14,8 @@ export const ButtonVariants = cva(
     variants: {
       buttonType: {
         primary:
-          'w-full h-[3.75rem] bg-primary border border-primary  rounded-default py-[1.125rem] px-[12.3125rem] hover:bg-secondary text-white-default',
-        add: 'w-full h-[3.75rem] bg-white-default border border-gray-normal rounded-default py-[1.125rem] px-[12.3125rem] hover:bg-gray-light text-gray-normal hover:text-gray-dark',
+          'w-[26.875rem] h-[3.75rem] bg-primary border border-primary  rounded-default py-[1.125rem] px-[12.3125rem] hover:bg-secondary text-white-default truncate',
+        add: 'w-[26.875rem] h-[3.75rem] bg-white-default border border-gray-normal rounded-default py-[1.125rem] px-[12.3125rem] hover:bg-gray-light text-gray-normal hover:text-gray-dark truncate',
       },
       fontSize: {
         default: 'text-menu-selected',
