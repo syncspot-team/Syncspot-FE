@@ -1,0 +1,5 @@
+export const OnboardingStepType = {
+  ONBOARDING_PLAN_STEP: 'ONBOARDING_PLAN_STEP', // 온보딩 시작 단계
+  ONBOARDING_CREATE_STEP: 'ONBOARDING_CREATE_STEP', // 온보딩 완료 단계
+  ONBOARDING_FUNCTION_SELECT_STEP: 'ONBOARDING_FUNCTION_SELECT_STEP', // 온보딩 기능 선택 단계
+} as const;

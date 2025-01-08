@@ -9,6 +9,7 @@ import { PATH } from '@src/constants/path';
 import { useNavigate } from 'react-router-dom';
 
 export const useSignInMutation = (
+  setFormLoading: (loading: boolean) => void,
   options?: UseMutationOptions<ISignInResponse, Error, ISignInRequest>,
 ) => {
   const navigate = useNavigate();
@@ -33,6 +34,9 @@ export const useSignInMutation = (
         });
         navigate(PATH.ONBOARDING);
       }
+    },
+    onSettled: () => {
+      setFormLoading(false);
     },
     ...options,
   });

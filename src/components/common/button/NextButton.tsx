@@ -1,25 +1,25 @@
 import Button from './Button';
 
-interface IAuthButton {
+interface INextButton {
   buttonText: string;
-  isLoading: boolean;
   disabled: boolean;
   className?: string;
+  onClick: () => void;
 }
 
-export default function AuthButton({
+export default function NextButton({
   buttonText,
-  isLoading,
   disabled,
   className,
-}: IAuthButton) {
+  onClick,
+}: INextButton) {
   return (
     <Button
       buttonType="primary"
       fontSize="default"
-      isLoading={isLoading}
       disabled={disabled}
       className={className}
+      onClick={onClick}
     >
       {buttonText}
     </Button>

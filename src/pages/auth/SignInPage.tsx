@@ -15,12 +15,11 @@ export default function SignInPage() {
   const [formLoading, setFormLoading] = useState(false);
   const { register, handleSubmit, watch } = useForm<ISignInRequest>();
   const isFormValid = watch('email') && watch('pw');
-  const { mutate: signIn } = useSignInMutation();
+  const { mutate: signIn } = useSignInMutation(setFormLoading);
 
   const onSubmit = (data: ISignInRequest) => {
     setFormLoading(true);
     signIn(data);
-    setFormLoading(false);
   };
 
   return (
@@ -29,7 +28,7 @@ export default function SignInPage() {
         <IconAntenna />
       </div>
       <h1 className="mb-6 text-title text-tertiary">싱크스팟 로그인</h1>
-      <div className="flex items-center text-subtitle gap-[0.875rem] mb-11">
+      <div className="flex items-center text-menu gap-[0.875rem] mb-11">
         <span className="text-gray-dark">아직 계정이 없으신가요?</span>
         <span
           onClick={() => navigate(PATH.SIGN_UP)}
@@ -56,9 +55,21 @@ export default function SignInPage() {
           isLoading={formLoading}
           disabled={!isFormValid}
         />
-        <span className="flex justify-end text-gray-normal mt-[0.875rem] mb-[2.5rem]">
-          아이디/비밀번호 찾기
-        </span>
+        <div className="flex justify-end text-gray-normal mt-[0.875rem] mb-[2.5rem]">
+          <span
+            onClick={() => navigate(PATH.HELP_ID_INQUIRY)}
+            className="cursor-pointer"
+          >
+            아이디 찾기
+          </span>
+          <span className="mx-[0.5rem]">/</span>
+          <span
+            onClick={() => navigate(PATH.HELP_PASSWORD_INQUIRY)}
+            className="cursor-pointer"
+          >
+            비밀번호 찾기
+          </span>
+        </div>
       </form>
       <div className="flex items-center gap-[1.25rem] cursor-pointer">
         <span className="hover:translate-y-[-0.25rem]">

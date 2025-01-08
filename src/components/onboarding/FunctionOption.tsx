@@ -1,0 +1,32 @@
+import { ONBOARDING_FUNCTION_TYPE } from '@src/types/onboarding/onboardingFunctionType';
+
+interface IFunctionOptionProps {
+  type: (typeof ONBOARDING_FUNCTION_TYPE)[keyof typeof ONBOARDING_FUNCTION_TYPE];
+  label: string;
+  selectedFunction:
+    | (typeof ONBOARDING_FUNCTION_TYPE)[keyof typeof ONBOARDING_FUNCTION_TYPE]
+    | null;
+  onClick: (
+    type: (typeof ONBOARDING_FUNCTION_TYPE)[keyof typeof ONBOARDING_FUNCTION_TYPE],
+  ) => void;
+}
+
+export default function FunctionOption({
+  type,
+  label,
+  selectedFunction,
+  onClick,
+}: IFunctionOptionProps) {
+  return (
+    <span
+      onClick={() => onClick(type)}
+      className={`flex w-full text-menu text-tertiary py-[0.875rem] px-[1.0625rem] rounded-default cursor-pointer ${
+        selectedFunction === type
+          ? 'border-4 border-blue-light02 bg-white-default'
+          : 'bg-gray-light'
+      }`}
+    >
+      {label}
+    </span>
+  );
+}
