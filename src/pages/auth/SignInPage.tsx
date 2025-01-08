@@ -55,7 +55,7 @@ export default function SignInPage() {
           isLoading={formLoading}
           disabled={!isFormValid}
         />
-        <span className="flex justify-end text-gray-normal mt-[0.875rem] mb-[2.5rem]">
+        <div className="flex justify-end text-gray-normal mt-[0.875rem] mb-[2.5rem]">
           <span
             onClick={() => navigate(PATH.HELP_ID_INQUIRY)}
             className="cursor-pointer"
@@ -69,7 +69,7 @@ export default function SignInPage() {
           >
             비밀번호 찾기
           </span>
-        </span>
+        </div>
       </form>
       <div className="flex items-center gap-[1.25rem] cursor-pointer">
         <span className="hover:translate-y-[-0.25rem]">
