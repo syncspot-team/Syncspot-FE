@@ -15,12 +15,11 @@ export default function SignInPage() {
   const [formLoading, setFormLoading] = useState(false);
   const { register, handleSubmit, watch } = useForm<ISignInRequest>();
   const isFormValid = watch('email') && watch('pw');
-  const { mutate: signIn } = useSignInMutation();
+  const { mutate: signIn } = useSignInMutation(setFormLoading);
 
   const onSubmit = (data: ISignInRequest) => {
     setFormLoading(true);
     signIn(data);
-    setFormLoading(false);
   };
 
   return (
