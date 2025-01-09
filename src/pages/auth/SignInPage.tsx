@@ -3,7 +3,6 @@ import IconOauthKakao from '@src/assets/icons/IconOauthKakao.svg?react';
 import IconOauthNaver from '@src/assets/icons/IconOauthNaver.svg?react';
 import IconOauthGoogle from '@src/assets/icons/IconOauthGoogle.svg?react';
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
 import { ISignInRequest } from '@src/types/auth/SignInRequestType';
 import { useNavigate } from 'react-router-dom';
 import { PATH } from '@src/constants/path';
@@ -12,14 +11,13 @@ import AuthButton from '@src/components/common/button/AuthButton';
 
 export default function SignInPage() {
   const navigate = useNavigate();
-  const [formLoading, setFormLoading] = useState(false);
-  const { register, handleSubmit, watch } = useForm<ISignInRequest>();
+  const { register, handleSubmit, watch, reset } = useForm<ISignInRequest>();
   const isFormValid = watch('email') && watch('pw');
-  const { mutate: signIn } = useSignInMutation(setFormLoading);
+  const { mutate: signIn, isPending } = useSignInMutation();
 
   const onSubmit = (data: ISignInRequest) => {
-    setFormLoading(true);
     signIn(data);
+    reset({ pw: '' });
   };
 
   return (
@@ -52,7 +50,7 @@ export default function SignInPage() {
         />
         <AuthButton
           buttonText="로그인"
-          isLoading={formLoading}
+          isLoading={isPending}
           disabled={!isFormValid}
         />
         <div className="flex justify-end text-gray-normal mt-[0.875rem] mb-[2.5rem]">

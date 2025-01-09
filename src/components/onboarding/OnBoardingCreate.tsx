@@ -1,7 +1,6 @@
 import { OnboardingStepType } from '@src/types/onboarding/onboardingStepType';
 import { useForm } from 'react-hook-form';
 import AuthButton from '../common/button/AuthButton';
-import { useState } from 'react';
 import { useCreateRoomMutation } from '@src/state/mutations/onboarding/useCreateRoomMutation';
 import { ICreateRoomRequest } from '@src/types/onboarding/createRoomRequestType';
 
@@ -15,16 +14,13 @@ export default function OnBoardingCreate({
   setSelectedRoomId,
 }: IOnBoardingCreateProps) {
   const { register, handleSubmit, watch } = useForm<ICreateRoomRequest>();
-  const [formLoading, setFormLoading] = useState(false);
   const isFormValid = watch('name');
-  const { mutate: createRoom } = useCreateRoomMutation(
-    setFormLoading,
+  const { mutate: createRoom, isPending } = useCreateRoomMutation(
     setSelectedRoomId,
     setOnboardingStep,
   );
 
   const onSubmit = (data: ICreateRoomRequest) => {
-    setFormLoading(true);
     createRoom(data);
   };
 
@@ -52,7 +48,7 @@ export default function OnBoardingCreate({
         />
         <AuthButton
           buttonText="생성 완료"
-          isLoading={formLoading}
+          isLoading={isPending}
           disabled={!isFormValid}
         />
       </form>
