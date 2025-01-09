@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URI;
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 const REFRESH_URL = BACKEND_URL + '/api/auth/refresh';
 
 const ACCESS_TOKEN = 'accessToken';
