@@ -1,4 +1,4 @@
-import { postCreateRoom } from '@src/apis/onboarding/postCreateRoon';
+import { postCreateRoom } from '@src/apis/onboarding/postCreateRoom';
 import { ICreateRoomRequest } from '@src/types/onboarding/createRoomRequestType';
 import { ICreateRoomResponse } from '@src/types/onboarding/createRoomResponseType';
 import { OnboardingStepType } from '@src/types/onboarding/onboardingStepType';
