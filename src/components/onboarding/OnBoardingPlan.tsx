@@ -3,10 +3,10 @@ import AddButton from '@src/components/common/button/AddButton';
 import NextButton from '@src/components/common/button/NextButton';
 import IconInfo from '@src/assets/icons/IconInfo.svg?react';
 import Modal from '@src/components/common/modal/Modal';
-import RoomInfo from '@src/components/common/modal/RoomInfo';
 import { useState } from 'react';
 import IconBubble from '@src/assets/icons/IconBubblePlan.svg?react';
 import IconGhost from '@src/assets/icons/IconGhost.svg?react';
+import RoomInfo from '@src/components/onboarding/RoomInfo';
 
 interface IOnBoardingPlanProps {
   setOnboardingStep: (step: keyof typeof OnboardingStepType) => void;
