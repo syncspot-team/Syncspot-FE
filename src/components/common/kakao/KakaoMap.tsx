@@ -131,5 +131,5 @@ export default function KakaoMap({ coordinates }: IKakaoMap) {
     updateMap();
   }, [coordinates]);
 
-  return <div ref={containerRef} className="w-full h-full rounded-2xl" />;
+  return <div ref={containerRef} className="w-full h-full rounded-default" />;
 }
