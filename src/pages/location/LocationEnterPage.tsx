@@ -153,7 +153,7 @@ export default function LocationEnterPage() {
         {myLocationFields.map((field, index) => (
           <KakaoLocationPicker
             key={field.id}
-            className="w-full text-left bg-white-default rounded-default whitespace-nowrap mb-[0.625rem] hover:opacity-55 hover:ring-1 hover:ring-gray-dark"
+            className="w-full text-left bg-white-default whitespace-nowrap mb-[0.625rem] hover:opacity-55 hover:ring-1 hover:ring-gray-dark"
             onSelect={(location) => handleLocationSelect(location, index, true)}
             defaultAddress={field.roadNameAddress}
           />
@@ -164,13 +164,13 @@ export default function LocationEnterPage() {
         {friendLocationFields.map((field) => (
           <div
             key={field.id}
-            className="w-full text-left bg-white-default py-[1.3125rem] px-[1.5rem] rounded-default whitespace-nowrap mb-[0.625rem] p-2 cursor-not-allowed opacity-70"
+            className="w-full text-left bg-white-default rounded-default whitespace-nowrap mb-[0.625rem] py-[1.3125rem] px-[1.5rem] cursor-not-allowed opacity-70"
           >
             {field.roadNameAddress || '위치 정보 없음'}
           </div>
         ))}
 
-        <div className="flex flex-col gap-2 mt-auto">
+        <div className="flex flex-col mt-[1.75rem] gap-[0.5rem]">
           <AddButton
             onClick={handleAddLocation}
             buttonText="장소 추가하기"
