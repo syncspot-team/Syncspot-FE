@@ -44,7 +44,7 @@ export default function KakaoMap({ coordinates }: IKakaoMap) {
     // 텍스트 오버레이를 마커 컨텐츠의 일부로 추가
     const addressContent = document.createElement('div');
     addressContent.className =
-      'absolute flex items-center justify-center px-3 py-2 border shadow-md bg-white-default -top-10 border-primary rounded-default whitespace-nowrap';
+      'absolute flex items-center justify-center px-3 py-2 border shadow-md text-menu bg-white-default -top-10 border-primary rounded-default whitespace-nowrap';
     addressContent.textContent = roadNameAddress;
     markerContent.appendChild(addressContent);
 
