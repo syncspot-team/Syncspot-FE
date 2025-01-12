@@ -1,4 +1,4 @@
-export interface KakaoAddressResponse {
+export interface KakaoAddressSearchResponse {
   meta: {
     total_count: number;
     pageable_count: number;

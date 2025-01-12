@@ -7,6 +7,8 @@ import AuthButton from '@src/components/common/button/AuthButton';
 import { useSignUpMutation } from '@src/state/mutations/auth/useSignUpMutation';
 import { useState } from 'react';
 import { signupSchema } from '@src/utils/validatePw';
+import KakaoLocationPicker from '@src/components/common/kakao/KakaoLocationPicker';
+import { ISelectedLocation } from '@src/components/common/kakao/types';
 
 export default function SignUpPage() {
   const {
@@ -49,42 +51,15 @@ export default function SignUpPage() {
     e.preventDefault();
   };
 
-  // 주소 검색하는 함수
-  const openAddressSearch = () => {
-    new window.daum.Postcode({
-      oncomplete: function (data: any) {
-        const siDo = data.sido;
-        const siGunGu = data.sigungu;
-        const roadNameAddress = data.roadAddress;
+  const handleLocationSelect = (location: ISelectedLocation) => {
+    const { address } = location;
 
-        // 주소와 좌표 설정
-        setValue(`siDo`, siDo);
-        setValue(`siGunGu`, siGunGu);
-        setValue(`roadNameAddress`, roadNameAddress);
-        // setValue(`addressLatitude`, addressLat);
-        // setValue(`addressLongitude`, addressLong);
-        setValue(`existAddress`, true);
-
-        // const geocoder = new window.kakao.maps.services.Geocoder();
-        // geocoder.addressSearch(
-        //   fullAddress,
-        //   function (result: any, status: any) {
-        //     if (status === window.kakao.maps.services.Status.OK) {
-        //       const addressLat = parseFloat(result[0].y);
-        //       const addressLong = parseFloat(result[0].x);
-
-        //       // 주소와 좌표 설정
-        //       setValue(`siDo`, siDo);
-        //       setValue(`siGunGu`, siGunGu);
-        //       setValue(`roadNameAddress`, roadNameAddress);
-        //       setValue(`addressLatitude`, addressLat);
-        //       setValue(`addressLongitude`, addressLong);
-        //       setValue(`existAddress`, true);
-        //     }
-        //   },
-        // );
-      },
-    }).open();
+    setValue('siDo', address?.address.region_1depth_name || '');
+    setValue('siGunGu', address?.address.region_2depth_name || '');
+    setValue('roadNameAddress', address?.road_address?.address_name || '');
+    setValue('addressLatitude', address?.y ? parseFloat(address.y) : 0);
+    setValue('addressLongitude', address?.x ? parseFloat(address.x) : 0);
+    setValue('existAddress', true);
   };
 
   return (
@@ -146,14 +121,10 @@ export default function SignUpPage() {
         </div>
         <div className="mb-5">
           <p className="p-4">내 주소 (선택)</p>
-          <div onClick={() => openAddressSearch()}>
-            <Input
-              type="text"
-              placeholder="내 위치를 편리하게 설정할 수 있어요!"
-              maxLength={20}
-              {...register('roadNameAddress')}
-            />
-          </div>
+          <KakaoLocationPicker
+            className="w-full text-left bg-white border border-gray-light rounded-default"
+            onSelect={handleLocationSelect}
+          />
         </div>
         <div className="flex justify-center">
           <AuthButton

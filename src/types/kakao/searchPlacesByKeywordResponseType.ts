@@ -1,4 +1,4 @@
-export interface KakaoPlacesResponse {
+export interface KakaoKeywordSearchResponse {
   meta: {
     total_count: number; // 검색어에 검색된 문서 수
     pageable_count: number; // total_count 중 노출 가능 문서 수
