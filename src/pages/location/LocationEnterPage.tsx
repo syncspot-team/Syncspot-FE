@@ -82,6 +82,9 @@ export default function LocationEnterPage() {
   );
 
   const handleLocationSelect = (location: ISelectedLocation, index: number) => {
+    // 선택한 장소에 대해서 내 장소 목록에 있는 값들과 비교하여 이미 존재하는 장소인지를 확인하고, 이미 존재한다면
+    // 토스트 메세지를 띄우고 false를 리턴한다.
+
     const { place, address } = location;
     // 새로운 값 설정
     setValue(
@@ -117,7 +120,9 @@ export default function LocationEnterPage() {
     // 서버로 장소 저장 및 수정 요청하는 부분
     console.log(currentLocation);
 
-    // index가 초기 더미 데이터의 길이보다 작으면 기존 필드
+    // index가 초기 더미 데이터의 길이보다 작으면 기존 필드 (초기 더미데이터의 길이로 판별하고 있지만 실제로는 useState로 관리되는 나의 주소목록들을 기준으로 판단해야한다.)
+    // 또는 백엔드에서 기존에 장소 목록들을 줄때, placeId값도 준다고 하니, 이 값을 활용해서, 주소들이 있는 목록으로 부터 placeId값을 받아와서 해당 값이 존재하는 경우에는 장소 수정요청을,
+    // 그렇지 않은 경우에는 저장요청을 보낸다.
     // const isExistingField = index < DUMMY_LOCATIONS.myLocations.length;
 
     // if (isExistingField) {
@@ -127,6 +132,8 @@ export default function LocationEnterPage() {
     //   alert('새로운 장소 저장 요청을 보냅니다.');
     //   // TODO: 저장 API 호출
     // }
+
+    return true;
   };
 
   const handleAddLocation = () => {

@@ -7,7 +7,7 @@ import { mergeClassNames } from '@src/utils/mergeClassNames';
 
 interface IKakaoLocationPicker {
   className?: string;
-  onSelect?: (location: ISelectedLocation) => void;
+  onSelect?: (location: ISelectedLocation) => boolean;
   defaultAddress?: string;
 }
 
@@ -23,8 +23,11 @@ export default function KakaoLocationPicker({
   const handlePlaceSelect = async (place: Place) => {
     const addressData = await searchAddressInfo(place.road_address_name);
     const location = { place, address: addressData };
-    setSelectedLocation(location);
-    onSelect?.(location);
+    const selectResult = onSelect?.(location);
+    if (selectResult !== false) {
+      setSelectedLocation(location);
+    }
+
     setIsModalOpen(false);
   };
 
