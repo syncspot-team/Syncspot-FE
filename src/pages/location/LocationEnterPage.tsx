@@ -77,6 +77,10 @@ export default function LocationEnterPage() {
     name: 'friendLocations',
   });
 
+  const isAllMyLocationsFilled = myLocations.every(
+    (loc) => loc.addressLat !== 0 && loc.addressLong !== 0,
+  );
+
   const handleLocationSelect = (location: ISelectedLocation, index: number) => {
     const { place, address } = location;
     // 새로운 값 설정
@@ -214,7 +218,7 @@ export default function LocationEnterPage() {
           <SearchButton
             onClick={handleSearch}
             buttonText="중간 지점 찾기"
-            disabled={false}
+            disabled={!isAllMyLocationsFilled}
             className="w-full"
           />
         </div>
