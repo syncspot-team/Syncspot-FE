@@ -5,6 +5,7 @@ import SearchButton from '@src/components/common/button/SearchButton';
 import AddButton from '@src/components/common/button/AddButton';
 import KakaoMap from '@src/components/common/kakao/KakaoMap';
 import { useMemo } from 'react';
+import IconXmark from '@src/assets/icons/IconXmark.svg?react';
 
 interface ILocationForm {
   myLocations: {
@@ -76,34 +77,38 @@ export default function LocationEnterPage() {
     name: 'friendLocations',
   });
 
-  const handleLocationSelect = (
-    location: ISelectedLocation,
-    index: number,
-    isMyLocation: boolean,
-  ) => {
+  const handleLocationSelect = (location: ISelectedLocation, index: number) => {
     const { place, address } = location;
-    const prefix = isMyLocation ? 'myLocations' : 'friendLocations';
-
     setValue(
-      `${prefix}.${index}.siDo` as const,
+      `myLocations.${index}.siDo` as const,
       address?.address.region_1depth_name || '',
     );
     setValue(
-      `${prefix}.${index}.siGunGu` as const,
+      `myLocations.${index}.siGunGu` as const,
       address?.address.region_2depth_name || '',
     );
     setValue(
-      `${prefix}.${index}.roadNameAddress` as const,
+      `myLocations.${index}.roadNameAddress` as const,
       place.place_name || '',
     );
     setValue(
-      `${prefix}.${index}.addressLat` as const,
+      `myLocations.${index}.addressLat` as const,
       address?.y ? parseFloat(address.y) : 0,
     );
     setValue(
-      `${prefix}.${index}.addressLong` as const,
+      `myLocations.${index}.addressLong` as const,
       address?.x ? parseFloat(address.x) : 0,
     );
+  };
+
+  const handleAddLocation = () => {
+    appendMyLocation({
+      siDo: '',
+      siGunGu: '',
+      roadNameAddress: '',
+      addressLat: 0,
+      addressLong: 0,
+    });
   };
 
   const isValidLocation = (loc: (typeof myLocations)[0]) =>
@@ -130,16 +135,6 @@ export default function LocationEnterPage() {
     JSON.stringify(friendLocations.filter(isValidLocation)),
   ]);
 
-  const handleAddLocation = () => {
-    appendMyLocation({
-      siDo: '',
-      siGunGu: '',
-      roadNameAddress: '',
-      addressLat: 0,
-      addressLong: 0,
-    });
-  };
-
   return (
     <div className="grid w-full grid-cols-1 lg:grid-cols-2 px-[3.125rem] lg:px-[7.5rem] gap-[0.9375rem] mt-[1.875rem]">
       <div className="flex flex-col justify-center order-2 p-5 rounded-default bg-gray-light lg:order-1">
@@ -150,12 +145,25 @@ export default function LocationEnterPage() {
           내가 입력한 장소
         </span>
         {myLocationFields.map((field, index) => (
-          <KakaoLocationPicker
+          <div
             key={field.id}
-            className="w-full text-left bg-white-default whitespace-nowrap mb-[0.625rem] hover:opacity-55 hover:ring-1 hover:ring-gray-dark"
-            onSelect={(location) => handleLocationSelect(location, index, true)}
-            defaultAddress={field.roadNameAddress}
-          />
+            className="flex items-center justify-between bg-white-default rounded-default mb-[0.625rem] hover:opacity-55 hover:ring-1 hover:ring-gray-dark"
+          >
+            <KakaoLocationPicker
+              className="flex-1 text-left whitespace-nowrap"
+              onSelect={(location) => handleLocationSelect(location, index)}
+              defaultAddress={field.roadNameAddress}
+            />
+            <button
+              type="button"
+              onClick={() => {
+                alert('해당 장소를 삭제하시겠습니까?');
+              }}
+              className="p-2 mx-2 rounded-default hover:bg-gray-dark"
+            >
+              <IconXmark className="w-5 h-5" />
+            </button>
+          </div>
         ))}
         <span className="text-subtitle text-tertiary my-[0.75rem]">
           친구가 입력한 장소
