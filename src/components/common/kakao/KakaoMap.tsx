@@ -96,7 +96,7 @@ export default function KakaoMap({ coordinates }: IKakaoMap) {
         if (mapRef.current) {
           mapRef.current.setBounds(bounds);
         }
-      }, 500);
+      }, 100);
     }
   };
 

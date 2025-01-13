@@ -4,6 +4,7 @@ import { ISelectedLocation } from '@src/components/common/kakao/types';
 import SearchButton from '@src/components/common/button/SearchButton';
 import AddButton from '@src/components/common/button/AddButton';
 import KakaoMap from '@src/components/common/kakao/KakaoMap';
+import { useMemo } from 'react';
 
 interface ILocationForm {
   myLocations: {
@@ -105,31 +106,29 @@ export default function LocationEnterPage() {
     );
   };
 
-  const getAllCoordinates = () => {
-    const myCoords = myLocations
-      .filter(
-        (location) => location.addressLat !== 0 && location.addressLong !== 0,
-      )
-      .map((location) => ({
+  const isValidLocation = (loc: (typeof myLocations)[0]) =>
+    loc.addressLat !== 0 && loc.addressLong !== 0;
+
+  const coordinates = useMemo(() => {
+    const formatLocations = (
+      locations: typeof myLocations,
+      isMyLocation: boolean,
+    ) =>
+      locations.filter(isValidLocation).map((location) => ({
         lat: location.addressLat,
         lng: location.addressLong,
-        isMyLocation: true,
+        isMyLocation,
         roadNameAddress: location.roadNameAddress,
       }));
 
-    const friendCoords = friendLocations
-      .filter(
-        (location) => location.addressLat !== 0 && location.addressLong !== 0,
-      )
-      .map((location) => ({
-        lat: location.addressLat,
-        lng: location.addressLong,
-        isMyLocation: false,
-        roadNameAddress: location.roadNameAddress,
-      }));
-
-    return [...myCoords, ...friendCoords];
-  };
+    return [
+      ...formatLocations(myLocations, true),
+      ...formatLocations(friendLocations, false),
+    ];
+  }, [
+    JSON.stringify(myLocations.filter(isValidLocation)),
+    JSON.stringify(friendLocations.filter(isValidLocation)),
+  ]);
 
   const handleAddLocation = () => {
     appendMyLocation({
@@ -185,7 +184,7 @@ export default function LocationEnterPage() {
         </div>
       </div>
       <div className="rounded-default min-h-[500px] shadow-md order-1 lg:order-2">
-        <KakaoMap coordinates={getAllCoordinates()} />
+        <KakaoMap coordinates={coordinates} />
       </div>
     </div>
   );
