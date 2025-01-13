@@ -60,6 +60,8 @@ export default function SignUpPage() {
     setValue('addressLatitude', address?.y ? parseFloat(address.y) : 0);
     setValue('addressLongitude', address?.x ? parseFloat(address.x) : 0);
     setValue('existAddress', true);
+
+    return true;
   };
 
   return (
