@@ -14,6 +14,7 @@ export default function KakaoMap({ coordinates }: IKakaoMap) {
   const mapRef = useRef<any>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const markersRef = useRef<any[]>([]);
+  const resizeTimeoutRef = useRef<NodeJS.Timeout>();
 
   const placeMarker = (
     lat: number,
@@ -129,6 +130,41 @@ export default function KakaoMap({ coordinates }: IKakaoMap) {
 
   useEffect(() => {
     updateMap();
+  }, [coordinates]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      // 이전 타임아웃을 클리어
+      if (resizeTimeoutRef.current) {
+        clearTimeout(resizeTimeoutRef.current);
+      }
+
+      // 새로운 타임아웃 설정
+      resizeTimeoutRef.current = setTimeout(() => {
+        if (mapRef.current) {
+          mapRef.current.relayout();
+
+          // 약간의 지연 후 bounds 재설정
+          setTimeout(() => {
+            if (coordinates.length > 0) {
+              const bounds = new window.kakao.maps.LatLngBounds();
+              coordinates.forEach(({ lat, lng }) => {
+                bounds.extend(new window.kakao.maps.LatLng(lat, lng));
+              });
+              mapRef.current.setBounds(bounds);
+            }
+          }, 100);
+        }
+      }, 200);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      if (resizeTimeoutRef.current) {
+        clearTimeout(resizeTimeoutRef.current);
+      }
+    };
   }, [coordinates]);
 
   return <div ref={containerRef} className="w-full h-full rounded-default" />;
