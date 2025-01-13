@@ -79,6 +79,7 @@ export default function LocationEnterPage() {
 
   const handleLocationSelect = (location: ISelectedLocation, index: number) => {
     const { place, address } = location;
+    // 새로운 값 설정
     setValue(
       `myLocations.${index}.siDo` as const,
       address?.address.region_1depth_name || '',
@@ -99,6 +100,29 @@ export default function LocationEnterPage() {
       `myLocations.${index}.addressLong` as const,
       address?.x ? parseFloat(address.x) : 0,
     );
+
+    // 장소 선택 완료 후 처리 (장소 수정, 저장 요청시에 사용될 장소에 대한 값)
+    const currentLocation = {
+      siDo: address?.address.region_1depth_name || '',
+      siGunGu: address?.address.region_2depth_name || '',
+      roadNameAddress: place.place_name || '',
+      addressLat: address?.y ? parseFloat(address.y) : 0,
+      addressLong: address?.x ? parseFloat(address.x) : 0,
+    };
+
+    // 서버로 장소 저장 및 수정 요청하는 부분
+    console.log(currentLocation);
+
+    // index가 초기 더미 데이터의 길이보다 작으면 기존 필드
+    // const isExistingField = index < DUMMY_LOCATIONS.myLocations.length;
+
+    // if (isExistingField) {
+    //   alert('장소 수정 요청을 보냅니다.');
+    //   // TODO: 수정 API 호출
+    // } else {
+    //   alert('새로운 장소 저장 요청을 보냅니다.');
+    //   // TODO: 저장 API 호출
+    // }
   };
 
   const handleAddLocation = () => {
@@ -135,6 +159,10 @@ export default function LocationEnterPage() {
     JSON.stringify(friendLocations.filter(isValidLocation)),
   ]);
 
+  const handleSearch = () => {
+    // TODO: 중간 지점 찾기 페이지로 이동
+  };
+
   return (
     <div className="grid w-full grid-cols-1 lg:grid-cols-2 px-[3.125rem] lg:px-[7.5rem] gap-[0.9375rem] mt-[1.875rem]">
       <div className="flex flex-col justify-center order-2 p-5 rounded-default bg-gray-light lg:order-1">
@@ -161,7 +189,7 @@ export default function LocationEnterPage() {
               }}
               className="p-2 mx-2 rounded-default hover:bg-gray-dark"
             >
-              <IconXmark className="w-5 h-5" />
+              <IconXmark className="size-5" />
             </button>
           </div>
         ))}
@@ -184,14 +212,14 @@ export default function LocationEnterPage() {
             className="w-full"
           />
           <SearchButton
+            onClick={handleSearch}
             buttonText="중간 지점 찾기"
-            isLoading={false}
             disabled={false}
             className="w-full"
           />
         </div>
       </div>
-      <div className="rounded-default min-h-[500px] shadow-md order-1 lg:order-2">
+      <div className="rounded-default min-h-[500px] order-1 lg:order-2">
         <KakaoMap coordinates={coordinates} />
       </div>
     </div>

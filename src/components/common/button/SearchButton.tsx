@@ -2,24 +2,24 @@ import Button from './Button';
 
 interface ISearchButton {
   buttonText: string;
-  isLoading: boolean;
   disabled: boolean;
   className?: string;
+  onClick: () => void;
 }
 
 export default function SearchButton({
   buttonText,
-  isLoading,
   disabled,
   className,
+  onClick,
 }: ISearchButton) {
   return (
     <Button
       buttonType="primary"
       fontSize="default"
-      isLoading={isLoading}
       disabled={disabled}
       className={className}
+      onClick={onClick}
     >
       {buttonText}
     </Button>
