@@ -11,7 +11,7 @@ export const useSignUpMutation = (
 ) => {
   const navigate = useNavigate();
 
-  const userSignup = useMutation({
+  return useMutation({
     mutationFn: postSignUp,
     onSuccess: () => {
       CustomToast({
@@ -22,6 +22,4 @@ export const useSignUpMutation = (
     },
     ...options,
   });
-
-  return userSignup;
 };
