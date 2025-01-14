@@ -78,7 +78,7 @@ export default function RoomList() {
     <li
       ref={dropdownRef}
       onClick={handleDropdownToggle}
-      className="relative flex items-center cursor-pointer text-blue-dark01 px-2 py-2 md:px-3 md:py-2 lg:py-3 bg-blue-light01 rounded-[0.4375rem] sm:rounded-[0.625rem] whitespace-nowrap gap-[0.125rem]"
+      className="relative flex items-center cursor-pointer text-blue-dark01 px-2 py-2 md:px-3 lg:py-3 bg-blue-light01 rounded-[0.4375rem] sm:rounded-[0.625rem] whitespace-nowrap gap-[0.125rem]"
     >
       <span className="min-w-[5rem] lg:min-w-[6.25rem] text-sm lg:text-menu truncate">
         {selectedRoom}
