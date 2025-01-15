@@ -101,12 +101,12 @@ export default function Header() {
         </ul>
 
         {/* 데스크탑 메뉴 */}
-        <ul className="hidden md:flex items-center gap-[0.625rem] text-gray-dark text-menu whitespace-nowrap *:cursor-pointer">
+        <ul className="hidden md:flex items-center gap-[0.625rem] text-gray-dark whitespace-nowrap *:cursor-pointer">
           {menuItems.map((item) => (
             <li
               key={item.label}
               onClick={item.onClick}
-              className="hover:bg-gray-light px-2 py-3 sm:px-3 sm:py-3 rounded-[0.625rem] text-sm lg:text-menu"
+              className="hover:bg-gray-light px-2 py-3 sm:px-3 sm:py-3 rounded-[0.625rem] text-content lg:text-menu"
             >
               {item.label}
             </li>
@@ -116,12 +116,12 @@ export default function Header() {
               onClick={() => navigate(PATH.MY_PAGE)}
               className="hover:bg-gray-light px-2 sm:px-3 py-2 rounded-[0.625rem]"
             >
-              <IconUser />
+              <IconUser className="size-4 sm:size-6 lg:size-7" />
             </li>
           ) : (
             <li
               onClick={() => navigate(PATH.SIGN_IN)}
-              className="border-tertiary border-login rounded-login px-2 sm:px-3 text-sm lg:text-menu py-[0.3125rem] hover:bg-primary hover:border-primary hover:text-white-default ml-1"
+              className="border-tertiary border-login rounded-login px-2 sm:px-3 text-content lg:text-menu py-[0.3125rem] hover:bg-primary hover:border-primary hover:text-white-default ml-1"
             >
               로그인
             </li>
@@ -179,7 +179,7 @@ export default function Header() {
                   navigate(PATH.SIGN_IN);
                   setIsMenuOpen(false);
                 }}
-                className="p-4 text-sm cursor-pointer sm:px-6 sm:text-content rounded-default hover:bg-gray-light"
+                className="p-4 cursor-pointer text-content sm:px-6 sm:text-content rounded-default hover:bg-gray-light"
               >
                 로그인
               </li>
