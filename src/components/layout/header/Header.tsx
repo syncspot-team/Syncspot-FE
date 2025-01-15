@@ -92,7 +92,10 @@ export default function Header() {
             }
           }}
         >
-          <HeaderMenu isMobile onMenuSelect={() => setIsMenuOpen(false)} />
+          <HeaderMenu
+            isMobile={true}
+            onMenuSelect={() => setIsMenuOpen(false)}
+          />
         </div>
       </nav>
     </header>
