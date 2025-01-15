@@ -17,6 +17,7 @@ export default function Header() {
   const { roomId } = useRoomIdStore();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const [isAnimating, setIsAnimating] = useState(false);
   const menuItems = [
     {
       label: '중간 지점 찾기',
@@ -51,6 +52,11 @@ export default function Header() {
     }
   };
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+    setIsAnimating(true);
+  };
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -70,7 +76,7 @@ export default function Header() {
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
-      window.addEventListener('resize', handleResize);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
@@ -125,7 +131,7 @@ export default function Header() {
         {/* 모바일 메뉴 버튼 */}
         <div className="md:hidden">
           <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            onClick={toggleMenu}
             className="p-2 hover:bg-gray-light rounded-[0.625rem]"
           >
             {isMenuOpen ? <IconHeaderXmark /> : <IconHamburgerMenu />}
@@ -133,48 +139,53 @@ export default function Header() {
         </div>
 
         {/* 모바일 메뉴 드롭다운 */}
-        {isMenuOpen && (
-          <div
-            ref={menuRef}
-            className="absolute top-[4.5rem] left-0 right-0 bg-white-default lg:hidden z-50"
-          >
-            <ul className="flex flex-col w-full">
-              {menuItems.map((item) => (
-                <li
-                  key={item.label}
-                  onClick={() => {
-                    item.onClick();
-                    setIsMenuOpen(false);
-                  }}
-                  className="p-4 text-sm rounded-md cursor-pointer sm:text-content sm:px-6 hover:bg-gray-light"
-                >
-                  {item.label}
-                </li>
-              ))}
-              {isLogin ? (
-                <li
-                  onClick={() => {
-                    navigate(PATH.MY_PAGE);
-                    setIsMenuOpen(false);
-                  }}
-                  className="p-4 text-sm rounded-md cursor-pointer sm:px-6 hover:bg-gray-light sm:text-content"
-                >
-                  마이페이지
-                </li>
-              ) : (
-                <li
-                  onClick={() => {
-                    navigate(PATH.SIGN_IN);
-                    setIsMenuOpen(false);
-                  }}
-                  className="p-4 text-sm rounded-md cursor-pointer sm:px-6 hover:bg-gray-light sm:text-content"
-                >
-                  로그인
-                </li>
-              )}
-            </ul>
-          </div>
-        )}
+        <div
+          ref={menuRef}
+          className={`absolute top-[4.0625rem] text-gray-dark left-0 right-0 bg-white-default lg:hidden z-50
+            ${isMenuOpen ? 'animate-slideDown' : isAnimating ? 'animate-slideUp' : 'hidden'}
+          `}
+          onAnimationEnd={() => {
+            if (!isMenuOpen) {
+              setIsAnimating(false);
+            }
+          }}
+        >
+          <ul className="flex flex-col w-full">
+            {menuItems.map((item) => (
+              <li
+                key={item.label}
+                onClick={() => {
+                  item.onClick();
+                  setIsMenuOpen(false);
+                }}
+                className="p-4 text-sm cursor-pointer sm:px-6 sm:text-content rounded-default hover:bg-gray-light"
+              >
+                {item.label}
+              </li>
+            ))}
+            {isLogin ? (
+              <li
+                onClick={() => {
+                  navigate(PATH.MY_PAGE);
+                  setIsMenuOpen(false);
+                }}
+                className="p-4 text-sm cursor-pointer sm:px-6 sm:text-content rounded-default hover:bg-gray-light"
+              >
+                마이페이지
+              </li>
+            ) : (
+              <li
+                onClick={() => {
+                  navigate(PATH.SIGN_IN);
+                  setIsMenuOpen(false);
+                }}
+                className="p-4 text-sm cursor-pointer sm:px-6 sm:text-content rounded-default hover:bg-gray-light"
+              >
+                로그인
+              </li>
+            )}
+          </ul>
+        </div>
       </nav>
     </header>
   );
