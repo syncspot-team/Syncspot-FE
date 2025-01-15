@@ -1,56 +1,19 @@
 import IconMainLogo from '@src/assets/icons/IconMainLogo.svg?react';
-import IconUser from '@src/assets/icons/IconUser.svg?react';
 import { PATH } from '@src/constants/path';
 import { useLoginStore } from '@src/state/store/loginStore';
 import { useNavigate } from 'react-router-dom';
 import RoomList from './RoomList';
-import { useRoomIdStore } from '@src/state/store/roomIdStore';
-import CustomToast from '@src/components/common/toast/customToast';
-import { TOAST_TYPE } from '@src/types/toastType';
 import IconHamburgerMenu from '@src/assets/icons/IconHamburgerMenu.svg?react';
 import IconHeaderXmark from '@src/assets/icons/IconHeaderXmark.svg?react';
 import { useState, useEffect, useRef } from 'react';
+import HeaderMenu from './HeaderMenu';
 
 export default function Header() {
+  const menuRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const { isLogin } = useLoginStore();
-  const { roomId } = useRoomIdStore();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
   const [isAnimating, setIsAnimating] = useState(false);
-  const menuItems = [
-    {
-      label: '중간 지점 찾기',
-      onClick: () => handleNavigateWithRoomCheck(PATH.LOCATION_ENTER(roomId)),
-    },
-    {
-      label: '장소 투표',
-      onClick: () => handleNavigateWithRoomCheck(PATH.PLACE_VOTE(roomId)),
-    },
-    {
-      label: '시간 투표',
-      onClick: () => handleNavigateWithRoomCheck(PATH.TIME_VOTE(roomId)),
-    },
-    {
-      label: '서비스 소개',
-      onClick: () => navigate(PATH.ABOUT),
-    },
-  ];
-
-  const handleNavigateWithRoomCheck = (path: string) => {
-    if (!isLogin) {
-      navigate(PATH.SIGN_IN);
-      return;
-    }
-    if (!roomId) {
-      CustomToast({
-        type: TOAST_TYPE.ERROR,
-        message: '모임을 선택해주세요!',
-      });
-    } else {
-      navigate(path);
-    }
-  };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -101,32 +64,7 @@ export default function Header() {
         </ul>
 
         {/* 데스크탑 메뉴 */}
-        <ul className="hidden md:flex items-center gap-[0.625rem] text-gray-dark whitespace-nowrap *:cursor-pointer">
-          {menuItems.map((item) => (
-            <li
-              key={item.label}
-              onClick={item.onClick}
-              className="hover:bg-gray-light px-2 py-3 sm:px-3 sm:py-3 rounded-[0.625rem] text-content lg:text-menu"
-            >
-              {item.label}
-            </li>
-          ))}
-          {isLogin ? (
-            <li
-              onClick={() => navigate(PATH.MY_PAGE)}
-              className="hover:bg-gray-light px-2 sm:px-3 py-2 rounded-[0.625rem]"
-            >
-              <IconUser className="size-4 sm:size-6 lg:size-7" />
-            </li>
-          ) : (
-            <li
-              onClick={() => navigate(PATH.SIGN_IN)}
-              className="border-tertiary border-login rounded-login px-2 sm:px-3 text-content lg:text-menu py-[0.3125rem] hover:bg-primary hover:border-primary hover:text-white-default ml-1"
-            >
-              로그인
-            </li>
-          )}
-        </ul>
+        <HeaderMenu isMobile={false} />
 
         {/* 모바일 메뉴 버튼 */}
         <div className="md:hidden">
@@ -134,14 +72,18 @@ export default function Header() {
             onClick={toggleMenu}
             className="p-2 hover:bg-gray-light rounded-[0.625rem]"
           >
-            {isMenuOpen ? <IconHeaderXmark /> : <IconHamburgerMenu />}
+            {isMenuOpen ? (
+              <IconHeaderXmark className="size-5" />
+            ) : (
+              <IconHamburgerMenu className="size-5" />
+            )}
           </button>
         </div>
 
         {/* 모바일 메뉴 드롭다운 */}
         <div
           ref={menuRef}
-          className={`absolute top-[4.0625rem] text-gray-dark left-0 right-0 bg-white-default lg:hidden z-50
+          className={`absolute top-[3.875rem] text-gray-dark left-0 right-0 bg-white-default lg:hidden z-50
             ${isMenuOpen ? 'animate-slideDown' : isAnimating ? 'animate-slideUp' : 'hidden'}
           `}
           onAnimationEnd={() => {
@@ -150,41 +92,7 @@ export default function Header() {
             }
           }}
         >
-          <ul className="flex flex-col w-full">
-            {menuItems.map((item) => (
-              <li
-                key={item.label}
-                onClick={() => {
-                  item.onClick();
-                  setIsMenuOpen(false);
-                }}
-                className="p-4 text-sm cursor-pointer sm:px-6 sm:text-content rounded-default hover:bg-gray-light"
-              >
-                {item.label}
-              </li>
-            ))}
-            {isLogin ? (
-              <li
-                onClick={() => {
-                  navigate(PATH.MY_PAGE);
-                  setIsMenuOpen(false);
-                }}
-                className="p-4 text-sm cursor-pointer sm:px-6 sm:text-content rounded-default hover:bg-gray-light"
-              >
-                마이페이지
-              </li>
-            ) : (
-              <li
-                onClick={() => {
-                  navigate(PATH.SIGN_IN);
-                  setIsMenuOpen(false);
-                }}
-                className="p-4 cursor-pointer text-content sm:px-6 sm:text-content rounded-default hover:bg-gray-light"
-              >
-                로그인
-              </li>
-            )}
-          </ul>
+          <HeaderMenu isMobile onMenuSelect={() => setIsMenuOpen(false)} />
         </div>
       </nav>
     </header>
