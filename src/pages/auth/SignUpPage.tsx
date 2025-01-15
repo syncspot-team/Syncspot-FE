@@ -111,7 +111,7 @@ export default function SignUpPage() {
           닉네임
         </span>
         <Input
-          type="username"
+          type="text"
           placeholder="닉네임을 입력해주세요"
           maxLength={20}
           {...register('name')}
