@@ -6,6 +6,7 @@ import {
 import { postPlaceSave } from '@src/apis/location/postPlaceSave';
 import { IPlaceSaveRequestType } from '@src/types/location/placeSaveRequestType';
 import { LOCATION_KEY } from '@src/state/queries/location/key';
+import { IPlaceSaveResponseType } from '@src/types/location/placeSaveResponseType';
 
 interface IPlaceSaveRequest {
   placeSavePayload: IPlaceSaveRequestType;
@@ -13,7 +14,11 @@ interface IPlaceSaveRequest {
 
 export const usePlaceSaveMutation = (
   roomId: string,
-  options?: UseMutationOptions<any, Error, IPlaceSaveRequest>,
+  options?: UseMutationOptions<
+    IPlaceSaveResponseType,
+    Error,
+    IPlaceSaveRequest
+  >,
 ) => {
   const queryClient = useQueryClient();
 
