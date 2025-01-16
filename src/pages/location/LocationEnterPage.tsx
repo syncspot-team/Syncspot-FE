@@ -84,7 +84,7 @@ export default function LocationEnterPage() {
   // 장소 목록 조회 쿼리
   const { data: placeSearchData } = useGetPlaceSearchQuery();
 
-  const { control, setValue, watch } = useForm<ILocationForm>({
+  const { control, setValue, watch, reset } = useForm<ILocationForm>({
     defaultValues: {
       myLocations: [],
       friendLocations: [],
@@ -96,31 +96,24 @@ export default function LocationEnterPage() {
     if (placeSearchData?.data) {
       setSavedLocations(placeSearchData.data.myLocations);
 
-      // myLocations 업데이트
-      setValue(
-        'myLocations',
-        placeSearchData.data.myLocations.map((place) => ({
+      reset({
+        myLocations: placeSearchData.data.myLocations.map((place) => ({
           siDo: place.siDo,
           siGunGu: place.siGunGu,
           roadNameAddress: place.roadNameAddress,
           addressLat: place.addressLat,
           addressLong: place.addressLong,
         })),
-      );
-
-      // friendLocations 업데이트
-      setValue(
-        'friendLocations',
-        placeSearchData.data.friendLocations.map((place) => ({
+        friendLocations: placeSearchData.data.friendLocations.map((place) => ({
           siDo: place.siDo,
           siGunGu: place.siGunGu,
           roadNameAddress: place.roadNameAddress,
           addressLat: place.addressLat,
           addressLong: place.addressLong,
         })),
-      );
+      });
     }
-  }, [placeSearchData?.data, setValue]);
+  }, [placeSearchData?.data, reset]);
 
   // 장소 저장 mutation
   const { mutate: placeSaveMutation } = usePlaceSaveMutation();
