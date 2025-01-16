@@ -10,7 +10,7 @@ export const API = {
   PLACE_SEARCH: (roomId: string) => `/api/places/rooms/${roomId}`, // 특정 방에 입력한 장소 목록들 조회
   PLACE_SAVE: (roomId: string) => `/api/places/rooms/${roomId}`, // 특정 방에 입력한 장소 저장
   PLACE_UPDATE: (roomId: string) => `/api/places/rooms/${roomId}`, // 특정 방에 입력한 장소 수정
-  PLACE_DELETE: (placeId: string) => `/api/places/${placeId}`, // 특정 방에 입력한 장소 삭제
+  PLACE_DELETE: (placeId: number) => `/api/places/${placeId}`, // 특정 방에 입력한 장소 삭제
   PLACE_VOTE_RESULT: (roomId: string) =>
     `/api/place-votes/result/rooms/${roomId}`, // 특정 방의 장소 투표 결과 조회
   PLACE_REVOTE: (roomId: string) => `/api/place-votes/rooms/${roomId}`, // 특정 방의 장소 재투표
