@@ -1,5 +1,4 @@
 export const API = {
-  PLACE_UPDATE: '/api/market', // 중간 지점 장소 리스트 업데이트
   SIGN_UP: '/api/members', // 회원가입
   SIGN_IN: '/api/members/login', // 로그인
   LOGOUT: '/api/members/logout', // 로그아웃
@@ -8,9 +7,10 @@ export const API = {
     `/api/member-rooms/exists/rooms/${roomId}`, // 사용자가 방 회원인지 확인
   SAVE_USER_TO_ROOM: (roomId: string) => `/api/member-rooms/rooms/${roomId}`, // 사용자를 방에 저장
   MIDPOINTS_SEARCH: (roomId: string) => `/api/mid-points/rooms/${roomId}`, // 중간 지점 장소 목록 검색
-  PLACES_SEARCH: (roomId: string) => `/api/place-rooms/rooms/${roomId}`, // 특정 방에 입력한 장소 목록들 조회
-  PLACE_SAVE: (roomId: string) => `/api/place-rooms/rooms/${roomId}`, // 특정 방에 입력한 장소 저장
-  PLACE_DELETE: (roomId: string) => `/api/place-rooms/rooms/${roomId}`, // 특정 방에 입력한 장소 삭제
+  PLACE_SEARCH: (roomId: string) => `/api/places/rooms/${roomId}`, // 특정 방에 입력한 장소 목록들 조회
+  PLACE_SAVE: (roomId: string) => `/api/places/rooms/${roomId}`, // 특정 방에 입력한 장소 저장
+  PLACE_UPDATE: (roomId: string) => `/api/places/rooms/${roomId}`, // 특정 방에 입력한 장소 수정
+  PLACE_DELETE: (placeId: number) => `/api/places/${placeId}`, // 특정 방에 입력한 장소 삭제
   PLACE_VOTE_RESULT: (roomId: string) =>
     `/api/place-votes/result/rooms/${roomId}`, // 특정 방의 장소 투표 결과 조회
   PLACE_REVOTE: (roomId: string) => `/api/place-votes/rooms/${roomId}`, // 특정 방의 장소 재투표
