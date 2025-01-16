@@ -180,57 +180,60 @@ export default function LocationEnterPage() {
         <h1 className="flex items-center justify-center text-title text-tertiary my-[2.5rem]">
           모임 정보 입력
         </h1>
-        <span className="text-subtitle text-tertiary mb-[0.75rem]">
-          내가 입력한 장소
-        </span>
-        {myLocationFields.map((field, index) => (
-          <div
-            key={field.id}
-            className="flex items-center justify-between bg-white-default rounded-default mb-[0.625rem] hover:opacity-55 hover:ring-1 hover:ring-gray-dark"
-          >
-            <KakaoLocationPicker
-              className="flex-1 text-left whitespace-nowrap"
-              onSelect={(location) => handleLocationSelect(location, index)}
-              defaultAddress={field.roadNameAddress}
-            />
-            <button
-              type="button"
-              onClick={() => {
-                alert('해당 장소를 삭제하시겠습니까?');
-              }}
-              className="p-2 mx-2 rounded-default hover:bg-gray-dark"
+
+        <div className="max-h-[31.25rem] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full">
+          <h1 className="text-subtitle text-tertiary mb-[0.75rem]">
+            내가 입력한 장소
+          </h1>
+          {myLocationFields.map((field, index) => (
+            <div
+              key={field.id}
+              className="flex items-center justify-between bg-white-default rounded-default mb-[0.625rem] hover:opacity-55 hover:border hover:border-gray-dark"
             >
-              <IconXmark className="size-5" />
-            </button>
-          </div>
-        ))}
-        <span className="text-subtitle text-tertiary my-[0.75rem]">
-          친구가 입력한 장소
-        </span>
-        {friendLocationFields.map((field) => (
-          <div
-            key={field.id}
-            className="w-full text-left bg-white-default rounded-default whitespace-nowrap mb-[0.625rem] py-[1.3125rem] px-[1.5rem] cursor-not-allowed opacity-70"
-          >
-            {field.roadNameAddress || '위치 정보 없음'}
-          </div>
-        ))}
+              <KakaoLocationPicker
+                className="flex-1 text-left whitespace-nowrap"
+                onSelect={(location) => handleLocationSelect(location, index)}
+                defaultAddress={field.roadNameAddress}
+              />
+              <button
+                type="button"
+                onClick={() => {
+                  alert('해당 장소를 삭제하시겠습니까?');
+                }}
+                className="p-2 mx-2 rounded-default hover:bg-gray-dark"
+              >
+                <IconXmark className="size-5" />
+              </button>
+            </div>
+          ))}
+          <h1 className="text-subtitle text-tertiary my-[0.75rem]">
+            친구가 입력한 장소
+          </h1>
+          {friendLocationFields.map((field) => (
+            <div
+              key={field.id}
+              className="w-full text-left bg-white-default rounded-default whitespace-nowrap mb-[0.625rem] py-[1.3125rem] px-[1.5rem] cursor-not-allowed opacity-70"
+            >
+              {field.roadNameAddress || '위치 정보 없음'}
+            </div>
+          ))}
+        </div>
 
         <div className="flex flex-col mt-[1.75rem] gap-[0.5rem]">
           <AddButton
             onClick={handleAddLocation}
             buttonText="장소 추가하기"
-            className="w-full"
+            className="w-full px-[0.3125rem]"
           />
           <SearchButton
             onClick={handleSearch}
             buttonText="중간 지점 찾기"
             disabled={!isAllMyLocationsFilled}
-            className="w-full"
+            className="w-full px-[0.3125rem]"
           />
         </div>
       </div>
-      <div className="rounded-default min-h-[500px] order-1 lg:order-2">
+      <div className="rounded-default min-h-[31.25rem] order-1 lg:order-2">
         <KakaoMap coordinates={coordinates} />
       </div>
     </div>
