@@ -84,11 +84,27 @@ export default function KakaoMap({ coordinates }: IKakaoMap) {
     });
     markersRef.current = [];
 
+    // 모든 좌표의 최소/최대값을 찾아서 여유 공간을 추가
+    let minLat = Infinity;
+    let maxLat = -Infinity;
+    let minLng = Infinity;
+    let maxLng = -Infinity;
+
+    coordinates.forEach(({ lat, lng }) => {
+      minLat = Math.min(minLat, lat);
+      maxLat = Math.max(maxLat, lat);
+      minLng = Math.min(minLng, lng);
+      maxLng = Math.max(maxLng, lng);
+    });
+
+    // 위도에 여유 공간 추가 (텍스트 오버레이를 위한 공간)
+    const latPadding = (maxLat - minLat) * 0.1; // 10% 여유 공간
+    bounds.extend(new window.kakao.maps.LatLng(minLat - latPadding, minLng));
+    bounds.extend(new window.kakao.maps.LatLng(maxLat + latPadding, maxLng));
+
+    // 마커 생성
     coordinates.forEach(({ lat, lng, isMyLocation, roadNameAddress }) => {
       placeMarker(lat, lng, mapRef.current, isMyLocation, roadNameAddress);
-
-      const coords = new window.kakao.maps.LatLng(lat, lng);
-      bounds.extend(coords);
     });
 
     if (coordinates.length > 0) {
@@ -134,23 +150,37 @@ export default function KakaoMap({ coordinates }: IKakaoMap) {
 
   useEffect(() => {
     const handleResize = () => {
-      // 이전 타임아웃을 클리어
       if (resizeTimeoutRef.current) {
         clearTimeout(resizeTimeoutRef.current);
       }
 
-      // 새로운 타임아웃 설정
       resizeTimeoutRef.current = setTimeout(() => {
         if (mapRef.current) {
           mapRef.current.relayout();
 
-          // 약간의 지연 후 bounds 재설정
           setTimeout(() => {
             if (coordinates.length > 0) {
               const bounds = new window.kakao.maps.LatLngBounds();
+              let minLat = Infinity;
+              let maxLat = -Infinity;
+              let minLng = Infinity;
+              let maxLng = -Infinity;
+
               coordinates.forEach(({ lat, lng }) => {
-                bounds.extend(new window.kakao.maps.LatLng(lat, lng));
+                minLat = Math.min(minLat, lat);
+                maxLat = Math.max(maxLat, lat);
+                minLng = Math.min(minLng, lng);
+                maxLng = Math.max(maxLng, lng);
               });
+
+              const latPadding = (maxLat - minLat) * 0.1;
+              bounds.extend(
+                new window.kakao.maps.LatLng(minLat - latPadding, minLng),
+              );
+              bounds.extend(
+                new window.kakao.maps.LatLng(maxLat + latPadding, maxLng),
+              );
+
               mapRef.current.setBounds(bounds);
             }
           }, 100);
