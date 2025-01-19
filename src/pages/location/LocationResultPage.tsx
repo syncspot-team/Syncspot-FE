@@ -2,7 +2,6 @@ import KakaoMap from '@src/components/common/kakao/KakaoMap';
 import { useState, useMemo } from 'react';
 import IconRightHalfArrow from '@src/assets/icons/IconRightHalfArrow.svg?react';
 import IconLinkPin from '@src/assets/icons/IconLinkPin.svg?react';
-import IconDropdown from '@src/assets/icons/IconDropdown.svg?react';
 
 const ENTER_LOCATIONS = [
   {
@@ -51,10 +50,8 @@ const RESULT_LOCATIONS = [
   {
     placeId: 1,
     siDo: '서울특별시',
-    siGunGu:
-      '노원구 sdnflksdjflksjdflkja;dfjalksdjf;ajsfjlksajflkjfklsjdlkfjsdjfksjdlfjklsdjflskdjflksj',
-    roadNameAddress:
-      '동일로 1238 sdfjkdsjfkdsjfkjskdjfkjsdjfkjksdjfksjsdlkfjsldjflksjdlfjlksdjflkjsdlfjlksjlkdfjlkjsd',
+    siGunGu: '노원구',
+    roadNameAddress: '동일로 1238',
     addressLat: 37.6544,
     addressLong: 127.0565,
   },
@@ -106,17 +103,14 @@ export default function LocationResultPage() {
       roadNameAddress: location.roadNameAddress,
     }));
 
-    const selectedCoord =
-      selectedLocation !== null
-        ? RESULT_LOCATIONS.filter(
-            (location) => location.placeId === selectedLocation,
-          ).map((location) => ({
-            lat: location.addressLat,
-            lng: location.addressLong,
-            isMyLocation: true,
-            roadNameAddress: location.roadNameAddress,
-          }))
-        : [];
+    const selectedCoord = RESULT_LOCATIONS.filter(
+      (location) => location.placeId === selectedLocation,
+    ).map((location) => ({
+      lat: location.addressLat,
+      lng: location.addressLong,
+      isMyLocation: true,
+      roadNameAddress: location.roadNameAddress,
+    }));
 
     return [...enterCoords, ...selectedCoord];
   }, [selectedLocation]);
@@ -165,7 +159,6 @@ export default function LocationResultPage() {
                 <span className="truncate text-gray-dark">
                   {location.siGunGu}
                 </span>
-                <IconDropdown className="flex-shrink-0 cursor-pointer size-5 text-gray-dark" />
               </div>
             </li>
           ))}
