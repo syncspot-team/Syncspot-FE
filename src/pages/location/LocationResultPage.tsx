@@ -2,6 +2,8 @@ import KakaoMap from '@src/components/common/kakao/KakaoMap';
 import { useState, useMemo } from 'react';
 import IconRightHalfArrow from '@src/assets/icons/IconRightHalfArrow.svg?react';
 import IconLinkPin from '@src/assets/icons/IconLinkPin.svg?react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { PATH } from '@src/constants/path';
 
 const ENTER_LOCATIONS = [
   {
@@ -89,8 +91,19 @@ const RESULT_LOCATIONS = [
   },
 ];
 
+interface ILocation {
+  placeId: number;
+  siDo: string;
+  siGunGu: string;
+  roadNameAddress: string;
+  addressLat: number;
+  addressLong: number;
+}
+
 export default function LocationResultPage() {
   const SEQUENCE = ['첫', '두', '세', '네', '다섯'];
+  const navigate = useNavigate();
+  const { roomId } = useParams();
   const [selectedLocation, setSelectedLocation] = useState<number>(
     RESULT_LOCATIONS[0].placeId,
   );
@@ -115,8 +128,17 @@ export default function LocationResultPage() {
     return [...enterCoords, ...selectedCoord];
   }, [selectedLocation]);
 
+  const handleClickMidpoint = (location: ILocation) => {
+    const { addressLat, addressLong, roadNameAddress } = location;
+
+    navigate(
+      PATH.LOCATION_RECOMMENDATIONS(roomId) +
+        `?lat=${addressLat}&lng=${addressLong}&location=${roadNameAddress}`,
+    );
+  };
+
   return (
-    <div className="grid w-full grid-cols-1 lg:grid-cols-10 px-[3.125rem] lg:px-[7.5rem] gap-[0.9375rem] mt-[1.875rem]">
+    <div className="grid w-full grid-cols-1 lg:grid-cols-10 px-4 lg:px-[7.5rem] gap-[0.9375rem] mt-[2.5rem]">
       <div className="rounded-default min-h-[40.625rem] lg:col-span-6">
         <KakaoMap coordinates={coordinates} />
       </div>
@@ -142,6 +164,9 @@ export default function LocationResultPage() {
                   </span>
                 </span>
                 <IconRightHalfArrow
+                  onClick={() => {
+                    handleClickMidpoint(location);
+                  }}
                   className={`${
                     selectedLocation === location.placeId
                       ? 'opacity-100'
