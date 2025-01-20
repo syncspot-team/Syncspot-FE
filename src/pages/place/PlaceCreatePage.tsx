@@ -144,7 +144,7 @@ export default function PlaceCreatePage() {
     <div className="grid w-full grid-cols-1 lg:grid-cols-2 px-4 lg:px-[7.5rem] gap-[0.9375rem] mt-[1.875rem]">
       <div className="flex flex-col justify-center order-2 p-5 rounded-default bg-gray-light lg:order-1">
         <h1 className="flex items-center justify-center text-title text-tertiary my-[1.25rem]">
-          모임 장소 투표 생성
+          모임 장소 투표 생성 하기
         </h1>
         <div className="flex flex-col items-center text-content text-gray-dark mb-[1.25rem]">
           <span>우리 같이 투표해요!</span>
