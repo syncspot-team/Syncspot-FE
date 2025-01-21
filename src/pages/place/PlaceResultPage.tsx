@@ -65,14 +65,14 @@ export default function PlaceResultPage() {
   };
 
   return (
-    <div className="flex flex-col items-center w-full py-16 bg-gray-light mt-[2.5rem] my-0 mx-auto">
+    <div className="flex flex-col items-center w-full pt-16 pb-10 bg-gray-light mt-[2.5rem]">
       <div className="flex flex-col items-center w-full">
         <h1 className="-mt-8 text-title text-blue-dark02">투표 결과</h1>
         <p className="mt-2 mb-4 text-content text-gray-dark">
           이번 모임 만남이 가능한 장소를 확인해보세요!
         </p>
 
-        <ul className="mb-5 flex flex-col gap-4 max-h-[25rem] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full">
+        <ul className="mb-8 flex flex-col gap-4 max-h-[25rem] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full">
           {locations.map((location, index) => (
             <li
               key={index}
@@ -91,7 +91,7 @@ export default function PlaceResultPage() {
         <Button
           buttonType="primary"
           fontSize="small"
-          className="mb-[0.625rem] text-menu"
+          className="mb-[0.625rem] h-[3.125rem]"
           onClick={handleVoteAgain}
         >
           투표 다시하기
@@ -99,7 +99,7 @@ export default function PlaceResultPage() {
         <Button
           buttonType="primary"
           fontSize="small"
-          className="text-menu"
+          className="h-[3.125rem]"
           onClick={handleCreateVoteAgain}
         >
           투표 재생성하기
