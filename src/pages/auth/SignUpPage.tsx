@@ -2,7 +2,7 @@ import { ISignUpFormValues } from '@src/types/auth/SignUpRequestType';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Input } from '@src/components/common/input/Input';
-import AuthButton from '@src/components/common/button/AuthButton';
+import Button from '@src/components/common/button/Button';
 import { useSignUpMutation } from '@src/state/mutations/auth/useSignUpMutation';
 import KakaoLocationPicker from '@src/components/common/kakao/KakaoLocationPicker';
 import { ISelectedLocation } from '@src/components/common/kakao/types';
@@ -128,12 +128,14 @@ export default function SignUpPage() {
           className="text-left ring-1 ring-gray-normal bg-white-default rounded-default"
           onSelect={handleLocationSelect}
         />
-        <AuthButton
-          buttonText="회원가입"
+        <Button
+          buttonType="primary"
           isLoading={isPending}
           disabled={!isFormValid}
           className="mt-[1.75rem]"
-        />
+        >
+          회원가입
+        </Button>
       </form>
     </div>
   );

@@ -22,7 +22,7 @@ export default function FunctionOption({
       onClick={() => onClick(type)}
       className={`flex w-full text-menu text-tertiary py-[0.875rem] px-[1.0625rem] rounded-default cursor-pointer ${
         selectedFunction === type
-          ? 'border-4 border-blue-light02 bg-white-default'
+          ? 'ring-2 ring-blue-light02 bg-white-default'
           : 'bg-gray-light'
       }`}
     >

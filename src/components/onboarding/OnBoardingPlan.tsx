@@ -1,12 +1,11 @@
 import { OnboardingStepType } from '@src/types/onboarding/onboardingStepType';
-import AddButton from '@src/components/common/button/AddButton';
-import NextButton from '@src/components/common/button/NextButton';
 import IconInfo from '@src/assets/icons/IconInfo.svg?react';
 import Modal from '@src/components/common/modal/Modal';
 import { useState } from 'react';
 import IconBubble from '@src/assets/icons/IconBubblePlan.svg?react';
 import IconGhost from '@src/assets/icons/IconGhost.svg?react';
 import RoomInfo from '@src/components/onboarding/RoomInfo';
+import Button from '@src/components/common/button/Button';
 
 interface IOnBoardingPlanProps {
   setOnboardingStep: (step: keyof typeof OnboardingStepType) => void;
@@ -66,13 +65,13 @@ export default function OnBoardingPlan({
             <h1 className="text-subtitle text-tertiary mb-[1.875rem]">
               어떤 모임을 계획하고 계시나요?
             </h1>
-            <ul className="flex flex-col items-center w-full gap-[1.5rem] mb-[1.875rem] max-h-[25rem] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full">
+            <ul className="flex flex-col items-center w-full gap-[1.5rem] mb-[1.875rem] max-h-[25rem] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full p-1">
               {dummyData.data.map((item) => (
                 <li
                   key={item.roomId}
                   className={`flex items-center justify-between w-full text-menu text-tertiary bg-gray-light py-[0.875rem] px-[1.0625rem] rounded-default cursor-pointer ${
                     clickedRoom === item.roomId
-                      ? 'border-4 border-blue-light02 bg-white-default'
+                      ? 'ring-2 ring-blue-light02 bg-white-default'
                       : ''
                   }`}
                   onClick={() => handleRoomClick(item.roomId)}
@@ -87,16 +86,21 @@ export default function OnBoardingPlan({
                 </li>
               ))}
             </ul>
-            <AddButton
+            <Button
               onClick={handleAddButtonClick}
-              buttonText="모임 추가"
+              buttonType="add"
+              fontSize="small"
               className="mb-[1.0625rem]"
-            />
-            <NextButton
+            >
+              모임 추가
+            </Button>
+            <Button
               onClick={handleNextButtonClick}
-              buttonText="다음"
+              buttonType="primary"
               disabled={!clickedRoom}
-            />
+            >
+              다음
+            </Button>
           </div>
         ) : (
           <div className="flex flex-col items-center mt-[4.6875rem]">

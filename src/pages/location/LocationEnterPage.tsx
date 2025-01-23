@@ -1,8 +1,7 @@
 import { useForm, useFieldArray } from 'react-hook-form';
 import KakaoLocationPicker from '@src/components/common/kakao/KakaoLocationPicker';
 import { ISelectedLocation } from '@src/components/common/kakao/types';
-import SearchButton from '@src/components/common/button/SearchButton';
-import AddButton from '@src/components/common/button/AddButton';
+import Button from '@src/components/common/button/Button';
 import KakaoMap from '@src/components/common/kakao/KakaoMap';
 import { useMemo, useState, useEffect } from 'react';
 import IconXmark from '@src/assets/icons/IconXmark.svg?react';
@@ -338,17 +337,22 @@ export default function LocationEnterPage() {
         </div>
 
         <div className="flex flex-col mt-[1.75rem] gap-[0.5rem]">
-          <AddButton
+          <Button
+            buttonType="add"
+            fontSize="small"
             onClick={handleAddLocation}
-            buttonText="장소 추가하기"
             className="w-full px-[0.3125rem]"
-          />
-          <SearchButton
+          >
+            장소 추가하기
+          </Button>
+          <Button
+            buttonType="primary"
             onClick={handleSearch}
-            buttonText="중간 지점 찾기"
             disabled={!isAllMyLocationsFilled}
             className="w-full px-[0.3125rem]"
-          />
+          >
+            중간 지점 찾기
+          </Button>
         </div>
       </div>
       <div className="rounded-default min-h-[31.25rem] order-1 lg:order-2">

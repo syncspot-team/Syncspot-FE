@@ -1,11 +1,10 @@
 import { useForm, useFieldArray } from 'react-hook-form';
 import KakaoLocationPicker from '@src/components/common/kakao/KakaoLocationPicker';
 import { ISelectedLocation } from '@src/components/common/kakao/types';
-import SearchButton from '@src/components/common/button/SearchButton';
-import AddButton from '@src/components/common/button/AddButton';
 import KakaoMap from '@src/components/common/kakao/KakaoMap';
 import { useMemo } from 'react';
 import IconXmark from '@src/assets/icons/IconXmark.svg?react';
+import Button from '@src/components/common/button/Button';
 
 interface ILocationForm {
   locations: {
@@ -175,17 +174,23 @@ export default function PlaceCreatePage() {
         </ul>
 
         <div className="flex flex-col mt-[1.75rem] gap-[0.5rem]">
-          <AddButton
+          <Button
             onClick={handleAddLocation}
-            buttonText="장소 추가하기"
+            buttonType="add"
+            fontSize="small"
             className="w-full px-[0.3125rem]"
-          />
-          <SearchButton
+          >
+            장소 추가하기
+          </Button>
+          <Button
             onClick={handleVoteCreate}
-            buttonText="투표 생성하기"
-            disabled={!isAllLocationsFilled}
+            buttonType="primary"
+            fontSize="small"
             className="w-full px-[0.3125rem]"
-          />
+            disabled={!isAllLocationsFilled}
+          >
+            투표 생성하기
+          </Button>
         </div>
       </div>
       <div className="rounded-default min-h-[31.25rem] order-1 lg:order-2">
