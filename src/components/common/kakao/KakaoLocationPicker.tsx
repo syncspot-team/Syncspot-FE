@@ -64,7 +64,7 @@ export default function KakaoLocationPicker({
       />
 
       {isSearching && (
-        <div className="absolute z-50 w-full mt-[0.0625rem] rounded-default shadow-lg bg-white-default border-gray-light">
+        <div className="absolute z-50 w-full mt-[0.0625rem] rounded-md shadow-lg bg-white-default">
           <div className="max-h-[25rem] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full">
             {suggestions.length > 0 ? (
               suggestions.map((place) => (
@@ -77,7 +77,7 @@ export default function KakaoLocationPicker({
                 </div>
               ))
             ) : (
-              <div className="p-4 text-center text-black-default">
+              <div className="p-4 text-center text-description text-black-default">
                 검색 결과가 존재하지 않습니다
               </div>
             )}
