@@ -1,10 +1,10 @@
 import { useRoomIdStore } from '@src/state/store/roomIdStore';
-import NextButton from '@src/components/common/button/NextButton';
 import { useState } from 'react';
 import { ONBOARDING_FUNCTION_TYPE } from '@src/types/onboarding/onboardingFunctionType';
 import { useNavigate } from 'react-router-dom';
 import { PATH } from '@src/constants/path';
 import FunctionOption from './FunctionOption';
+import Button from '@src/components/common/button/Button';
 
 interface IOnBoardingFunctionSelectProps {
   selectedRoomId: string | null;
@@ -66,11 +66,13 @@ export default function OnBoardingFunctionSelect({
             onClick={handleFunctionClick}
           />
         ))}
-        <NextButton
-          buttonText="완료"
+        <Button
+          buttonType="primary"
           disabled={!selectedFunction}
           onClick={handleDoneClick}
-        />
+        >
+          완료
+        </Button>
       </div>
     </div>
   );
