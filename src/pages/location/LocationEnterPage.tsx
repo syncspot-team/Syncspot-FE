@@ -304,32 +304,34 @@ export default function LocationEnterPage() {
           <h1 className="text-subtitle text-tertiary mb-[0.75rem]">
             내가 입력한 장소
           </h1>
-          {myLocationFields.map((field, index) => (
-            <div
-              key={field.id}
-              className="flex items-center justify-between bg-white-default rounded-default mb-[0.625rem] hover:opacity-55 hover:border hover:border-gray-dark"
-            >
-              <KakaoLocationPicker
-                className="flex-1 text-left whitespace-nowrap"
-                onSelect={(location) => handleLocationSelect(location, index)}
-                defaultAddress={field.roadNameAddress}
-              />
-              <button
-                type="button"
-                onClick={() => handleDeleteLocation(index)}
-                className="p-1 mx-2 rounded-[0.5rem] hover:bg-gray-dark"
+          <ul className="flex flex-col p-1">
+            {myLocationFields.map((field, index) => (
+              <li
+                className="flex items-center justify-between bg-white-default rounded-default mb-[0.625rem] hover:opacity-55 hover:ring-1 hover:ring-gray-dark"
+                key={field.id}
               >
-                <IconXmark className="size-5" />
-              </button>
-            </div>
-          ))}
+                <KakaoLocationPicker
+                  className="flex-1 w-full text-content bg-white-default py-[1.3125rem] truncate"
+                  onSelect={(location) => handleLocationSelect(location, index)}
+                  defaultAddress={field.roadNameAddress}
+                />
+                <button
+                  type="button"
+                  onClick={() => handleDeleteLocation(index)}
+                  className="p-1 mx-2 rounded-[0.5rem] hover:bg-gray-dark"
+                >
+                  <IconXmark className="size-5" />
+                </button>
+              </li>
+            ))}
+          </ul>
           <h1 className="text-subtitle text-tertiary my-[0.75rem]">
             친구가 입력한 장소
           </h1>
           {friendLocationFields.map((field) => (
             <div
               key={field.id}
-              className="w-full text-left bg-white-default rounded-default whitespace-nowrap mb-[0.625rem] py-[1.3125rem] px-[1.5rem] cursor-not-allowed opacity-70"
+              className="w-full text-content bg-white-default rounded-default truncate mb-[0.625rem] py-[1.3125rem] pl-[0.9375rem] cursor-not-allowed opacity-70"
             >
               {field.roadNameAddress || '위치 정보 없음'}
             </div>
@@ -341,7 +343,7 @@ export default function LocationEnterPage() {
             buttonType="add"
             fontSize="small"
             onClick={handleAddLocation}
-            className="w-full px-[0.3125rem]"
+            className="px-[0.3125rem]"
           >
             장소 추가하기
           </Button>
@@ -349,7 +351,7 @@ export default function LocationEnterPage() {
             buttonType="primary"
             onClick={handleSearch}
             disabled={!isAllMyLocationsFilled}
-            className="w-full px-[0.3125rem]"
+            className="px-[0.3125rem]"
           >
             중간 지점 찾기
           </Button>

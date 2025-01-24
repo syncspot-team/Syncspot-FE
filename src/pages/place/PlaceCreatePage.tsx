@@ -21,7 +21,8 @@ const DUMMY_LOCATIONS = {
     {
       siDo: '서울특별시',
       siGunGu: '강남구',
-      roadNameAddress: '테헤란로 427',
+      roadNameAddress:
+        '테헤란로 427 테헤란로 427 테헤란로 427 테헤란로 427 테헤란로 427 테헤란로 427',
       addressLat: 37.5065,
       addressLong: 127.0536,
     },
@@ -156,7 +157,7 @@ export default function PlaceCreatePage() {
               className="flex items-center justify-between bg-white-default rounded-default mb-[0.625rem] hover:opacity-55 hover:ring-1 hover:ring-gray-dark"
             >
               <KakaoLocationPicker
-                className="flex-1 text-left whitespace-nowrap"
+                className="flex-1 w-full text-content bg-white-default py-[1.3125rem] truncate"
                 onSelect={(location) => handleLocationSelect(location, index)}
                 defaultAddress={field.roadNameAddress}
               />

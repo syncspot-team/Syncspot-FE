@@ -3,7 +3,7 @@ import { searchAddressInfo } from '@src/apis/kakao/searchAddressInfo';
 import { Place, ISelectedLocation } from '@src/components/common/kakao/types';
 import { useDebounce } from '@src/hooks/useDebounce';
 import { searchPlacesByKeyword } from '@src/apis/kakao/searchPlacesByKeyword';
-import { mergeClassNames } from '@src/utils/mergeClassNames';
+import { Input } from '@src/components/common/input/Input';
 
 interface IKakaoLocationPicker {
   className?: string;
@@ -51,16 +51,13 @@ export default function KakaoLocationPicker({
   }, [debouncedSearchTerm, isSearching]);
 
   return (
-    <div className="relative">
-      <input
+    <div className="relative w-full">
+      <Input
         type="text"
         value={searchTerm}
         onChange={handleInputChange}
         placeholder="장소를 선택해주세요"
-        className={mergeClassNames(
-          'w-full cursor-pointer py-[1.125rem] pr-[1.5rem] pl-[0.9375rem] rounded-default',
-          className,
-        )}
+        className={`w-full ${className}`}
       />
 
       {isSearching && (
@@ -71,13 +68,13 @@ export default function KakaoLocationPicker({
                 <div
                   key={place.id}
                   onClick={() => handlePlaceSelect(place)}
-                  className="py-[1.125rem] pr-[1.5rem] pl-[0.9375rem] truncate rounded-md cursor-pointer hover:bg-gray-light"
+                  className="py-[1.125rem] pl-[0.9375rem] truncate rounded-md cursor-pointer hover:bg-gray-light"
                 >
-                  <div className="text-content">{place.place_name}</div>
+                  <div className="text-description">{place.place_name}</div>
                 </div>
               ))
             ) : (
-              <div className="p-4 text-center text-description text-black-default">
+              <div className="p-4 text-center text-description">
                 검색 결과가 존재하지 않습니다
               </div>
             )}

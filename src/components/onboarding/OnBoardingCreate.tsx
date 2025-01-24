@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useCreateRoomMutation } from '@src/state/mutations/onboarding/useCreateRoomMutation';
 import { ICreateRoomRequest } from '@src/types/onboarding/createRoomRequestType';
 import Button from '@src/components/common/button/Button';
+import { Input } from '@src/components/common/input/Input';
 
 interface IOnBoardingCreateProps {
   setOnboardingStep: (step: keyof typeof OnboardingStepType) => void;
@@ -30,21 +31,21 @@ export default function OnBoardingCreate({
         모임 생성하기
       </h1>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
-        <h3 className="text-menu text-tertiary mb-[0.875rem] ml-2">
+        <h3 className="text-menu text-tertiary mb-[0.625rem] ml-2">
           모임 이름
         </h3>
-        <input
+        <Input
           {...register('name')}
           placeholder="최대 8자까지 가능해요"
-          className="placeholder:text-gray-normal bg-gray-light py-[1.3125rem] px-[1.5rem] rounded-default mb-[1.75rem]"
+          className="mb-[1.75rem]"
         />
-        <h3 className="text-menu text-tertiary mb-[0.875rem] ml-2">
+        <h3 className="text-menu text-tertiary mb-[0.625rem] ml-2">
           모임 설명 (선택)
         </h3>
-        <input
+        <Input
           {...register('roomDescription')}
           placeholder="최대 100자까지 가능해요"
-          className="placeholder:text-gray-normal bg-gray-light py-[1.3125rem] px-[1.5rem] rounded-default mb-[2.375rem]"
+          className="mb-[2.375rem]"
         />
         <Button
           buttonType="primary"

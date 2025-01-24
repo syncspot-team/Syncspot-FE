@@ -16,7 +16,7 @@ export default function OnBoardingPlan({
   setOnboardingStep,
   setSelectedRoomId,
 }: IOnBoardingPlanProps) {
-  const [clickedRoom, setClickedRoom] = useState<string>('');
+  const [clickedRoomId, setClickedRoomId] = useState<string>('');
   const [clickedRoomInfo, setClickedRoomInfo] = useState<{
     roomId: string;
     roomName: string;
@@ -37,13 +37,13 @@ export default function OnBoardingPlan({
   };
 
   const handleRoomClick = (roomId: string) => {
-    setClickedRoom(roomId);
+    setClickedRoomId(roomId);
   };
   const handleAddButtonClick = () => {
     setOnboardingStep(OnboardingStepType.ONBOARDING_CREATE_STEP);
   };
   const handleNextButtonClick = () => {
-    setSelectedRoomId(clickedRoom);
+    setSelectedRoomId(clickedRoomId);
     setOnboardingStep(OnboardingStepType.ONBOARDING_FUNCTION_SELECT_STEP);
   };
   const handleInfoClick = (
@@ -52,9 +52,6 @@ export default function OnBoardingPlan({
   ) => {
     e.stopPropagation();
     setClickedRoomInfo(room);
-  };
-  const handleAddRoomClick = () => {
-    setOnboardingStep(OnboardingStepType.ONBOARDING_CREATE_STEP);
   };
 
   return (
@@ -69,8 +66,8 @@ export default function OnBoardingPlan({
               {dummyData.data.map((item) => (
                 <li
                   key={item.roomId}
-                  className={`flex items-center justify-between w-full text-menu text-tertiary bg-gray-light py-[0.875rem] px-[1.0625rem] rounded-default cursor-pointer ${
-                    clickedRoom === item.roomId
+                  className={`flex items-center justify-between w-full text-content text-tertiary bg-gray-light py-[1rem] px-[1.0625rem] rounded-default cursor-pointer ${
+                    clickedRoomId === item.roomId
                       ? 'ring-2 ring-blue-light02 bg-white-default'
                       : ''
                   }`}
@@ -97,7 +94,7 @@ export default function OnBoardingPlan({
             <Button
               onClick={handleNextButtonClick}
               buttonType="primary"
-              disabled={!clickedRoom}
+              disabled={!clickedRoomId}
             >
               다음
             </Button>
@@ -114,7 +111,7 @@ export default function OnBoardingPlan({
               모임을 생성하고 서비스를 사용해보세요!
             </h1>
             <div
-              onClick={handleAddRoomClick}
+              onClick={handleAddButtonClick}
               className="flex items-center justify-center rounded-full cursor-pointer size-20 bg-white-default text-primary text-subtitle shadow-default hover:translate-y-[-0.1875rem]"
             >
               +

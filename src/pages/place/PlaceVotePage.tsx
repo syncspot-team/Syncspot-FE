@@ -80,19 +80,16 @@ export default function PlaceVotePage() {
           {locations.map((location, index) => (
             <li
               key={index}
-              className={`flex items-center bg-white-default rounded-default mb-[0.625rem] hover:opacity-85 cursor-pointer transition-all ${
+              className={`flex items-center bg-white-default rounded-default mb-[0.625rem] hover:opacity-55 cursor-pointer transition-all ${
                 selectedLocationIndex === index
                   ? 'ring-2 ring-primary'
                   : 'hover:ring-1 hover:ring-gray-dark'
               }`}
               onClick={() => setSelectedLocationIndex(index)}
             >
-              <div className="flex-1 p-4">
-                <p className="font-medium">{location.roadNameAddress}</p>
-                <p className="text-sm text-gray-dark">
-                  {location.siDo} {location.siGunGu}
-                </p>
-              </div>
+              <span className="flex-1 w-full text-content bg-white-default py-[1.3125rem] pl-[0.9375rem] truncate rounded-default">
+                {location.roadNameAddress}
+              </span>
             </li>
           ))}
         </ul>
@@ -100,9 +97,8 @@ export default function PlaceVotePage() {
         <div className="mt-[1.75rem]">
           <Button
             buttonType="primary"
-            fontSize="default"
             disabled={selectedLocationIndex === null}
-            className="w-full px-[0.3125rem]"
+            className="px-[0.3125rem]"
             onClick={handleVoteSubmit}
           >
             투표하기
