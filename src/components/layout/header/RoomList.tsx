@@ -78,9 +78,9 @@ export default function RoomList() {
     <li
       ref={dropdownRef}
       onClick={handleDropdownToggle}
-      className="relative flex items-center cursor-pointer text-blue-dark01 px-2 py-2 md:px-3 lg:py-3 bg-blue-light01 rounded-[0.4375rem] sm:rounded-[0.625rem] whitespace-nowrap gap-[0.125rem]"
+      className="relative flex items-center cursor-pointer text-blue-dark01 p-2 lg:px-3 bg-blue-light01 rounded-[0.4375rem] whitespace-nowrap gap-[0.5rem]"
     >
-      <span className="min-w-[5rem] lg:min-w-[6.25rem] text-sm lg:text-menu truncate">
+      <span className="min-w-[3.75rem] lg:min-w-[5rem] text-description lg:text-content truncate">
         {selectedRoom}
       </span>
       <IconDropdown
@@ -102,7 +102,7 @@ export default function RoomList() {
           {dummyData.data.map((room) => (
             <li
               key={room.roomId}
-              className="px-3 py-3 text-sm truncate cursor-pointer sm:px-4 lg:text-menu hover:bg-gray-light"
+              className="p-2 truncate cursor-pointer lg:px-3 text-description lg:text-content hover:bg-gray-light"
               onClick={() => handleRoomSelect(room.roomId, room.roomName)}
             >
               {room.roomName}

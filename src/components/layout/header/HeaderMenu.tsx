@@ -60,7 +60,7 @@ export default function HeaderMenu({
       className={`${
         isMobile
           ? 'flex flex-col w-full'
-          : 'hidden md:flex items-center gap-[0.625rem] text-gray-dark whitespace-nowrap *:cursor-pointer'
+          : 'hidden lg:flex items-center gap-[0.625rem] text-gray-dark whitespace-nowrap *:cursor-pointer'
       }`}
     >
       {menuItems.map((item) => (
@@ -69,9 +69,9 @@ export default function HeaderMenu({
           onClick={item.onClick}
           className={`${
             isMobile
-              ? 'p-4 text-sm cursor-pointer sm:px-6 sm:text-content rounded-default'
-              : 'px-2 sm:px-3 py-2 rounded-[0.625rem] text-content lg:text-menu'
-          } hover:bg-gray-light`}
+              ? 'p-4 text-content cursor-pointer'
+              : 'py-2 px-3 rounded-[0.625rem] text-content'
+          } hover:bg-gray-light rounded-[0.625rem]`}
         >
           {item.label}
         </li>
@@ -84,15 +84,11 @@ export default function HeaderMenu({
           }}
           className={`${
             isMobile
-              ? 'p-4 text-sm cursor-pointer sm:px-6 sm:text-content rounded-default'
-              : 'hover:bg-gray-light px-2 sm:px-3 py-2 rounded-[0.625rem]'
-          } hover:bg-gray-light`}
+              ? 'p-4 text-content cursor-pointer'
+              : 'hover:bg-gray-light p-2 rounded-[0.625rem]'
+          } hover:bg-gray-light rounded-[0.625rem]`}
         >
-          {isMobile ? (
-            '마이페이지'
-          ) : (
-            <IconUser className="size-4 sm:size-6 lg:size-7" />
-          )}
+          {isMobile ? '마이페이지' : <IconUser className="size-6" />}
         </li>
       ) : (
         <li
@@ -102,8 +98,8 @@ export default function HeaderMenu({
           }}
           className={`${
             isMobile
-              ? 'p-4 cursor-pointer text-sm sm:px-6 sm:text-content rounded-default hover:bg-gray-light'
-              : 'border-tertiary border-login rounded-login px-2 sm:px-3 text-content lg:text-menu py-[0.3125rem] hover:bg-primary hover:border-primary hover:text-white-default ml-1'
+              ? 'p-4 cursor-pointer text-content hover:bg-gray-light rounded-[0.625rem]'
+              : 'border-tertiary border-login rounded-login px-3 text-content py-[0.3125rem] hover:bg-primary hover:border-primary hover:text-white-default ml-1'
           }`}
         >
           로그인
