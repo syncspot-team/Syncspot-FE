@@ -4,7 +4,9 @@ import { mergeClassNames } from '../../../utils/mergeClassNames';
 
 export const ButtonVariants = cva(
   `
-  flex items-center justify-center   
+  flex items-center justify-center  
+  w-full h-[3.4375rem] py-[1.125rem] px-[12.3125rem]
+  rounded-default text-white-default truncate
   disabled:cursor-not-allowed
   disabled:bg-disabled
   disabled:border-disabled
@@ -13,31 +15,26 @@ export const ButtonVariants = cva(
   {
     variants: {
       buttonType: {
-        primary:
-          'w-[26.875rem] h-[3.75rem] bg-primary border border-primary  rounded-default py-[1.125rem] px-[12.3125rem] hover:bg-secondary text-white-default truncate',
-        add: 'w-[26.875rem] h-[3.75rem] bg-white-default border border-gray-normal rounded-default py-[1.125rem] px-[12.3125rem] hover:bg-gray-light text-gray-normal hover:text-gray-dark truncate',
+        primary: 'bg-primary hover:bg-secondary',
+        add: 'bg-gray-normal hover:bg-gray-400',
       },
       fontSize: {
-        default: 'text-menu-selected',
         small: 'text-menu',
+        normal: 'text-menu-selected',
       },
     },
     defaultVariants: {
       buttonType: 'primary',
-      fontSize: 'default',
+      fontSize: 'normal',
     },
   },
 );
 
-interface IButton {
-  isLoading?: boolean;
-  disabled?: boolean;
-}
-
 interface IButtonProps
   extends VariantProps<typeof ButtonVariants>,
-    ButtonHTMLAttributes<HTMLButtonElement>,
-    IButton {
+    ButtonHTMLAttributes<HTMLButtonElement> {
+  isLoading?: boolean;
+  disabled?: boolean;
   className?: string;
   onClick?: () => void;
   children: React.ReactNode;
