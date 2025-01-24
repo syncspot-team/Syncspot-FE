@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { PATH } from '@src/constants/path';
 import { useSignInMutation } from '@src/state/mutations/auth/useSignInMutation';
 import Button from '@src/components/common/button/Button';
+import { Input } from '@src/components/common/input/Input';
 
 export default function SignInPage() {
   const navigate = useNavigate();
@@ -32,17 +33,17 @@ export default function SignInPage() {
         </span>
       </div>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
-        <input
+        <Input
           {...register('email')}
           type="text"
           placeholder="아이디 (이메일)"
-          className="placeholder:text-gray-normal bg-gray-light py-[1.3125rem] px-[1.5rem] rounded-default mb-[0.875rem]"
+          className="mb-[0.875rem]"
         />
-        <input
+        <Input
           {...register('pw')}
           type="password"
           placeholder="비밀번호 (영문 대/소문자, 숫자, 특수문자 포함)"
-          className="placeholder:text-gray-normal bg-gray-light  py-[1.3125rem] px-[1.5rem] rounded-default mb-5"
+          className="mb-5"
         />
         <Button
           buttonType="primary"
@@ -53,17 +54,10 @@ export default function SignInPage() {
         </Button>
         <div className="flex justify-end text-gray-normal mt-[0.875rem] mb-[2.5rem]">
           <span
-            onClick={() => navigate(PATH.HELP_ID_INQUIRY)}
-            className="cursor-pointer"
-          >
-            아이디 찾기
-          </span>
-          <span className="mx-[0.5rem]">/</span>
-          <span
             onClick={() => navigate(PATH.HELP_PASSWORD_INQUIRY)}
-            className="cursor-pointer"
+            className="cursor-pointer hover:underline"
           >
-            비밀번호 찾기
+            비밀번호를 잊으셨나요?
           </span>
         </div>
       </form>

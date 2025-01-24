@@ -9,7 +9,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       <input
         ref={ref}
         className={mergeClassNames(
-          'text-description py-[1.125rem] pl-[0.9375rem] pr-[1.5rem] rounded-default bg-gray-light placeholder:text-gray-normal',
+          'text-description py-[1.125rem] pl-[0.9375rem] rounded-default bg-gray-light placeholder:text-gray-normal',
           className,
         )}
         {...props}

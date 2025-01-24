@@ -125,7 +125,7 @@ export default function SignUpPage() {
           내 주소 (선택)
         </span>
         <KakaoLocationPicker
-          className="text-left ring-1 ring-gray-normal bg-white-default rounded-default"
+          className="ring-1 ring-gray-normal bg-white-default"
           onSelect={handleLocationSelect}
         />
         <Button
