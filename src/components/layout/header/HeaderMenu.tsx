@@ -3,19 +3,36 @@ import { useLoginStore } from '@src/state/store/loginStore';
 import { useRoomIdStore } from '@src/state/store/roomIdStore';
 import { useNavigate } from 'react-router-dom';
 import IconUser from '@src/assets/icons/IconUser.svg?react';
+import IconDropdown from '@src/assets/icons/IconDropdown.svg?react';
 import CustomToast from '@src/components/common/toast/customToast';
 import { TOAST_TYPE } from '@src/types/toastType';
+import { useState, useRef, useEffect } from 'react';
 
 export default function HeaderMenu({
-  isMobile = false,
+  isMobile,
   onMenuSelect,
 }: {
-  isMobile?: boolean;
+  isMobile: boolean;
   onMenuSelect?: () => void;
 }) {
+  const menuRef = useRef<HTMLUListElement>(null);
   const navigate = useNavigate();
   const { isLogin } = useLoginStore();
   const { roomId } = useRoomIdStore();
+  const [clickedMenu, setClickedMenu] = useState<string | null>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setClickedMenu(null);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const handleNavigateWithRoomCheck = (path: string) => {
     onMenuSelect?.();
@@ -37,14 +54,58 @@ export default function HeaderMenu({
     {
       label: '중간 지점 찾기',
       onClick: () => handleNavigateWithRoomCheck(PATH.LOCATION_ENTER(roomId)),
+      subMenus: [
+        {
+          label: '모임 생성',
+          onClick: () => handleNavigateWithRoomCheck(PATH.ONBOARDING),
+        },
+        {
+          label: '장소 입력',
+          onClick: () =>
+            handleNavigateWithRoomCheck(PATH.LOCATION_ENTER(roomId)),
+        },
+        {
+          label: '중간 지점 찾기 결과',
+          onClick: () =>
+            handleNavigateWithRoomCheck(PATH.LOCATION_RESULT(roomId)),
+        },
+      ],
     },
     {
       label: '장소 투표',
       onClick: () => handleNavigateWithRoomCheck(PATH.PLACE_VOTE(roomId)),
+      subMenus: [
+        {
+          label: '장소 투표 생성',
+          onClick: () => handleNavigateWithRoomCheck(PATH.PLACE_CREATE(roomId)),
+        },
+        {
+          label: '장소 투표하기',
+          onClick: () => handleNavigateWithRoomCheck(PATH.PLACE_VOTE(roomId)),
+        },
+        {
+          label: '장소 투표 결과',
+          onClick: () => handleNavigateWithRoomCheck(PATH.PLACE_RESULT(roomId)),
+        },
+      ],
     },
     {
       label: '시간 투표',
       onClick: () => handleNavigateWithRoomCheck(PATH.TIME_VOTE(roomId)),
+      subMenus: [
+        {
+          label: '시간 투표 생성',
+          onClick: () => handleNavigateWithRoomCheck(PATH.TIME_CREATE(roomId)),
+        },
+        {
+          label: '시간 투표하기',
+          onClick: () => handleNavigateWithRoomCheck(PATH.TIME_VOTE(roomId)),
+        },
+        {
+          label: '시간 투표 결과',
+          onClick: () => handleNavigateWithRoomCheck(PATH.TIME_RESULT(roomId)),
+        },
+      ],
     },
     {
       label: '서비스 소개',
@@ -57,23 +118,70 @@ export default function HeaderMenu({
 
   return (
     <ul
+      ref={menuRef}
       className={`${
         isMobile
           ? 'flex flex-col w-full'
-          : 'hidden md:flex items-center gap-[0.625rem] text-gray-dark whitespace-nowrap *:cursor-pointer'
-      }`}
+          : 'hidden lg:flex items-center gap-[0.625rem]'
+      } text-gray-dark whitespace-nowrap cursor-pointer text-content`}
     >
       {menuItems.map((item) => (
-        <li
-          key={item.label}
-          onClick={item.onClick}
-          className={`${
-            isMobile
-              ? 'p-4 text-sm cursor-pointer sm:px-6 sm:text-content rounded-default'
-              : 'px-2 sm:px-3 py-2 rounded-[0.625rem] text-content lg:text-menu'
-          } hover:bg-gray-light`}
-        >
-          {item.label}
+        <li key={item.label} className="relative">
+          <div
+            className={`${
+              isMobile ? 'p-4 flex justify-between items-center' : 'py-2 px-3'
+            } hover:bg-gray-light rounded-[0.625rem]`}
+            onClick={(e) => {
+              e.stopPropagation();
+              if (item.subMenus) {
+                setClickedMenu(clickedMenu === item.label ? null : item.label);
+              } else {
+                item.onClick();
+              }
+            }}
+          >
+            <span>{item.label}</span>
+            {item.subMenus && isMobile && (
+              <IconDropdown
+                className={`size-5 transition-transform mr-2 ${
+                  clickedMenu === item.label ? 'rotate-180' : ''
+                }`}
+              />
+            )}
+          </div>
+          {item.subMenus && clickedMenu === item.label && (
+            <div
+              className={`${
+                isMobile
+                  ? 'bg-white-default'
+                  : 'absolute left-0 top-[100%] min-w-[9.375rem] z-50'
+              }`}
+            >
+              <ul
+                className={`${
+                  isMobile
+                    ? 'animate-slideDown'
+                    : 'shadow-md rounded-[0.3125rem] bg-white-default mt-1'
+                }`}
+              >
+                {item.subMenus.map((subMenu) => (
+                  <li
+                    key={subMenu.label}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      subMenu.onClick();
+                      setClickedMenu(null);
+                    }}
+                    className={`${
+                      isMobile ? 'px-6 py-3' : 'px-3 py-3'
+                    } cursor-pointer rounded-[0.3125rem] text-description hover:bg-gray-light`}
+                  >
+                    {subMenu.label}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </li>
       ))}
       {isLogin ? (
@@ -83,16 +191,10 @@ export default function HeaderMenu({
             isMobile && onMenuSelect?.();
           }}
           className={`${
-            isMobile
-              ? 'p-4 text-sm cursor-pointer sm:px-6 sm:text-content rounded-default'
-              : 'hover:bg-gray-light px-2 sm:px-3 py-2 rounded-[0.625rem]'
-          } hover:bg-gray-light`}
+            isMobile ? 'p-4' : 'p-2'
+          } hover:bg-gray-light rounded-[0.625rem]`}
         >
-          {isMobile ? (
-            '마이페이지'
-          ) : (
-            <IconUser className="size-4 sm:size-6 lg:size-7" />
-          )}
+          {isMobile ? '마이페이지' : <IconUser className="size-6" />}
         </li>
       ) : (
         <li
@@ -102,8 +204,8 @@ export default function HeaderMenu({
           }}
           className={`${
             isMobile
-              ? 'p-4 cursor-pointer text-sm sm:px-6 sm:text-content rounded-default hover:bg-gray-light'
-              : 'border-tertiary border-login rounded-login px-2 sm:px-3 text-content lg:text-menu py-[0.3125rem] hover:bg-primary hover:border-primary hover:text-white-default ml-1'
+              ? 'p-4 cursor-pointer hover:bg-gray-light rounded-[0.625rem]'
+              : 'border-gray-normal border-login rounded-login px-3 py-[0.3125rem] hover:bg-primary hover:border-primary hover:text-white-default ml-1'
           }`}
         >
           로그인

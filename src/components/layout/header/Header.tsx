@@ -28,8 +28,8 @@ export default function Header() {
     };
 
     const handleResize = () => {
-      // tailwindcss기준 md 브레이크포인트
-      if (window.innerWidth >= 768) {
+      // tailwindcss기준 lg 브레이크포인트
+      if (window.innerWidth >= 1024) {
         setIsMenuOpen(false);
       }
     };
@@ -45,8 +45,8 @@ export default function Header() {
 
   return (
     <header className="mt-[1.5625rem]">
-      <nav className="flex items-center justify-between px-4 sm:px-6 lg:px-[7.5rem] lg:gap-[2.5rem]">
-        <ul className="flex items-center gap-[0.9375rem] lg:gap-[1.25rem]">
+      <nav className="flex items-center justify-between px-4 lg:px-[7.5rem] lg:gap-[2.5rem]">
+        <ul className="flex items-center gap-[0.9375rem]">
           <li
             onClick={() => {
               navigate(PATH.ROOT);
@@ -67,7 +67,7 @@ export default function Header() {
         <HeaderMenu isMobile={false} />
 
         {/* 모바일 메뉴 버튼 */}
-        <div className="md:hidden">
+        <ul className="lg:hidden">
           <button
             onClick={toggleMenu}
             className="p-2 hover:bg-gray-light rounded-[0.625rem]"
@@ -78,12 +78,12 @@ export default function Header() {
               <IconHamburgerMenu className="size-5" />
             )}
           </button>
-        </div>
+        </ul>
 
         {/* 모바일 메뉴 드롭다운 */}
         <div
           ref={menuRef}
-          className={`absolute top-[3.875rem] text-gray-dark left-0 right-0 bg-white-default lg:hidden z-50
+          className={`lg:hidden absolute top-[3.875rem] text-gray-dark left-0 right-0 bg-white-default z-50
             ${isMenuOpen ? 'animate-slideDown' : isAnimating ? 'animate-slideUp' : 'hidden'}
           `}
           onAnimationEnd={() => {
