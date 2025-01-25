@@ -89,7 +89,7 @@ export default function RoomList() {
         }`}
       />
       <div
-        className={`absolute left-0 w-full mt-1 border border-gray-light rounded-lg shadow-lg top-full bg-white-default z-50
+        className={`absolute left-0 w-full mt-1 border border-gray-light rounded-[0.25rem] shadow-lg top-full bg-white-default z-50
           ${isDropdownOpen ? 'animate-slideDown' : isAnimating ? 'animate-slideUp' : 'hidden'}
         `}
         onAnimationEnd={() => {
@@ -102,7 +102,7 @@ export default function RoomList() {
           {dummyData.data.map((room) => (
             <li
               key={room.roomId}
-              className="p-2 truncate cursor-pointer lg:px-3 text-description lg:text-content hover:bg-gray-light"
+              className="p-2 truncate cursor-pointer lg:px-3 text-description lg:text-content hover:bg-gray-light rounded-[0.25rem]"
               onClick={() => handleRoomSelect(room.roomId, room.roomName)}
             >
               {room.roomName}

@@ -28,7 +28,7 @@ export default function Header() {
     };
 
     const handleResize = () => {
-      // tailwindcss기준 md 브레이크포인트
+      // tailwindcss기준 lg 브레이크포인트
       if (window.innerWidth >= 1024) {
         setIsMenuOpen(false);
       }
@@ -67,7 +67,7 @@ export default function Header() {
         <HeaderMenu isMobile={false} />
 
         {/* 모바일 메뉴 버튼 */}
-        <div className="lg:hidden">
+        <ul className="lg:hidden">
           <button
             onClick={toggleMenu}
             className="p-2 hover:bg-gray-light rounded-[0.625rem]"
@@ -78,7 +78,7 @@ export default function Header() {
               <IconHamburgerMenu className="size-5" />
             )}
           </button>
-        </div>
+        </ul>
 
         {/* 모바일 메뉴 드롭다운 */}
         <div
