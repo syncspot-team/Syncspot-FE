@@ -121,7 +121,7 @@ export default function RoomList() {
             ))}
           </ul>
           {dummyData.data.length > 0 && (
-            <div className="sticky bottom-0 bg-blue-light01 rounded-[0.25rem] ring-1 ring-blue-dark01 hover:opacity-80">
+            <div className="sticky bottom-0 bg-blue-light01 rounded-[0.25rem] ring-1 ring-blue-dark01 opacity-80 hover:opacity-100">
               <button
                 className="w-full p-2 truncate cursor-pointer lg:px-3 text-description lg:text-content rounded-[0.25rem]"
                 onClick={handleViewAllRooms}
