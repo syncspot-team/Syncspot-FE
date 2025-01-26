@@ -14,24 +14,26 @@ export default function OnBoardingPage() {
   // getQueryData를 통해 RoomList에서 useGetJoinRoomQuery로 불러온 데이터 값을 받아와서 OnBoardingPlan 컴포넌트에 데이터를 전달해야한다
 
   useEffect(() => {
-    // 현재 상태를 히스토리 스택에 추가
-    window.history.pushState({ onboardingStep }, '', PATH.ONBOARDING);
-
-    // popstate 이벤트 핸들러
+    // 초기 진입 시에는 pushState를 하지 않음
     const handlePopState = (event: PopStateEvent) => {
+      if (event.state === null) {
+        // 히스토리 스택이 비어있거나 랜딩 페이지로 돌아가는 경우
+        window.location.href = PATH.ROOT; // 랜딩 페이지로 리다이렉트
+        return;
+      }
+
       if (event.state) {
-        // 이전 상태로 복원
         setOnboardingStep(event.state.onboardingStep);
       } else {
-        // 히스토리 스택에 상태가 없는 경우 초기 상태로
         setOnboardingStep(OnboardingStepType.ONBOARDING_PLAN_STEP);
       }
     };
 
-    // popstate 이벤트 리스너 등록
     window.addEventListener('popstate', handlePopState);
 
-    // 컴포넌트 언마운트 시 이벤트 리스너 제거
+    // replaceState를 사용하여 현재 상태를 교체 (새로운 히스토리 항목을 추가하지 않음)
+    window.history.replaceState({ onboardingStep }, '', PATH.ONBOARDING);
+
     return () => {
       window.removeEventListener('popstate', handlePopState);
     };
