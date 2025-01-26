@@ -13,26 +13,54 @@ export default function OnBoardingPage() {
 
   // getQueryData를 통해 RoomList에서 useGetJoinRoomQuery로 불러온 데이터 값을 받아와서 OnBoardingPlan 컴포넌트에 데이터를 전달해야한다
 
+  // 온보딩 단계 변경을 처리하는 새로운 함수
+  const handleStepChange = (newStep: keyof typeof OnboardingStepType) => {
+    // 현재 단계를 history에 추가
+    const currentState = {
+      onboardingStep: newStep,
+      previousStep: onboardingStep,
+    };
+
+    // 현재 history stack의 마지막 상태를 교체
+    window.history.replaceState(
+      {
+        onboardingStep,
+        previousStep: window.history.state?.previousStep,
+      },
+      '',
+      PATH.ONBOARDING,
+    );
+
+    // 새로운 상태를 push
+    window.history.pushState(currentState, '', PATH.ONBOARDING);
+    setOnboardingStep(newStep);
+  };
+
   useEffect(() => {
-    // 초기 진입 시에는 pushState를 하지 않음
     const handlePopState = (event: PopStateEvent) => {
       if (event.state === null) {
-        // 히스토리 스택이 비어있거나 랜딩 페이지로 돌아가는 경우
-        window.location.href = PATH.ROOT; // 랜딩 페이지로 리다이렉트
+        // 히스토리의 첫 페이지인 경우
+        window.location.href = PATH.ROOT;
         return;
       }
 
-      if (event.state) {
-        setOnboardingStep(event.state.onboardingStep);
-      } else {
-        setOnboardingStep(OnboardingStepType.ONBOARDING_PLAN_STEP);
-      }
+      // 이전 단계로 돌아감
+      setOnboardingStep(event.state.onboardingStep);
     };
 
     window.addEventListener('popstate', handlePopState);
 
-    // replaceState를 사용하여 현재 상태를 교체 (새로운 히스토리 항목을 추가하지 않음)
-    window.history.replaceState({ onboardingStep }, '', PATH.ONBOARDING);
+    // 초기 진입 시 현재 상태를 history에 추가
+    if (window.history.state === null) {
+      window.history.replaceState(
+        {
+          onboardingStep,
+          previousStep: null,
+        },
+        '',
+        PATH.ONBOARDING,
+      );
+    }
 
     return () => {
       window.removeEventListener('popstate', handlePopState);
@@ -43,13 +71,13 @@ export default function OnBoardingPage() {
     <>
       {onboardingStep === OnboardingStepType.ONBOARDING_PLAN_STEP && (
         <OnBoardingPlan
-          setOnboardingStep={setOnboardingStep}
+          setOnboardingStep={handleStepChange}
           setSelectedRoomId={setSelectedRoomId}
         />
       )}
       {onboardingStep === OnboardingStepType.ONBOARDING_CREATE_STEP && (
         <OnBoardingCreate
-          setOnboardingStep={setOnboardingStep}
+          setOnboardingStep={handleStepChange}
           setSelectedRoomId={setSelectedRoomId}
         />
       )}

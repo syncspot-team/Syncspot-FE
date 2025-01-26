@@ -343,7 +343,7 @@ export default function LocationEnterPage() {
             buttonType="add"
             fontSize="small"
             onClick={handleAddLocation}
-            className="px-[0.3125rem]"
+            className="px-[0.3125rem] w-full"
           >
             장소 추가하기
           </Button>
@@ -351,7 +351,7 @@ export default function LocationEnterPage() {
             buttonType="primary"
             onClick={handleSearch}
             disabled={!isAllMyLocationsFilled}
-            className="px-[0.3125rem]"
+            className="px-[0.3125rem] w-full"
           >
             중간 지점 찾기
           </Button>
