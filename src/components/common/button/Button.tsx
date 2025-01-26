@@ -5,7 +5,7 @@ import { mergeClassNames } from '../../../utils/mergeClassNames';
 export const ButtonVariants = cva(
   `
   flex items-center justify-center  
-  w-full h-[3.4375rem] py-[1.125rem] px-[12.3125rem]
+  w-[26.25rem] h-[3.4375rem] py-[1.125rem] px-[12.3125rem]
   rounded-default text-white-default truncate
   disabled:cursor-not-allowed
   disabled:bg-disabled
