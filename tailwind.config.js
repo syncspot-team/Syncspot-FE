@@ -164,10 +164,16 @@ export default {
           '0%': { opacity: '1', transform: 'translateY(0)' },
           '100%': { opacity: '0', transform: 'translateY(-10px)' },
         },
+        customBounce: {
+          '0%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+          '100%': { transform: 'translateY(0)' },
+        },
       },
       animation: {
         slideDown: 'slideDown 0.2s ease-in-out',
         slideUp: 'slideUp 0.2s ease-in-out',
+        customBounce: 'customBounce 1s ease-in-out infinite',
       },
     },
   },

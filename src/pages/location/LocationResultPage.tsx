@@ -171,7 +171,7 @@ export default function LocationResultPage() {
                     selectedLocation === location.placeId
                       ? 'opacity-100'
                       : 'opacity-0'
-                  } rounded-[0.4375rem] hover:bg-gray-normal p-1 mr-2`}
+                  } rounded-[0.4375rem] p-1 mr-2 text-primary hover:bg-gray-light hover:scale-110`}
                 />
               </div>
               <div className="flex items-center gap-4 my-[0.375rem]">

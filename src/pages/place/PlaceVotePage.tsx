@@ -98,7 +98,7 @@ export default function PlaceVotePage() {
           <Button
             buttonType="primary"
             disabled={selectedLocationIndex === null}
-            className="px-[0.3125rem]"
+            className="px-[0.3125rem] w-full"
             onClick={handleVoteSubmit}
           >
             투표하기
