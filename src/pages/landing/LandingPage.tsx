@@ -41,7 +41,7 @@ export default function LandingPage() {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="hidden lg:flex lg:flex-col gap-20 absolute right-[6.25rem] mt-[150px] w-[37.5rem] text-menu"
+        className="hidden lg:flex lg:flex-col gap-20 absolute right-[6.25rem] mt-[150px] w-[37.5rem] text-menu select-none"
       >
         <motion.div
           variants={messageVariants}
