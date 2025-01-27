@@ -166,9 +166,9 @@ export default function PlaceCreatePage() {
                 onClick={() => {
                   alert('해당 장소를 삭제하시겠습니까?');
                 }}
-                className="p-1 mx-2 rounded-[0.5rem] hover:bg-gray-dark"
+                className="p-1 mx-2 rounded-[0.5rem] hover:bg-gray-normal"
               >
-                <IconXmark className="size-5" />
+                <IconXmark className="size-4" />
               </button>
             </li>
           ))}
