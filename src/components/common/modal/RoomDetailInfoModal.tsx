@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import IconEditPen from '@src/assets/icons/IconEditPen.svg?react';
 import Button from '@src/components/common/button/Button';
 
@@ -12,7 +13,11 @@ interface IRoomDetailInfoModalProps {
 export default function RoomDetailInfoModal({
   onClose,
 }: IRoomDetailInfoModalProps) {
-  const DUMMY_ROOMINFO = {
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [isEditingMemo, setIsEditingMemo] = useState(false);
+  const [roomName, setRoomName] = useState('싱크고 동창회');
+  const [memo, setMemo] = useState('2024년 19기 동창회');
+  const [roomInfo, setRoomInfo] = useState({
     roomName: '싱크고 동창회',
     memo: '2024년 19기 동창회',
     emails: [
@@ -25,6 +30,28 @@ export default function RoomDetailInfoModal({
       'syncspotfighting@gmail.com',
       'syncspotfighting@gmail.com',
     ],
+  });
+
+  const handleEditName = () => {
+    if (isEditingName) {
+      // API 호출하여 이름 업데이트하는 과정 추후에 추가 예정
+      setRoomInfo((prev) => ({
+        ...prev,
+        roomName: roomName,
+      }));
+    }
+    setIsEditingName(!isEditingName);
+  };
+
+  const handleEditMemo = () => {
+    if (isEditingMemo) {
+      // API 호출하여 메모 업데이트하는 과정 추후에 추가 예정
+      setRoomInfo((prev) => ({
+        ...prev,
+        memo: memo,
+      }));
+    }
+    setIsEditingMemo(!isEditingMemo);
   };
 
   return (
@@ -32,23 +59,65 @@ export default function RoomDetailInfoModal({
       <h1 className="mb-6 text-center text-subtitle lg:text-title text-tertiary">
         모임 정보
       </h1>
-      <div className="flex flex-col w-full">
+      <div className="flex flex-col w-full mb-3">
         <h3 className="text-content lg:text-menu text-blue-dark03">이름</h3>
-        <div className="flex items-center justify-between gap-2 mb-3">
-          <p className="flex-1 truncate text-description lg:text-content">
-            {DUMMY_ROOMINFO.roomName}
-          </p>
-          <IconEditPen className="cursor-pointer size-5" />
+        <div className="flex items-center justify-between gap-2">
+          {isEditingName ? (
+            <input
+              type="text"
+              value={roomName}
+              onChange={(e) => setRoomName(e.target.value)}
+              className="flex-1 p-1 rounded-lg ring-1 ring-gray-normal text-description lg:text-content"
+            />
+          ) : (
+            <p className="flex-1 truncate text-description lg:text-content">
+              {roomInfo.roomName}
+            </p>
+          )}
+          {isEditingName ? (
+            <span
+              onClick={handleEditName}
+              className="cursor-pointer p-2 text-description bg-blue-light01 text-blue-dark03 hover:bg-blue-light02 rounded-[0.5rem]"
+            >
+              완료
+            </span>
+          ) : (
+            <IconEditPen
+              className="cursor-pointer p-1 rounded-[0.5rem] hover:bg-gray-light"
+              onClick={handleEditName}
+            />
+          )}
         </div>
       </div>
 
-      <div className="flex flex-col w-full">
+      <div className="flex flex-col w-full mb-3">
         <h3 className="text-content lg:text-menu text-blue-dark03">메모</h3>
-        <div className="flex items-center justify-between gap-2 mb-3">
-          <p className="flex-1 truncate text-description lg:text-content">
-            {DUMMY_ROOMINFO.memo}
-          </p>
-          <IconEditPen className="cursor-pointer size-5" />
+        <div className="flex items-center justify-between gap-2">
+          {isEditingMemo ? (
+            <input
+              type="text"
+              value={memo}
+              onChange={(e) => setMemo(e.target.value)}
+              className="flex-1 p-1 rounded-lg ring-1 ring-gray-normal text-description lg:text-content"
+            />
+          ) : (
+            <p className="flex-1 truncate text-description lg:text-content">
+              {roomInfo.memo}
+            </p>
+          )}
+          {isEditingMemo ? (
+            <span
+              onClick={handleEditMemo}
+              className="cursor-pointer p-2 text-description bg-blue-light01 text-blue-dark03 hover:bg-blue-light02 rounded-[0.5rem]"
+            >
+              완료
+            </span>
+          ) : (
+            <IconEditPen
+              className="cursor-pointer p-1 rounded-[0.5rem] hover:bg-gray-light"
+              onClick={handleEditMemo}
+            />
+          )}
         </div>
       </div>
 
@@ -56,7 +125,7 @@ export default function RoomDetailInfoModal({
         모임 참여 인원
       </h1>
       <ul className="max-h-[10rem] w-full overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full p-1">
-        {DUMMY_ROOMINFO.emails.map((email) => (
+        {roomInfo.emails.map((email) => (
           <li key={email} className="p-2 text-description text-blue-dark03">
             {email}
           </li>
