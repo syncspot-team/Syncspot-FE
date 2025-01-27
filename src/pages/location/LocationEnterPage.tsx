@@ -340,8 +340,7 @@ export default function LocationEnterPage() {
 
         <div className="flex flex-col mt-[1.75rem] gap-[0.5rem]">
           <Button
-            buttonType="add"
-            fontSize="small"
+            buttonType="secondary"
             onClick={handleAddLocation}
             className="px-[0.3125rem] w-full"
           >

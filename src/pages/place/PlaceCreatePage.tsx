@@ -177,8 +177,7 @@ export default function PlaceCreatePage() {
         <div className="flex flex-col mt-[1.75rem] gap-[0.5rem]">
           <Button
             onClick={handleAddLocation}
-            buttonType="add"
-            fontSize="small"
+            buttonType="secondary"
             className="w-full px-[0.3125rem]"
           >
             장소 추가하기
@@ -186,7 +185,6 @@ export default function PlaceCreatePage() {
           <Button
             onClick={handleVoteCreate}
             buttonType="primary"
-            fontSize="small"
             className="w-full px-[0.3125rem]"
             disabled={!isAllLocationsFilled}
           >

@@ -1,27 +1,33 @@
 import { OnboardingStepType } from '@src/types/onboarding/onboardingStepType';
-import IconInfo from '@src/assets/icons/IconInfo.svg?react';
+import IconDetailInfo from '@src/assets/icons/IconDetailInfo.svg?react';
 import Modal from '@src/components/common/modal/Modal';
 import { useState } from 'react';
 import IconBubble from '@src/assets/icons/IconBubblePlan.svg?react';
-import IconGhost from '@src/assets/icons/IconGhost.svg?react';
-import RoomInfo from '@src/components/onboarding/RoomInfo';
+import IconDolphin from '@src/assets/icons/IconDolphin.svg?react';
 import Button from '@src/components/common/button/Button';
+import RoomDetailInfoModal from '@src/components/common/modal/RoomDetailInfoModal';
+import { useModal } from '@src/hooks/useModal';
+import { MODAL_TYPE } from '@src/types/modalType';
 
 interface IOnBoardingPlanProps {
   setOnboardingStep: (step: keyof typeof OnboardingStepType) => void;
   setSelectedRoomId: (roomId: string) => void;
 }
 
+interface IRoomDetailInfo {
+  roomId: string;
+  roomName: string;
+}
+
 export default function OnBoardingPlan({
   setOnboardingStep,
   setSelectedRoomId,
 }: IOnBoardingPlanProps) {
+  const { modalType, openModal, closeModal } = useModal();
   const [clickedRoomId, setClickedRoomId] = useState<string>('');
-  const [clickedRoomInfo, setClickedRoomInfo] = useState<{
-    roomId: string;
-    roomName: string;
-  } | null>(null);
-  const dummyData = {
+  const [selectedRoomInfo, setSelectedRoomInfo] =
+    useState<IRoomDetailInfo | null>(null);
+  const DUMMY_ROOM_LIST = {
     data: [
       { roomId: '1', roomName: '모임1' },
       { roomId: '2', roomName: '모임2' },
@@ -46,24 +52,25 @@ export default function OnBoardingPlan({
     setSelectedRoomId(clickedRoomId);
     setOnboardingStep(OnboardingStepType.ONBOARDING_FUNCTION_SELECT_STEP);
   };
-  const handleInfoClick = (
+  const handleDetailInfoClick = (
     e: React.MouseEvent,
-    room: { roomId: string; roomName: string },
+    roomDetailInfo: IRoomDetailInfo,
   ) => {
     e.stopPropagation();
-    setClickedRoomInfo(room);
+    setSelectedRoomInfo(roomDetailInfo);
+    openModal(MODAL_TYPE.ROOM_DETAIL_INFO_MODAL);
   };
 
   return (
     <>
       <div className="flex items-center justify-center">
-        {dummyData.data && dummyData.data.length > 0 ? (
+        {DUMMY_ROOM_LIST.data && DUMMY_ROOM_LIST.data.length > 0 ? (
           <div className="flex flex-col items-center mt-[4.6875rem]">
             <h1 className="text-subtitle text-tertiary mb-[1.875rem]">
               어떤 모임을 계획하고 계시나요?
             </h1>
             <ul className="flex flex-col items-center w-full gap-[1.5rem] mb-[1.875rem] max-h-[25rem] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full p-1">
-              {dummyData.data.map((item) => (
+              {DUMMY_ROOM_LIST.data.map((item) => (
                 <li
                   key={item.roomId}
                   className={`flex items-center justify-between w-full text-content text-tertiary bg-gray-light py-[1rem] px-[1.0625rem] rounded-default cursor-pointer ${
@@ -76,17 +83,16 @@ export default function OnBoardingPlan({
                   <span>{item.roomName}</span>
                   <span
                     className="hover:translate-y-[-0.1875rem]"
-                    onClick={(e) => handleInfoClick(e, item)}
+                    onClick={(e) => handleDetailInfoClick(e, item)}
                   >
-                    <IconInfo className="size-[1.5625rem]" />
+                    <IconDetailInfo className="size-[1.5625rem]" />
                   </span>
                 </li>
               ))}
             </ul>
             <Button
               onClick={handleAddButtonClick}
-              buttonType="add"
-              fontSize="small"
+              buttonType="secondary"
               className="mb-[1.0625rem]"
             >
               모임 추가
@@ -105,30 +111,24 @@ export default function OnBoardingPlan({
               <IconBubble />
             </span>
             <span>
-              <IconGhost />
+              <IconDolphin className="animate-customBounce" />
             </span>
             <h1 className="text-menu text-gray-dark my-[1.875rem]">
               모임을 생성하고 서비스를 사용해보세요!
             </h1>
-            <div
-              onClick={handleAddButtonClick}
-              className="flex items-center justify-center rounded-full cursor-pointer size-20 bg-white-default text-primary text-subtitle shadow-default hover:translate-y-[-0.1875rem]"
-            >
-              +
-            </div>
+            <Button onClick={handleAddButtonClick} className="">
+              모임 생성하기
+            </Button>
           </div>
         )}
       </div>
 
       <Modal
-        isOpen={!!clickedRoomInfo}
-        onClose={() => setClickedRoomInfo(null)}
+        isOpen={modalType === MODAL_TYPE.ROOM_DETAIL_INFO_MODAL}
+        onClose={closeModal}
       >
-        {clickedRoomInfo && (
-          <RoomInfo
-            room={clickedRoomInfo}
-            onClose={() => setClickedRoomInfo(null)}
-          />
+        {selectedRoomInfo && (
+          <RoomDetailInfoModal room={selectedRoomInfo} onClose={closeModal} />
         )}
       </Modal>
     </>
