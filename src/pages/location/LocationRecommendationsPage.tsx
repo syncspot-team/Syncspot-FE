@@ -1,18 +1,32 @@
 import KakaoMap from '@src/components/common/kakao/KakaoMap';
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import IconLinkPin from '@src/assets/icons/IconLinkPin.svg?react';
 import IconStudy from '@src/assets/icons/IconStudy.svg?react';
 import IconCafe from '@src/assets/icons/IconCafe.svg?react';
 import IconRestaurant from '@src/assets/icons/IconRestaurant.svg?react';
+import IconDropdown from '@src/assets/icons/IconDropdown.svg?react';
+import IconXmark from '@src/assets/icons/IconXmark.svg?react';
 import { useSearchParams, useNavigate, useParams } from 'react-router-dom';
 import { PATH } from '@src/constants/path';
+
+interface ILocation {
+  placeId: number;
+  siDo: string;
+  siGunGu: string;
+  roadNameAddress: string;
+  addressLat: number;
+  addressLong: number;
+  placeStandard?: string;
+  page?: number;
+}
 
 const RECOMMEND_LOCATIONS = [
   // Page 1
   {
     placeId: 1,
     siDo: '서울특별시',
-    siGunGu: '송파구',
+    siGunGu:
+      '송파구 송파구 송파구 송파구 송파구 송파구 송파구 송파구 송파구 송파구 송파구 송파구 송파구 송파구 송파구 송파구',
     roadNameAddress: '오금로 123',
     addressLat: 37.5123,
     addressLong: 127.1076,
@@ -22,7 +36,8 @@ const RECOMMEND_LOCATIONS = [
   {
     placeId: 2,
     siDo: '서울특별시',
-    siGunGu: '구로구',
+    siGunGu:
+      '구로구 구로구 구로구 구로구 구로구 구로구 구로구 구로구 구로구 구로구',
     roadNameAddress: '디지털로 300',
     addressLat: 37.484,
     addressLong: 126.9011,
@@ -313,10 +328,89 @@ const PLACE_STANDARDS = {
   STUDY: 'STUDY',
   CAFE: 'CAFE',
   RESTAURANT: 'RESTAURANT',
-};
+} as const;
 
 type PLACE_STANDARDS_TYPE =
   (typeof PLACE_STANDARDS)[keyof typeof PLACE_STANDARDS];
+
+const AddressPopup = ({
+  address,
+  onClose,
+}: {
+  address: string;
+  onClose: () => void;
+}) => (
+  <div className="absolute left-0 z-10 w-full p-2 mt-1 rounded-lg shadow-md top-full bg-white-default">
+    <div className="flex items-start gap-2">
+      <span className="px-2 py-1 rounded-lg text-description bg-gray-light whitespace-nowrap">
+        주소
+      </span>
+      <span className="text-description text-gray-dark grow">{address}</span>
+      <button onClick={onClose} className="flex-shrink-0 mt-[0.125rem]">
+        <IconXmark className="size-4 text-gray-dark" />
+      </button>
+    </div>
+  </div>
+);
+
+const AddressElement = ({
+  location,
+  onExpand,
+  isExpanded,
+}: {
+  location: ILocation;
+  onExpand: (placeId: number) => void;
+  isExpanded: boolean;
+}) => {
+  const [isTruncated, setIsTruncated] = useState(false);
+  const addressRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    const element = addressRef.current;
+    if (!element) return;
+
+    const resizeObserver = new ResizeObserver(() => {
+      setIsTruncated(element.scrollWidth > element.clientWidth);
+    });
+
+    resizeObserver.observe(element);
+    return () => resizeObserver.unobserve(element);
+  }, []);
+
+  return (
+    <div className="relative mt-1">
+      <div className="flex items-center gap-1">
+        <h3
+          ref={addressRef}
+          className="truncate text-description text-gray-dark grow"
+        >
+          {location.siGunGu}
+        </h3>
+        {isTruncated && (
+          <>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onExpand(location.placeId);
+              }}
+              className="flex-shrink-0"
+            >
+              <IconDropdown
+                className={`size-4 text-gray-dark ${isExpanded ? 'rotate-180' : ''}`}
+              />
+            </button>
+            {isExpanded && (
+              <AddressPopup
+                address={location.siGunGu}
+                onClose={() => onExpand(location.placeId)}
+              />
+            )}
+          </>
+        )}
+      </div>
+    </div>
+  );
+};
 
 export default function LocationRecommendationsPage() {
   const { roomId } = useParams();
@@ -325,6 +419,9 @@ export default function LocationRecommendationsPage() {
   const [selectedPlaceStandard, setSelectedPlaceStandard] =
     useState<PLACE_STANDARDS_TYPE>(PLACE_STANDARDS.ALL);
   const navigate = useNavigate();
+  const [expandedAddressIds, setExpandedAddressIds] = useState<Set<number>>(
+    new Set(),
+  );
 
   // 초기 선택된 위치를 URL 파라미터 기반으로 찾기
   const selectedMidpoint = useMemo(() => {
@@ -386,6 +483,18 @@ export default function LocationRecommendationsPage() {
 
     return [...recommendCoords, ...midpointCoord];
   }, [currentPageLocations, selectedMidpoint]);
+
+  const handleExpand = (placeId: number) => {
+    setExpandedAddressIds((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(placeId)) {
+        newSet.delete(placeId);
+      } else {
+        newSet.add(placeId);
+      }
+      return newSet;
+    });
+  };
 
   return (
     <>
@@ -454,7 +563,7 @@ export default function LocationRecommendationsPage() {
             {currentPageLocations.map((location) => (
               <li
                 key={location.placeId}
-                className="flex flex-col justify-center p-4 cursor-pointer rounded-[0.625rem] bg-gray-light shadow-sm"
+                className="flex flex-col justify-center p-4 pb-[0.625rem] cursor-pointer rounded-[0.625rem] bg-gray-light shadow-sm"
               >
                 <div className="flex items-center gap-2">
                   <span className="flex-shrink-0">
@@ -472,17 +581,17 @@ export default function LocationRecommendationsPage() {
                     {location.roadNameAddress}
                   </span>
                 </div>
-                <div className="flex items-center gap-2 mt-2">
+                <div className="flex items-center gap-2 my-2">
                   <span className="text-[1.25rem] text-blue-dark01">
                     {location.roadNameAddress}
                   </span>
                   <IconLinkPin className="flex-shrink-0 size-4" />
                 </div>
-                <div className="mt-1">
-                  <h3 className="truncate text-description text-gray-dark">
-                    {location.siGunGu}
-                  </h3>
-                </div>
+                <AddressElement
+                  location={location}
+                  onExpand={handleExpand}
+                  isExpanded={expandedAddressIds.has(location.placeId)}
+                />
               </li>
             ))}
           </ul>
