@@ -16,16 +16,15 @@ export const ButtonVariants = cva(
     variants: {
       buttonType: {
         primary: 'bg-primary hover:bg-secondary',
-        add: 'bg-gray-normal hover:bg-gray-400',
+        secondary: 'bg-gray-normal hover:bg-gray-400',
       },
       fontSize: {
-        small: 'text-menu',
-        normal: 'text-menu-selected',
+        default: 'text-content lg:text-menu',
       },
     },
     defaultVariants: {
       buttonType: 'primary',
-      fontSize: 'normal',
+      fontSize: 'default',
     },
   },
 );

@@ -101,7 +101,6 @@ export default function PlaceResultPage() {
 
           <Button
             buttonType="primary"
-            fontSize="small"
             className="mb-[0.625rem] w-[28rem]"
             onClick={handleVoteAgain}
           >
@@ -109,7 +108,6 @@ export default function PlaceResultPage() {
           </Button>
           <Button
             buttonType="primary"
-            fontSize="small"
             className="w-[28rem]"
             onClick={handleCreateVoteAgain}
           >
