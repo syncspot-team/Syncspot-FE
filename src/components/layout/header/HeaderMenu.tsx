@@ -187,7 +187,7 @@ export default function HeaderMenu({
       {isLogin ? (
         <li
           onClick={() => {
-            navigate(PATH.MY_PAGE);
+            navigate(PATH.USERS + '/' + PATH.USERS_PROFILE);
             isMobile && onMenuSelect?.();
           }}
           className={`${
