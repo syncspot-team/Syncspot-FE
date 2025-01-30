@@ -11,7 +11,6 @@ import { UnknowErrorBoundary } from '@src/components/error/boundary/UnknowErrorB
 import { GlobalLoading } from '@src/components/loading/GlobalLoading';
 import { PATH, ROUTE_TYPE } from '@src/constants/path';
 import { Suspense } from 'react';
-import HelpIdInquiryPage from '@src/pages/auth/HelpIdInquiryPage';
 import HelpPwInquiryPage from '@src/pages/auth/HelpPwInquiryPage';
 import SignInPage from '@src/pages/auth/SignInPage';
 import SignUpPage from '@src/pages/auth/SignUpPage';
@@ -70,10 +69,6 @@ const router = createBrowserRouter([
         {
           path: PATH.SIGN_UP,
           element: <SignUpPage />,
-        },
-        {
-          path: PATH.HELP_ID_INQUIRY,
-          element: <HelpIdInquiryPage />,
         },
         {
           path: PATH.HELP_PASSWORD_INQUIRY,
