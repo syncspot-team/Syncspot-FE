@@ -27,7 +27,7 @@ export default function SignInPage() {
         <span className="text-gray-dark">아직 계정이 없으신가요?</span>
         <span
           onClick={() => navigate(PATH.SIGN_UP)}
-          className="cursor-pointer text-primary"
+          className="cursor-pointer hover:underline text-primary"
         >
           회원가입하기
         </span>
