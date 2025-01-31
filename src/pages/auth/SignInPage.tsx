@@ -21,7 +21,7 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center mx-auto my-0 mt-[7.5rem]">
+    <div className="flex flex-col items-center justify-center mx-auto my-0 mt-[7.5rem] px-4 lg:px-[7.5rem]">
       <h1 className="mb-6 text-title text-tertiary">싱크스팟 로그인</h1>
       <div className="flex items-center text-menu gap-[0.875rem] mb-11">
         <span className="text-gray-dark">아직 계정이 없으신가요?</span>

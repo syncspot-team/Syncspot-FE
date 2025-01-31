@@ -19,5 +19,9 @@ export const PATH = {
   TIME_VOTE: (roomId?: string) => `/time/vote/${roomId ?? ':roomId'}`,
   TIME_RESULT: (roomId?: string) => `/time/result/${roomId ?? ':roomId'}`,
   ABOUT: '/about',
-  MY_PAGE: '/mypage',
+  USERS: '/users',
+  USERS_PROFILE: 'profile',
+  USERS_GROUP_LISTS: 'group_lists',
+  USERS_LOGOUT: 'logout',
+  USERS_QUIT: 'quit',
 } as const;
