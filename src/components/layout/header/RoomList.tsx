@@ -1,6 +1,7 @@
 import IconDropdown from '@src/assets/icons/IconDropdown.svg?react';
 import { PATH } from '@src/constants/path';
 import { useRoomIdStore } from '@src/state/store/roomIdStore';
+import { OnboardingStepType } from '@src/types/onboarding/onboardingStepType';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -109,24 +110,41 @@ export default function RoomList() {
         }}
       >
         <div className="flex flex-col h-full">
-          <ul className="max-h-[12.5rem] overflow-y-auto flex-1 scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full">
-            {dummyData.data.map((room) => (
-              <li
-                key={room.roomId}
-                className="p-2 truncate cursor-pointer lg:px-3 text-description lg:text-content hover:bg-gray-light rounded-[0.25rem]"
-                onClick={() => handleRoomSelect(room.roomId, room.roomName)}
-              >
-                {room.roomName}
-              </li>
-            ))}
-          </ul>
-          {dummyData.data.length > 0 && (
+          {dummyData.data.length > 0 ? (
+            <>
+              <ul className="max-h-[12.5rem] overflow-y-auto flex-1 scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full">
+                {dummyData.data.map((room) => (
+                  <li
+                    key={room.roomId}
+                    className="p-2 truncate cursor-pointer lg:px-3 text-description lg:text-content hover:bg-gray-light rounded-[0.25rem]"
+                    onClick={() => handleRoomSelect(room.roomId, room.roomName)}
+                  >
+                    {room.roomName}
+                  </li>
+                ))}
+              </ul>
+              <div className="sticky bottom-0 bg-blue-light01 rounded-[0.25rem] ring-1 ring-blue-dark01 opacity-80 hover:opacity-100 m-2">
+                <button
+                  className="w-full p-2 lg:px-3 truncate cursor-pointer text-description lg:text-content rounded-[0.25rem]"
+                  onClick={handleViewAllRooms}
+                >
+                  전체 모임 보기
+                </button>
+              </div>
+            </>
+          ) : (
             <div className="sticky bottom-0 bg-blue-light01 rounded-[0.25rem] ring-1 ring-blue-dark01 opacity-80 hover:opacity-100 m-2">
               <button
                 className="w-full p-2 lg:px-3 truncate cursor-pointer text-description lg:text-content rounded-[0.25rem]"
-                onClick={handleViewAllRooms}
+                onClick={() =>
+                  navigate(PATH.ONBOARDING, {
+                    state: {
+                      initialStep: OnboardingStepType.ONBOARDING_CREATE_STEP,
+                    },
+                  })
+                }
               >
-                전체 모임 보기
+                모임 생성하기
               </button>
             </div>
           )}
