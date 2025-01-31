@@ -13,7 +13,7 @@ export default function UserQuit() {
       </h3>
 
       <div className="flex flex-col gap-6">
-        <h4 className="font-semibold text-content lg:text-menu">
+        <h4 className="font-semibold text-menu lg:text-subtitle">
           정말 탈퇴하시겠어요?
         </h4>
 
