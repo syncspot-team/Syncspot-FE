@@ -17,7 +17,7 @@ export const ButtonVariants = cva(
       buttonType: {
         primary: 'bg-primary hover:bg-secondary',
         secondary: 'bg-gray-normal hover:bg-gray-400',
-        quit: 'bg-gray-normal hover:bg-red-normal',
+        quit: 'bg-gray-normal enabled:bg-red-normal',
       },
       fontSize: {
         default: 'text-content lg:text-menu',

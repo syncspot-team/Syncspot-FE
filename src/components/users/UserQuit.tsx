@@ -1,7 +1,10 @@
 import IconWarningTriangle from '@src/assets/icons/IconWarningTriangle.svg?react';
 import Button from '../common/button/Button';
+import { useState } from 'react';
 
 export default function UserQuit() {
+  const [quitReason, setQuitReason] = useState('');
+
   const handleQuit = () => {
     // 탈퇴 로직 처리
   };
@@ -55,10 +58,17 @@ export default function UserQuit() {
           <textarea
             className="w-full h-32 p-4 mt-4 rounded-lg resize-none bg-gray-light"
             placeholder="탈퇴 사유를 입력해주세요"
+            value={quitReason}
+            onChange={(e) => setQuitReason(e.target.value)}
           />
         </div>
 
-        <Button buttonType="quit" className="w-full" onClick={handleQuit}>
+        <Button
+          buttonType="quit"
+          className="w-full"
+          onClick={handleQuit}
+          disabled={!quitReason.trim()}
+        >
           계정 삭제하기
         </Button>
       </div>
