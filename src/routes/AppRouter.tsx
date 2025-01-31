@@ -29,10 +29,10 @@ import TimeResultPage from '@src/pages/time/TimeResultPage';
 import Layout from '@src/components/layout/Layout';
 import AboutPage from '@src/pages/about/AboutPage';
 import UserPage from '@src/pages/users/UserPage';
-import UserProfilePage from '@src/pages/users/UserProfilePage';
-import UserGroupList from '@src/pages/users/UserGroupList';
-import UserLogout from '@src/pages/users/UserLogout';
-import UserQuit from '@src/pages/users/UserQuit';
+import UserProfile from '@src/components/users/UserProfile';
+import UserGroupList from '@src/components/users/UserGroupList';
+import UserLogout from '@src/components/users/UserLogout';
+import UserQuit from '@src/components/users/UserQuit';
 
 const createAuthRouter = (routeType: ROUTE_TYPE, children: RouteObject[]) => {
   const authRouter = children.map((child: RouteObject) => ({
@@ -86,7 +86,7 @@ const router = createBrowserRouter([
           children: [
             {
               path: PATH.USERS_PROFILE,
-              element: <UserProfilePage />,
+              element: <UserProfile />,
             },
             {
               path: PATH.USERS_GROUP_LISTS,
