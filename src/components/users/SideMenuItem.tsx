@@ -31,7 +31,7 @@ export default function SideMenuItem({ item }: { item: ISideMenuItem }) {
       }
     >
       {!item.isMobile && <Icon className="transition-none size-[1.125rem]" />}
-      <span className="text-description lg:text-menu">{item.text}</span>
+      <span className="text-description lg:text-content">{item.text}</span>
     </NavLink>
   );
 }

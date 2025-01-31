@@ -4,12 +4,17 @@ import OnBoardingCreate from '@src/components/onboarding/OnBoardingCreate';
 import OnBoardingPlan from '@src/components/onboarding/OnBoardingPlan';
 import OnBoardingFunctionSelect from '@src/components/onboarding/OnBoardingFunctionSelect';
 import { PATH } from '@src/constants/path';
+import { useLocation } from 'react-router-dom';
 
 export default function OnBoardingPage() {
+  const location = useLocation();
   const [selectedRoomId, setSelectedRoomId] = useState<string | null>(null); // 선택한 모임 정보
   const [onboardingStep, setOnboardingStep] = useState<
     keyof typeof OnboardingStepType
-  >(OnboardingStepType.ONBOARDING_PLAN_STEP); // 온보딩 단계
+  >(
+    (location.state?.initialStep as keyof typeof OnboardingStepType) ||
+      OnboardingStepType.ONBOARDING_PLAN_STEP,
+  );
 
   // getQueryData를 통해 RoomList에서 useGetJoinRoomQuery로 불러온 데이터 값을 받아와서 OnBoardingPlan 컴포넌트에 데이터를 전달해야한다
 
