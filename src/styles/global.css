@@ -20,9 +20,14 @@
 }
 
 @layer base {
+  html {
+    overflow-x: hidden;
+  }
+
   body {
     /* 폰트 설정 */
     font-family: 'SUIT', 'Pretendard', sans-serif;
+    overflow-x: hidden;
 
     /* 색상 설정 */
     --white: #ffffff;
