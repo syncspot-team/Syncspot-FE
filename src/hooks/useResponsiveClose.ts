@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 
-export function useResponsiveClose(breakpoint: number, handler: () => void) {
+export function useResponsiveClose(breakpoint: number, callback: () => void) {
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= breakpoint) {
-        handler();
+        callback();
       }
     };
 
@@ -13,5 +13,5 @@ export function useResponsiveClose(breakpoint: number, handler: () => void) {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [breakpoint, handler]);
+  }, [breakpoint, callback]);
 }
