@@ -83,7 +83,6 @@ export default function SignUpPage() {
       { email: watch('email'), code: watch('code') },
       {
         onSuccess: (data) => {
-          console.log('확인해보자', data);
           if (data.data.isVerified) {
             setIsEmailVerified(true);
           } else {
@@ -104,11 +103,10 @@ export default function SignUpPage() {
   };
 
   const handleSignUp = (data: ISignUpFormValues) => {
-    console.log('확인해보자!', data);
     if (!isEmailVerified) {
       CustomToast({
         type: TOAST_TYPE.WARNING,
-        message: '이메일 인증을 진행해 주세요.',
+        message: '이메일 인증을 먼저 진행해 주세요.',
       });
       return;
     }
