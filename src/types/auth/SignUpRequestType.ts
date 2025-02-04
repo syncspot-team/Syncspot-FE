@@ -8,6 +8,7 @@ export interface ISignUpRequest {
   roadNameAddress?: string;
   addressLatitude?: number;
   addressLongitude?: number;
+  code: string;
 }
 
 export interface ISignUpFormValues extends ISignUpRequest {
