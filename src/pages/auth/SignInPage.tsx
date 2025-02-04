@@ -21,41 +21,47 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center mx-auto my-0 mt-[7.5rem] px-4 lg:px-[7.5rem]">
+    <div className="flex flex-col items-center justify-center mx-auto my-0 mt-[8.75rem] px-4">
       <h1 className="mb-6 text-title text-tertiary">싱크스팟 로그인</h1>
-      <div className="flex items-center text-menu gap-[0.875rem] mb-11">
-        <span className="text-gray-dark">아직 계정이 없으신가요?</span>
+      <div className="flex items-center text-menu gap-[0.875rem] mb-6">
+        <span className="text-gray-dark text-content lg:text-menu">
+          아직 계정이 없으신가요?
+        </span>
         <span
           onClick={() => navigate(PATH.SIGN_UP)}
-          className="cursor-pointer hover:underline text-primary"
+          className="underline cursor-pointer lg:no-underline hover:underline text-primary text-content lg:text-menu"
         >
           회원가입하기
         </span>
       </div>
-      <form onSubmit={handleSubmit(handleSignIn)} className="flex flex-col">
+      <form
+        onSubmit={handleSubmit(handleSignIn)}
+        className="flex flex-col items-center w-full"
+      >
         <Input
           {...register('email')}
           type="text"
           placeholder="아이디 (이메일)"
-          className="mb-[0.875rem]"
+          className="mb-[0.875rem] w-full max-w-[26.875rem]"
         />
         <Input
           {...register('pw')}
           type="password"
           placeholder="비밀번호 (영문 대/소문자, 숫자, 특수문자 포함)"
-          className="mb-5"
+          className="mb-5 w-full max-w-[26.875rem]"
         />
         <Button
           buttonType="primary"
           isLoading={isSignInPending}
           disabled={!isFormValid}
+          className="w-full max-w-[26.875rem] px-5"
         >
           로그인
         </Button>
-        <div className="flex justify-end text-gray-normal mt-[0.875rem] mb-[2.5rem]">
+        <div className="flex justify-end text-gray-normal mt-[0.875rem] mb-[2.5rem] w-full max-w-[26.875rem]">
           <span
             onClick={() => navigate(PATH.HELP_PASSWORD_INQUIRY)}
-            className="cursor-pointer hover:underline"
+            className="underline cursor-pointer hover:underline lg:no-underline"
           >
             비밀번호를 잊으셨나요?
           </span>
