@@ -7,19 +7,12 @@ import { useSignUpMutation } from '@src/state/mutations/auth/useSignUpMutation';
 import KakaoLocationPicker from '@src/components/common/kakao/KakaoLocationPicker';
 import { ISelectedLocation } from '@src/components/common/kakao/types';
 import { signupSchema } from '@src/types/auth/SignUpSchema';
-
-const signUpDefaultValues: ISignUpFormValues = {
-  name: '',
-  email: '',
-  pw: '',
-  confirmPw: '',
-  existAddress: false,
-  siDo: '',
-  siGunGu: '',
-  roadNameAddress: '',
-  addressLatitude: 0,
-  addressLongitude: 0,
-};
+import { SignUpDefaultValues } from '@src/components/auth/constants';
+import { useState } from 'react';
+import CustomToast from '@src/components/common/toast/customToast';
+import { TOAST_TYPE } from '@src/types/toastType';
+import { useRequestEmailVerificationMutation } from '@src/state/mutations/auth/useRequestEmailVerificationMutation';
+import { useConfirmEmailVerificationMutation } from '@src/state/mutations/auth/useConfirmEmailVerificationMutation';
 
 export default function SignUpPage() {
   const {
@@ -31,19 +24,97 @@ export default function SignUpPage() {
   } = useForm<ISignUpFormValues>({
     mode: 'onChange',
     resolver: yupResolver(signupSchema),
-    defaultValues: signUpDefaultValues,
+    defaultValues: SignUpDefaultValues,
   });
-  const { mutate: userSignup, isPending } = useSignUpMutation();
-  const isFormValid =
-    watch('email') && watch('pw') && watch('confirmPw') && watch('name');
 
-  const onSubmit = (data: ISignUpFormValues) => {
-    const { confirmPw, ...signUpPayload } = data;
-    userSignup(signUpPayload);
+  const { mutate: userSignup, isPending: isSignUpPending } =
+    useSignUpMutation();
+  const {
+    mutate: requestEmailVerification,
+    isPending: isRequestEmailVerificationPending,
+  } = useRequestEmailVerificationMutation();
+  const {
+    mutate: confirmEmailVerification,
+    isPending: isConfirmEmailVerificationPending,
+  } = useConfirmEmailVerificationMutation();
+
+  const [isEmailSent, setIsEmailSent] = useState(false);
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
+  const isFormValid =
+    watch('email') &&
+    watch('pw') &&
+    watch('confirmPw') &&
+    watch('name') &&
+    isEmailVerified;
+
+  const handleRequestEmailVerification = (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    const email = watch('email');
+    if (!email || errors.email) {
+      CustomToast({
+        type: TOAST_TYPE.WARNING,
+        message: '올바른 이메일 형식을 입력해 주세요.',
+      });
+      return;
+    }
+
+    requestEmailVerification(
+      { email },
+      {
+        onSuccess: () => {
+          setIsEmailSent(true);
+        },
+      },
+    );
   };
 
-  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+  const handleConfirmEmailVerification = (e: React.MouseEvent) => {
     e.preventDefault();
+    const code = watch('code');
+    if (!code || errors.code) {
+      CustomToast({
+        type: TOAST_TYPE.WARNING,
+        message: '인증번호를 모두 입력해주세요!',
+      });
+      return;
+    }
+    confirmEmailVerification(
+      { email: watch('email'), code: watch('code') },
+      {
+        onSuccess: (data) => {
+          console.log('확인해보자', data);
+          if (data.data.isVerified) {
+            setIsEmailVerified(true);
+          } else {
+            CustomToast({
+              type: TOAST_TYPE.ERROR,
+              message: '인증번호가 올바르지 않습니다.',
+            });
+          }
+        },
+        onError: () => {
+          CustomToast({
+            type: TOAST_TYPE.ERROR,
+            message: '인증번호가 올바르지 않습니다.',
+          });
+        },
+      },
+    );
+  };
+
+  const handleSignUp = (data: ISignUpFormValues) => {
+    console.log('확인해보자!', data);
+    if (!isEmailVerified) {
+      CustomToast({
+        type: TOAST_TYPE.WARNING,
+        message: '이메일 인증을 진행해 주세요.',
+      });
+      return;
+    }
+
+    const { confirmPw, ...signUpPayload } = data;
+    userSignup(signUpPayload);
   };
 
   const handleLocationSelect = (location: ISelectedLocation) => {
@@ -64,29 +135,88 @@ export default function SignUpPage() {
       <h1 className="mb-[1.875rem] text-title text-tertiary">
         싱크스팟 회원가입
       </h1>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
+      <form onSubmit={handleSubmit(handleSignUp)} className="flex flex-col">
         <span className="ml-2 mb-[0.125rem] text-menu text-tertiary">
           아이디 (이메일)
         </span>
-        <Input
-          type="email"
-          placeholder="이메일을 입력해 주세요"
-          {...register('email')}
-        />
+        <div className="relative">
+          <Input
+            {...register('email')}
+            type="email"
+            placeholder="이메일을 입력해 주세요"
+            className="pr-[6.25rem] w-full disabled:cursor-not-allowed"
+            disabled={isEmailVerified}
+          />
+          <button
+            type="button"
+            onClick={handleRequestEmailVerification}
+            disabled={isEmailVerified}
+            className="absolute right-3 top-1/2 -translate-y-1/2 h-[2.125rem] whitespace-nowrap text-description bg-gray-normal p-2 text-white-default rounded-md hover:enabled:bg-gray-dark cursor-pointer disabled:cursor-not-allowed"
+          >
+            {isRequestEmailVerificationPending
+              ? '확인중...'
+              : isEmailSent
+                ? '재전송'
+                : '인증코드 받기'}
+          </button>
+        </div>
         {errors.email && (
           <p className="ml-2 text-sm text-error-normal">
             {errors.email.message}
           </p>
         )}
+
+        {isEmailSent && (
+          <>
+            <span className="ml-2 mt-[1rem] mb-[0.125rem] text-menu text-tertiary">
+              인증번호
+            </span>
+            <div className="relative">
+              <Input
+                {...register('code')}
+                type="text"
+                placeholder="인증번호 6자리를 입력해주세요"
+                maxLength={6}
+                disabled={isEmailVerified}
+                className="pr-[6.25rem] w-full disabled:cursor-not-allowed"
+              />
+              <button
+                type="button"
+                onClick={handleConfirmEmailVerification}
+                disabled={isEmailVerified}
+                className="absolute right-3 top-1/2 -translate-y-1/2 h-[2.125rem] whitespace-nowrap text-description bg-gray-normal p-2 text-white-default rounded-md hover:enabled:bg-gray-dark cursor-pointer disabled:cursor-not-allowed"
+              >
+                {isConfirmEmailVerificationPending
+                  ? '확인중...'
+                  : isEmailVerified
+                    ? '인증 완료'
+                    : '인증'}
+              </button>
+            </div>
+            {errors.code && (
+              <p className="ml-2 text-sm text-error-normal">
+                {errors.code.message}
+              </p>
+            )}
+            {isEmailVerified && (
+              <p className="mt-2 text-sm text-center text-blue-normal02">
+                인증이 완료되었습니다!
+              </p>
+            )}
+          </>
+        )}
         <span className="ml-2 mt-[1rem] mb-[0.125rem] text-menu text-tertiary">
           비밀번호
         </span>
         <Input
-          type="password"
-          onPaste={handlePaste}
-          autoComplete="off"
-          placeholder="영문 대/소문자, 숫자, 특수문자를 포함하여 주세요"
           {...register('pw')}
+          type="password"
+          onPaste={(e: React.ClipboardEvent<HTMLInputElement>) => {
+            e.preventDefault();
+          }}
+          autoComplete="off"
+          maxLength={20}
+          placeholder="영문 대/소문자, 숫자, 특수문자를 포함하여 주세요"
         />
         {errors.pw && (
           <p className="ml-2 text-sm text-error-normal">{errors.pw.message}</p>
@@ -95,12 +225,14 @@ export default function SignUpPage() {
           비밀번호 확인
         </span>
         <Input
+          {...register('confirmPw')}
           type="password"
-          onPaste={handlePaste}
-          autoComplete="new-password"
+          onPaste={(e: React.ClipboardEvent<HTMLInputElement>) => {
+            e.preventDefault();
+          }}
+          autoComplete="off"
           placeholder="비밀번호 확인을 위해 다시 한 번 입력해 주세요"
           maxLength={20}
-          {...register('confirmPw')}
         />
         {errors.confirmPw && (
           <p className="ml-2 text-sm text-error-normal">
@@ -111,10 +243,10 @@ export default function SignUpPage() {
           닉네임
         </span>
         <Input
+          {...register('name')}
           type="text"
           placeholder="닉네임을 입력해주세요"
           maxLength={20}
-          {...register('name')}
         />
         {errors.name && (
           <p className="ml-2 text-sm text-error-normal">
@@ -130,7 +262,7 @@ export default function SignUpPage() {
         />
         <Button
           buttonType="primary"
-          isLoading={isPending}
+          isLoading={isSignUpPending}
           disabled={!isFormValid}
           className="mt-[1.75rem]"
         >

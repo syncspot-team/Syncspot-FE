@@ -13,10 +13,10 @@ export default function SignInPage() {
   const navigate = useNavigate();
   const { register, handleSubmit, watch, reset } = useForm<ISignInRequest>();
   const isFormValid = watch('email') && watch('pw');
-  const { mutate: signIn, isPending } = useSignInMutation();
+  const { mutate: signIn, isPending: isSignInPending } = useSignInMutation();
 
-  const onSubmit = (data: ISignInRequest) => {
-    signIn(data);
+  const handleSignIn = (signInPayload: ISignInRequest) => {
+    signIn(signInPayload);
     reset({ pw: '' });
   };
 
@@ -32,7 +32,7 @@ export default function SignInPage() {
           회원가입하기
         </span>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
+      <form onSubmit={handleSubmit(handleSignIn)} className="flex flex-col">
         <Input
           {...register('email')}
           type="text"
@@ -47,7 +47,7 @@ export default function SignInPage() {
         />
         <Button
           buttonType="primary"
-          isLoading={isPending}
+          isLoading={isSignInPending}
           disabled={!isFormValid}
         >
           로그인

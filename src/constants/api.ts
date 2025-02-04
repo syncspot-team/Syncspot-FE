@@ -1,5 +1,8 @@
 export const API = {
   SIGN_UP: '/api/members', // 회원가입
+  SIGN_UP_REQUEST_EMAIL_VERIFICATION:
+    '/api/members/verification-request/signup', // 회원가입 이메일 인증 요청
+  SIGN_UP_CONFIRM_EMAIL_VERIFICATION: '/api/members/verification/signup', // 회원가입 이메일 인증 확인
   SIGN_IN: '/api/members/login', // 로그인
   LOGOUT: '/api/members/logout', // 로그아웃
   JOINED_ROOMS_SEARCH: '/api/member-rooms', // 사용자가 참여한 방 목록 검색
