@@ -10,7 +10,7 @@ export default function HelpPwInquiryPage() {
   const [tempPassword, setTempPassword] = useState('');
 
   return (
-    <div className="flex flex-col items-center justify-center mx-auto my-0 mt-[7.5rem] px-4 lg:px-[7.5rem]">
+    <div className="flex flex-col items-center justify-center mx-auto my-0 mt-[8.75rem] px-4 lg:px-[7.5rem]">
       <h1
         className={`mb-8 text-title text-tertiary ${pwInquiryStep === PwInquiryStepType.PW_REISSUE_STEP && 'mt-12'}`}
       >
