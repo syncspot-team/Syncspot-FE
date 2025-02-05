@@ -130,7 +130,7 @@ export default function PwInquiryStep({
       <h3 className="ml-2 mb-[0.125rem] text-menu text-tertiary">
         아이디 (이메일)
       </h3>
-      <div className="flex gap-1">
+      <div className="relative flex gap-1">
         <Input
           {...register('email', {
             required: '이메일을 입력해주세요.',
@@ -140,7 +140,7 @@ export default function PwInquiryStep({
             },
           })}
           placeholder="이메일을 입력해주세요"
-          className="flex-1"
+          className="w-full"
         />
         <button
           onClick={
@@ -149,9 +149,9 @@ export default function PwInquiryStep({
               : () => handleEmailSubmit(watch('email'))
           }
           disabled={!watch('email')}
-          className="px-4 bg-primary hover:bg-secondary text-description lg:text-content text-white-default rounded-default disabled:bg-gray-normal disabled:cursor-not-allowed"
+          className="absolute right-3 top-1/2 -translate-y-1/2 h-[2.125rem] whitespace-nowrap text-description bg-gray-normal p-2 text-white-default rounded-md hover:enabled:bg-gray-dark cursor-pointer disabled:cursor-not-allowed"
         >
-          {isEmailSent ? '재전송' : '전송'}
+          {isEmailSent ? '재전송' : '인증코드 받기'}
         </button>
       </div>
       {errors.email && (
@@ -163,12 +163,12 @@ export default function PwInquiryStep({
       <h3 className="ml-2 mt-6 mb-[0.125rem] text-menu text-tertiary">
         인증코드
       </h3>
-      <div className="flex gap-1">
+      <div className="relative flex gap-1">
         <Input
           {...register('verificationCode')}
           placeholder="이메일로 발송된 인증 코드를 입력해주세요"
           disabled={!isEmailSent}
-          className="flex-1 disabled:cursor-not-allowed"
+          className="w-full disabled:cursor-not-allowed"
         />
         <button
           onClick={() =>
@@ -178,7 +178,7 @@ export default function PwInquiryStep({
             })
           }
           disabled={!isEmailSent}
-          className="px-4 bg-primary hover:bg-secondary text-description lg:text-content text-white-default rounded-default disabled:bg-gray-normal disabled:cursor-not-allowed"
+          className="absolute right-3 top-1/2 -translate-y-1/2 h-[2.125rem] whitespace-nowrap text-description bg-gray-normal p-2 text-white-default rounded-md hover:enabled:bg-gray-dark cursor-pointer disabled:cursor-not-allowed"
         >
           확인
         </button>
@@ -189,7 +189,7 @@ export default function PwInquiryStep({
         onClick={handleTempPasswordRequest}
         isLoading={false}
         disabled={!isVerified}
-        className="w-full mt-10"
+        className="w-full px-5 mt-10"
       >
         임시 비밀번호 발급
       </Button>

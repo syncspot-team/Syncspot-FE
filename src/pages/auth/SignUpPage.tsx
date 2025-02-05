@@ -129,15 +129,18 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center mx-auto my-0 mt-[3.4375rem]">
+    <div className="flex flex-col items-center justify-center mx-auto my-0 mt-[3.4375rem] px-6">
       <h1 className="mb-[1.875rem] text-title text-tertiary">
         싱크스팟 회원가입
       </h1>
-      <form onSubmit={handleSubmit(handleSignUp)} className="flex flex-col">
-        <span className="ml-2 mb-[0.125rem] text-menu text-tertiary">
+      <form
+        onSubmit={handleSubmit(handleSignUp)}
+        className="flex flex-col items-center w-full"
+      >
+        <span className="ml-2 mb-[0.125rem] text-menu text-tertiary w-full max-w-[26.875rem]">
           아이디 (이메일)
         </span>
-        <div className="relative">
+        <div className="relative w-full max-w-[26.875rem]">
           <Input
             {...register('email')}
             type="email"
@@ -166,10 +169,10 @@ export default function SignUpPage() {
 
         {isEmailSent && (
           <>
-            <span className="ml-2 mt-[1rem] mb-[0.125rem] text-menu text-tertiary">
+            <span className="ml-2 mt-[1rem] mb-[0.125rem] text-menu text-tertiary w-full max-w-[26.875rem]">
               인증번호
             </span>
-            <div className="relative">
+            <div className="relative w-full max-w-[26.875rem]">
               <Input
                 {...register('code')}
                 type="text"
@@ -203,7 +206,7 @@ export default function SignUpPage() {
             )}
           </>
         )}
-        <span className="ml-2 mt-[1rem] mb-[0.125rem] text-menu text-tertiary">
+        <span className="ml-2 mt-[1rem] mb-[0.125rem] text-menu text-tertiary w-full max-w-[26.875rem]">
           비밀번호
         </span>
         <Input
@@ -215,11 +218,12 @@ export default function SignUpPage() {
           autoComplete="off"
           maxLength={20}
           placeholder="영문 대/소문자, 숫자, 특수문자를 포함하여 주세요"
+          className="w-full max-w-[26.875rem]"
         />
         {errors.pw && (
           <p className="ml-2 text-sm text-error-normal">{errors.pw.message}</p>
         )}
-        <span className="ml-2 mt-[1rem] mb-[0.125rem] text-menu text-tertiary">
+        <span className="ml-2 mt-[1rem] mb-[0.125rem] text-menu text-tertiary w-full max-w-[26.875rem]">
           비밀번호 확인
         </span>
         <Input
@@ -231,13 +235,14 @@ export default function SignUpPage() {
           autoComplete="off"
           placeholder="비밀번호 확인을 위해 다시 한 번 입력해 주세요"
           maxLength={20}
+          className="w-full max-w-[26.875rem]"
         />
         {errors.confirmPw && (
           <p className="ml-2 text-sm text-error-normal">
             {errors.confirmPw.message}
           </p>
         )}
-        <span className="ml-2 mt-[1rem] mb-[0.125rem] text-menu text-tertiary">
+        <span className="ml-2 mt-[1rem] mb-[0.125rem] text-menu text-tertiary w-full max-w-[26.875rem]">
           닉네임
         </span>
         <Input
@@ -245,24 +250,27 @@ export default function SignUpPage() {
           type="text"
           placeholder="닉네임을 입력해주세요"
           maxLength={20}
+          className="w-full max-w-[26.875rem]"
         />
         {errors.name && (
           <p className="ml-2 text-sm text-error-normal">
             {errors.name.message}
           </p>
         )}
-        <span className="ml-2 mt-[1rem] mb-[0.125rem] text-menu text-tertiary">
+        <span className="ml-2 mt-[1rem] mb-[0.125rem] text-menu text-tertiary w-full max-w-[26.875rem]">
           내 주소 (선택)
         </span>
-        <KakaoLocationPicker
-          className="ring-1 ring-gray-normal bg-white-default"
-          onSelect={handleLocationSelect}
-        />
+        <div className="w-full max-w-[26.875rem]">
+          <KakaoLocationPicker
+            className="ring-1 ring-gray-normal bg-white-default "
+            onSelect={handleLocationSelect}
+          />
+        </div>
         <Button
           buttonType="primary"
           isLoading={isSignUpPending}
           disabled={!isFormValid}
-          className="mt-[1.75rem]"
+          className="mt-[1.75rem] w-full max-w-[26.875rem] px-5"
         >
           회원가입
         </Button>
