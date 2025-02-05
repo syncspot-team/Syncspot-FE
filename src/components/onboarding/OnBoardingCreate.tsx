@@ -4,6 +4,7 @@ import { useCreateRoomMutation } from '@src/state/mutations/onboarding/useCreate
 import { ICreateRoomRequest } from '@src/types/onboarding/createRoomRequestType';
 import Button from '@src/components/common/button/Button';
 import { Input } from '@src/components/common/input/Input';
+import { useSaveUserToRoomMutation } from '@src/state/mutations/onboarding/useSaveUserToRoomMutation';
 
 interface IOnBoardingCreateProps {
   setOnboardingStep: (step: keyof typeof OnboardingStepType) => void;
@@ -16,21 +17,27 @@ export default function OnBoardingCreate({
 }: IOnBoardingCreateProps) {
   const { register, handleSubmit, watch } = useForm<ICreateRoomRequest>();
   const isFormValid = watch('name');
+  const { mutate: saveUserToRoom } = useSaveUserToRoomMutation();
   const { mutate: createRoom, isPending } = useCreateRoomMutation(
     setSelectedRoomId,
     setOnboardingStep,
   );
 
-  const onSubmit = (data: ICreateRoomRequest) => {
-    createRoom(data);
+  const handleCreateRoom = (createRoomPayload: ICreateRoomRequest) => {
+    createRoom(createRoomPayload, {
+      onSuccess: (data) => {
+        const roomId = data.data.id;
+        saveUserToRoom({ roomId });
+      },
+    });
   };
 
   return (
-    <div className="flex flex-col items-center mt-[7.5rem]">
+    <div className="flex flex-col items-center mt-[8.75rem]">
       <h1 className="text-subtitle text-tertiary mb-[1.875rem]">
         모임 생성하기
       </h1>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
+      <form onSubmit={handleSubmit(handleCreateRoom)} className="flex flex-col">
         <h3 className="text-menu text-tertiary mb-[0.625rem] ml-2">
           모임 이름
         </h3>
