@@ -43,7 +43,7 @@ export default function OnBoardingCreate({
           모임 설명 (선택)
         </h3>
         <Input
-          {...register('roomDescription')}
+          {...register('memo')}
           placeholder="최대 100자까지 가능해요"
           className="mb-[2.375rem]"
         />

@@ -7,6 +7,7 @@ import { OnboardingStepType } from '@src/types/onboarding/onboardingStepType';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import RoomListItem from './RoomListItem';
+import { IRoom } from '@src/types/header/joinRoomResponseType';
 
 export default function RoomList() {
   const navigate = useNavigate();
@@ -90,7 +91,7 @@ export default function RoomList() {
           {roomList?.data.length && roomList.data.length > 0 ? (
             <>
               <ul className="max-h-[12.5rem] overflow-y-auto flex-1 scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full">
-                {roomList?.data.map((room) => (
+                {roomList?.data.map((room: IRoom) => (
                   <RoomListItem
                     key={room.roomId}
                     roomId={room.roomId}
