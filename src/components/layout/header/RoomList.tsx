@@ -6,6 +6,7 @@ import { useRoomIdStore } from '@src/state/store/roomIdStore';
 import { OnboardingStepType } from '@src/types/onboarding/onboardingStepType';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import RoomListItem from './RoomListItem';
 
 export default function RoomList() {
   const navigate = useNavigate();
@@ -14,11 +15,9 @@ export default function RoomList() {
   const [isAnimating, setIsAnimating] = useState(false);
   const [selectedRoomName, setSelectedRoomName] = useState('전체 모임 목록');
   const { setRoomId } = useRoomIdStore();
+  const { data: roomList, isLoading, error } = useGetJoinRoomQuery();
 
   useClickOutside(dropdownRef, () => setIsDropdownOpen(false));
-
-  //   API 요청 추가
-  const { data: roomList, isLoading, error } = useGetJoinRoomQuery();
 
   // 초기 데이터 설정
   useEffect(() => {
@@ -51,12 +50,16 @@ export default function RoomList() {
 
   // 로딩 상태 처리
   if (isLoading) {
-    return <li className="px-3 py-2 text-menu">로딩중</li>;
+    return (
+      <li className="p-2 lg:px-3 text-description lg:text-content">로딩중</li>
+    );
   }
 
   // 에러 상태 처리
   if (error) {
-    return <li className="px-3 py-2 text-menu">오류</li>;
+    return (
+      <li className="p-2 lg:px-3 text-description lg:text-content">오류</li>
+    );
   }
 
   return (
@@ -65,11 +68,11 @@ export default function RoomList() {
       onClick={handleDropdownToggle}
       className="relative flex items-center cursor-pointer text-blue-dark01 p-2 lg:px-3 bg-blue-light01 rounded-[0.4375rem] whitespace-nowrap gap-[0.5rem]"
     >
-      <span className="min-w-[3.75rem] lg:min-w-[5rem] text-description lg:text-content truncate">
+      <span className="min-w-[3.75rem] lg:min-w-[5rem] text-description lg:text-content truncate text-blue-dark01">
         {selectedRoomName}
       </span>
       <IconDropdown
-        className={`size-4 lg:size-5 -mr-1 lg:-mr-2 ${
+        className={`size-4 lg:size-5 -mr-1 lg:-mr-2 text-blue-dark01 ${
           isDropdownOpen ? 'rotate-180' : ''
         }`}
       />
@@ -88,13 +91,12 @@ export default function RoomList() {
             <>
               <ul className="max-h-[12.5rem] overflow-y-auto flex-1 scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full">
                 {roomList?.data.map((room) => (
-                  <li
+                  <RoomListItem
                     key={room.roomId}
-                    className="p-2 truncate cursor-pointer lg:px-3 text-description lg:text-content hover:bg-gray-light rounded-[0.25rem]"
-                    onClick={() => handleRoomSelect(room.roomId, room.roomName)}
-                  >
-                    {room.roomName}
-                  </li>
+                    roomId={room.roomId}
+                    roomName={room.roomName}
+                    onSelect={handleRoomSelect}
+                  />
                 ))}
               </ul>
               <div className="sticky bottom-0 bg-blue-light01 rounded-[0.25rem] ring-1 ring-blue-dark01 opacity-80 hover:opacity-100 m-2">

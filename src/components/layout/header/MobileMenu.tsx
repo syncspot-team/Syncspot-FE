@@ -29,7 +29,7 @@ export default function MobileMenu() {
 
       <div
         ref={menuRef}
-        className={`fixed top-[4rem] text-gray-dark left-0 right-0 bg-white-default z-[100] border-2 border-red-500
+        className={`fixed top-[4rem] text-gray-dark left-0 right-0 bg-white-default z-[100]
           ${isMenuOpen ? 'animate-slideDown' : isAnimating ? 'animate-slideUp' : 'hidden'}
         `}
         onAnimationEnd={() => {
