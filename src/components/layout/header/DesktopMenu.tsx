@@ -20,8 +20,8 @@ export default function DesktopMenu() {
     if (item.subMenus) {
       setClickedMenu(clickedMenu === item.label ? null : item.label);
     } else {
-      item.onClick();
       setClickedMenu(null);
+      item.onClick();
     }
   }
 
@@ -30,8 +30,8 @@ export default function DesktopMenu() {
     item: IMenuItem,
   ) {
     e.stopPropagation();
-    item.onClick();
     setClickedMenu(null);
+    item.onClick();
   }
 
   return (
@@ -55,7 +55,7 @@ export default function DesktopMenu() {
           )}
         </li>
       ))}
-      <AuthButton onAuthClick={() => setClickedMenu(null)} />
+      <AuthButton onAuthClick={() => setClickedMenu(null)} isMobile={false} />
     </ul>
   );
 }
