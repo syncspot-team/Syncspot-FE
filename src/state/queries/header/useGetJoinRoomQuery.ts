@@ -5,7 +5,7 @@ import { getJoinRoom } from '@src/apis/header/getJoinRoom';
 import { IJoinRoomResponse } from '@src/types/header/joinRoomResponseType';
 
 export const useGetJoinRoomQuery = (
-  options?: UseQueryOptions<IJoinRoomResponse, Error, IJoinRoomResponse>,
+  options?: UseQueryOptions<IJoinRoomResponse, Error, void>,
 ) => {
   return useQuery({
     queryKey: ROOM_QUERY_KEY.GET_JOINED_ROOM(),

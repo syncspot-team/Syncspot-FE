@@ -8,7 +8,7 @@ import { useLocation } from 'react-router-dom';
 
 export default function OnBoardingPage() {
   const location = useLocation();
-  const [selectedRoomId, setSelectedRoomId] = useState<string | null>(null); // 선택한 모임 정보
+  const [selectedRoomId, setSelectedRoomId] = useState<string | null>(null);
   const [onboardingStep, setOnboardingStep] = useState<
     keyof typeof OnboardingStepType
   >(
