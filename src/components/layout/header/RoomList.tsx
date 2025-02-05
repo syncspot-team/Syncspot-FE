@@ -36,6 +36,11 @@ export default function RoomList() {
           setRoomName(firstRoom.roomName);
           setSelectedRoomName(firstRoom.roomName);
         }
+      } else {
+        const firstRoom = roomList.data[0];
+        setRoomId(firstRoom.roomId);
+        setRoomName(firstRoom.roomName);
+        setSelectedRoomName(firstRoom.roomName);
       }
     } else {
       setRoomId('');
