@@ -1,4 +1,4 @@
-import { useRoomIdStore } from '@src/state/store/roomIdStore';
+import { useRoomStore } from '@src/state/store/roomStore';
 import { useState } from 'react';
 import { ONBOARDING_FUNCTION_TYPE } from '@src/types/onboarding/onboardingFunctionType';
 import { useNavigate } from 'react-router-dom';
@@ -8,13 +8,15 @@ import Button from '@src/components/common/button/Button';
 
 interface IOnBoardingFunctionSelectProps {
   selectedRoomId: string | null;
+  selectedRoomName: string | null;
 }
 
 export default function OnBoardingFunctionSelect({
   selectedRoomId,
+  selectedRoomName,
 }: IOnBoardingFunctionSelectProps) {
   const navigate = useNavigate();
-  const { setRoomId } = useRoomIdStore();
+  const { setRoomId, setRoomName } = useRoomStore();
   const [selectedFunction, setSelectedFunction] = useState<
     | (typeof ONBOARDING_FUNCTION_TYPE)[keyof typeof ONBOARDING_FUNCTION_TYPE]
     | null
@@ -23,6 +25,8 @@ export default function OnBoardingFunctionSelect({
   const handleDoneClick = () => {
     if (!selectedFunction) return;
     setRoomId(selectedRoomId!);
+    setRoomName(selectedRoomName!);
+
     switch (selectedFunction) {
       case ONBOARDING_FUNCTION_TYPE.FIND_MIDDLE_POINT:
         navigate(PATH.LOCATION_ENTER(selectedRoomId!));

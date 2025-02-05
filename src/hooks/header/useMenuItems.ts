@@ -1,9 +1,9 @@
 import { PATH } from '@src/constants/path';
-import { useRoomIdStore } from '@src/state/store/roomIdStore';
+import { useRoomStore } from '@src/state/store/roomStore';
 import { useNavigateWithRoomCheck } from './useNavigateWithRoomCheck';
 
 export const useMenuItems = (callback?: () => void) => {
-  const { roomId } = useRoomIdStore();
+  const { roomId } = useRoomStore();
   const navigateWithRoomCheck = useNavigateWithRoomCheck();
 
   return [

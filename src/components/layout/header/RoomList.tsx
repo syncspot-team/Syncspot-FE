@@ -2,7 +2,7 @@ import IconDropdown from '@src/assets/icons/IconDropdown.svg?react';
 import { PATH } from '@src/constants/path';
 import { useClickOutside } from '@src/hooks/useClickOutside';
 import { useGetJoinRoomQuery } from '@src/state/queries/header/useGetJoinRoomQuery';
-import { useRoomIdStore } from '@src/state/store/roomIdStore';
+import { useRoomStore } from '@src/state/store/roomStore';
 import { OnboardingStepType } from '@src/types/onboarding/onboardingStepType';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -14,8 +14,8 @@ export default function RoomList() {
   const dropdownRef = useRef<HTMLLIElement>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  const { roomId, setRoomId, setRoomName } = useRoomStore();
   const [selectedRoomName, setSelectedRoomName] = useState('전체 모임 목록');
-  const { setRoomId } = useRoomIdStore();
   const { data: roomList, isLoading, error } = useGetJoinRoomQuery();
 
   useClickOutside(dropdownRef, () => setIsDropdownOpen(false));
@@ -23,18 +23,29 @@ export default function RoomList() {
   // 초기 데이터 설정
   useEffect(() => {
     if (roomList?.data && roomList.data.length > 0) {
-      const firstRoom = roomList.data[0];
-      setRoomId(firstRoom.roomId);
-      setSelectedRoomName(firstRoom.roomName);
+      if (roomId) {
+        const selectedRoom = roomList.data.find(
+          (room: IRoom) => room.roomId === roomId,
+        );
+        if (selectedRoom) {
+          setSelectedRoomName(selectedRoom.roomName);
+          setRoomName(selectedRoom.roomName);
+        }
+      } else {
+        const firstRoom = roomList.data[0];
+        setRoomId(firstRoom.roomId);
+        setRoomName(firstRoom.roomName);
+        setSelectedRoomName(firstRoom.roomName);
+      }
     } else {
       setRoomId('');
       setSelectedRoomName('전체 모임 목록');
     }
-  }, [roomList]);
+  }, [roomList, roomId]);
 
   const handleRoomSelect = (roomId: string, roomName: string) => {
-    setSelectedRoomName(roomName);
     setRoomId(roomId);
+    setRoomName(roomName);
     setIsDropdownOpen(false);
     navigate(PATH.LOCATION_ENTER(roomId));
   };
@@ -69,7 +80,7 @@ export default function RoomList() {
       onClick={handleDropdownToggle}
       className="relative flex items-center cursor-pointer text-blue-dark01 p-2 lg:px-3 bg-blue-light01 rounded-[0.4375rem] whitespace-nowrap gap-[0.5rem]"
     >
-      <span className="min-w-[3.75rem] lg:min-w-[5rem] text-description lg:text-content truncate text-blue-dark01">
+      <span className="w-[5.3125rem] lg:min-w-[5.9375rem] lg:max-w-[6.25rem] text-description lg:text-content truncate text-blue-dark01">
         {selectedRoomName}
       </span>
       <IconDropdown
@@ -78,7 +89,7 @@ export default function RoomList() {
         }`}
       />
       <div
-        className={`absolute left-0 top-full w-full mt-1 border border-gray-light rounded-[0.25rem] shadow-lg  bg-white-default z-50
+        className={`absolute left-0 top-full w-[7.5rem] lg:w-[8.75rem] mt-1 border border-gray-light rounded-[0.25rem] shadow-lg bg-white-default z-50
           ${isDropdownOpen ? 'animate-slideDown' : isAnimating ? 'animate-slideUp' : 'hidden'}
         `}
         onAnimationEnd={() => {

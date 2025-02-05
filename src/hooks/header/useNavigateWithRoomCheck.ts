@@ -1,13 +1,13 @@
 import CustomToast from '@src/components/common/toast/customToast';
 import { PATH } from '@src/constants/path';
 import { useLoginStore } from '@src/state/store/loginStore';
-import { useRoomIdStore } from '@src/state/store/roomIdStore';
+import { useRoomStore } from '@src/state/store/roomStore';
 import { TOAST_TYPE } from '@src/types/toastType';
 import { useNavigate } from 'react-router-dom';
 
 export const useNavigateWithRoomCheck = () => {
   const { isLogin } = useLoginStore();
-  const { roomId } = useRoomIdStore();
+  const { roomId } = useRoomStore();
   const navigate = useNavigate();
 
   return (path: string, callback?: () => void) => {
