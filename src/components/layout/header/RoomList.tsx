@@ -30,12 +30,12 @@ export default function RoomList() {
         if (selectedRoom) {
           setSelectedRoomName(selectedRoom.roomName);
           setRoomName(selectedRoom.roomName);
+        } else {
+          const firstRoom = roomList.data[0];
+          setRoomId(firstRoom.roomId);
+          setRoomName(firstRoom.roomName);
+          setSelectedRoomName(firstRoom.roomName);
         }
-      } else {
-        const firstRoom = roomList.data[0];
-        setRoomId(firstRoom.roomId);
-        setRoomName(firstRoom.roomName);
-        setSelectedRoomName(firstRoom.roomName);
       }
     } else {
       setRoomId('');
