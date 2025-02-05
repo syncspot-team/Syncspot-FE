@@ -5,7 +5,7 @@ import { ONBOARDING_QUERY_KEY } from './key';
 
 export const useGetRoomDetailInfoQuery = (
   roomId: string,
-  options?: UseQueryOptions<IGetRoomDetailInfoResponseType, Error, void>,
+  options?: UseQueryOptions<IGetRoomDetailInfoResponseType, Error, any>,
 ) => {
   return useQuery({
     queryKey: ONBOARDING_QUERY_KEY.GET_ROOM_DETAIL_INFO(roomId),
