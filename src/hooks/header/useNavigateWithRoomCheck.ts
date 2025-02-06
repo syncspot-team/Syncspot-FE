@@ -10,9 +10,7 @@ export const useNavigateWithRoomCheck = () => {
   const { roomId } = useRoomStore();
   const navigate = useNavigate();
 
-  return (path: string, callback?: () => void) => {
-    callback?.();
-
+  return (path: string) => {
     if (path === PATH.ABOUT) {
       navigate(path);
       return;

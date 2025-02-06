@@ -39,7 +39,7 @@ export default function MobileMenu() {
         }}
       >
         <MobileMenuList
-          onMenuSelect={() => setIsMenuOpen(false)}
+          onCloseMenu={() => setIsMenuOpen(false)}
           isMenuOpen={isMenuOpen}
         />
       </div>
