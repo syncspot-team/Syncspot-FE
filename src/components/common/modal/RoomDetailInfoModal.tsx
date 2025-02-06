@@ -1,57 +1,73 @@
-import { useState } from 'react';
-import IconEditPen from '@src/assets/icons/IconEditPen.svg?react';
+import { useState, useEffect } from 'react';
 import Button from '@src/components/common/button/Button';
+import { IRoom } from '@src/types/header/joinRoomResponseType';
+import { useGetRoomDetailInfoQuery } from '@src/state/queries/onboarding/useGetRoomDetailInfoQuery';
+import { usePatchRoomNameMutation } from '@src/state/mutations/onboarding/usePatchRoomNameMutation';
+import { usePatchRoomMemoMutation } from '@src/state/mutations/onboarding/usePatchRoomMemoMutation';
+import EditableField from '@src/components/onboarding/modal/EditableField';
 
 interface IRoomDetailInfoModalProps {
-  room: {
-    roomId: string;
-    roomName: string;
-  };
+  room: IRoom;
   onClose: () => void;
 }
 
+interface IRoomDetailInfo {
+  data: {
+    name: string;
+    memo: string;
+    memberCount: number;
+    emails: string[];
+  };
+}
+
+export const EDIT_TYPE = {
+  NAME: 'name',
+  MEMO: 'memo',
+} as const;
+
+type EditType = (typeof EDIT_TYPE)[keyof typeof EDIT_TYPE];
+
 export default function RoomDetailInfoModal({
+  room,
   onClose,
 }: IRoomDetailInfoModalProps) {
+  const { data: roomDetailInfoData } = useGetRoomDetailInfoQuery(room.roomId);
+  const [roomDetailInfo, setRoomDetailInfo] = useState<IRoomDetailInfo | null>(
+    null,
+  );
   const [isEditingName, setIsEditingName] = useState(false);
   const [isEditingMemo, setIsEditingMemo] = useState(false);
-  const [roomName, setRoomName] = useState('싱크고 동창회');
-  const [memo, setMemo] = useState('2024년 19기 동창회');
-  const [roomInfo, setRoomInfo] = useState({
-    roomName: '싱크고 동창회',
-    memo: '2024년 19기 동창회',
-    emails: [
-      'syncspotfighting@gmail.com',
-      'syncspotfighting@gmail.com',
-      'syncspotfighting@gmail.com',
-      'syncspotfighting@gmail.com',
-      'syncspotfighting@gmail.com',
-      'syncspotfighting@gmail.com',
-      'syncspotfighting@gmail.com',
-      'syncspotfighting@gmail.com',
-    ],
-  });
+  const [roomName, setRoomName] = useState('');
+  const [memo, setMemo] = useState('');
 
-  const handleEditName = () => {
-    if (isEditingName) {
-      // API 호출하여 이름 업데이트하는 과정 추후에 추가 예정
-      setRoomInfo((prev) => ({
-        ...prev,
-        roomName: roomName,
+  const { mutate: patchRoomName } = usePatchRoomNameMutation();
+  const { mutate: patchRoomMemo } = usePatchRoomMemoMutation();
+
+  useEffect(() => {
+    if (roomDetailInfoData) {
+      setRoomDetailInfo(roomDetailInfoData);
+      setRoomName(roomDetailInfoData.data.name);
+      setMemo(roomDetailInfoData.data.memo);
+    }
+  }, [roomDetailInfoData]);
+
+  const handleEdit = (type: EditType, value: string) => {
+    const isEditing = type === EDIT_TYPE.NAME ? isEditingName : isEditingMemo;
+    const setIsEditing =
+      type === EDIT_TYPE.NAME ? setIsEditingName : setIsEditingMemo;
+
+    if (isEditing) {
+      if (type === EDIT_TYPE.NAME) {
+        patchRoomName({ roomId: room.roomId, name: value });
+      } else {
+        patchRoomMemo({ roomId: room.roomId, memo: value });
+      }
+      setRoomDetailInfo((prev) => ({
+        ...prev!,
+        data: { ...prev!.data, [type]: value },
       }));
     }
-    setIsEditingName(!isEditingName);
-  };
-
-  const handleEditMemo = () => {
-    if (isEditingMemo) {
-      // API 호출하여 메모 업데이트하는 과정 추후에 추가 예정
-      setRoomInfo((prev) => ({
-        ...prev,
-        memo: memo,
-      }));
-    }
-    setIsEditingMemo(!isEditingMemo);
+    setIsEditing(!isEditing);
   };
 
   return (
@@ -61,71 +77,31 @@ export default function RoomDetailInfoModal({
       </h1>
       <div className="flex flex-col w-full mb-3">
         <h3 className="text-content lg:text-menu text-blue-dark03">이름</h3>
-        <div className="flex items-center justify-between gap-2">
-          {isEditingName ? (
-            <input
-              type="text"
-              value={roomName}
-              onChange={(e) => setRoomName(e.target.value)}
-              className="flex-1 p-1 rounded-lg ring-1 ring-gray-normal text-description lg:text-content"
-            />
-          ) : (
-            <p className="flex-1 truncate text-description lg:text-content">
-              {roomInfo.roomName}
-            </p>
-          )}
-          {isEditingName ? (
-            <span
-              onClick={handleEditName}
-              className="cursor-pointer p-2 text-description bg-blue-light01 text-blue-dark03 hover:bg-blue-light02 rounded-[0.5rem]"
-            >
-              완료
-            </span>
-          ) : (
-            <IconEditPen
-              className="cursor-pointer p-1 rounded-[0.5rem] hover:bg-gray-light"
-              onClick={handleEditName}
-            />
-          )}
-        </div>
+        <EditableField
+          isEditing={isEditingName}
+          value={roomName}
+          displayValue={roomDetailInfo?.data.name || ''}
+          onChange={(e) => setRoomName(e.target.value)}
+          onEditToggle={() => handleEdit(EDIT_TYPE.NAME, roomName)}
+        />
       </div>
 
       <div className="flex flex-col w-full mb-3">
         <h3 className="text-content lg:text-menu text-blue-dark03">메모</h3>
-        <div className="flex items-center justify-between gap-2">
-          {isEditingMemo ? (
-            <input
-              type="text"
-              value={memo}
-              onChange={(e) => setMemo(e.target.value)}
-              className="flex-1 p-1 rounded-lg ring-1 ring-gray-normal text-description lg:text-content"
-            />
-          ) : (
-            <p className="flex-1 truncate text-description lg:text-content">
-              {roomInfo.memo}
-            </p>
-          )}
-          {isEditingMemo ? (
-            <span
-              onClick={handleEditMemo}
-              className="cursor-pointer p-2 text-description bg-blue-light01 text-blue-dark03 hover:bg-blue-light02 rounded-[0.5rem]"
-            >
-              완료
-            </span>
-          ) : (
-            <IconEditPen
-              className="cursor-pointer p-1 rounded-[0.5rem] hover:bg-gray-light"
-              onClick={handleEditMemo}
-            />
-          )}
-        </div>
+        <EditableField
+          isEditing={isEditingMemo}
+          value={memo}
+          displayValue={roomDetailInfo?.data.memo || ''}
+          onChange={(e) => setMemo(e.target.value)}
+          onEditToggle={() => handleEdit(EDIT_TYPE.MEMO, memo)}
+        />
       </div>
 
       <h1 className="my-6 text-center text-subtitle lg:text-title text-tertiary">
         모임 참여 인원
       </h1>
       <ul className="max-h-[10rem] w-full overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full p-1">
-        {roomInfo.emails.map((email) => (
+        {roomDetailInfo?.data.emails?.map((email: string) => (
           <li key={email} className="p-2 text-description text-blue-dark03">
             {email}
           </li>

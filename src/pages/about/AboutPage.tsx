@@ -13,7 +13,7 @@ import { PATH } from '@src/constants/path';
 
 export default function AboutPage() {
   return (
-    <div className="pb-20 mt-[1.875rem] px-4 lg:px-[7.5rem] select-none">
+    <div className="pb-20 mt-[1.875rem] px-4 lg:px-[7.5rem] select-none relative z-[1]">
       {/* 첫 번째 섹션 */}
       <section className="relative flex flex-col justify-start pl-8 lg:pl-16 lg:justify-center h-full pb-20 lg:pb-0 lg:min-h-[43.75rem] bg-blue-light01 rounded-3xl">
         <h1 className="z-50 mt-24 mb-5 text-title lg:text-logo text-tertiary">

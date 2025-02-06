@@ -1,4 +1,4 @@
-interface ILocation {
+export interface ILocation {
   placeId: number;
   siDo: string;
   siGunGu: string;
@@ -7,7 +7,7 @@ interface ILocation {
   addressLong: number;
 }
 
-interface IPlaceSearchData {
+export interface IPlaceSearchData {
   myLocationExistence: boolean;
   myLocations: ILocation[];
   friendLocationExistence: boolean;

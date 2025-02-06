@@ -8,15 +8,14 @@ import { useLocation } from 'react-router-dom';
 
 export default function OnBoardingPage() {
   const location = useLocation();
-  const [selectedRoomId, setSelectedRoomId] = useState<string | null>(null); // 선택한 모임 정보
+  const [selectedRoomId, setSelectedRoomId] = useState<string | null>(null);
+  const [selectedRoomName, setSelectedRoomName] = useState<string | null>(null);
   const [onboardingStep, setOnboardingStep] = useState<
     keyof typeof OnboardingStepType
   >(
     (location.state?.initialStep as keyof typeof OnboardingStepType) ||
       OnboardingStepType.ONBOARDING_PLAN_STEP,
   );
-
-  // getQueryData를 통해 RoomList에서 useGetJoinRoomQuery로 불러온 데이터 값을 받아와서 OnBoardingPlan 컴포넌트에 데이터를 전달해야한다
 
   // 온보딩 단계 변경을 처리하는 새로운 함수
   const handleStepChange = (newStep: keyof typeof OnboardingStepType) => {
@@ -78,17 +77,22 @@ export default function OnBoardingPage() {
         <OnBoardingPlan
           setOnboardingStep={handleStepChange}
           setSelectedRoomId={setSelectedRoomId}
+          setSelectedRoomName={setSelectedRoomName}
         />
       )}
       {onboardingStep === OnboardingStepType.ONBOARDING_CREATE_STEP && (
         <OnBoardingCreate
           setOnboardingStep={handleStepChange}
           setSelectedRoomId={setSelectedRoomId}
+          setSelectedRoomName={setSelectedRoomName}
         />
       )}
       {onboardingStep ===
         OnboardingStepType.ONBOARDING_FUNCTION_SELECT_STEP && (
-        <OnBoardingFunctionSelect selectedRoomId={selectedRoomId} />
+        <OnBoardingFunctionSelect
+          selectedRoomId={selectedRoomId}
+          selectedRoomName={selectedRoomName}
+        />
       )}
     </>
   );

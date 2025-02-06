@@ -6,16 +6,16 @@ import AuthButton from './AuthButton';
 import IconDropdown from '@src/assets/icons/IconDropdown.svg?react';
 
 interface IMobileMenuListProps {
-  onMenuSelect: () => void;
+  onCloseMenu: () => void;
   isMenuOpen: boolean;
 }
 
 export default function MobileMenuList({
-  onMenuSelect,
+  onCloseMenu,
   isMenuOpen,
 }: IMobileMenuListProps) {
   const [clickedMenu, setClickedMenu] = useState<string | null>(null);
-  const menuItems = useMenuItems(onMenuSelect);
+  const menuItems = useMenuItems();
 
   useEffect(() => {
     if (!isMenuOpen) {
@@ -31,7 +31,7 @@ export default function MobileMenuList({
     if (item.subMenus) {
       setClickedMenu(clickedMenu === item.label ? null : item.label);
     } else {
-      onMenuSelect();
+      onCloseMenu();
       item.onClick();
     }
   };
@@ -42,7 +42,7 @@ export default function MobileMenuList({
   ) => {
     e.stopPropagation();
     setClickedMenu(null);
-    onMenuSelect();
+    onCloseMenu();
     item.onClick();
   };
 
@@ -73,7 +73,7 @@ export default function MobileMenuList({
           )}
         </li>
       ))}
-      <AuthButton onAuthClick={onMenuSelect} isMobile={true} />
+      <AuthButton onAuthClick={onCloseMenu} isMobile={true} />
     </ul>
   );
 }

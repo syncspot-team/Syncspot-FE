@@ -11,7 +11,7 @@ export default function RoomListItem({
 }: RoomListItemProps) {
   return (
     <li
-      className="p-2 truncate cursor-pointer lg:px-3 text-description lg:text-content hover:bg-gray-light rounded-[0.25rem]"
+      className="p-2 truncate cursor-pointer lg:px-3 text-description lg:text-content hover:bg-gray-light rounded-[0.25rem] relative z-[100]"
       onClick={() => onSelect(roomId, roomName)}
     >
       {roomName}

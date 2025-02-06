@@ -29,7 +29,8 @@ export const API = {
     `/api/place-vote-rooms/rooms/${roomId}`, // 특정 방의 장소 투표방 생성
   RECOMMEND_PLACE_SEARCH: '/api/recommend-places', // 특정 중간 지점 장소를 기준으로 식당, 스터티 카페, 카페 추천
   ROOM_CREATE: '/api/rooms', // 방 생성
-  ROOM_NAME_CHANGE: (roomId: string) => `/api/rooms/${roomId}`, // 방 이름 변경
+  ROOM_NAME_CHANGE: (roomId: string) => `/api/rooms/${roomId}/name`, // 방 이름 변경
+  ROOM_MEMO_CHANGE: (roomId: string) => `/api/rooms/${roomId}/memo`, // 방 메모 변경
   ROOM_EXISTS_CHECK: (roomId: string) => `/api/rooms/${roomId}/existence`, // 방 존재 여부 확인
   TIME_VOTE_RESULT: (roomId: string) =>
     `/api/time-votes/result/rooms/${roomId}`, // 특정 방의 시간 투표 결과 조회

@@ -13,6 +13,7 @@ import CustomToast from '@src/components/common/toast/customToast';
 import { TOAST_TYPE } from '@src/types/toastType';
 import { useNavigate, useParams } from 'react-router-dom';
 import { PATH } from '@src/constants/path';
+import { ILocation } from '@src/types/location/placeSearchResponseType';
 
 interface ILocationForm {
   myLocations: {
@@ -96,20 +97,24 @@ export default function LocationEnterPage() {
       setSavedLocations(placeSearchData.data.myLocations);
 
       reset({
-        myLocations: placeSearchData.data.myLocations.map((place) => ({
-          siDo: place.siDo,
-          siGunGu: place.siGunGu,
-          roadNameAddress: place.roadNameAddress,
-          addressLat: place.addressLat,
-          addressLong: place.addressLong,
-        })),
-        friendLocations: placeSearchData.data.friendLocations.map((place) => ({
-          siDo: place.siDo,
-          siGunGu: place.siGunGu,
-          roadNameAddress: place.roadNameAddress,
-          addressLat: place.addressLat,
-          addressLong: place.addressLong,
-        })),
+        myLocations: placeSearchData.data.myLocations.map(
+          (place: ILocation) => ({
+            siDo: place.siDo,
+            siGunGu: place.siGunGu,
+            roadNameAddress: place.roadNameAddress,
+            addressLat: place.addressLat,
+            addressLong: place.addressLong,
+          }),
+        ),
+        friendLocations: placeSearchData.data.friendLocations.map(
+          (place: ILocation) => ({
+            siDo: place.siDo,
+            siGunGu: place.siGunGu,
+            roadNameAddress: place.roadNameAddress,
+            addressLat: place.addressLat,
+            addressLong: place.addressLong,
+          }),
+        ),
       });
     }
   }, [placeSearchData?.data, reset]);
