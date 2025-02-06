@@ -84,6 +84,7 @@ export default function OnBoardingPage() {
         <OnBoardingCreate
           setOnboardingStep={handleStepChange}
           setSelectedRoomId={setSelectedRoomId}
+          setSelectedRoomName={setSelectedRoomName}
         />
       )}
       {onboardingStep ===

@@ -9,25 +9,28 @@ import { useSaveUserToRoomMutation } from '@src/state/mutations/onboarding/useSa
 interface IOnBoardingCreateProps {
   setOnboardingStep: (step: keyof typeof OnboardingStepType) => void;
   setSelectedRoomId: (roomId: string) => void;
+  setSelectedRoomName: (roomName: string) => void;
 }
 
 export default function OnBoardingCreate({
   setOnboardingStep,
   setSelectedRoomId,
+  setSelectedRoomName,
 }: IOnBoardingCreateProps) {
   const { register, handleSubmit, watch } = useForm<ICreateRoomRequest>();
   const isFormValid = watch('name');
   const { mutate: saveUserToRoom } = useSaveUserToRoomMutation();
-  const { mutate: createRoom, isPending } = useCreateRoomMutation(
-    setSelectedRoomId,
-    setOnboardingStep,
-  );
+  const { mutate: createRoom, isPending } = useCreateRoomMutation();
 
   const handleCreateRoom = (createRoomPayload: ICreateRoomRequest) => {
     createRoom(createRoomPayload, {
       onSuccess: (data) => {
         const roomId = data.data.id;
         saveUserToRoom({ roomId });
+
+        setSelectedRoomId(data.data.id);
+        setSelectedRoomName(createRoomPayload.name);
+        setOnboardingStep(OnboardingStepType.ONBOARDING_FUNCTION_SELECT_STEP);
       },
     });
   };
