@@ -26,7 +26,7 @@ export default function OnBoardingPlan({
   const { modalType, openModal, closeModal } = useModal();
   const [clickedRoomId, setClickedRoomId] = useState('');
   const [clickedRoomName, setClickedRoomName] = useState('');
-  const [selectedRoomInfo, setSelectedRoomInfo] = useState<IRoom | null>(null);
+  const [clickedRoomInfo, setClickedRoomInfo] = useState<IRoom | null>(null);
   const { data: roomList, isLoading: isRoomListLoading } =
     useGetJoinRoomQuery();
 
@@ -44,7 +44,7 @@ export default function OnBoardingPlan({
   };
   const handleDetailInfoClick = (e: React.MouseEvent, roomInfo: IRoom) => {
     e.stopPropagation();
-    setSelectedRoomInfo(roomInfo);
+    setClickedRoomInfo(roomInfo);
     openModal(MODAL_TYPE.ROOM_DETAIL_INFO_MODAL);
   };
 
@@ -118,8 +118,8 @@ export default function OnBoardingPlan({
         isOpen={modalType === MODAL_TYPE.ROOM_DETAIL_INFO_MODAL}
         onClose={closeModal}
       >
-        {selectedRoomInfo && (
-          <RoomDetailInfoModal room={selectedRoomInfo} onClose={closeModal} />
+        {clickedRoomInfo && (
+          <RoomDetailInfoModal room={clickedRoomInfo} onClose={closeModal} />
         )}
       </Modal>
     </>

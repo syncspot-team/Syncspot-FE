@@ -23,6 +23,7 @@ export const useSignInMutation = (
           type: TOAST_TYPE.ERROR,
           message: '아이디 또는 비밀번호를 확인해주세요.',
         });
+        return;
       }
       // 로그인 성공시 accessToken, refreshToken 저장
       else if (data.data.accessToken && data.data.refreshToken) {
@@ -31,7 +32,7 @@ export const useSignInMutation = (
           type: TOAST_TYPE.SUCCESS,
           message: '로그인에 성공하였습니다.',
         });
-        navigate(PATH.ONBOARDING);
+        navigate(PATH.ROOT);
       }
     },
     ...options,

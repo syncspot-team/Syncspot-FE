@@ -40,36 +40,16 @@ export default function OnBoardingFunctionSelect({
     }
   };
 
-  const handleFunctionClick = (
-    functionType: (typeof ONBOARDING_FUNCTION_TYPE)[keyof typeof ONBOARDING_FUNCTION_TYPE],
-  ) => {
-    setSelectedFunction(functionType);
-  };
-
-  const functionOptions = [
-    {
-      type: ONBOARDING_FUNCTION_TYPE.FIND_MIDDLE_POINT,
-      label: '중간 지점 찾기',
-    },
-    { type: ONBOARDING_FUNCTION_TYPE.VOTE_PLACE, label: '장소 투표' },
-    { type: ONBOARDING_FUNCTION_TYPE.VOTE_TIME, label: '시간 투표' },
-  ];
-
   return (
-    <div className="flex flex-col items-center mt-[7.5rem]">
+    <div className="flex flex-col items-center mt-[9.375rem]">
       <h1 className="text-subtitle text-tertiary mb-[1.875rem]">
         무엇을 할까요?
       </h1>
       <div className="flex flex-col items-center gap-[1.875rem]">
-        {functionOptions.map((option) => (
-          <FunctionOption
-            key={option.type}
-            type={option.type}
-            label={option.label}
-            selectedFunction={selectedFunction}
-            onClick={handleFunctionClick}
-          />
-        ))}
+        <FunctionOption
+          selectedFunction={selectedFunction}
+          setSelectedFunction={setSelectedFunction}
+        />
         <Button
           buttonType="primary"
           disabled={!selectedFunction}

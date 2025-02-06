@@ -19,24 +19,33 @@ export default function OnBoardingCreate({
 }: IOnBoardingCreateProps) {
   const { register, handleSubmit, watch } = useForm<ICreateRoomRequest>();
   const isFormValid = watch('name');
-  const { mutate: saveUserToRoom } = useSaveUserToRoomMutation();
-  const { mutate: createRoom, isPending } = useCreateRoomMutation();
+  const { mutate: createRoom, isPending: isCreateRoomPending } =
+    useCreateRoomMutation();
+  const { mutate: saveUserToRoom, isPending: isSaveUserToRoomPending } =
+    useSaveUserToRoomMutation();
 
   const handleCreateRoom = (createRoomPayload: ICreateRoomRequest) => {
     createRoom(createRoomPayload, {
       onSuccess: (data) => {
         const roomId = data.data.id;
-        saveUserToRoom({ roomId });
-
-        setSelectedRoomId(data.data.id);
-        setSelectedRoomName(createRoomPayload.name);
-        setOnboardingStep(OnboardingStepType.ONBOARDING_FUNCTION_SELECT_STEP);
+        saveUserToRoom(
+          { roomId },
+          {
+            onSuccess: () => {
+              setSelectedRoomId(roomId);
+              setSelectedRoomName(createRoomPayload.name);
+              setOnboardingStep(
+                OnboardingStepType.ONBOARDING_FUNCTION_SELECT_STEP,
+              );
+            },
+          },
+        );
       },
     });
   };
 
   return (
-    <div className="flex flex-col items-center mt-[8.75rem]">
+    <div className="flex flex-col items-center mt-[10rem]">
       <h1 className="text-subtitle text-tertiary mb-[1.875rem]">
         모임 생성하기
       </h1>
@@ -59,7 +68,7 @@ export default function OnBoardingCreate({
         />
         <Button
           buttonType="primary"
-          isLoading={isPending}
+          isLoading={isCreateRoomPending || isSaveUserToRoomPending}
           disabled={!isFormValid}
         >
           생성 완료
