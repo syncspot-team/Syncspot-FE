@@ -41,41 +41,6 @@ interface ISavedLocation {
   addressLong: number;
 }
 
-// const DUMMY_LOCATIONS = {
-//   myLocations: [
-//     {
-//       siDo: '서울특별시',
-//       siGunGu: '강남구',
-//       roadNameAddress: '테헤란로 427',
-//       addressLat: 37.5065,
-//       addressLong: 127.0536,
-//     },
-//     {
-//       siDo: '서울특별시',
-//       siGunGu: '서초구',
-//       roadNameAddress: '강남대로 373',
-//       addressLat: 37.4969,
-//       addressLong: 127.0278,
-//     },
-//   ],
-//   friendLocations: [
-//     {
-//       siDo: '서울특별시',
-//       siGunGu: '마포구',
-//       roadNameAddress: '월드컵북로 396',
-//       addressLat: 37.5826,
-//       addressLong: 126.9012,
-//     },
-//     {
-//       siDo: '서울특별시',
-//       siGunGu: '용산구',
-//       roadNameAddress: '이태원로 217',
-//       addressLat: 37.5384,
-//       addressLong: 126.9946,
-//     },
-//   ],
-// };
-
 export default function LocationEnterPage() {
   const navigate = useNavigate();
   const { roomId } = useParams();
