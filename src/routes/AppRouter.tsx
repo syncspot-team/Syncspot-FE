@@ -33,6 +33,7 @@ import UserProfile from '@src/components/users/UserProfile';
 import UserGroupList from '@src/components/users/UserGroupList';
 import UserLogout from '@src/components/users/UserLogout';
 import UserQuit from '@src/components/users/UserQuit';
+import RoomLayout from '@src/components/layout/RoomLayout';
 
 const createAuthRouter = (routeType: ROUTE_TYPE, children: RouteObject[]) => {
   const authRouter = children.map((child: RouteObject) => ({
@@ -107,40 +108,45 @@ const router = createBrowserRouter([
           element: <OnBoardingPage />,
         },
         {
-          path: PATH.LOCATION_ENTER(),
-          element: <LocationEnterPage />,
-        },
-        {
-          path: PATH.LOCATION_RESULT(),
-          element: <LocationResultPage />,
-        },
-        {
-          path: PATH.LOCATION_RECOMMENDATIONS(),
-          element: <LocationRecommendationsPage />,
-        },
-        {
-          path: PATH.PLACE_CREATE(),
-          element: <PlaceCreatePage />,
-        },
-        {
-          path: PATH.PLACE_VOTE(),
-          element: <PlaceVotePage />,
-        },
-        {
-          path: PATH.PLACE_RESULT(),
-          element: <PlaceResultPage />,
-        },
-        {
-          path: PATH.TIME_CREATE(),
-          element: <TimeCreatePage />,
-        },
-        {
-          path: PATH.TIME_VOTE(),
-          element: <TimeVotePage />,
-        },
-        {
-          path: PATH.TIME_RESULT(),
-          element: <TimeResultPage />,
+          element: <RoomLayout />,
+          children: [
+            {
+              path: PATH.LOCATION_ENTER(),
+              element: <LocationEnterPage />,
+            },
+            {
+              path: PATH.LOCATION_RESULT(),
+              element: <LocationResultPage />,
+            },
+            {
+              path: PATH.LOCATION_RECOMMENDATIONS(),
+              element: <LocationRecommendationsPage />,
+            },
+            {
+              path: PATH.PLACE_CREATE(),
+              element: <PlaceCreatePage />,
+            },
+            {
+              path: PATH.PLACE_VOTE(),
+              element: <PlaceVotePage />,
+            },
+            {
+              path: PATH.PLACE_RESULT(),
+              element: <PlaceResultPage />,
+            },
+            {
+              path: PATH.TIME_CREATE(),
+              element: <TimeCreatePage />,
+            },
+            {
+              path: PATH.TIME_VOTE(),
+              element: <TimeVotePage />,
+            },
+            {
+              path: PATH.TIME_RESULT(),
+              element: <TimeResultPage />,
+            },
+          ],
         },
       ]),
       {
