@@ -28,6 +28,8 @@ export default function KakaoLocationPicker({
     const selectResult = onSelect?.(location);
     if (selectResult) {
       setSearchTerm(place.place_name);
+    } else {
+      setSearchTerm(defaultAddress || '');
     }
     setSuggestions([]);
   };
