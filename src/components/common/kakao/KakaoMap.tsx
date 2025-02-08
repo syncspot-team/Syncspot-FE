@@ -7,6 +7,7 @@ interface IKakaoMap {
     lng: number;
     isMyLocation: boolean;
     roadNameAddress: string;
+    isSelected?: boolean;
   }[];
 }
 
@@ -22,6 +23,7 @@ export default function KakaoMap({ coordinates }: IKakaoMap) {
     map: any,
     isMyLocation: boolean,
     roadNameAddress: string,
+    isSelected?: boolean,
   ) => {
     const coords = new window.kakao.maps.LatLng(lat, lng);
 
@@ -44,8 +46,11 @@ export default function KakaoMap({ coordinates }: IKakaoMap) {
 
     // 텍스트 오버레이를 마커 컨텐츠의 일부로 추가
     const addressContent = document.createElement('div');
-    addressContent.className =
-      'absolute flex items-center justify-center px-3 py-2 border shadow-md text-menu bg-white-default -top-10 border-primary rounded-default whitespace-nowrap';
+    addressContent.className = `absolute flex items-center justify-center px-3 py-2 border shadow-md text-menu -top-10 rounded-default whitespace-nowrap ${
+      isSelected
+        ? 'bg-blue-normal01 text-white-default border-blue-normal01'
+        : 'bg-white-default text-black border-primary'
+    }`;
     addressContent.textContent = roadNameAddress;
     markerContent.appendChild(addressContent);
 
@@ -103,9 +108,18 @@ export default function KakaoMap({ coordinates }: IKakaoMap) {
     bounds.extend(new window.kakao.maps.LatLng(maxLat + latPadding, maxLng));
 
     // 마커 생성
-    coordinates.forEach(({ lat, lng, isMyLocation, roadNameAddress }) => {
-      placeMarker(lat, lng, mapRef.current, isMyLocation, roadNameAddress);
-    });
+    coordinates.forEach(
+      ({ lat, lng, isMyLocation, roadNameAddress, isSelected }) => {
+        placeMarker(
+          lat,
+          lng,
+          mapRef.current,
+          isMyLocation,
+          roadNameAddress,
+          isSelected,
+        );
+      },
+    );
 
     if (coordinates.length > 0) {
       setTimeout(() => {
