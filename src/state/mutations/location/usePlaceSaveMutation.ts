@@ -30,6 +30,9 @@ export const usePlaceSaveMutation = (
       queryClient.invalidateQueries({
         queryKey: LOCATION_KEY.GET_PLACE_SEARCH(roomId!),
       });
+      queryClient.invalidateQueries({
+        queryKey: LOCATION_KEY.GET_MIDPOINT_SEARCH(roomId!),
+      });
     },
     ...options,
   });
