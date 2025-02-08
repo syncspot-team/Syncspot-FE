@@ -287,9 +287,9 @@ export default function LocationEnterPage() {
                 <button
                   type="button"
                   onClick={() => handleDeleteLocation(index)}
-                  className="p-1 mx-2 rounded-[0.5rem] hover:bg-gray-normal absolute right-0 group/deleteButton"
+                  className="p-1 mx-2 rounded-[0.5rem] hover:bg-gray-normal absolute right-0 group/deleteButton hidden group-hover/location:block"
                 >
-                  <IconXmark className="hidden transition-none size-4 text-gray-normal group-hover/deleteButton:text-gray-dark group-hover/location:block" />
+                  <IconXmark className="transition-none size-4 text-gray-normal group-hover/deleteButton:text-gray-dark" />
                 </button>
               </li>
             ))
