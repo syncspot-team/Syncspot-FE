@@ -7,7 +7,10 @@ import { LOCATION_KEY } from './key';
 export const useMidpointTimeSearchQuery = (
   destLatitude: number,
   destLongitude: number,
-  options?: UseQueryOptions<IMidpointTimeSearchResponseType, Error, any>,
+  options?: Omit<
+    UseQueryOptions<IMidpointTimeSearchResponseType, Error>,
+    'queryKey' | 'queryFn'
+  >,
 ) => {
   const { roomId } = useParams();
 
