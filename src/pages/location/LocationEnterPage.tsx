@@ -14,8 +14,6 @@ import { TOAST_TYPE } from '@src/types/toastType';
 import { useNavigate, useParams } from 'react-router-dom';
 import { PATH } from '@src/constants/path';
 import { ILocation } from '@src/types/location/placeSearchResponseType';
-import { useQueryClient } from '@tanstack/react-query';
-import { LOCATION_KEY } from '@src/state/queries/location/key';
 import { IPlaceSaveRequestType } from '@src/types/location/placeSaveRequestType';
 
 interface ILocationForm {
@@ -26,6 +24,7 @@ interface ILocationForm {
 export default function LocationEnterPage() {
   const navigate = useNavigate();
   const { roomId } = useParams();
+  const lastLocationRef = useRef<HTMLLIElement>(null);
   const [savedLocations, setSavedLocations] = useState<ILocation[]>([]);
 
   // 장소 목록 조회 쿼리
@@ -56,8 +55,6 @@ export default function LocationEnterPage() {
     name: 'friendLocations',
   });
 
-  const queryClient = useQueryClient();
-
   const myLocations = watch('myLocations');
   const friendLocations = watch('friendLocations');
 
@@ -67,8 +64,6 @@ export default function LocationEnterPage() {
       myLocations.every((loc) => loc.addressLat !== 0 && loc.addressLong !== 0)
     );
   }, [myLocations]);
-
-  const lastLocationRef = useRef<HTMLLIElement>(null);
 
   useEffect(() => {
     if (placeSearchData?.data) {
@@ -161,27 +156,17 @@ export default function LocationEnterPage() {
         },
         {
           onSuccess: () => {
-            queryClient
-              .invalidateQueries({
-                queryKey: LOCATION_KEY.GET_PLACE_SEARCH(roomId!),
-              })
-              .then(() => {
-                // form 값 업데이트
-                setValue(`myLocations.${index}.siDo`, newLocation.siDo);
-                setValue(`myLocations.${index}.siGunGu`, newLocation.siGunGu);
-                setValue(
-                  `myLocations.${index}.roadNameAddress`,
-                  newLocation.roadNameAddress,
-                );
-                setValue(
-                  `myLocations.${index}.addressLat`,
-                  newLocation.addressLat,
-                );
-                setValue(
-                  `myLocations.${index}.addressLong`,
-                  newLocation.addressLong,
-                );
-              });
+            setValue(`myLocations.${index}.siDo`, newLocation.siDo);
+            setValue(`myLocations.${index}.siGunGu`, newLocation.siGunGu);
+            setValue(
+              `myLocations.${index}.roadNameAddress`,
+              newLocation.roadNameAddress,
+            );
+            setValue(`myLocations.${index}.addressLat`, newLocation.addressLat);
+            setValue(
+              `myLocations.${index}.addressLong`,
+              newLocation.addressLong,
+            );
           },
         },
       );
@@ -191,27 +176,17 @@ export default function LocationEnterPage() {
         { placeSavePayload: newLocation },
         {
           onSuccess: () => {
-            queryClient
-              .invalidateQueries({
-                queryKey: LOCATION_KEY.GET_PLACE_SEARCH(roomId!),
-              })
-              .then(() => {
-                // form 값 업데이트
-                setValue(`myLocations.${index}.siDo`, newLocation.siDo);
-                setValue(`myLocations.${index}.siGunGu`, newLocation.siGunGu);
-                setValue(
-                  `myLocations.${index}.roadNameAddress`,
-                  newLocation.roadNameAddress,
-                );
-                setValue(
-                  `myLocations.${index}.addressLat`,
-                  newLocation.addressLat,
-                );
-                setValue(
-                  `myLocations.${index}.addressLong`,
-                  newLocation.addressLong,
-                );
-              });
+            setValue(`myLocations.${index}.siDo`, newLocation.siDo);
+            setValue(`myLocations.${index}.siGunGu`, newLocation.siGunGu);
+            setValue(
+              `myLocations.${index}.roadNameAddress`,
+              newLocation.roadNameAddress,
+            );
+            setValue(`myLocations.${index}.addressLat`, newLocation.addressLat);
+            setValue(
+              `myLocations.${index}.addressLong`,
+              newLocation.addressLong,
+            );
           },
         },
       );
@@ -234,9 +209,6 @@ export default function LocationEnterPage() {
             setSavedLocations((prev) =>
               prev.filter((loc) => loc.placeId !== savedLocation.placeId),
             );
-            queryClient.invalidateQueries({
-              queryKey: LOCATION_KEY.GET_PLACE_SEARCH(roomId!),
-            });
             CustomToast({
               type: TOAST_TYPE.SUCCESS,
               message: '장소가 삭제되었습니다.',
