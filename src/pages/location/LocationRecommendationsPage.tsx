@@ -498,7 +498,7 @@ export default function LocationRecommendationsPage() {
 
   return (
     <>
-      <div className="grid w-full grid-cols-1 lg:grid-cols-2 px-4 lg:px-[7.5rem] gap-[0.9375rem] mt-[2.1875rem]">
+      <div className="grid w-full grid-cols-1 lg:grid-cols-2 px-4 lg:px-[7.5rem] gap-[0.9375rem] mt-[1.625rem]">
         <div className="hidden lg:block">
           <h3 className="flex items-center text-menu-selected text-blue-dark01">
             {searchParams.get('location')}

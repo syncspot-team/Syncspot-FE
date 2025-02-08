@@ -256,8 +256,9 @@ export default function SignUpPage() {
         </span>
         <div className="w-full max-w-[26.875rem]">
           <KakaoLocationPicker
-            className="ring-1 ring-gray-normal bg-white-default "
+            InputClassName="ring-1 ring-gray-normal bg-white-default"
             onSelect={handleLocationSelect}
+            usePortal={false}
           />
         </div>
         <Button

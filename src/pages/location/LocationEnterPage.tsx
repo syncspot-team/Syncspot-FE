@@ -3,7 +3,7 @@ import KakaoLocationPicker from '@src/components/common/kakao/KakaoLocationPicke
 import { ISelectedLocation } from '@src/components/common/kakao/types';
 import Button from '@src/components/common/button/Button';
 import KakaoMap from '@src/components/common/kakao/KakaoMap';
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState, useEffect, useRef } from 'react';
 import IconXmark from '@src/assets/icons/IconXmark.svg?react';
 import { useGetPlaceSearchQuery } from '../../state/queries/location/useGetPlaceSearchQuery';
 import { usePlaceSaveMutation } from '@src/state/mutations/location/usePlaceSaveMutation';
@@ -31,9 +31,9 @@ export default function LocationEnterPage() {
   // 장소 목록 조회 쿼리
   const { data: placeSearchData } = useGetPlaceSearchQuery();
 
-  const { mutate: placeSaveMutation } = usePlaceSaveMutation();
-  const { mutate: placeUpdateMutation } = usePlaceUpdateMutation();
-  const { mutate: placeDeleteMutation } = usePlaceDeleteMutation();
+  const { mutate: placeSaveMutation } = usePlaceSaveMutation(); // 장소 저장
+  const { mutate: placeUpdateMutation } = usePlaceUpdateMutation(); // 장소 수정
+  const { mutate: placeDeleteMutation } = usePlaceDeleteMutation(); // 장소 삭제
 
   const { control, setValue, watch, reset } = useForm<ILocationForm>({
     defaultValues: {
@@ -42,7 +42,34 @@ export default function LocationEnterPage() {
     },
   });
 
-  // placeSearchData가 로드되면 폼 값을 업데이트
+  const {
+    fields: myLocationFields,
+    append: appendMyLocation,
+    remove: removeMyLocation,
+  } = useFieldArray({
+    control,
+    name: 'myLocations',
+  });
+
+  const { fields: friendLocationFields } = useFieldArray({
+    control,
+    name: 'friendLocations',
+  });
+
+  const queryClient = useQueryClient();
+
+  const myLocations = watch('myLocations');
+  const friendLocations = watch('friendLocations');
+
+  const isAllMyLocationsFilled = useMemo(() => {
+    return (
+      myLocations.length > 0 &&
+      myLocations.every((loc) => loc.addressLat !== 0 && loc.addressLong !== 0)
+    );
+  }, [myLocations]);
+
+  const lastLocationRef = useRef<HTMLLIElement>(null);
+
   useEffect(() => {
     if (placeSearchData?.data) {
       setSavedLocations(placeSearchData.data.myLocations);
@@ -70,28 +97,16 @@ export default function LocationEnterPage() {
     }
   }, [placeSearchData?.data, reset]);
 
-  const queryClient = useQueryClient();
-
-  const myLocations = watch('myLocations');
-  const friendLocations = watch('friendLocations');
-
-  const {
-    fields: myLocationFields,
-    append: appendMyLocation,
-    remove: removeMyLocation,
-  } = useFieldArray({
-    control,
-    name: 'myLocations',
-  });
-
-  const { fields: friendLocationFields } = useFieldArray({
-    control,
-    name: 'friendLocations',
-  });
-
-  const isAllMyLocationsFilled = myLocations?.every(
-    (loc) => loc.addressLat !== 0 && loc.addressLong !== 0,
-  );
+  useEffect(() => {
+    // placeSearchData가 로드된 후 추가된 장소에 대해서만 스크롤
+    if (
+      lastLocationRef.current &&
+      myLocationFields.length >
+        (placeSearchData?.data?.myLocations?.length || 0)
+    ) {
+      lastLocationRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [myLocationFields.length, placeSearchData?.data?.myLocations?.length]);
 
   const handleLocationSelect = (location: ISelectedLocation, index: number) => {
     const { place, address } = location;
@@ -108,15 +123,21 @@ export default function LocationEnterPage() {
       addressLong: address?.x ? parseFloat(address.x) : 0,
     };
 
-    // 현재 수정 중인 위치를 제외한 다른 위치들 중에서 중복 체크
-    const isDuplicate = myLocations.some(
+    // 내 위치들과 친구 위치들 모두에서 중복 체크
+    const isDuplicateInMyLocations = myLocations.some(
       (loc, idx) =>
         idx !== index &&
         loc.addressLat === newLocation.addressLat &&
         loc.addressLong === newLocation.addressLong,
     );
 
-    if (isDuplicate) {
+    const isDuplicateInFriendLocations = friendLocations.some(
+      (loc) =>
+        loc.addressLat === newLocation.addressLat &&
+        loc.addressLong === newLocation.addressLong,
+    );
+
+    if (isDuplicateInMyLocations || isDuplicateInFriendLocations) {
       CustomToast({
         type: TOAST_TYPE.WARNING,
         message: '이미 등록된 장소입니다.',
@@ -262,51 +283,67 @@ export default function LocationEnterPage() {
   };
 
   return (
-    <div className="grid w-full grid-cols-1 lg:grid-cols-2 px-4 lg:px-[7.5rem] gap-[0.9375rem] mt-[1.875rem]">
-      <div className="flex flex-col justify-center order-2 p-5 rounded-default bg-gray-light lg:order-1">
-        <h1 className="flex items-center justify-center text-title text-tertiary my-[2.5rem]">
+    <div className="grid w-full grid-cols-1 lg:grid-cols-2 px-4 lg:px-[7.5rem] gap-[0.9375rem] mt-[1.5625rem]">
+      <div className="flex flex-col order-2 p-5 rounded-default bg-gray-light lg:order-1">
+        <h1 className="flex items-center justify-center text-subtitle lg:text-title text-tertiary my-[1.25rem] lg:my-[1.5625rem]">
           모임 정보 입력
         </h1>
 
-        <div className="max-h-[31.25rem] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full">
-          <h1 className="text-subtitle text-tertiary mb-[0.75rem]">
-            내가 입력한 장소
-          </h1>
-          <ul className="flex flex-col p-1">
-            {myLocationFields.map((field, index) => (
+        <h1 className="mb-1 lg:mb-[0.375rem] ml-2 text-menu lg:text-subtitle text-tertiary">
+          내가 입력한 장소
+        </h1>
+        <ul className="flex flex-col p-1 max-h-[15.625rem] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full">
+          {myLocationFields.length === 0 ? (
+            <li className="flex items-center justify-center py-4 text-description lg:text-content text-gray-dark">
+              아래 장소 추가하기 버튼을 클릭해 장소를 추가해보세요!
+            </li>
+          ) : (
+            myLocationFields.map((field, index) => (
               <li
-                className="flex relative items-center justify-between bg-white-default rounded-default mb-[0.625rem] hover:ring-1 hover:ring-gray-dark [&:not(:last-child)]:z-[2] last:z-[1]"
                 key={field.id}
+                ref={
+                  index === myLocationFields.length - 1 ? lastLocationRef : null
+                }
+                className="flex relative items-center justify-between bg-white-default rounded-default mb-[0.625rem] hover:ring-1 hover:ring-gray-normal z-10"
               >
                 <KakaoLocationPicker
-                  className="w-full text-content bg-white-default py-[1.3125rem] truncate"
+                  InputClassName="w-full text-description lg:text-content bg-white-default py-[1.3125rem] truncate"
                   onSelect={(location) => handleLocationSelect(location, index)}
                   defaultAddress={field.roadNameAddress}
+                  usePortal={true}
                 />
                 <button
                   type="button"
                   onClick={() => handleDeleteLocation(index)}
-                  className="p-1 mx-2 rounded-[0.5rem] hover:bg-gray-normal absolute right-0"
+                  className="p-1 mx-2 rounded-[0.5rem] hover:bg-gray-normal absolute right-0 group"
                 >
-                  <IconXmark className="size-4" />
+                  <IconXmark className="transition-none size-4 text-gray-normal group-hover:text-gray-dark" />
                 </button>
               </li>
-            ))}
-          </ul>
-          <h1 className="text-subtitle text-tertiary my-[0.75rem]">
-            친구가 입력한 장소
-          </h1>
-          {friendLocationFields.map((field) => (
-            <div
-              key={field.id}
-              className="w-full text-content bg-white-default rounded-default truncate mb-[0.625rem] py-[1.3125rem] pl-[0.9375rem] cursor-not-allowed opacity-70"
-            >
-              {field.roadNameAddress || '위치 정보 없음'}
+            ))
+          )}
+        </ul>
+        <h1 className="text-menu lg:text-subtitle text-tertiary mb-1 lg:mb-[0.375rem] mt-2 lg:mt-4 ml-2">
+          친구가 입력한 장소
+        </h1>
+        <div className="max-h-[15.625rem] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full">
+          {friendLocationFields.length === 0 ? (
+            <div className="flex items-center justify-center py-4 text-description lg:text-content text-gray-dark">
+              아직 친구가 장소를 입력하지 않았습니다
             </div>
-          ))}
+          ) : (
+            friendLocationFields.map((field) => (
+              <div
+                key={field.id}
+                className="w-full text-description lg:text-content bg-white-default rounded-default truncate mb-[0.625rem] py-[1.3125rem] pl-[0.9375rem] cursor-not-allowed opacity-70"
+              >
+                {field.roadNameAddress || '위치 정보 없음'}
+              </div>
+            ))
+          )}
         </div>
 
-        <div className="flex flex-col mt-[1.75rem] gap-[0.5rem]">
+        <div className="flex flex-col mt-auto gap-[0.5rem]">
           <Button
             buttonType="secondary"
             onClick={handleAddLocation}
