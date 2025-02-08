@@ -1,14 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useRef } from 'react';
 
+export interface ICoordinate {
+  lat: number;
+  lng: number;
+  isMyLocation: boolean;
+  roadNameAddress: string;
+  isSelected?: boolean;
+}
+
 interface IKakaoMap {
-  coordinates: {
-    lat: number;
-    lng: number;
-    isMyLocation: boolean;
-    roadNameAddress: string;
-    isSelected?: boolean;
-  }[];
+  coordinates: ICoordinate[];
 }
 
 export default function KakaoMap({ coordinates }: IKakaoMap) {
