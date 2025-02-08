@@ -10,6 +10,8 @@ export const useGetPlaceSearchQuery = (
   const { roomId } = useParams();
 
   return useQuery({
+    staleTime: 0,
+    gcTime: 0,
     queryKey: LOCATION_KEY.GET_PLACE_SEARCH(roomId!),
     queryFn: () => getPlaceSearch(roomId!),
     ...options,

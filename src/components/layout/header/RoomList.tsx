@@ -5,7 +5,7 @@ import { useGetJoinRoomQuery } from '@src/state/queries/header/useGetJoinRoomQue
 import { useRoomStore } from '@src/state/store/roomStore';
 import { OnboardingStepType } from '@src/types/onboarding/onboardingStepType';
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import RoomListItem from './RoomListItem';
 import { IRoom } from '@src/types/header/joinRoomResponseType';
 
@@ -17,19 +17,32 @@ export default function RoomList() {
   const { roomId, setRoomId, setRoomName } = useRoomStore();
   const [selectedRoomName, setSelectedRoomName] = useState('전체 모임 목록');
   const { data: roomList, isLoading, error } = useGetJoinRoomQuery();
+  const { roomId: urlRoomId } = useParams();
 
   useClickOutside(dropdownRef, () => setIsDropdownOpen(false));
 
-  // 초기 데이터 설정
+  // URL 파라미터와 roomList 변경 감지
   useEffect(() => {
+    if (urlRoomId && roomList?.data) {
+      const roomFromUrl = roomList.data.find(
+        (room: IRoom) => room.roomId === urlRoomId,
+      );
+      if (roomFromUrl) {
+        setRoomId(roomFromUrl.roomId);
+        setRoomName(roomFromUrl.roomName);
+        setSelectedRoomName(roomFromUrl.roomName);
+        return;
+      }
+    }
     if (roomList?.data && roomList.data.length > 0) {
       if (roomId) {
         const selectedRoom = roomList.data.find(
           (room: IRoom) => room.roomId === roomId,
         );
         if (selectedRoom) {
-          setSelectedRoomName(selectedRoom.roomName);
+          setRoomId(selectedRoom.roomId);
           setRoomName(selectedRoom.roomName);
+          setSelectedRoomName(selectedRoom.roomName);
         } else {
           const firstRoom = roomList.data[0];
           setRoomId(firstRoom.roomId);
@@ -46,7 +59,7 @@ export default function RoomList() {
       setRoomId('');
       setSelectedRoomName('전체 모임 목록');
     }
-  }, [roomList, roomId]);
+  }, [roomList, roomId, urlRoomId]);
 
   const handleRoomSelect = (roomId: string, roomName: string) => {
     setRoomId(roomId);

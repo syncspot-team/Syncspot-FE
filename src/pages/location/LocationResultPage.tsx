@@ -138,7 +138,7 @@ export default function LocationResultPage() {
   };
 
   return (
-    <div className="grid w-full grid-cols-1 lg:grid-cols-10 px-4 lg:px-[7.5rem] gap-[0.9375rem] mt-[2.5rem]">
+    <div className="grid w-full grid-cols-1 lg:grid-cols-10 px-4 lg:px-[7.5rem] gap-[0.9375rem] mt-[1.5625rem]">
       <div className="rounded-default min-h-[40.625rem] lg:col-span-6">
         <KakaoMap coordinates={coordinates} />
       </div>
