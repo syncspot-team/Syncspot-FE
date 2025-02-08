@@ -11,6 +11,8 @@ export const API = {
     `/api/member-rooms/exists/rooms/${roomId}`, // 사용자가 방 회원인지 확인
   SAVE_USER_TO_ROOM: (roomId: string) => `/api/member-rooms/rooms/${roomId}`, // 사용자를 방에 저장
   MIDPOINTS_SEARCH: (roomId: string) => `/api/mid-points/rooms/${roomId}`, // 중간 지점 장소 목록 검색
+  MIDPOINTS_TIME_SEARCH: (roomId: string) =>
+    `/api/mid-points/rooms/${roomId}/travel-time`, // 중간 지점 장소까지 시간 검색
   PLACE_SEARCH: (roomId: string) => `/api/places/rooms/${roomId}`, // 특정 방에 입력한 장소 목록들 조회
   PLACE_SAVE: (roomId: string) => `/api/places/rooms/${roomId}`, // 특정 방에 입력한 장소 저장
   PLACE_UPDATE: (roomId: string) => `/api/places/rooms/${roomId}`, // 특정 방에 입력한 장소 수정

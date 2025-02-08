@@ -276,7 +276,7 @@ export default function LocationEnterPage() {
                 ref={
                   index === myLocationFields.length - 1 ? lastLocationRef : null
                 }
-                className="flex relative items-center justify-between bg-white-default rounded-default mb-[0.625rem] hover:ring-1 hover:ring-gray-normal z-10"
+                className="flex group/location relative items-center justify-between bg-white-default rounded-default mb-[0.625rem] hover:ring-1 hover:ring-gray-normal z-10"
               >
                 <KakaoLocationPicker
                   InputClassName="w-full text-description lg:text-content bg-white-default py-[1.3125rem] truncate"
@@ -287,9 +287,9 @@ export default function LocationEnterPage() {
                 <button
                   type="button"
                   onClick={() => handleDeleteLocation(index)}
-                  className="p-1 mx-2 rounded-[0.5rem] hover:bg-gray-normal absolute right-0 group"
+                  className="p-1 mx-2 rounded-[0.5rem] hover:bg-gray-normal absolute right-0 group/deleteButton hidden group-hover/location:block"
                 >
-                  <IconXmark className="transition-none size-4 text-gray-normal group-hover:text-gray-dark" />
+                  <IconXmark className="transition-none size-4 text-gray-normal group-hover/deleteButton:text-gray-dark" />
                 </button>
               </li>
             ))
