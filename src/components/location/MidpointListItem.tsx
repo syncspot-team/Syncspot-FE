@@ -1,5 +1,4 @@
 import IconRightHalfArrow from '@src/assets/icons/IconRightHalfArrow.svg?react';
-import IconLinkPin from '@src/assets/icons/IconLinkPin.svg?react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { IMidpointDataResponseType } from '@src/types/location/midpointSearchResponseType';
 import { PATH } from '@src/constants/path';
@@ -69,11 +68,10 @@ export default function MidpointListItem({
           } rounded-[0.4375rem] p-1 text-primary hover:bg-gray-light hover:scale-110`}
         />
       </div>
-      <div className="flex items-center gap-4 my-1">
-        <span className="truncate text-blue-dark01 text-subtitle">
+      <div className="flex items-center my-[0.125rem]">
+        <h3 className="truncate text-blue-dark01 text-subtitle">
           {location.name}
-        </span>
-        <IconLinkPin className="flex-shrink-0 size-[1.125rem]" />
+        </h3>
       </div>
       {isSelected ? (
         <div className="flex flex-col gap-1">
