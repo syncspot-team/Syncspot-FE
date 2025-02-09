@@ -3,7 +3,6 @@ import IconLinkPin from '@src/assets/icons/IconLinkPin.svg?react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { IMidpointDataResponseType } from '@src/types/location/midpointSearchResponseType';
 import { PATH } from '@src/constants/path';
-import { useState, useEffect, useRef } from 'react';
 import AddressDisplay from './AddressDisplay';
 
 interface IMidpointListItemProps {
@@ -34,34 +33,20 @@ export default function MidpointListItem({
 }: IMidpointListItemProps) {
   const { roomId } = useParams();
   const navigate = useNavigate();
-  const [isTruncated, setIsTruncated] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
-  const addressRef = useRef<HTMLSpanElement>(null);
-
-  useEffect(() => {
-    const element = addressRef.current;
-    if (!element) return;
-
-    const resizeObserver = new ResizeObserver(() => {
-      setIsTruncated(element.scrollWidth > element.clientWidth);
-    });
-
-    resizeObserver.observe(element);
-    return () => resizeObserver.unobserve(element);
-  }, []);
+  const address = location.roadNameAddress || '위치 정보 없음';
 
   const handleNavigate = (e: React.MouseEvent) => {
     e.stopPropagation();
-    const { addressLat, addressLong, roadNameAddress } = location;
+    const { addressLat, addressLong, name } = location;
     navigate(
       PATH.LOCATION_RECOMMENDATIONS(roomId) +
-        `?lat=${addressLat}&lng=${addressLong}&location=${roadNameAddress}`,
+        `?lat=${addressLat}&lng=${addressLong}&location=${name}`,
     );
   };
 
   return (
     <li
-      className={`flex flex-col justify-center h-full max-h-[140px] p-4 cursor-pointer rounded-default shadow-sm ${
+      className={`flex flex-col justify-center h-full max-h-[8.75rem] p-4 cursor-pointer rounded-default shadow-sm ${
         isSelected
           ? 'bg-blue-100 opacity-95 ring-2 ring-blue-normal01'
           : 'ring-1 ring-primary'
@@ -102,22 +87,10 @@ export default function MidpointListItem({
               </span>
             </div>
           )}
-          <AddressDisplay
-            address={location.roadNameAddress}
-            addressRef={addressRef}
-            isTruncated={isTruncated}
-            isExpanded={isExpanded}
-            setIsExpanded={setIsExpanded}
-          />
+          <AddressDisplay address={address} />
         </div>
       ) : (
-        <AddressDisplay
-          address={location.roadNameAddress}
-          addressRef={addressRef}
-          isTruncated={isTruncated}
-          isExpanded={isExpanded}
-          setIsExpanded={setIsExpanded}
-        />
+        <AddressDisplay address={address} />
       )}
     </li>
   );
