@@ -4,12 +4,20 @@ import IconLinkPin from '@src/assets/icons/IconLinkPin.svg?react';
 import IconStudy from '@src/assets/icons/IconStudy.svg?react';
 import IconCafe from '@src/assets/icons/IconCafe.svg?react';
 import IconRestaurant from '@src/assets/icons/IconRestaurant.svg?react';
-import { useSearchParams, useNavigate, useParams } from 'react-router-dom';
+import {
+  useSearchParams,
+  useNavigate,
+  useParams,
+  Link,
+} from 'react-router-dom';
 import { useGetRecommendPlaceSearchQuery } from '@src/state/queries/location/useGetRecommendPlaceSearchQuery';
 import { useMidpointSearchQuery } from '@src/state/queries/location/useMidpointSearchQuery';
 import { IPlaceContent } from '@src/types/location/recommendPlaceSearchResponseType';
 import AddressDisplay from '@src/components/location/AddressDisplay';
 import { IMidpointDataResponseType } from '@src/types/location/midpointSearchResponseType';
+import IconLeftArrow from '@src/assets/icons/IconLeftArrow.svg?react';
+import IconRightArrow from '@src/assets/icons/IconRightArrow.svg?react';
+
 import { PATH } from '@src/constants/path';
 
 const PLACE_STANDARDS = {
@@ -45,7 +53,6 @@ export default function LocationRecommendationsPage() {
         lng: place.addressLong,
         isMyLocation: false,
         roadNameAddress: place.name,
-        name: place.name,
         isSelected: place.name === selectedPlace,
       })) || [];
 
@@ -57,7 +64,6 @@ export default function LocationRecommendationsPage() {
             lng: firstMidpoint.addressLong,
             isMyLocation: true,
             roadNameAddress: firstMidpoint.name,
-            name: '중간 지점',
           },
         ]
       : [];
@@ -102,7 +108,7 @@ export default function LocationRecommendationsPage() {
     }
   }, [midpointSearchData, urlLat, urlLng, navigate, roomId]);
 
-  const totalPages = recommendPlaceSearchData?.data.totalPages || 5;
+  const totalPages = recommendPlaceSearchData?.data.totalPages;
   const currentGroup = Math.floor(currentPage / 5);
   const startPage = currentGroup * 5;
   const endPage = Math.min(startPage + 5, totalPages);
@@ -166,7 +172,7 @@ export default function LocationRecommendationsPage() {
         </div>
       </div>
       <div className="grid w-full grid-cols-1 lg:grid-cols-2 px-4 lg:px-[7.5rem] gap-[0.9375rem] mt-[0.4375rem]">
-        <div className="rounded-default min-h-[40.625rem]">
+        <div className="rounded-default h-[31.25rem] lg:h-[43.75rem]">
           <KakaoMap coordinates={coordinates} />
         </div>
         <div className="flex flex-col h-full">
@@ -177,8 +183,8 @@ export default function LocationRecommendationsPage() {
                   key={index}
                   className={`flex flex-col justify-center p-4 pb-[0.625rem] cursor-pointer rounded-[0.625rem] shadow-sm ${
                     selectedPlace === place.name
-                      ? 'ring-2 ring-blue-normal01'
-                      : ''
+                      ? 'bg-blue-100 opacity-95 ring-2 ring-blue-normal01'
+                      : 'ring-1 ring-primary'
                   }`}
                   onClick={() => setSelectedPlace(place.name)}
                 >
@@ -203,12 +209,30 @@ export default function LocationRecommendationsPage() {
                       {place.roadNameAddress}
                     </span>
                   </div>
-                  <div className="flex items-center gap-2 my-2">
-                    <span className="text-[1.25rem] text-blue-dark01">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[1.25rem] text-blue-dark01 my-1">
                       {place.name}
                     </span>
-                    <IconLinkPin className="flex-shrink-0 size-4" />
+                    {selectedPlace == place.name && (
+                      <Link
+                        to={place.placeUrl}
+                        target="_blank"
+                        className="text-white-default"
+                      >
+                        <IconLinkPin className="flex-shrink-0 size-4 hover:scale-110" />
+                      </Link>
+                    )}
                   </div>
+                  {selectedPlace == place.name && (
+                    <div className="flex items-center gap-2">
+                      <span className="px-2 py-1 rounded-lg bg-primary text-white-default text-description">
+                        {`내 위치로부터 ${place.distance}m`}
+                      </span>
+                      <span className="px-2 py-1 rounded-lg bg-primary text-white-default text-description">
+                        {place.phoneNumber}
+                      </span>
+                    </div>
+                  )}
                   <div className="mt-1">
                     <AddressDisplay address={place.siGunGu} />
                   </div>
@@ -218,12 +242,10 @@ export default function LocationRecommendationsPage() {
           </ul>
           <div className="h-[0.7fr] flex items-center justify-center gap-4 mt-4">
             {currentGroup > 0 && (
-              <button
-                className="px-2 rounded hover:bg-gray-light"
+              <IconLeftArrow
+                className="size-5 hover:cursor-pointer"
                 onClick={() => handlePageChange(startPage - 1)}
-              >
-                이전
-              </button>
+              />
             )}
             {Array.from(
               { length: endPage - startPage },
@@ -242,12 +264,10 @@ export default function LocationRecommendationsPage() {
               </button>
             ))}
             {endPage < totalPages && (
-              <button
-                className="px-2 rounded hover:bg-gray-light"
+              <IconRightArrow
+                className="size-5 hover:cursor-pointer"
                 onClick={() => handlePageChange(endPage)}
-              >
-                다음
-              </button>
+              />
             )}
           </div>
         </div>
