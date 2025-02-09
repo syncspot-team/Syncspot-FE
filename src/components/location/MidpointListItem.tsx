@@ -66,7 +66,7 @@ export default function MidpointListItem({
           onClick={handleNavigate}
           className={`${
             isSelected ? 'opacity-100' : 'opacity-0'
-          } rounded-[0.4375rem] p-1 mr-2 text-primary hover:bg-gray-light hover:scale-110`}
+          } rounded-[0.4375rem] p-1 text-primary hover:bg-gray-light hover:scale-110`}
         />
       </div>
       <div className="flex items-center gap-4 my-1">
