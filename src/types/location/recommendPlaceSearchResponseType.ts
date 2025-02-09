@@ -16,7 +16,7 @@ interface IPageResponse<T> {
   empty: boolean;
 }
 
-interface IPlaceContent {
+export interface IPlaceContent {
   name: string;
   siDo: string;
   siGunGu: string;
