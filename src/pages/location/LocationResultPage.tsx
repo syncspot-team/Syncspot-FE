@@ -10,7 +10,7 @@ import { useCoordinates } from '@src/hooks/location/useCoordinates';
 import { SEQUENCE } from '@src/components/location/constants';
 
 export default function LocationResultPage() {
-  const [selectedLocationIndex, setSelectedLocationIndex] = useState<number>(0);
+  const [selectedLocationIndex, setSelectedLocationIndex] = useState(0);
 
   const { data: placeSearchData } = useGetPlaceSearchQuery();
   const { data: midpointSearchData } = useMidpointSearchQuery();
@@ -42,7 +42,7 @@ export default function LocationResultPage() {
         <KakaoMap coordinates={coordinates} />
       </div>
       <div className="lg:col-span-4">
-        <ul className="grid grid-rows-5 h-full gap-[0.625rem]">
+        <ul className="grid grid-cols-1 grid-rows-5 h-full gap-[0.625rem]">
           {midpointSearchData.data.map(
             (location: IMidpointDataResponseType, index: number) => (
               <MidpointListItem

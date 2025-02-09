@@ -5,4 +5,8 @@ export const LOCATION_KEY = {
     'getMidpointTimeSearch',
     roomId,
   ],
+  GET_RECOMMEND_PLACE_SEARCH: (roomId: string) => [
+    'getRecommendPlaceSearch',
+    roomId,
+  ],
 };

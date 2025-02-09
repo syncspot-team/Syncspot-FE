@@ -1,9 +1,7 @@
 import IconRightHalfArrow from '@src/assets/icons/IconRightHalfArrow.svg?react';
-import IconLinkPin from '@src/assets/icons/IconLinkPin.svg?react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { IMidpointDataResponseType } from '@src/types/location/midpointSearchResponseType';
 import { PATH } from '@src/constants/path';
-import { useState, useEffect, useRef } from 'react';
 import AddressDisplay from './AddressDisplay';
 
 interface IMidpointListItemProps {
@@ -34,34 +32,20 @@ export default function MidpointListItem({
 }: IMidpointListItemProps) {
   const { roomId } = useParams();
   const navigate = useNavigate();
-  const [isTruncated, setIsTruncated] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
-  const addressRef = useRef<HTMLSpanElement>(null);
-
-  useEffect(() => {
-    const element = addressRef.current;
-    if (!element) return;
-
-    const resizeObserver = new ResizeObserver(() => {
-      setIsTruncated(element.scrollWidth > element.clientWidth);
-    });
-
-    resizeObserver.observe(element);
-    return () => resizeObserver.unobserve(element);
-  }, []);
+  const address = location.roadNameAddress || '위치 정보 없음';
 
   const handleNavigate = (e: React.MouseEvent) => {
     e.stopPropagation();
-    const { addressLat, addressLong, roadNameAddress } = location;
+    const { addressLat, addressLong, name } = location;
     navigate(
       PATH.LOCATION_RECOMMENDATIONS(roomId) +
-        `?lat=${addressLat}&lng=${addressLong}&location=${roadNameAddress}`,
+        `?lat=${addressLat}&lng=${addressLong}&location=${name}`,
     );
   };
 
   return (
     <li
-      className={`flex flex-col justify-center h-full max-h-[140px] p-4 cursor-pointer rounded-default shadow-sm ${
+      className={`flex flex-col justify-center h-full max-h-[8.75rem] p-4 cursor-pointer rounded-default shadow-sm ${
         isSelected
           ? 'bg-blue-100 opacity-95 ring-2 ring-blue-normal01'
           : 'ring-1 ring-primary'
@@ -81,14 +65,13 @@ export default function MidpointListItem({
           onClick={handleNavigate}
           className={`${
             isSelected ? 'opacity-100' : 'opacity-0'
-          } rounded-[0.4375rem] p-1 mr-2 text-primary hover:bg-gray-light hover:scale-110`}
+          } rounded-[0.4375rem] p-1 text-primary hover:bg-gray-light hover:scale-110`}
         />
       </div>
-      <div className="flex items-center gap-4 my-1">
-        <span className="truncate text-blue-dark01 text-subtitle">
+      <div className="flex items-center my-[0.125rem]">
+        <h3 className="truncate text-blue-dark01 text-subtitle">
           {location.name}
-        </span>
-        <IconLinkPin className="flex-shrink-0 size-[1.125rem]" />
+        </h3>
       </div>
       {isSelected ? (
         <div className="flex flex-col gap-1">
@@ -102,22 +85,10 @@ export default function MidpointListItem({
               </span>
             </div>
           )}
-          <AddressDisplay
-            address={location.roadNameAddress}
-            addressRef={addressRef}
-            isTruncated={isTruncated}
-            isExpanded={isExpanded}
-            setIsExpanded={setIsExpanded}
-          />
+          <AddressDisplay address={address} />
         </div>
       ) : (
-        <AddressDisplay
-          address={location.roadNameAddress}
-          addressRef={addressRef}
-          isTruncated={isTruncated}
-          isExpanded={isExpanded}
-          setIsExpanded={setIsExpanded}
-        />
+        <AddressDisplay address={address} />
       )}
     </li>
   );

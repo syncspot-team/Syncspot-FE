@@ -61,19 +61,19 @@ export default function KakaoMap({ coordinates }: IKakaoMap) {
       position: coords,
       content: markerContent,
       yAnchor: 1,
-      zIndex: isMyLocation ? 1000 : 1,
+      zIndex: isSelected ? 3000 : isMyLocation ? 2000 : 1,
     });
 
-    // 마우스 호버 이벤트 추가
+    // 마우스 호버 이벤트 수정
     addressContent.addEventListener('mouseenter', () => {
-      customOverlay.setZIndex(2000);
+      customOverlay.setZIndex(4000);
       addressContent.style.transform = 'scale(1.05)';
       addressContent.style.boxShadow =
         '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)';
     });
 
     addressContent.addEventListener('mouseleave', () => {
-      customOverlay.setZIndex(isMyLocation ? 1000 : 1);
+      customOverlay.setZIndex(isSelected ? 3000 : isMyLocation ? 2000 : 1);
       addressContent.style.transform = 'scale(1)';
       addressContent.style.boxShadow = '';
     });

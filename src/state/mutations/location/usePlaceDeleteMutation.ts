@@ -27,6 +27,9 @@ export const usePlaceDeleteMutation = (
       queryClient.invalidateQueries({
         queryKey: LOCATION_KEY.GET_MIDPOINT_SEARCH(roomId!),
       });
+      queryClient.invalidateQueries({
+        queryKey: LOCATION_KEY.GET_RECOMMEND_PLACE_SEARCH(roomId!),
+      });
     },
     ...options,
   });
