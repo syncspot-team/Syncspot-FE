@@ -264,7 +264,7 @@ export default function LocationEnterPage() {
         <h1 className="mb-1 lg:mb-[0.375rem] ml-2 text-menu lg:text-subtitle text-tertiary">
           내가 입력한 장소
         </h1>
-        <ul className="flex flex-col p-1 max-h-[15.625rem] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full">
+        <ul className="flex flex-col p-1 max-h-[12.5rem] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full">
           {myLocationFields.length === 0 ? (
             <li className="flex items-center justify-center py-4 text-description lg:text-content text-gray-dark">
               아래 장소 추가하기 버튼을 클릭해 장소를 추가해보세요!
@@ -298,7 +298,7 @@ export default function LocationEnterPage() {
         <h1 className="text-menu lg:text-subtitle text-tertiary mb-1 lg:mb-[0.375rem] mt-2 lg:mt-4 ml-2">
           친구가 입력한 장소
         </h1>
-        <div className="max-h-[15.625rem] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full">
+        <div className="max-h-[12.5rem] mb-2 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full">
           {friendLocationFields.length === 0 ? (
             <div className="flex items-center justify-center py-4 text-description lg:text-content text-gray-dark">
               아직 친구가 장소를 입력하지 않았습니다
