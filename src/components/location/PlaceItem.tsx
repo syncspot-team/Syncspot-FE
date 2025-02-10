@@ -2,7 +2,7 @@ import IconLinkPin from '@src/assets/icons/IconLinkPin.svg?react';
 import IconStudy from '@src/assets/icons/IconStudy.svg?react';
 import IconCafe from '@src/assets/icons/IconCafe.svg?react';
 import IconRestaurant from '@src/assets/icons/IconRestaurant.svg?react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { IPlaceContent } from '@src/types/location/recommendPlaceSearchResponseType';
 import AddressDisplay from './AddressDisplay';
 
@@ -17,6 +17,7 @@ export default function PlaceItem({
   isSelected,
   onSelect,
 }: IPlaceItemProps) {
+  const [searchParams] = useSearchParams();
   const PLACE_ICONS = {
     STUDY: IconStudy,
     CAFE: IconCafe,
@@ -57,7 +58,7 @@ export default function PlaceItem({
         <div className="flex items-center gap-2">
           {place.distance && (
             <span className="px-2 py-1 rounded-lg bg-primary text-white-default text-description">
-              {`내 위치로부터 ${place.distance}m`}
+              {`${searchParams.get('location')}에서 ${place.distance}m`}
             </span>
           )}
           {place.phoneNumber && (

@@ -3,11 +3,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { IMidpointDataResponseType } from '@src/types/location/midpointSearchResponseType';
 import { PATH } from '@src/constants/path';
 import AddressDisplay from './AddressDisplay';
+import { IPlaceSearchResponseType } from '@src/types/location/placeSearchResponseType';
 
 interface IMidpointListItemProps {
   location: IMidpointDataResponseType;
   index: number;
   isSelected: boolean;
+  placeSearchData: IPlaceSearchResponseType;
   sequence: string;
   timeSearchData?: {
     data?: {
@@ -25,6 +27,7 @@ export default function MidpointListItem({
   location,
   index,
   isSelected,
+  placeSearchData,
   sequence,
   timeSearchData,
   isTimeSearchLoading,
@@ -33,6 +36,8 @@ export default function MidpointListItem({
   const { roomId } = useParams();
   const navigate = useNavigate();
   const address = location.roadNameAddress || '위치 정보 없음';
+  const myLocationName =
+    placeSearchData?.data?.myLocations?.[0]?.roadNameAddress;
 
   const handleNavigate = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -78,10 +83,10 @@ export default function MidpointListItem({
           {!isTimeSearchLoading && timeSearchData?.data?.elements[0] && (
             <div className="flex items-center gap-2">
               <span className="px-2 py-1 rounded-md bg-primary text-description text-white-default">
-                {timeSearchData.data.elements[0].distance.text}
+                {`${myLocationName}에서 ${timeSearchData.data.elements[0].distance.text}`}
               </span>
               <span className="px-2 py-1 rounded-md bg-primary text-description text-white-default">
-                {timeSearchData.data.elements[0].duration.text}
+                {`${timeSearchData.data.elements[0].duration.text}`}
               </span>
             </div>
           )}

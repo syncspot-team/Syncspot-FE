@@ -50,6 +50,7 @@ export default function LocationResultPage() {
                 location={location}
                 index={index}
                 isSelected={selectedLocationIndex === index}
+                placeSearchData={placeSearchData}
                 sequence={SEQUENCE[index]}
                 timeSearchData={
                   selectedLocationIndex === index ? timeSearchData : undefined
