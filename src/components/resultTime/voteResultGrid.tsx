@@ -129,9 +129,9 @@ export default function VoteResultGrid() {
           )}
           disabled={currentIndex === 0}
         >
-          <Arrow className="text-4xl " />
+          <Arrow className="text-title " />
         </button>
-        <p className="text-xl font-bold text-center text-blue-dark03">
+        <p className="font-bold text-center text-title text-blue-dark03">
           {formattedDates[currentIndex]}
         </p>
         <button
@@ -143,7 +143,7 @@ export default function VoteResultGrid() {
           )}
           disabled={currentIndex === formattedDates.length - 1}
         >
-          <Arrow className="text-4xl rotate-180" />
+          <Arrow className="rotate-180 text-title" />
         </button>
       </div>
 
