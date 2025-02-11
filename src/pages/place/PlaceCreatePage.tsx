@@ -139,17 +139,6 @@ export default function PlaceCreatePage() {
     return true;
   };
 
-  const handleAddLocation = () => {
-    appendLocation({
-      siDo: '',
-      siGunGu: '',
-      roadNameAddress: '',
-      addressLat: 0,
-      addressLong: 0,
-      name: '',
-    });
-  };
-
   const isValidLocation = (loc: (typeof locations)[0]) =>
     loc.addressLat !== 0 && loc.addressLong !== 0;
 
@@ -178,14 +167,12 @@ export default function PlaceCreatePage() {
     };
 
     if (placeVoteRoomCheckData?.data.existence) {
-      console.log('업데이트');
       placeVoteRoomUpdateMutation(payload, {
         onSuccess: () => {
           navigate(PATH.PLACE_VOTE(roomId));
         },
       });
     } else {
-      console.log('생성');
       placeVoteRoomCreateMutation(payload, {
         onSuccess: () => {
           navigate(PATH.PLACE_VOTE(roomId));
@@ -232,7 +219,16 @@ export default function PlaceCreatePage() {
         </ul>
         <div className="flex flex-col mt-auto gap-[0.5rem]">
           <Button
-            onClick={handleAddLocation}
+            onClick={() => {
+              appendLocation({
+                siDo: '',
+                siGunGu: '',
+                roadNameAddress: '',
+                addressLat: 0,
+                addressLong: 0,
+                name: '',
+              });
+            }}
             buttonType="secondary"
             className="w-full px-[0.3125rem]"
           >
