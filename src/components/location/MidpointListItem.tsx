@@ -82,12 +82,16 @@ export default function MidpointListItem({
         <div className="flex flex-col gap-1">
           {!isTimeSearchLoading && timeSearchData?.data?.elements[0] && (
             <div className="flex items-center gap-2">
-              <span className="px-2 py-1 rounded-md bg-primary text-description text-white-default">
-                {`${myLocationName}에서 ${timeSearchData.data.elements[0].distance.text}`}
-              </span>
-              <span className="px-2 py-1 rounded-md bg-primary text-description text-white-default">
-                {`${timeSearchData.data.elements[0].duration.text}`}
-              </span>
+              {timeSearchData.data.elements[0].distance?.text && (
+                <span className="px-2 py-1 rounded-md bg-primary text-description text-white-default">
+                  {`${myLocationName}에서 ${timeSearchData.data.elements[0].distance.text}`}
+                </span>
+              )}
+              {timeSearchData.data.elements[0].duration?.text && (
+                <span className="px-2 py-1 rounded-md bg-primary text-description text-white-default">
+                  {`${timeSearchData.data.elements[0].duration.text}`}
+                </span>
+              )}
             </div>
           )}
           <AddressDisplay address={address} />
