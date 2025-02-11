@@ -5,6 +5,7 @@ import { useSaveUserToRoomMutation } from '@src/state/mutations/onboarding/useSa
 import { useQueryClient } from '@tanstack/react-query';
 import { ROOM_QUERY_KEY } from '@src/state/queries/header/key';
 import { Loading } from '@src/components/loading/Loading';
+import SomethingWrongErrorPage from '@src/pages/error/SomethingWrongErrorPage';
 
 interface RoomCheckProps {
   children: React.ReactNode;
@@ -46,7 +47,11 @@ const RoomCheck = ({ children }: RoomCheckProps) => {
   }
 
   // 방 멤버 확인이 완료되고, 멤버인 경우에만 children 렌더링
-  return joinedRoomCheck?.data.exists ? <>{children}</> : <Loading />;
+  return joinedRoomCheck?.data.exists ? (
+    <>{children}</>
+  ) : (
+    <SomethingWrongErrorPage />
+  );
 };
 
 export default RoomCheck;
