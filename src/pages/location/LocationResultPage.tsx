@@ -13,7 +13,11 @@ export default function LocationResultPage() {
   const [selectedLocationIndex, setSelectedLocationIndex] = useState(0);
 
   const { data: placeSearchData } = useGetPlaceSearchQuery();
-  const { data: midpointSearchData } = useMidpointSearchQuery();
+  const { data: midpointSearchData } = useMidpointSearchQuery({
+    enabled:
+      !!placeSearchData?.data?.myLocationExistence ||
+      !!placeSearchData?.data?.friendLocationExistence,
+  });
 
   const selectedMidpoint = midpointSearchData?.data[selectedLocationIndex];
   const { data: timeSearchData, isLoading: isTimeSearchLoading } =

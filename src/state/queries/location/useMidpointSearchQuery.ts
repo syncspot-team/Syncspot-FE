@@ -5,7 +5,10 @@ import { useParams } from 'react-router-dom';
 import { IMidpointSearchResponseType } from '@src/types/location/midpointSearchResponseType';
 
 export const useMidpointSearchQuery = (
-  options?: UseQueryOptions<IMidpointSearchResponseType, Error, any>,
+  options?: Omit<
+    UseQueryOptions<IMidpointSearchResponseType, Error, any>,
+    'queryKey' | 'queryFn'
+  >,
 ) => {
   const { roomId } = useParams();
 
