@@ -104,10 +104,15 @@ export default function KakaoMap({ coordinates }: IKakaoMap) {
       maxLng = Math.max(maxLng, lng);
     });
 
-    // 위도에 여유 공간 추가 (텍스트 오버레이를 위한 공간)
-    const latPadding = (maxLat - minLat) * 0.1; // 10% 여유 공간
-    bounds.extend(new window.kakao.maps.LatLng(minLat - latPadding, minLng));
-    bounds.extend(new window.kakao.maps.LatLng(maxLat + latPadding, maxLng));
+    // 위도와 경도 모두에 더 큰 여유 공간 (20프로) 추가
+    const latPadding = (maxLat - minLat) * 0.2;
+    const lngPadding = (maxLng - minLng) * 0.2;
+    bounds.extend(
+      new window.kakao.maps.LatLng(minLat - latPadding, minLng - lngPadding),
+    );
+    bounds.extend(
+      new window.kakao.maps.LatLng(maxLat + latPadding, maxLng + lngPadding),
+    );
 
     // 마커 생성
     coordinates.forEach(
@@ -189,12 +194,19 @@ export default function KakaoMap({ coordinates }: IKakaoMap) {
                 maxLng = Math.max(maxLng, lng);
               });
 
-              const latPadding = (maxLat - minLat) * 0.1;
+              const latPadding = (maxLat - minLat) * 0.2;
+              const lngPadding = (maxLng - minLng) * 0.2;
               bounds.extend(
-                new window.kakao.maps.LatLng(minLat - latPadding, minLng),
+                new window.kakao.maps.LatLng(
+                  minLat - latPadding,
+                  minLng - lngPadding,
+                ),
               );
               bounds.extend(
-                new window.kakao.maps.LatLng(maxLat + latPadding, maxLng),
+                new window.kakao.maps.LatLng(
+                  maxLat + latPadding,
+                  maxLng + lngPadding,
+                ),
               );
 
               mapRef.current.setBounds(bounds);
