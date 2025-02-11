@@ -50,7 +50,7 @@ export default function MidpointListItem({
 
   return (
     <li
-      className={`flex flex-col justify-center h-full max-h-[8.75rem] p-4 cursor-pointer rounded-default shadow-sm ${
+      className={`flex flex-col justify-center h-full p-4 cursor-pointer rounded-default shadow-sm ${
         isSelected
           ? 'bg-blue-100 opacity-95 ring-2 ring-blue-normal01'
           : 'ring-1 ring-primary'
