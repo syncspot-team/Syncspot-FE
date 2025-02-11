@@ -2,130 +2,148 @@ import { useForm, useFieldArray } from 'react-hook-form';
 import KakaoLocationPicker from '@src/components/common/kakao/KakaoLocationPicker';
 import { ISelectedLocation } from '@src/components/common/kakao/types';
 import KakaoMap from '@src/components/common/kakao/KakaoMap';
-import { useMemo } from 'react';
+import { useMemo, useEffect, useRef } from 'react';
 import IconXmark from '@src/assets/icons/IconXmark.svg?react';
 import Button from '@src/components/common/button/Button';
+import { useMidpointSearchQuery } from '@src/state/queries/location/useMidpointSearchQuery';
+import { useGetPlaceVoteRoomCheckQuery } from '@src/state/queries/place/useGetPlaceVoteRoomCheckQuery';
+import { usePlaceVoteRoomCreateMutation } from '@src/state/mutations/place/usePlaceVoteRoomCreateMutation';
+import { usePlaceVoteRoomUpdateMutation } from '@src/state/mutations/place/usePlaceVoteRoomUpdateMutation';
+import { IPlaceVoteRoomCheckResponseCandidate } from '@src/types/place/placeVoteRoomCheckResponseType';
+import { IMidpointDataResponseType } from '@src/types/location/midpointSearchResponseType';
+import { TOAST_TYPE } from '@src/types/toastType';
+import CustomToast from '@src/components/common/toast/customToast';
+import SomethingWrongErrorPage from '@src/pages/error/SomethingWrongErrorPage';
+import { useGetPlaceSearchQuery } from '@src/state/queries/location/useGetPlaceSearchQuery';
+import { useNavigate, useParams } from 'react-router-dom';
+import { PATH } from '@src/constants/path';
 
-interface ILocationForm {
-  locations: {
-    siDo: string;
-    siGunGu: string;
-    roadNameAddress: string;
-    addressLat: number;
-    addressLong: number;
-  }[];
+interface ILocationFormItem
+  extends Omit<IPlaceVoteRoomCheckResponseCandidate, 'id'> {
+  id?: number;
 }
 
-const DUMMY_LOCATIONS = {
-  locations: [
-    {
-      siDo: '서울특별시',
-      siGunGu: '강남구',
-      roadNameAddress:
-        '테헤란로 427 테헤란로 427 테헤란로 427 테헤란로 427 테헤란로 427 테헤란로 427',
-      addressLat: 37.5065,
-      addressLong: 127.0536,
-    },
-    {
-      siDo: '서울특별시',
-      siGunGu: '서초구',
-      roadNameAddress: '강남대로 373',
-      addressLat: 37.4969,
-      addressLong: 127.0278,
-    },
-    {
-      siDo: '서울특별시',
-      siGunGu: '마포구',
-      roadNameAddress: '월드컵북로 396',
-      addressLat: 37.5575,
-      addressLong: 126.9076,
-    },
-  ],
-};
+interface ILocationForm {
+  locations: ILocationFormItem[];
+}
 
 export default function PlaceCreatePage() {
-  const { control, setValue, watch } = useForm<ILocationForm>({
-    defaultValues: DUMMY_LOCATIONS,
+  const { roomId } = useParams();
+  const navigate = useNavigate();
+  const lastLocationRef = useRef<HTMLLIElement>(null);
+
+  const { data: placeVoteRoomCheckData } = useGetPlaceVoteRoomCheckQuery();
+  const { data: placeSearchData } = useGetPlaceSearchQuery({
+    enabled: !placeVoteRoomCheckData?.data.existence,
+  });
+  const { data: midpointSearchData } = useMidpointSearchQuery({
+    enabled:
+      placeSearchData?.data?.myLocationExistence ||
+      placeSearchData?.data?.friendLocationExistence,
+  });
+
+  const { mutate: placeVoteRoomCreateMutation } =
+    usePlaceVoteRoomCreateMutation();
+  const { mutate: placeVoteRoomUpdateMutation } =
+    usePlaceVoteRoomUpdateMutation();
+
+  const { control, reset, watch } = useForm<ILocationForm>({
+    defaultValues: {
+      locations: [],
+    },
   });
 
   const locations = watch('locations');
 
-  const { fields: locationFields, append: appendLocation } = useFieldArray({
+  const {
+    fields: locationFields,
+    append: appendLocation,
+    remove: removeLocation,
+  } = useFieldArray({
     control,
     name: 'locations',
   });
 
-  const isAllLocationsFilled = locations.every(
-    (loc) => loc.addressLat !== 0 && loc.addressLong !== 0,
-  );
+  // 초기 데이터 설정
+  useEffect(() => {
+    if (!placeVoteRoomCheckData) return;
+
+    if (placeVoteRoomCheckData.data.existence) {
+      const candidates = placeVoteRoomCheckData.data.placeCandidates;
+      reset({
+        locations: candidates.map(
+          (candidate: IPlaceVoteRoomCheckResponseCandidate) => ({
+            id: candidate.id,
+            siDo: candidate.siDo,
+            siGunGu: candidate.siGunGu,
+            roadNameAddress: candidate.roadNameAddress,
+            addressLat: candidate.addressLat,
+            addressLong: candidate.addressLong,
+            name: candidate.roadNameAddress,
+          }),
+        ),
+      });
+    } else if (midpointSearchData?.data) {
+      reset({
+        locations: midpointSearchData.data.map(
+          (place: IMidpointDataResponseType) => ({
+            siDo: place.siDo,
+            siGunGu: place.siGunGu,
+            roadNameAddress: place.name,
+            addressLat: place.addressLat,
+            addressLong: place.addressLong,
+            name: place.name,
+          }),
+        ),
+      });
+    }
+  }, [placeVoteRoomCheckData, midpointSearchData, reset]);
+
+  useEffect(() => {
+    if (lastLocationRef.current) {
+      lastLocationRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [locationFields.length]);
 
   const handleLocationSelect = (location: ISelectedLocation, index: number) => {
-    // 선택한 장소에 대해서 내 장소 목록에 있는 값들과 비교하여 이미 존재하는 장소인지를 확인하고, 이미 존재한다면
-    // 토스트 메세지를 띄우고 false를 리턴한다.
-
     const { place, address } = location;
-    // 새로운 값 설정
-    setValue(
-      `locations.${index}.siDo` as const,
-      address?.address.region_1depth_name || '',
-    );
-    setValue(
-      `locations.${index}.siGunGu` as const,
-      address?.address.region_2depth_name || '',
-    );
-    setValue(
-      `locations.${index}.roadNameAddress` as const,
-      place.place_name || '',
-    );
-    setValue(
-      `locations.${index}.addressLat` as const,
-      address?.y ? parseFloat(address.y) : 0,
-    );
-    setValue(
-      `locations.${index}.addressLong` as const,
-      address?.x ? parseFloat(address.x) : 0,
+
+    const isDuplicate = locations.some(
+      (loc, i) =>
+        i !== index &&
+        loc.addressLat === parseFloat(address?.y || '0') &&
+        loc.addressLong === parseFloat(address?.x || '0'),
     );
 
-    // 장소 선택 완료 후 처리 (장소 수정, 저장 요청시에 사용될 장소에 대한 값)
-    const currentLocation = {
+    if (isDuplicate) {
+      CustomToast({
+        type: TOAST_TYPE.WARNING,
+        message: '이미 등록된 장소입니다.',
+      });
+      return false;
+    }
+
+    const newLocation = {
       siDo: address?.address.region_1depth_name || '',
       siGunGu: address?.address.region_2depth_name || '',
       roadNameAddress: place.place_name || '',
       addressLat: address?.y ? parseFloat(address.y) : 0,
       addressLong: address?.x ? parseFloat(address.x) : 0,
+      name: place.place_name || '',
     };
 
-    // 서버로 장소 저장 및 수정 요청하는 부분
-    console.log(currentLocation);
-
-    // index가 초기 더미 데이터의 길이보다 작으면 기존 필드 (초기 더미데이터의 길이로 판별하고 있지만 실제로는 useState로 관리되는 나의 주소목록들을 기준으로 판단해야한다.)
-    // 또는 백엔드에서 기존에 장소 목록들을 줄때, placeId값도 준다고 하니, 이 값을 활용해서, 주소들이 있는 목록으로 부터 placeId값을 받아와서 해당 값이 존재하는 경우에는 장소 수정요청을,
-    // 그렇지 않은 경우에는 저장요청을 보낸다.
-    // const isExistingField = index < DUMMY_LOCATIONS.locations.length;
-
-    // if (isExistingField) {
-    //   alert('장소 수정 요청을 보냅니다.');
-    //   // TODO: 수정 API 호출
-    // } else {
-    //   alert('새로운 장소 저장 요청을 보냅니다.');
-    //   // TODO: 저장 API 호출
-    // }
+    const newLocations = [...locations];
+    newLocations[index] = newLocation;
+    reset({ locations: newLocations });
 
     return true;
   };
 
-  const handleAddLocation = () => {
-    appendLocation({
-      siDo: '',
-      siGunGu: '',
-      roadNameAddress: '',
-      addressLat: 0,
-      addressLong: 0,
-    });
-  };
-
   const isValidLocation = (loc: (typeof locations)[0]) =>
     loc.addressLat !== 0 && loc.addressLong !== 0;
+
+  const isAllLocationsFilled =
+    locations.length > 0 && locations.every(isValidLocation);
 
   const coordinates = useMemo(() => {
     return locations.filter(isValidLocation).map((location) => ({
@@ -134,15 +152,42 @@ export default function PlaceCreatePage() {
       roadNameAddress: location.roadNameAddress,
       isMyLocation: false,
     }));
-  }, [JSON.stringify(locations.filter(isValidLocation))]);
+  }, [locations]);
 
   const handleVoteCreate = () => {
-    // TODO: 투표 생성 요청
+    const payload = {
+      placeCandidates: locations.map((location) => ({
+        siDo: location.siDo,
+        siGunGu: location.siGunGu,
+        roadNameAddress: location.roadNameAddress,
+        addressLat: location.addressLat,
+        addressLong: location.addressLong,
+        name: location.roadNameAddress,
+      })),
+    };
+
+    if (placeVoteRoomCheckData?.data.existence) {
+      placeVoteRoomUpdateMutation(payload, {
+        onSuccess: () => {
+          navigate(PATH.PLACE_VOTE(roomId));
+        },
+      });
+    } else {
+      placeVoteRoomCreateMutation(payload, {
+        onSuccess: () => {
+          navigate(PATH.PLACE_VOTE(roomId));
+        },
+      });
+    }
   };
+
+  if (!midpointSearchData?.data) {
+    return <SomethingWrongErrorPage />;
+  }
 
   return (
     <div className="grid w-full grid-cols-1 lg:grid-cols-2 px-4 lg:px-[7.5rem] gap-[0.9375rem] mt-[1.875rem]">
-      <div className="flex flex-col justify-center order-2 p-5 rounded-default bg-gray-light lg:order-1">
+      <div className="flex flex-col order-2 p-5 rounded-default bg-gray-light lg:order-1">
         <h1 className="flex items-center justify-center text-title text-tertiary my-[1.25rem]">
           모임 장소 투표 생성 하기
         </h1>
@@ -150,33 +195,40 @@ export default function PlaceCreatePage() {
           <span>우리 같이 투표해요!</span>
           <span>원하는 모임 장소를 선택한 후 투표를 진행하세요!</span>
         </div>
-        <ul className="flex flex-col max-h-[31.25rem] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full p-1">
+        <ul className="flex flex-col max-h-[calc(100vh-25rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full p-1">
           {locationFields.map((field, index) => (
             <li
               key={field.id}
-              className="flex items-center justify-between bg-white-default rounded-default mb-[0.625rem] hover:opacity-55 hover:ring-1 hover:ring-gray-dark"
+              ref={index === locationFields.length - 1 ? lastLocationRef : null}
+              className="flex group/location relative items-center justify-between bg-white-default rounded-default mb-[0.625rem] hover:ring-1 hover:ring-gray-normal z-10"
             >
               <KakaoLocationPicker
-                InputClassName="flex-1 w-full text-content bg-white-default py-[1.3125rem] truncate"
+                InputClassName="w-full text-description lg:text-content bg-white-default py-[1.3125rem] truncate"
                 onSelect={(location) => handleLocationSelect(location, index)}
-                defaultAddress={field.roadNameAddress}
+                defaultAddress={locations[index]?.roadNameAddress}
               />
               <button
                 type="button"
-                onClick={() => {
-                  alert('해당 장소를 삭제하시겠습니까?');
-                }}
-                className="p-1 mx-2 rounded-[0.5rem] hover:bg-gray-normal"
+                onClick={() => removeLocation(index)}
+                className="p-1 mx-2 rounded-[0.5rem] hover:bg-gray-normal absolute right-0 group/deleteButton hidden group-hover/location:block"
               >
-                <IconXmark className="size-4" />
+                <IconXmark className="transition-none size-4 text-gray-normal group-hover/deleteButton:text-gray-dark" />
               </button>
             </li>
           ))}
         </ul>
-
-        <div className="flex flex-col mt-[1.75rem] gap-[0.5rem]">
+        <div className="flex flex-col mt-auto gap-[0.5rem]">
           <Button
-            onClick={handleAddLocation}
+            onClick={() => {
+              appendLocation({
+                siDo: '',
+                siGunGu: '',
+                roadNameAddress: '',
+                addressLat: 0,
+                addressLong: 0,
+                name: '',
+              });
+            }}
             buttonType="secondary"
             className="w-full px-[0.3125rem]"
           >
@@ -192,7 +244,7 @@ export default function PlaceCreatePage() {
           </Button>
         </div>
       </div>
-      <div className="rounded-default min-h-[31.25rem] order-1 lg:order-2">
+      <div className="rounded-default min-h-[31.25rem] lg:min-h-[calc(100vh-8rem)] order-1 lg:order-2">
         <KakaoMap coordinates={coordinates} />
       </div>
     </div>

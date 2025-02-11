@@ -11,6 +11,7 @@ import PlaceTypeFilter, {
 } from '@src/components/location/PlaceTypeFilter';
 import PlaceList from '@src/components/location/PlaceList';
 import { useCoordinates } from '@src/hooks/location/useCoordinates';
+import { useGetPlaceSearchQuery } from '@src/state/queries/location/useGetPlaceSearchQuery';
 
 export default function LocationRecommendationsPage() {
   const navigate = useNavigate();
@@ -23,7 +24,12 @@ export default function LocationRecommendationsPage() {
     useState<PLACE_STANDARDS_TYPE>(PLACE_STANDARDS.ALL);
   const [selectedPlace, setSelectedPlace] = useState<string | null>(null);
 
-  const { data: midpointSearchData } = useMidpointSearchQuery();
+  const { data: placeSearchData } = useGetPlaceSearchQuery();
+  const { data: midpointSearchData } = useMidpointSearchQuery({
+    enabled:
+      !!placeSearchData?.data?.myLocationExistence ||
+      !!placeSearchData?.data?.friendLocationExistence,
+  });
   const { data: recommendPlaceSearchData, refetch } =
     useGetRecommendPlaceSearchQuery(selectedPlaceStandard, currentPage);
 
@@ -60,6 +66,10 @@ export default function LocationRecommendationsPage() {
 
   // url에 쿼리로 있는 위도, 경도에 대해 해당 값이 중간점 검색 데이터에 존재하는지 유효성 확인
   useEffect(() => {
+    if (!urlLat || !urlLng || !searchParams.get('location')) {
+      navigate(PATH.LOCATION_RESULT(roomId!));
+    }
+
     if (midpointSearchData?.data) {
       const isValidLocation = midpointSearchData.data.some(
         (point: IMidpointDataResponseType) =>
@@ -84,7 +94,7 @@ export default function LocationRecommendationsPage() {
         />
       </div>
       <div className="grid w-full grid-cols-1 lg:grid-cols-2 px-4 lg:px-[7.5rem] gap-[0.9375rem] mt-[0.4375rem]">
-        <div className="rounded-default h-[31.25rem] lg:h-[43.75rem]">
+        <div className="rounded-default h-[31.25rem] lg:h-[calc(100vh-10rem)]">
           <KakaoMap coordinates={coordinates} />
         </div>
         <PlaceList

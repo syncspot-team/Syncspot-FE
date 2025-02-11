@@ -60,7 +60,7 @@ export default function OnBoardingPlan({
             <h1 className="text-subtitle text-tertiary mb-[1.875rem]">
               어떤 모임을 계획하고 계시나요?
             </h1>
-            <ul className="flex flex-col items-center w-full gap-[1.5rem] mb-[1.875rem] max-h-[25rem] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full p-1">
+            <ul className="flex flex-col items-center w-full gap-[1.25rem] mb-[1.875rem] max-h-[calc(100vh-25rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full p-1">
               {roomList.data.map((item: IRoom) => (
                 <li
                   key={item.roomId}

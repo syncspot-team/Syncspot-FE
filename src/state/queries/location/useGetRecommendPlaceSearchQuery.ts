@@ -7,7 +7,10 @@ import { LOCATION_KEY } from './key';
 export const useGetRecommendPlaceSearchQuery = (
   placeStandard: string,
   page: number,
-  options?: UseQueryOptions<IRecommendPlaceSearchResponseType, Error, any>,
+  options?: Omit<
+    UseQueryOptions<IRecommendPlaceSearchResponseType, Error, any>,
+    'queryKey' | 'queryFn'
+  >,
 ) => {
   const { roomId } = useParams();
   const [searchParams] = useSearchParams();
@@ -15,6 +18,8 @@ export const useGetRecommendPlaceSearchQuery = (
   const addressLong = searchParams.get('lng');
 
   return useQuery({
+    staleTime: 0,
+    gcTime: 0,
     queryKey: LOCATION_KEY.GET_RECOMMEND_PLACE_SEARCH(roomId!),
     queryFn: () =>
       getRecommendPlaceSearch(
@@ -23,6 +28,7 @@ export const useGetRecommendPlaceSearchQuery = (
         placeStandard,
         page,
       ),
+    enabled: !!addressLat && !!addressLong && !!searchParams.get('location'),
     ...options,
   });
 };

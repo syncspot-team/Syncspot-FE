@@ -13,7 +13,11 @@ export default function LocationResultPage() {
   const [selectedLocationIndex, setSelectedLocationIndex] = useState(0);
 
   const { data: placeSearchData } = useGetPlaceSearchQuery();
-  const { data: midpointSearchData } = useMidpointSearchQuery();
+  const { data: midpointSearchData } = useMidpointSearchQuery({
+    enabled:
+      !!placeSearchData?.data?.myLocationExistence ||
+      !!placeSearchData?.data?.friendLocationExistence,
+  });
 
   const selectedMidpoint = midpointSearchData?.data[selectedLocationIndex];
   const { data: timeSearchData, isLoading: isTimeSearchLoading } =
@@ -38,10 +42,10 @@ export default function LocationResultPage() {
 
   return (
     <div className="grid w-full grid-cols-1 lg:grid-cols-10 px-4 lg:px-[7.5rem] gap-[1.25rem] lg:gap-[0.625rem] mt-[1.5625rem]">
-      <div className="rounded-default h-[31.25rem] lg:h-[46.875rem] lg:col-span-6">
+      <div className="rounded-default h-[31.25rem] lg:min-h-[calc(100vh-8rem)] lg:col-span-6">
         <KakaoMap coordinates={coordinates} />
       </div>
-      <div className="lg:col-span-4">
+      <div className="lg:col-span-4 lg:max-h-[calc(100vh-8rem)]">
         <ul className="grid grid-cols-1 grid-rows-5 h-full gap-[0.625rem]">
           {midpointSearchData.data.map(
             (location: IMidpointDataResponseType, index: number) => (
