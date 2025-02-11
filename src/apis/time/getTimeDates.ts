@@ -5,6 +5,6 @@ import getAPIResponseData from '@src/utils/getAPIResponseData';
 export const getTimeDates = async (roomId: string) => {
   return getAPIResponseData<ITimeDatesResponseType, void>({
     method: 'GET',
-    url: API.TIME_VOTE(roomId),
+    url: API.TIME_VOTE_ROOM_CHECK(roomId),
   });
 };
