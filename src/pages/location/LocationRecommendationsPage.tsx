@@ -1,9 +1,8 @@
 import KakaoMap from '@src/components/common/kakao/KakaoMap';
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate, useParams } from 'react-router-dom';
 import { useGetRecommendPlaceSearchQuery } from '@src/state/queries/location/useGetRecommendPlaceSearchQuery';
 import { useMidpointSearchQuery } from '@src/state/queries/location/useMidpointSearchQuery';
-import { IPlaceContent } from '@src/types/location/recommendPlaceSearchResponseType';
 import { IMidpointDataResponseType } from '@src/types/location/midpointSearchResponseType';
 import { PATH } from '@src/constants/path';
 import PlaceTypeFilter, {
@@ -11,6 +10,7 @@ import PlaceTypeFilter, {
   PLACE_STANDARDS_TYPE,
 } from '@src/components/location/PlaceTypeFilter';
 import PlaceList from '@src/components/location/PlaceList';
+import { useCoordinates } from '@src/hooks/location/useCoordinates';
 
 export default function LocationRecommendationsPage() {
   const navigate = useNavigate();
@@ -27,30 +27,11 @@ export default function LocationRecommendationsPage() {
   const { data: recommendPlaceSearchData, refetch } =
     useGetRecommendPlaceSearchQuery(selectedPlaceStandard, currentPage);
 
-  const coordinates = useMemo(() => {
-    const recommendCoords =
-      recommendPlaceSearchData?.data.content.map((place: IPlaceContent) => ({
-        lat: place.addressLat,
-        lng: place.addressLong,
-        isMyLocation: false,
-        roadNameAddress: place.name,
-        isSelected: place.name === selectedPlace,
-      })) || [];
-
-    const firstMidpoint = midpointSearchData?.data[0];
-    const midpointCoord = firstMidpoint
-      ? [
-          {
-            lat: firstMidpoint.addressLat,
-            lng: firstMidpoint.addressLong,
-            isMyLocation: true,
-            roadNameAddress: firstMidpoint.name,
-          },
-        ]
-      : [];
-
-    return [...recommendCoords, ...midpointCoord];
-  }, [recommendPlaceSearchData, midpointSearchData, selectedPlace]);
+  const coordinates = useCoordinates(
+    recommendPlaceSearchData,
+    midpointSearchData,
+    selectedPlace,
+  );
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);

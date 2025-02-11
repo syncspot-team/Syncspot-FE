@@ -38,7 +38,7 @@ export default function LocationResultPage() {
 
   return (
     <div className="grid w-full grid-cols-1 lg:grid-cols-10 px-4 lg:px-[7.5rem] gap-[1.25rem] lg:gap-[0.625rem] mt-[1.5625rem]">
-      <div className="rounded-default min-h-[40.625rem] lg:col-span-6">
+      <div className="rounded-default h-[31.25rem] lg:h-[46.875rem] lg:col-span-6">
         <KakaoMap coordinates={coordinates} />
       </div>
       <div className="lg:col-span-4">
@@ -50,6 +50,7 @@ export default function LocationResultPage() {
                 location={location}
                 index={index}
                 isSelected={selectedLocationIndex === index}
+                placeSearchData={placeSearchData}
                 sequence={SEQUENCE[index]}
                 timeSearchData={
                   selectedLocationIndex === index ? timeSearchData : undefined
