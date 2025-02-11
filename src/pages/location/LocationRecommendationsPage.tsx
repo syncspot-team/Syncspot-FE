@@ -94,7 +94,7 @@ export default function LocationRecommendationsPage() {
         />
       </div>
       <div className="grid w-full grid-cols-1 lg:grid-cols-2 px-4 lg:px-[7.5rem] gap-[0.9375rem] mt-[0.4375rem]">
-        <div className="rounded-default h-[31.25rem] lg:h-[43.75rem]">
+        <div className="rounded-default h-[31.25rem] lg:h-[calc(100vh-10rem)]">
           <KakaoMap coordinates={coordinates} />
         </div>
         <PlaceList

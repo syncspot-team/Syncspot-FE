@@ -68,9 +68,7 @@ export default function PlaceItem({
           )}
         </div>
       )}
-      <div className="mt-auto">
-        <AddressDisplay address={place.siGunGu} />
-      </div>
+      <AddressDisplay address={place.siDo + ' ' + place.siGunGu} />
     </li>
   );
 }
