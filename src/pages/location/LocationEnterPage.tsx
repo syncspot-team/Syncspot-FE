@@ -142,7 +142,10 @@ export default function LocationEnterPage() {
 
     // 기존 입력 위치가 savedLocations에 있는지 확인
     const existingLocation = savedLocations.find(
-      (loc) => loc.roadNameAddress === currentLocation.roadNameAddress,
+      (loc) =>
+        loc.roadNameAddress === currentLocation.roadNameAddress &&
+        loc.addressLat === currentLocation.addressLat &&
+        loc.addressLong === currentLocation.addressLong,
     );
 
     if (existingLocation) {
@@ -260,7 +263,6 @@ export default function LocationEnterPage() {
         <h1 className="flex items-center justify-center text-subtitle lg:text-title text-tertiary my-[1.25rem] lg:my-[1.5625rem]">
           모임 정보 입력
         </h1>
-
         <h1 className="mb-1 lg:mb-[0.375rem] ml-2 text-menu lg:text-subtitle text-tertiary">
           내가 입력한 장소
         </h1>
