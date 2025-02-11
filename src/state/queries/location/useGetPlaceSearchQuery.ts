@@ -5,7 +5,10 @@ import { IPlaceSearchResponseType } from '@src/types/location/placeSearchRespons
 import { useParams } from 'react-router-dom';
 
 export const useGetPlaceSearchQuery = (
-  options?: UseQueryOptions<IPlaceSearchResponseType, Error, any>,
+  options?: Omit<
+    UseQueryOptions<IPlaceSearchResponseType, Error, any>,
+    'queryKey' | 'queryFn'
+  >,
 ) => {
   const { roomId } = useParams();
 
