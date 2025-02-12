@@ -36,8 +36,11 @@ export default function MidpointListItem({
   const { roomId } = useParams();
   const navigate = useNavigate();
   const address = location.roadNameAddress || '위치 정보 없음';
-  const myLocationName =
-    placeSearchData?.data?.myLocations?.[0]?.roadNameAddress;
+
+  const allLocations = [
+    ...(placeSearchData?.data?.myLocations || []),
+    ...(placeSearchData?.data?.friendLocations || []),
+  ];
 
   const handleNavigate = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -79,23 +82,29 @@ export default function MidpointListItem({
         </h3>
       </div>
       {isSelected ? (
-        <div className="flex flex-col gap-1">
-          {!isTimeSearchLoading && timeSearchData?.data?.elements[0] && (
-            <div className="flex items-center gap-2">
-              {timeSearchData.data.elements[0].distance?.text && (
-                <span className="px-2 py-1 rounded-md bg-primary text-description text-white-default">
-                  {`${myLocationName}에서 ${timeSearchData.data.elements[0].distance.text}`}
-                </span>
-              )}
-              {timeSearchData.data.elements[0].duration?.text && (
-                <span className="px-2 py-1 rounded-md bg-primary text-description text-white-default">
-                  {`${timeSearchData.data.elements[0].duration.text}`}
-                </span>
-              )}
-            </div>
-          )}
+        <>
+          <div className="flex py-4 mb-1 overflow-x-auto scrollbar-hide">
+            {!isTimeSearchLoading && timeSearchData?.data?.elements && (
+              <div className="flex gap-4">
+                {timeSearchData.data.elements.map((element, idx) => (
+                  <div key={idx} className="flex items-center gap-1 w-max">
+                    {element.distance?.text && (
+                      <span className="px-2 py-1 rounded-md bg-primary text-description text-white-default whitespace-nowrap">
+                        {`${allLocations[idx]?.roadNameAddress}에서 ${element.distance.text}`}
+                      </span>
+                    )}
+                    {element.duration?.text && (
+                      <span className="px-2 py-1 rounded-md bg-blue-dark01 text-description text-white-default whitespace-nowrap">
+                        {element.duration.text + '소요'}
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
           <AddressDisplay address={address} />
-        </div>
+        </>
       ) : (
         <AddressDisplay address={address} />
       )}
