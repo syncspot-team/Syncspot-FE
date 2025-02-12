@@ -21,6 +21,9 @@ export const usePlaceVoteRoomUpdateMutation = (
       queryClient.invalidateQueries({
         queryKey: PLACE_VOTE_ROOM_KEY.GET_PLACE_VOTE_ROOM_CHECK(roomId!),
       });
+      queryClient.invalidateQueries({
+        queryKey: PLACE_VOTE_ROOM_KEY.GET_PLACE_VOTE_RESULT(roomId!),
+      });
     },
     ...options,
   });
