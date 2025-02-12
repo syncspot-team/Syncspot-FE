@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import KakaoMap from '@src/components/common/kakao/KakaoMap';
 import { useMidpointSearchQuery } from '@src/state/queries/location/useMidpointSearchQuery';
 import { useGetPlaceSearchQuery } from '@src/state/queries/location/useGetPlaceSearchQuery';
@@ -15,22 +15,32 @@ export default function LocationResultPage() {
   const { data: placeSearchData } = useGetPlaceSearchQuery();
   const { data: midpointSearchData } = useMidpointSearchQuery({
     enabled:
-      !!placeSearchData?.data?.myLocationExistence ||
-      !!placeSearchData?.data?.friendLocationExistence,
+      placeSearchData?.data?.myLocationExistence ||
+      placeSearchData?.data?.friendLocationExistence,
   });
 
   const selectedMidpoint = midpointSearchData?.data[selectedLocationIndex];
-  const { data: timeSearchData, isLoading: isTimeSearchLoading } =
-    useMidpointTimeSearchQuery(
-      selectedMidpoint?.addressLat || 0,
-      selectedMidpoint?.addressLong || 0,
-      {
-        enabled:
-          !!selectedMidpoint &&
-          selectedMidpoint.addressLat !== 0 &&
-          selectedMidpoint.addressLong !== 0,
-      },
-    );
+  const {
+    data: timeSearchData,
+    isLoading: isTimeSearchLoading,
+    refetch,
+  } = useMidpointTimeSearchQuery(
+    selectedMidpoint?.addressLat || 0,
+    selectedMidpoint?.addressLong || 0,
+    {
+      enabled:
+        !!midpointSearchData?.data &&
+        !!selectedMidpoint &&
+        selectedMidpoint.addressLat !== 0 &&
+        selectedMidpoint.addressLong !== 0,
+    },
+  );
+
+  useEffect(() => {
+    if (selectedMidpoint?.addressLat && selectedMidpoint?.addressLong) {
+      refetch();
+    }
+  }, [selectedMidpoint, refetch]);
 
   const coordinates = useCoordinates(
     placeSearchData,

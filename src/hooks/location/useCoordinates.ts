@@ -45,31 +45,38 @@ export function useCoordinates(
         }));
 
       return [...recommendCoords, ...midpointCoord];
+    } else {
+      // 내 위치와 친구 위치 처리
+      const myLocations = placeSearchData.data.myLocationExistence
+        ? placeSearchData.data.myLocations.map((location) => ({
+            lat: location.addressLat,
+            lng: location.addressLong,
+            isMyLocation: false,
+            roadNameAddress: location.roadNameAddress,
+          }))
+        : [];
+
+      const friendLocations = placeSearchData.data.friendLocationExistence
+        ? placeSearchData.data.friendLocations.map((location) => ({
+            lat: location.addressLat,
+            lng: location.addressLong,
+            isMyLocation: false,
+            roadNameAddress: location.roadNameAddress,
+          }))
+        : [];
+
+      // 중간 지점 위치 처리 (선택된 위치만 표시)
+      const midpointLocations = midpointSearchData.data
+        .filter((_, index) => index === selectedLocation)
+        .map((location: IMidpointDataResponseType) => ({
+          lat: location.addressLat,
+          lng: location.addressLong,
+          isMyLocation: true,
+          roadNameAddress: location.name || '위치 정보 없음',
+          isSelected: true,
+        }));
+
+      return [...myLocations, ...friendLocations, ...midpointLocations];
     }
-
-    // 기존 장소 검색 데이터인 경우
-    const myLocations = placeSearchData.data.myLocationExistence
-      ? [
-          {
-            lat: placeSearchData.data.myLocations[0].addressLat,
-            lng: placeSearchData.data.myLocations[0].addressLong,
-            isMyLocation: true,
-            roadNameAddress:
-              placeSearchData.data.myLocations[0].roadNameAddress,
-          },
-        ]
-      : [];
-
-    const midpointLocations = midpointSearchData.data.map(
-      (location: IMidpointDataResponseType, index: number) => ({
-        lat: location.addressLat,
-        lng: location.addressLong,
-        isMyLocation: false,
-        roadNameAddress: location.name || '위치 정보 없음',
-        isSelected: index === selectedLocation,
-      }),
-    );
-
-    return [...myLocations, ...midpointLocations];
   }, [selectedLocation, placeSearchData, midpointSearchData, urlLat, urlLng]);
 }
