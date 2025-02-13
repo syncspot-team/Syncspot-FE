@@ -29,7 +29,7 @@ export default function PasswordChangeModal({
 
   return (
     <div className="w-[17.5rem] lg:w-[25rem]">
-      <h2 className="text-[1.25rem] lg:text-subtitle text-tertiary font-semibold mb-4">
+      <h2 className="ml-1 text-[1.25rem] lg:text-subtitle text-tertiary font-semibold mb-4">
         비밀번호 변경
       </h2>
       <form onSubmit={handleSubmit(handlePasswordChange)} className="space-y-4">
@@ -72,7 +72,7 @@ export default function PasswordChangeModal({
   ) {
     return (
       <div>
-        <label className="ml-[0.375rem] text-description font-semibold">
+        <label className="ml-[0.375rem] text-description lg:text-content font-semibold">
           {label}
         </label>
         <Input
@@ -103,7 +103,7 @@ export default function PasswordChangeModal({
     };
 
     return (
-      <div className="flex justify-end gap-2 mt-6">
+      <div className="flex justify-end gap-2">
         <button
           type="submit"
           className={`${buttonClasses.base} ${buttonClasses.submit}`}
