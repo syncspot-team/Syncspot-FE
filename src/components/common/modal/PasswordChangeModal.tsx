@@ -21,9 +21,9 @@ export default function PasswordChangeModal({
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm<IPasswordFormData>();
-
-  const newPassword = watch('newPassword');
+  } = useForm<IPasswordFormData>({
+    mode: 'onChange',
+  });
 
   const { mutate: modifyPassword } = useModifyPasswordMutation();
 
@@ -33,98 +33,18 @@ export default function PasswordChangeModal({
         비밀번호 변경
       </h2>
       <form onSubmit={handleSubmit(handlePasswordChange)} className="space-y-4">
-        <div>
-          <label className="ml-[0.375rem] text-description font-semibold">
-            현재 비밀번호
-          </label>
-          <Input
-            type="password"
-            className="w-full mt-1 bg-white-default ring-1 ring-gray-normal py-[0.875rem] pl-[0.625rem]"
-            onCopy={(e: React.ClipboardEvent) => {
-              e.preventDefault();
-              return false;
-            }}
-            onPaste={(e: React.ClipboardEvent) => {
-              e.preventDefault();
-              return false;
-            }}
-            {...register('password', {
-              required: '현재 비밀번호를 입력해주세요',
-            })}
-          />
-          {errors.password && (
-            <p className="mt-1 text-sm text-red-500">
-              {errors.password.message}
-            </p>
-          )}
-        </div>
-        <div>
-          <label className="ml-[0.375rem] text-description font-semibold">
-            새 비밀번호
-          </label>
-          <Input
-            type="password"
-            className="w-full mt-1 bg-white-default ring-1 ring-gray-normal py-[0.875rem] pl-[0.625rem]"
-            onCopy={(e: React.ClipboardEvent) => {
-              e.preventDefault();
-              return false;
-            }}
-            onPaste={(e: React.ClipboardEvent) => {
-              e.preventDefault();
-              return false;
-            }}
-            {...register('newPassword', {
-              required: '새 비밀번호를 입력해주세요',
-            })}
-          />
-          {errors.newPassword && (
-            <p className="mt-1 text-sm text-red-500">
-              {errors.newPassword.message}
-            </p>
-          )}
-        </div>
-        <div>
-          <label className="ml-[0.375rem] text-description font-semibold">
-            새 비밀번호 다시 입력
-          </label>
-          <Input
-            type="password"
-            className="w-full mt-1 bg-white-default ring-1 ring-gray-normal py-[0.875rem] pl-[0.625rem]"
-            onCopy={(e: React.ClipboardEvent) => {
-              e.preventDefault();
-              return false;
-            }}
-            onPaste={(e: React.ClipboardEvent) => {
-              e.preventDefault();
-              return false;
-            }}
-            {...register('confirmPassword', {
-              required: '비밀번호를 다시 입력해주세요',
-              validate: (value) =>
-                value === newPassword || '비밀번호가 일치하지 않습니다',
-            })}
-          />
-          {errors.confirmPassword && (
-            <p className="mt-1 text-sm text-red-500">
-              {errors.confirmPassword.message}
-            </p>
-          )}
-        </div>
-        <div className="flex justify-end gap-2 mt-6">
-          <button
-            type="submit"
-            className="px-4 py-1 font-semibold rounded-default text-white-default bg-primary hover:bg-secondary text-description lg:text-content"
-          >
-            완료
-          </button>
-          <button
-            type="button"
-            className="px-4 py-1 font-semibold border rounded-default text-primary border-primary text-description lg:text-content"
-            onClick={onClose}
-          >
-            취소
-          </button>
-        </div>
+        {renderPasswordField('현재 비밀번호', 'password', {
+          required: '현재 비밀번호를 입력해주세요',
+        })}
+        {renderPasswordField('새 비밀번호', 'newPassword', {
+          required: '새 비밀번호를 입력해주세요',
+        })}
+        {renderPasswordField('새 비밀번호 다시 입력', 'confirmPassword', {
+          required: '비밀번호를 다시 입력해주세요',
+          validate: (value: string) =>
+            value === watch('newPassword') || '비밀번호가 일치하지 않습니다',
+        })}
+        {renderActionButtons()}
       </form>
     </div>
   );
@@ -140,8 +60,64 @@ export default function PasswordChangeModal({
           type: 'success',
           message: '비밀번호가 변경되었습니다.',
         });
+        onClose();
       },
     });
-    onClose();
+  }
+
+  function renderPasswordField(
+    label: string,
+    name: keyof IPasswordFormData,
+    validation: object,
+  ) {
+    return (
+      <div>
+        <label className="ml-[0.375rem] text-description font-semibold">
+          {label}
+        </label>
+        <Input
+          {...register(name, validation)}
+          type="password"
+          className="w-full mt-1 bg-white-default ring-1 ring-gray-normal py-[0.875rem] pl-[0.625rem]"
+          onCopy={(e: React.ClipboardEvent) => {
+            e.preventDefault();
+            return false;
+          }}
+          onPaste={(e: React.ClipboardEvent) => {
+            e.preventDefault();
+            return false;
+          }}
+        />
+        {errors[name] && (
+          <p className="mt-1 text-sm text-red-500">{errors[name]?.message}</p>
+        )}
+      </div>
+    );
+  }
+
+  function renderActionButtons() {
+    const buttonClasses = {
+      base: 'px-4 py-1 font-semibold rounded-default text-description lg:text-content',
+      submit: 'bg-primary hover:bg-secondary text-white-default',
+      cancel: 'border border-primary text-primary',
+    };
+
+    return (
+      <div className="flex justify-end gap-2 mt-6">
+        <button
+          type="submit"
+          className={`${buttonClasses.base} ${buttonClasses.submit}`}
+        >
+          완료
+        </button>
+        <button
+          type="button"
+          className={`${buttonClasses.base} ${buttonClasses.cancel}`}
+          onClick={onClose}
+        >
+          취소
+        </button>
+      </div>
+    );
   }
 }
