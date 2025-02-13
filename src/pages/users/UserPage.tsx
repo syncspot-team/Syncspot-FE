@@ -13,7 +13,7 @@ export default function UserPage() {
         <div className="hidden lg:block lg:col-span-3">
           <DesktopSideMenu />
         </div>
-        <div className="lg:col-span-7 bg-white-default h-[calc(100vh-150px)]">
+        <div className="lg:col-span-7 bg-white-default h-[calc(100vh-9.375rem)]">
           <Outlet />
         </div>
       </div>
