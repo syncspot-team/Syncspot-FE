@@ -6,6 +6,9 @@ export const API = {
   SIGN_IN: '/api/members/login', // 로그인
   LOGOUT: '/api/members/logout', // 로그아웃
   JOINED_ROOMS_SEARCH: '/api/member-rooms', // 사용자가 참여한 방 목록 검색
+  PASSWORD_REISSUE_EMAIL_VERIFICATION:
+    '/api/members/verification-request/password-reissue', // 비밀번호 재발급 이메일 인증 요청
+  PASSWORD_REISSUE: '/api/members/password-reissue', // 비밀번호 재발급
   ROOM_DETAIL_SEARCH: (roomId: string) => `/api/rooms/${roomId}`, // 특정 방 상세 정보 조회
   JOINED_ROOM_CHECK: (roomId: string) =>
     `/api/member-rooms/exists/rooms/${roomId}`, // 사용자가 방 회원인지 확인

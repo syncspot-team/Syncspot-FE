@@ -16,6 +16,8 @@ const ERROR_CODE: ErrorCodeType = {
     message: 'Access Token을 재발급해야합니다.',
   },
   'MR-003': { status: '403', message: '해당 방의 회원이 아닙니다.' },
+  'M-004': { status: '403', message: '인증코드가 일치하지 않습니다.' },
+  'M-005': { status: '403', message: '비밀번호가 일치하지 않습니다.' },
   'R-201': { status: '404', message: '존재하지 않는 방입니다.' },
   'P-201': { status: '404', message: '방에 입력된 장소가 없습니다.' },
   'V-202': { status: '404', message: '생성된 투표방이 없습니다.' },
@@ -26,6 +28,7 @@ const ERROR_CODE: ErrorCodeType = {
   'V-301': { status: '409', message: '이미 투표를 하였습니다.' },
   'V-302': { status: '409', message: '이미 투표방이 존재합니다.' },
   'C-203': { status: '429', message: '요청을 너무 많이 했습니다.' },
+  'E-001': { status: '500', message: '이메일 전송에 실패하였습니다.' },
 
   // axios 에러
   ERR_NETWORK: {
