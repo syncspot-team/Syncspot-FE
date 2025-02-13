@@ -31,7 +31,7 @@ export default function UserProfileImage() {
         className="hidden"
       />
       <button
-        className="px-5 py-1 font-semibold rounded-full text-description lg:text-content text-white-default bg-primary hover:bg-secondary"
+        className="px-4 py-1 font-semibold rounded-full text-description lg:text-content text-white-default bg-primary hover:bg-secondary"
         onClick={() => fileInputRef.current?.click()}
       >
         변경

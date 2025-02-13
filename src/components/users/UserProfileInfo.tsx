@@ -36,12 +36,10 @@ export default function UserProfileInfo() {
 
   const handleProfileSave = (data: IProfileFormData) => {
     if (data.nickname !== initialNickname) {
-      console.log('닉네임 변경 요청:', data.nickname);
       // 닉네임 변경 API 호출
     }
 
     if (data.email !== initialEmail) {
-      console.log('이메일 변경 요청:', data.email);
       // 이메일 변경 API 호출
     }
 
@@ -50,7 +48,7 @@ export default function UserProfileInfo() {
 
   return (
     <form onSubmit={handleSubmitProfile(handleProfileSave)}>
-      <div className="flex items-center justify-between mt-4 mb-5">
+      <div className="flex items-center justify-between mt-0 mb-5 lg:mt-4">
         <h2 className="text-[1.25rem] lg:text-subtitle text-tertiary font-semibold">
           개인정보
         </h2>
@@ -62,14 +60,14 @@ export default function UserProfileInfo() {
       <Input
         {...register('nickname')}
         disabled={!isEditing}
-        className={`w-full mb-4 ${isEditing ? 'bg-white-default ring-1 ring-gray-normal' : 'bg-gray-light cursor-not-allowed'}`}
+        className={`w-full mt-[0.125rem] mb-4 ${isEditing ? 'bg-white-default ring-1 ring-primary' : 'bg-gray-light cursor-not-allowed'}`}
       />
       <label className="ml-[0.375rem] text-content-bold">아이디(이메일)</label>
       <Input
         {...register('email')}
         type="email"
         disabled={!isEditing}
-        className={`w-full ${isEditing ? 'bg-white-default ring-1 ring-gray-normal' : 'bg-gray-light cursor-not-allowed'}`}
+        className={`w-full mt-[0.125rem] ${isEditing ? 'bg-white-default ring-1 ring-primary' : 'bg-gray-light cursor-not-allowed'}`}
       />
     </form>
   );
