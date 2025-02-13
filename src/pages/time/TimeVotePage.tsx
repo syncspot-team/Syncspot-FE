@@ -1,5 +1,5 @@
-import ClickCalendar from '@src/components/voteTime/clickCalendar';
-import MyVote from '@src/components/voteTime/myVote';
+import ClickCalendar from '@src/components/time/voteTime/clickCalendar';
+import MyVote from '@src/components/time/voteTime/myVote';
 import {
   useGetTimeDatesQuery,
   useGetTimeResultQuery,

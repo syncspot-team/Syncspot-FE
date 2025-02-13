@@ -1,6 +1,6 @@
 import { ITimeVotedMyProps } from '@src/types/time/timeProps';
 import DatePicker from './datePicker';
-import Button from '../common/button/Button';
+import Button from '../../common/button/Button';
 import {
   usePostTimeVoteMutation,
   usePutTimeVoteMutation,
