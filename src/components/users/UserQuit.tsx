@@ -20,22 +20,22 @@ export default function UserQuit() {
           정말 탈퇴하시겠어요?
         </h4>
 
-        <div className="flex flex-col gap-3 whitespace-nowrap text-description lg:text-content text-primary">
+        <div className="flex flex-col gap-3 text-description lg:text-content text-primary">
           <div className="flex items-start gap-2">
-            <IconWarningTriangle className="size-5 mt-0.5" />
+            <IconWarningTriangle className="flex-shrink-0 size-5 lg:mt-0.5" />
             <p>
               지금 탈퇴하시면 이전에 참여했던 모임들의 기록은 볼 수 없습니다.
             </p>
           </div>
           <div className="flex items-start gap-2">
-            <IconWarningTriangle className="size-5 mt-0.5" />
+            <IconWarningTriangle className="flex-shrink-0 size-5 lg:mt-0.5" />
             <p>
               지금 탈퇴하시면 해당 계정으로 이용했던 내역은 모두 삭제되며,
               복구할 수 없습니다.
             </p>
           </div>
           <div className="flex items-start gap-2">
-            <IconWarningTriangle className="size-5 mt-0.5" />
+            <IconWarningTriangle className="flex-shrink-0 size-5 lg:mt-0.5" />
             <p>
               지금 탈퇴하시면 30일 이내 재가입이 불가하며 서비스 이용이
               제한됩니다.
