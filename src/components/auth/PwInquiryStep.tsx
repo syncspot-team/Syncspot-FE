@@ -6,7 +6,7 @@ import { PwInquiryStepType } from '@src/types/auth/PwInquiryStepType';
 
 interface IFormValues {
   email: string;
-  verificationCode: string;
+  code: string;
 }
 
 interface IPwInquiryStepProps {
@@ -77,8 +77,8 @@ export default function PwInquiryStep({
   };
 
   const handleVerificationSubmit = async (data: IFormValues) => {
-    if (!data.verificationCode) {
-      setError('verificationCode', {
+    if (!data.code) {
+      setError('code', {
         type: 'required',
         message: '인증코드를 입력해주세요.',
       });
@@ -89,10 +89,10 @@ export default function PwInquiryStep({
     const isSuccess = true; // API 응답값으로 대체 필요
 
     if (isSuccess) {
-      clearErrors('verificationCode');
+      clearErrors('code');
       setIsVerified(true);
     } else {
-      setError('verificationCode', {
+      setError('code', {
         type: 'validate',
         message: '인증코드가 다릅니다.',
       });
@@ -106,10 +106,10 @@ export default function PwInquiryStep({
   };
 
   const renderVerificationMessage = () => {
-    if (errors.verificationCode) {
+    if (errors.code) {
       return (
         <p className="flex items-center justify-center mt-1 ml-2 text-description lg:text-content text-error-normal">
-          {errors.verificationCode.message}
+          {errors.code.message}
         </p>
       );
     }
@@ -127,7 +127,7 @@ export default function PwInquiryStep({
 
   return (
     <div className="flex flex-col w-full max-w-[28.125rem]">
-      <h3 className="ml-2 mb-[0.125rem] text-menu text-tertiary">
+      <h3 className="ml-2 mb-[0.125rem] text-content lg:text-menu text-tertiary">
         아이디 (이메일)
       </h3>
       <div className="relative flex gap-1">
@@ -140,7 +140,7 @@ export default function PwInquiryStep({
             },
           })}
           placeholder="이메일을 입력해주세요"
-          className="w-full"
+          className="w-full text-description"
         />
         <button
           onClick={
@@ -160,21 +160,21 @@ export default function PwInquiryStep({
         </p>
       )}
 
-      <h3 className="ml-2 mt-6 mb-[0.125rem] text-menu text-tertiary">
+      <h3 className="ml-2 mt-6 mb-[0.125rem] text-content lg:text-menu text-tertiary">
         인증코드
       </h3>
       <div className="relative flex gap-1">
         <Input
-          {...register('verificationCode')}
+          {...register('code')}
           placeholder="이메일로 발송된 인증 코드를 입력해주세요"
           disabled={!isEmailSent}
-          className="w-full disabled:cursor-not-allowed"
+          className="w-full disabled:cursor-not-allowed text-description"
         />
         <button
           onClick={() =>
             handleVerificationSubmit({
               email: watch('email'),
-              verificationCode: watch('verificationCode'),
+              code: watch('code'),
             })
           }
           disabled={!isEmailSent}
