@@ -1,5 +1,5 @@
 import Button from '@src/components/common/button/Button';
-import VoteResultGrid from '@src/components/resultTime/voteResultGrid';
+import VoteResultGrid from '@src/components/time/resultTime/voteResultGrid';
 import { PATH } from '@src/constants/path';
 import { useNavigate, useParams } from 'react-router-dom';
 
