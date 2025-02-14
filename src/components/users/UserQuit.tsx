@@ -1,12 +1,33 @@
 import IconWarningTriangle from '@src/assets/icons/IconWarningTriangle.svg?react';
 import Button from '../common/button/Button';
 import { useState } from 'react';
-
+import CustomToast from '@src/components/common/toast/customToast';
+import { TOAST_TYPE } from '@src/types/toastType';
+import { PATH } from '@src/constants/path';
+import { useNavigate } from 'react-router-dom';
+import { useQuitUserMutation } from '@src/state/mutations/user/useQuitUserMutation';
+import { useLoginStore } from '@src/state/store/loginStore';
 export default function UserQuit() {
+  const navigate = useNavigate();
+  const { logout } = useLoginStore();
   const [quitReason, setQuitReason] = useState('');
 
+  const { mutate: quitUser } = useQuitUserMutation();
+
   const handleQuit = () => {
-    // 탈퇴 로직 처리
+    quitUser(
+      { accessToken: '' },
+      {
+        onSuccess: () => {
+          CustomToast({
+            type: TOAST_TYPE.SUCCESS,
+            message: '탈퇴가 완료되었습니다.',
+          });
+          logout();
+          navigate(PATH.ROOT);
+        },
+      },
+    );
   };
 
   return (
@@ -14,7 +35,6 @@ export default function UserQuit() {
       <h3 className="my-4 mb-8 ml-1 lg:mt-0 lg:ml-0 text-[1.25rem] lg:text-subtitle text-tertiary font-semibold">
         회원 탈퇴
       </h3>
-
       <div className="flex flex-col gap-6">
         <h4 className="font-semibold text-menu lg:text-subtitle">
           정말 탈퇴하시겠어요?

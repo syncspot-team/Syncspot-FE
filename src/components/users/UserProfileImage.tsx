@@ -21,7 +21,7 @@ export default function UserProfileImage() {
       <img
         src={profileImage}
         alt="프로필 이미지"
-        className="border-2 rounded-full border-primary size-24"
+        className="rounded-full shadow-lg size-24"
       />
       <input
         type="file"
