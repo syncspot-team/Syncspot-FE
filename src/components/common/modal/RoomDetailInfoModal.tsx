@@ -5,6 +5,10 @@ import { useGetRoomDetailInfoQuery } from '@src/state/queries/onboarding/useGetR
 import { usePatchRoomNameMutation } from '@src/state/mutations/onboarding/usePatchRoomNameMutation';
 import { usePatchRoomMemoMutation } from '@src/state/mutations/onboarding/usePatchRoomMemoMutation';
 import EditableField from '@src/components/onboarding/modal/EditableField';
+import { useDeleteUserFromRoomMutation } from '@src/state/mutations/onboarding/useDeleteUserFromRoomMutation';
+import CustomToast from '../toast/customToast';
+import { useNavigate } from 'react-router-dom';
+import { PATH } from '@src/constants/path';
 
 interface IRoomDetailInfoModalProps {
   room: IRoom;
@@ -31,6 +35,7 @@ export default function RoomDetailInfoModal({
   room,
   onClose,
 }: IRoomDetailInfoModalProps) {
+  const navigate = useNavigate();
   const { data: roomDetailInfoData } = useGetRoomDetailInfoQuery(room.roomId);
   const [roomDetailInfo, setRoomDetailInfo] = useState<IRoomDetailInfo | null>(
     null,
@@ -42,6 +47,7 @@ export default function RoomDetailInfoModal({
 
   const { mutate: patchRoomName } = usePatchRoomNameMutation();
   const { mutate: patchRoomMemo } = usePatchRoomMemoMutation();
+  const { mutate: deleteUserFromRoom } = useDeleteUserFromRoomMutation();
 
   useEffect(() => {
     if (roomDetailInfoData) {
@@ -68,6 +74,22 @@ export default function RoomDetailInfoModal({
       }));
     }
     setIsEditing(!isEditing);
+  };
+
+  const handleDeleteUserFromRoom = () => {
+    deleteUserFromRoom(
+      {},
+      {
+        onSuccess: () => {
+          CustomToast({
+            type: 'success',
+            message: '해당 모임에서 나갔습니다.',
+          });
+          onClose();
+          navigate(PATH.ONBOARDING);
+        },
+      },
+    );
   };
 
   return (
@@ -108,7 +130,10 @@ export default function RoomDetailInfoModal({
         ))}
       </ul>
 
-      <Button onClick={onClose} className="w-full mt-4 px-[0.3125rem]">
+      <Button
+        onClick={handleDeleteUserFromRoom}
+        className="w-full mt-4 px-[0.3125rem]"
+      >
         모임 나가기
       </Button>
       <Button
