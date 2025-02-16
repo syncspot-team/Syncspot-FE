@@ -35,7 +35,7 @@ export default function OnBoardingFunctionSelect({
         navigate(PATH.PLACE_VOTE(selectedRoomId!));
         break;
       case ONBOARDING_FUNCTION_TYPE.VOTE_TIME:
-        navigate(PATH.TIME_VOTE(selectedRoomId!));
+        navigate(PATH.TIME_CREATE(selectedRoomId!));
         break;
     }
   };

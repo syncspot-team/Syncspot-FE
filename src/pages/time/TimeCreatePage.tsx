@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import IconLeftArrow from '@src/assets/icons/IconLeftArrow.svg?react';
 import IconRightArrow from '@src/assets/icons/IconRightArrow.svg?react';
 import Button from '@src/components/common/button/Button';
@@ -6,34 +6,81 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './TimeCreatePage.css';
 import CustomToast from '@src/components/common/toast/customToast';
+import {
+  usePostTimeRoomMutation,
+  usePutTimeRoomMutation,
+} from '@src/state/mutations/time';
+import {
+  formatDate,
+  formatStringDate,
+} from '@src/components/time/utils/formatDate';
+import { useNavigate, useParams } from 'react-router-dom';
+import { PATH } from '@src/constants/path';
+import { useGetTimeDatesQuery } from '@src/state/queries/time';
+import SomethingWrongErrorPage from '../error/SomethingWrongErrorPage';
 
 export default function TimeCreatePage() {
+  const navigate = useNavigate();
+  const { roomId } = useParams();
   const [selectedDates, setSelectedDates] = useState<Date[]>([]);
+
+  const { data: getTimeDatesQuery } = useGetTimeDatesQuery();
+
+  useEffect(() => {
+    getTimeDatesQuery?.data.existence ? (
+      setSelectedDates(getTimeDatesQuery.data.dates.map(formatDate))
+    ) : (
+      <SomethingWrongErrorPage />
+    );
+  }, [roomId, getTimeDatesQuery]);
+
+  const { mutate: createTimeRoomMutation } = usePostTimeRoomMutation({
+    onSuccess: () => {
+      navigate(PATH.TIME_VOTE(roomId));
+    },
+  });
+
+  const { mutate: updateTimeRoomMutation } = usePutTimeRoomMutation({
+    onSuccess: () => {
+      navigate(PATH.TIME_VOTE(roomId));
+    },
+  });
 
   const handleDateClick = (date: Date) => {
     setSelectedDates((prev) => {
-      const dateExists = prev.some(
-        (d) => d.toDateString() === date.toDateString(),
-      );
+      const dateExists = prev.some((d) => d.getTime() === date.getTime());
+      let updatedDates;
 
       if (dateExists) {
-        return prev.filter((d) => d.toDateString() !== date.toDateString());
+        return prev.filter((d) => d.getTime() !== date.getTime());
+      } else {
+        if (prev.length >= 5) {
+          CustomToast({
+            type: 'error',
+            message: '최대 5개의 날짜만 선택할 수 있습니다.',
+          });
+          return prev;
+        }
+        updatedDates = [...prev, date];
       }
-
-      if (prev.length >= 5) {
-        CustomToast({
-          type: 'error',
-          message: '최대 5개의 날짜만 선택할 수 있습니다.',
-        });
-        return prev;
-      }
-
-      return [...prev, date];
+      return updatedDates.sort((a, b) => a.getTime() - b.getTime());
     });
   };
 
   const handleCreateClick = () => {
-    console.log('선택된 날짜들:', selectedDates);
+    if (selectedDates.length === 0) {
+      CustomToast({
+        type: 'error',
+        message: '날짜를 선택해 주세요.',
+      });
+      return;
+    }
+
+    const formattedDates = selectedDates.map(formatStringDate);
+    console.log('선택된 날짜들:', selectedDates, 'formatdates', formattedDates);
+    getTimeDatesQuery?.data.existence
+      ? updateTimeRoomMutation({ dates: formattedDates })
+      : createTimeRoomMutation({ dates: formattedDates });
   };
 
   return (
@@ -54,19 +101,24 @@ export default function TimeCreatePage() {
         showNeighboringMonth={true}
         className="w-full border-none calendar-custom"
         calendarType="gregory"
-        tileClassName={({ date, view }) => {
-          if (view === 'month') {
-            const isSelected = selectedDates.some(
-              (d) => d.toDateString() === date.toDateString(),
-            );
-            if (isSelected) {
-              return 'selected-date';
-            }
-          }
-          return null;
+        tileClassName={({ date }) => {
+          return selectedDates.some((d) => d.getTime() === date.getTime())
+            ? 'selected-date'
+            : '';
         }}
         onClickDay={handleDateClick}
       />
+
+      <div className="flex flex-col items-center justify-center mt-3 text-menu-selected text-tertiary ">
+        {selectedDates.length > 0 ? (
+          selectedDates.map((date, index) => (
+            <p key={index}>{formatStringDate(date)}</p>
+          ))
+        ) : (
+          <p></p>
+        )}
+      </div>
+
       <Button className="w-full mt-5" onClick={handleCreateClick}>
         시간 투표 생성
       </Button>
