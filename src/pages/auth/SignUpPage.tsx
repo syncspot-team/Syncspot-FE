@@ -238,7 +238,7 @@ export default function SignUpPage() {
           className="w-full max-w-[26.875rem]"
         />
         {errors.name && (
-          <p className="ml-2 text-description text-error-normal">
+          <p className="ml-2 text-description text-error-normal w-full max-w-[26.875rem]">
             {errors.name.message}
           </p>
         )}
