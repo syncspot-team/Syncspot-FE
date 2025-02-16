@@ -5,7 +5,7 @@ import {
   useGetTimeResultQuery,
   useGetTimeVotedQuery,
 } from '@src/state/queries/time';
-import { formatDate } from '@src/utils/formatDate';
+import { formatDate } from '@src/components/time/utils/formatDate';
 import { useRef } from 'react';
 
 export default function TimeVotePage() {
