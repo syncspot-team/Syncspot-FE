@@ -18,8 +18,10 @@ export default function TimeVotePage() {
   }
   //string 에서 Date 객체로 변환
   const timeDate = {
-    existence: timeDatesRes.existence,
-    dates: timeDatesRes.dates.map((date) => formatDate(date)),
+    existence: timeDatesRes.data.existence,
+    dates: timeDatesRes.data.existence
+      ? timeDatesRes.data.dates.map((date) => formatDate(date))
+      : [],
   };
 
   //투표여부 voteDate 에 myVotes 전달
