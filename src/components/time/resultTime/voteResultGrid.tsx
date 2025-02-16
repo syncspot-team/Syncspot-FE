@@ -6,7 +6,7 @@ import {
   format12Hour,
   format24Hour,
   getTimeIndex,
-} from '@src/utils/formatTime';
+} from '@src/components/time/utils/formatTime';
 import { mergeClassNames } from '@src/utils/mergeClassNames';
 import { useEffect, useState } from 'react';
 import GridTime from './gridTime';

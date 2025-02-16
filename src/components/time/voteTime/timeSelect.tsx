@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import './timeSelect.css';
 import { mergeClassNames } from '@src/utils/mergeClassNames';
 import IconTimeDropdown from '@src/assets/icons/IconTimeDropdown.svg?react';
-import { formatTime } from '@src/utils/formatTime';
+import { formatTime } from '@src/components/time/utils/formatTime';
 
 const SELECT_TYPES = {
   HOUR: 'hour' as const,
