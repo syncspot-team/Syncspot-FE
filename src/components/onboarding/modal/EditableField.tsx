@@ -22,7 +22,7 @@ export default function EditableField({
         <Input
           value={value}
           onChange={onChange}
-          className="flex-1 ring-1 ring-gray-normal !py-1 !text-description lg:!text-content"
+          className="flex-1 py-1 pl-2 bg-white-default ring-1 ring-gray-normal text-description lg:text-content"
         />
       ) : (
         <p className="flex-1 truncate text-description lg:text-content">
