@@ -9,11 +9,7 @@ import { ITimeResultResponseType } from '@src/types/time/timeResultType';
 import { getTimeResult } from '@src/apis/time/getTimeResult';
 
 export const useGetTimeResultQuery = (
-  options?: UseQueryOptions<
-    ITimeResultResponseType,
-    Error,
-    ITimeResultResponseType
-  >,
+  options?: UseQueryOptions<ITimeResultResponseType, Error, any>,
 ) => {
   const { roomId } = useParams();
   const queryClient = useQueryClient();
