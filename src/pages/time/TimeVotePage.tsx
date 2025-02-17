@@ -24,7 +24,7 @@ export default function TimeVotePage() {
   const timeDate = {
     existence: timeDatesRes.data.existence,
     dates: timeDatesRes.data.existence
-      ? timeDatesRes.data.dates.map((date) => formatDate(date))
+      ? timeDatesRes.data.dates.map((date: string) => formatDate(date))
       : [],
   };
   //string 에서 Date 객체로 변환
