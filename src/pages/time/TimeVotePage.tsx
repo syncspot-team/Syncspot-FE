@@ -6,15 +6,19 @@ import {
   useGetTimeVotedQuery,
 } from '@src/state/queries/time';
 import { formatDate } from '@src/components/time/utils/formatDate';
-import { useRef } from 'react';
 
 export default function TimeVotePage() {
-  const componentRef = useRef<HTMLDivElement>(null);
-
   //시간투표방 조회하고, dates 로 투표가능한 날짜 파악
   const { data: timeDatesRes } = useGetTimeDatesQuery();
-  if (!timeDatesRes) {
-    return <div>데이터를 불러오는 중입니다...</div>;
+
+  //투표여부 voteDate 에 myVotes 전달
+  const { data: timeVotedRes } = useGetTimeVotedQuery();
+
+  //clickCalendar 투표결과 확인 - 실시간 invalidate 개선
+  const { data: timeResultRes } = useGetTimeResultQuery();
+
+  if (!timeDatesRes || !timeVotedRes || !timeResultRes) {
+    return <div>Loading...</div>; // 데이터가 로딩 중임을 표시
   }
   //string 에서 Date 객체로 변환
   const timeDate = {
@@ -23,27 +27,18 @@ export default function TimeVotePage() {
       ? timeDatesRes.data.dates.map((date) => formatDate(date))
       : [],
   };
-
-  //투표여부 voteDate 에 myVotes 전달
-  const { data: timeVotedRes } = useGetTimeVotedQuery();
-  if (!timeVotedRes) {
-    return <div>데이터를 불러오는 중입니다...</div>;
-  }
   //string 에서 Date 객체로 변환
   const timeVoted = {
-    myVotesExistence: timeVotedRes.myVotesExistence,
-    myVotes: timeVotedRes.myVotes,
+    myVotesExistence: timeVotedRes.data.myVotesExistence,
+    myVotes: timeVotedRes.data.myVotes,
   };
 
-  //clickCalendar 투표결과 확인 - 실시간 invalidate 개선
-  const { data: timeResultRes } = useGetTimeResultQuery();
-  if (!timeResultRes) {
-    return <div>데이터를 불러오는 중입니다...</div>; // 로딩 상태 또는 에러 메시지 표시
-  }
-
   return (
-    <div ref={componentRef} className="flex gap-2">
-      <ClickCalendar dates={timeDate.dates} result={timeResultRes.result} />
+    <div className="flex flex-col lg:flex-row lg:items-start items-center mt-[5rem] w-full max-w-[62.5rem] mx-auto gap-5">
+      <ClickCalendar
+        dates={timeDate.dates}
+        result={timeResultRes.data.result}
+      />
 
       <MyVote
         dates={timeDate.dates}
