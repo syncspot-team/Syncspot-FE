@@ -23,17 +23,17 @@ export default function TimeSelectBox({
   };
 
   useEffect(() => {
-    setHour(initialHour.padStart(2, '0'));
-    setMinute(initialMinute.padStart(2, '0'));
+    setHour(initialHour);
+    setMinute(initialMinute);
   }, [initialHour, initialMinute]);
 
   return (
-    <div className="flex items-center justify-between w-full realtive">
-      <div className="relative inline-block w-22">
+    <div className="flex items-center justify-center w-full gap-4 ">
+      <div className="relative inline-block w-[5.75rem]">
         <Select selectType="hour" value={hour} onChange={handleHourChange} />
       </div>
 
-      <div className="relative inline-block w-22">
+      <div className="relative inline-block w-[5.75rem]">
         <Select
           selectType="minute"
           value={minute}
