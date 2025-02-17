@@ -1,10 +1,25 @@
 import { PATH } from '@src/constants/path';
 import { useRoomStore } from '@src/state/store/roomStore';
 import { useNavigateWithRoomCheck } from './useNavigateWithRoomCheck';
+import { useGetCheckLocationEnterQuery } from '@src/state/queries/header/useGetCheckLocationEnterQuery';
+import { useGetPlaceVoteRoomExistsQuery } from '@src/state/queries/header/useGetPlaceVoteRoomExistsQuery';
+import { useGetTimeViteRoomExistsQuery } from '@src/state/queries/header/useGetTimeViteRoomExistsQuery';
+
+import { useGetPlaceVotedQuery } from '@src/state/queries/header/useGetPlaceVotedQuery';
+import { useGetTimeVotedQuery } from '@src/state/queries/header/useGetTimeVotedQuery';
 
 export const useMenuItems = () => {
   const { roomId } = useRoomStore();
   const navigateWithRoomCheck = useNavigateWithRoomCheck();
+  const { data: placeSearchResponse } = useGetCheckLocationEnterQuery();
+  const { data: placeVoteRoomExists } = useGetPlaceVoteRoomExistsQuery();
+  const { data: timeVoteRoomExists } = useGetTimeViteRoomExistsQuery();
+  const { data: placeVoted } = useGetPlaceVotedQuery({
+    enabled: !!placeVoteRoomExists?.data.existence,
+  });
+  const { data: timeVoted } = useGetTimeVotedQuery({
+    enabled: !!timeVoteRoomExists?.data.existence,
+  });
 
   return [
     {
@@ -12,17 +27,19 @@ export const useMenuItems = () => {
       onClick: () => navigateWithRoomCheck(PATH.LOCATION_ENTER(roomId)),
       subMenus: [
         {
-          label: '모임 생성',
-          onClick: () => navigateWithRoomCheck(PATH.ONBOARDING),
-        },
-        {
-          label: '장소 입력',
+          label: '내 장소 입력',
           onClick: () => navigateWithRoomCheck(PATH.LOCATION_ENTER(roomId)),
         },
-        {
-          label: '중간 지점 찾기 결과',
-          onClick: () => navigateWithRoomCheck(PATH.LOCATION_RESULT(roomId)),
-        },
+        ...(placeSearchResponse?.data.myLocationExistence ||
+        placeSearchResponse?.data.friendLocationExistence
+          ? [
+              {
+                label: '중간 지점 찾기 결과',
+                onClick: () =>
+                  navigateWithRoomCheck(PATH.LOCATION_RESULT(roomId)),
+              },
+            ]
+          : []),
       ],
     },
     {
@@ -30,17 +47,25 @@ export const useMenuItems = () => {
       onClick: () => navigateWithRoomCheck(PATH.PLACE_VOTE(roomId)),
       subMenus: [
         {
-          label: '장소 투표 생성',
+          label: placeVoteRoomExists?.data.existence
+            ? '장소 투표 재생성'
+            : '장소 투표 생성',
           onClick: () => navigateWithRoomCheck(PATH.PLACE_CREATE(roomId)),
         },
-        {
-          label: '장소 투표하기',
-          onClick: () => navigateWithRoomCheck(PATH.PLACE_VOTE(roomId)),
-        },
-        {
-          label: '장소 투표 결과',
-          onClick: () => navigateWithRoomCheck(PATH.PLACE_RESULT(roomId)),
-        },
+        ...(placeVoteRoomExists?.data.existence
+          ? [
+              {
+                label: placeVoted?.data.existence
+                  ? '장소 재투표하기'
+                  : '장소 투표하기',
+                onClick: () => navigateWithRoomCheck(PATH.PLACE_VOTE(roomId)),
+              },
+              {
+                label: '장소 투표 결과',
+                onClick: () => navigateWithRoomCheck(PATH.PLACE_RESULT(roomId)),
+              },
+            ]
+          : []),
       ],
     },
     {
@@ -48,17 +73,25 @@ export const useMenuItems = () => {
       onClick: () => navigateWithRoomCheck(PATH.TIME_VOTE(roomId)),
       subMenus: [
         {
-          label: '시간 투표 생성',
+          label: timeVoteRoomExists?.data.existence
+            ? '시간 투표 재생성'
+            : '시간 투표 생성',
           onClick: () => navigateWithRoomCheck(PATH.TIME_CREATE(roomId)),
         },
-        {
-          label: '시간 투표하기',
-          onClick: () => navigateWithRoomCheck(PATH.TIME_VOTE(roomId)),
-        },
-        {
-          label: '시간 투표 결과',
-          onClick: () => navigateWithRoomCheck(PATH.TIME_RESULT(roomId)),
-        },
+        ...(timeVoteRoomExists?.data.existence
+          ? [
+              {
+                label: timeVoted?.data.myVotesExistence
+                  ? '시간 재투표하기'
+                  : '시간 투표하기',
+                onClick: () => navigateWithRoomCheck(PATH.TIME_VOTE(roomId)),
+              },
+              {
+                label: '시간 투표 결과',
+                onClick: () => navigateWithRoomCheck(PATH.TIME_RESULT(roomId)),
+              },
+            ]
+          : []),
       ],
     },
     {
