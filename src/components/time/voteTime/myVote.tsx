@@ -6,9 +6,10 @@ import {
   usePutTimeVoteMutation,
 } from '@src/state/mutations/time';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ITimeVoteRequest } from '@src/types/time/timeVoteType';
 import { formatStringDate } from '../utils/formatDate';
+import { PATH } from '@src/constants/path';
 
 export default function MyVote({
   dates,
@@ -17,7 +18,10 @@ export default function MyVote({
 }: ITimeVotedMyProps) {
   const { mutate: postVote } = usePostTimeVoteMutation();
   const { mutate: putVote } = usePutTimeVoteMutation();
+
   const { roomId } = useParams();
+  const navigate = useNavigate();
+  const [selectChange, setSelectChange] = useState(false);
 
   //투표값 존재할 경우
   const initialVotes = myVotesExistence
@@ -67,7 +71,9 @@ export default function MyVote({
       })),
     };
 
-    if (myVotesExistence) {
+    if (myVotesExistence && !selectChange) {
+      navigate(PATH.TIME_RESULT(roomId));
+    } else if (myVotesExistence && selectChange) {
       putVote(voteData);
     } else {
       postVote(voteData);
@@ -95,11 +101,12 @@ export default function MyVote({
       memberAvailableEndTime: endTime,
     };
     setVotes(updatedVotes);
+    setSelectChange(true);
     console.log(votes);
   };
 
   return (
-    <div className=" h-full w-1/2 bg-gray-light py-5 px-4 rounded-[1.25rem]">
+    <div className=" h-full w-full lg:w-1/2 bg-gray-light py-5 px-4 rounded-[1.25rem]">
       <p className="text-center text-title text-blue-dark02">참석 일시 투표</p>
       {Array.isArray(dates) &&
         dates.map((date, index) => {
