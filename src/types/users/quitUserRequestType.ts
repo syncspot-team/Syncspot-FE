@@ -1,3 +1,3 @@
 export interface IQuitUserRequestType {
-  accessToken: string;
+  withdrawalReason: string;
 }

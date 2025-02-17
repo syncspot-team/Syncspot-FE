@@ -20,6 +20,7 @@ export default function SignUpPage() {
     handleSubmit,
     setValue,
     watch,
+    setError,
     formState: { errors },
   } = useForm<ISignUpFormValues>({
     mode: 'onChange',
@@ -51,13 +52,7 @@ export default function SignUpPage() {
     e.preventDefault();
 
     const email = watch('email');
-    if (!email || errors.email) {
-      CustomToast({
-        type: TOAST_TYPE.WARNING,
-        message: '올바른 이메일 형식을 입력해 주세요.',
-      });
-      return;
-    }
+    if (!email || errors.email) return;
 
     requestEmailVerification(
       { email },
@@ -72,13 +67,8 @@ export default function SignUpPage() {
   const handleConfirmEmailVerification = (e: React.MouseEvent) => {
     e.preventDefault();
     const code = watch('code');
-    if (!code || errors.code) {
-      CustomToast({
-        type: TOAST_TYPE.WARNING,
-        message: '인증번호를 모두 입력해주세요!',
-      });
-      return;
-    }
+    if (!code || errors.code) return;
+
     confirmEmailVerification(
       { email: watch('email'), code: watch('code') },
       {
@@ -86,8 +76,7 @@ export default function SignUpPage() {
           if (data.data.isVerified) {
             setIsEmailVerified(true);
           } else {
-            CustomToast({
-              type: TOAST_TYPE.ERROR,
+            setError('code', {
               message: '인증번호가 올바르지 않습니다.',
             });
           }
@@ -146,7 +135,7 @@ export default function SignUpPage() {
             type="button"
             onClick={handleRequestEmailVerification}
             disabled={isEmailVerified}
-            className="absolute right-3 top-1/2 -translate-y-1/2 h-[2.125rem] whitespace-nowrap text-description bg-gray-normal p-2 text-white-default rounded-md hover:enabled:bg-gray-dark cursor-pointer disabled:cursor-not-allowed"
+            className="absolute right-3 top-[1.875rem] -translate-y-1/2 h-[2.125rem] whitespace-nowrap text-description bg-gray-normal p-2 text-white-default rounded-md hover:enabled:bg-gray-dark cursor-pointer disabled:cursor-not-allowed"
           >
             {isRequestEmailVerificationPending
               ? '확인중...'
@@ -154,12 +143,12 @@ export default function SignUpPage() {
                 ? '재전송'
                 : '인증코드 받기'}
           </button>
+          {errors.email && (
+            <p className="ml-2 text-description text-error-normal">
+              {errors.email.message}
+            </p>
+          )}
         </div>
-        {errors.email && (
-          <p className="ml-2 text-sm text-error-normal">
-            {errors.email.message}
-          </p>
-        )}
 
         {isEmailSent && (
           <>
@@ -179,7 +168,7 @@ export default function SignUpPage() {
                 type="button"
                 onClick={handleConfirmEmailVerification}
                 disabled={isEmailVerified}
-                className="absolute right-3 top-1/2 -translate-y-1/2 h-[2.125rem] whitespace-nowrap text-description bg-gray-normal p-2 text-white-default rounded-md hover:enabled:bg-gray-dark cursor-pointer disabled:cursor-not-allowed"
+                className="absolute right-3 top-[1.875rem] -translate-y-1/2 h-[2.125rem] whitespace-nowrap text-description bg-gray-normal p-2 text-white-default rounded-md hover:enabled:bg-gray-dark cursor-pointer disabled:cursor-not-allowed"
               >
                 {isConfirmEmailVerificationPending
                   ? '확인중...'
@@ -187,17 +176,17 @@ export default function SignUpPage() {
                     ? '인증 완료'
                     : '인증'}
               </button>
+              {errors.code && (
+                <p className="ml-2 text-description text-error-normal">
+                  {errors.code.message}
+                </p>
+              )}
+              {isEmailVerified && (
+                <p className="ml-2 text-description text-blue-normal02">
+                  인증이 완료되었습니다!
+                </p>
+              )}
             </div>
-            {errors.code && (
-              <p className="ml-2 text-sm text-error-normal">
-                {errors.code.message}
-              </p>
-            )}
-            {isEmailVerified && (
-              <p className="mt-2 text-sm text-center text-blue-normal02">
-                인증이 완료되었습니다!
-              </p>
-            )}
           </>
         )}
         <span className="ml-2 mt-[1rem] mb-[0.125rem] text-menu text-tertiary w-full max-w-[26.875rem]">
@@ -215,7 +204,9 @@ export default function SignUpPage() {
           className="w-full max-w-[26.875rem]"
         />
         {errors.pw && (
-          <p className="ml-2 text-sm text-error-normal">{errors.pw.message}</p>
+          <p className="ml-3 text-description text-error-normal w-full max-w-[26.875rem]">
+            {errors.pw.message}
+          </p>
         )}
         <span className="ml-2 mt-[1rem] mb-[0.125rem] text-menu text-tertiary w-full max-w-[26.875rem]">
           비밀번호 확인
@@ -232,7 +223,7 @@ export default function SignUpPage() {
           className="w-full max-w-[26.875rem]"
         />
         {errors.confirmPw && (
-          <p className="ml-2 text-sm text-error-normal">
+          <p className="ml-3 text-description text-error-normal w-full max-w-[26.875rem]">
             {errors.confirmPw.message}
           </p>
         )}
@@ -247,7 +238,7 @@ export default function SignUpPage() {
           className="w-full max-w-[26.875rem]"
         />
         {errors.name && (
-          <p className="ml-2 text-sm text-error-normal">
+          <p className="ml-2 text-description text-error-normal w-full max-w-[26.875rem]">
             {errors.name.message}
           </p>
         )}

@@ -7,16 +7,17 @@ import { PATH } from '@src/constants/path';
 import { useNavigate } from 'react-router-dom';
 import { useQuitUserMutation } from '@src/state/mutations/user/useQuitUserMutation';
 import { useLoginStore } from '@src/state/store/loginStore';
+
 export default function UserQuit() {
   const navigate = useNavigate();
   const { logout } = useLoginStore();
-  const [quitReason, setQuitReason] = useState('');
+  const [withdrawalReason, setWithdrawalReason] = useState('');
 
   const { mutate: quitUser } = useQuitUserMutation();
 
   const handleQuit = () => {
     quitUser(
-      { accessToken: '' },
+      { withdrawalReason },
       {
         onSuccess: () => {
           CustomToast({
@@ -78,8 +79,8 @@ export default function UserQuit() {
           <textarea
             className="w-full h-32 p-4 mt-4 rounded-lg resize-none bg-gray-light"
             placeholder="탈퇴 사유를 입력해주세요"
-            value={quitReason}
-            onChange={(e) => setQuitReason(e.target.value)}
+            value={withdrawalReason}
+            onChange={(e) => setWithdrawalReason(e.target.value)}
           />
         </div>
 
@@ -87,7 +88,7 @@ export default function UserQuit() {
           buttonType="quit"
           className="w-full"
           onClick={handleQuit}
-          disabled={!quitReason.trim()}
+          disabled={!withdrawalReason.trim()}
         >
           계정 삭제하기
         </Button>

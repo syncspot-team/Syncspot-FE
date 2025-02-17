@@ -18,7 +18,7 @@ export const signupSchema = yup.object().shape({
     .string()
     .required('비밀번호 확인을 입력해 주세요')
     .oneOf([yup.ref('pw')], '비밀번호가 일치하지 않습니다'),
-  name: yup.string().required('이름을 입력해 주세요'),
+  name: yup.string().required('닉네임을 입력해 주세요'),
   address: yup.string(),
   code: yup.string().required('인증번호를 입력해 주세요'),
 });
