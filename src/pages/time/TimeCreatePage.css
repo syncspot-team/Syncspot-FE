@@ -4,7 +4,7 @@
 }
 
 .react-calendar {
-  background-color: white !important;
+  background-color: transparent;
 }
 
 /* 요일 헤더 간격 조정 */
@@ -20,12 +20,12 @@
 }
 
 /* 토요일 헤더 색상 */
-.react-calendar__month-view__weekdays__weekday:nth-last-child() abbr {
+.react-calendar__month-view__weekdays__weekday:last-child abbr {
   color: #5c76ff; /* text-primary 색상 */
 }
 
 /* 일요일 헤더 색상 */
-.react-calendar__month-view__weekdays__weekday:last-child abbr {
+.react-calendar__month-view__weekdays__weekday:first-child abbr {
   color: #ff3629; /* 빨간색 */
 }
 
@@ -44,12 +44,10 @@
 
 /* 날짜 타일 스타일링 */
 .react-calendar__tile {
-  background-color: #f8f8fb;
-  border-radius: 0.25rem;
+  background-color: #ededf4;
+  border-radius: 0.875rem;
   padding: 0;
   margin: 0.125rem;
-  width: 100%;
-  height: 3rem;
   display: flex !important;
   justify-content: center;
   align-items: center;
@@ -68,7 +66,7 @@
 /* 각 날짜 타일의 너비를 강제로 동일하게 설정 */
 .react-calendar__month-view__days > * {
   width: 100% !important;
-  max-width: 100% !important;
+  height: 100% !important;
   flex: none !important;
 }
 
@@ -96,7 +94,8 @@
 /* 타일 hover 효과 제거 */
 .react-calendar__tile:enabled:hover,
 .react-calendar__tile:enabled:focus {
-  background-color: #f8f9fa;
+  background-color: #5786ff;
+  color: white;
 }
 
 /* 선택된 날짜 스타일 */
@@ -107,11 +106,11 @@
 }
 /* 선택되어있는 날짜 스타일링 */
 .selected-date {
-  background-color: #5786ff !important;
-  transition: none !important;
+  background-color: #bcd7ff !important;
+  transition: none;
 }
 .selected-date > abbr {
-  color: white !important;
+  color: #377bff !important;
 }
 
 /* 선택된 날짜 hover 시에도 같은 색상 유지 */
@@ -120,6 +119,21 @@
   background-color: #5786ff !important;
   color: white;
   transition: none;
+}
+.selected-date:enabled:hover {
+  background-color: #5786ff !important;
+  transition: none !important;
+  cursor: hover;
+}
+.selected-date > abbr:hover {
+  color: white !important;
+}
+
+/* tileDisabled 스타일 */
+.disabled-date {
+  background-color: #ededf4;
+  color: #000;
+  pointer-events: none !important;
 }
 
 /* 모든 calendar 관련 요소의 transition 제거 */
