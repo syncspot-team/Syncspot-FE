@@ -18,7 +18,6 @@ import {
 import { useNavigate, useParams } from 'react-router-dom';
 import { PATH } from '@src/constants/path';
 import { useGetTimeDatesQuery } from '@src/state/queries/time';
-import SomethingWrongErrorPage from '../error/SomethingWrongErrorPage';
 
 export default function TimeCreatePage() {
   const navigate = useNavigate();
@@ -28,24 +27,13 @@ export default function TimeCreatePage() {
   const { data: getTimeDatesQuery } = useGetTimeDatesQuery();
 
   useEffect(() => {
-    getTimeDatesQuery?.data.existence ? (
-      setSelectedDates(getTimeDatesQuery.data.dates.map(formatDate))
-    ) : (
-      <SomethingWrongErrorPage />
-    );
+    getTimeDatesQuery?.data.existence &&
+      setSelectedDates(getTimeDatesQuery.data.dates.map(formatDate));
   }, [roomId, getTimeDatesQuery]);
 
-  const { mutate: createTimeRoomMutation } = usePostTimeRoomMutation({
-    onSuccess: () => {
-      navigate(PATH.TIME_VOTE(roomId));
-    },
-  });
+  const { mutate: createTimeRoomMutation } = usePostTimeRoomMutation();
 
-  const { mutate: updateTimeRoomMutation } = usePutTimeRoomMutation({
-    onSuccess: () => {
-      navigate(PATH.TIME_VOTE(roomId));
-    },
-  });
+  const { mutate: updateTimeRoomMutation } = usePutTimeRoomMutation();
 
   const handleDateClick = (date: Date) => {
     setSelectedDates((prev) => {

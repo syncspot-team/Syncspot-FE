@@ -10,7 +10,7 @@ export const useGetTimeVotedQuery = (
   const { roomId } = useParams();
 
   return useQuery({
-    queryKey: TIME_KEY.GET_TIME_VOTED(roomId!),
+    queryKey: [TIME_KEY.GET_TIME_VOTED(roomId!)],
     queryFn: () => getTimeVoted(roomId!),
     ...options,
   });

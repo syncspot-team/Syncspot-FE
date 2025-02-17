@@ -26,6 +26,10 @@ export const usePostTimeVoteMutation = (
       queryClient.invalidateQueries({
         queryKey: TIME_KEY.GET_TIME_VOTED(roomId!),
       });
+      queryClient.invalidateQueries({
+        queryKey: [TIME_KEY.GET_TIME_RESULT(roomId!)],
+      });
+
       navigate(PATH.TIME_RESULT(roomId));
     },
     ...options,

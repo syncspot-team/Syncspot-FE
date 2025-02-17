@@ -1,6 +1,5 @@
 import {
   useQuery,
-  useQueryClient,
   UseQueryOptions,
 } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
@@ -12,14 +11,9 @@ export const useGetTimeResultQuery = (
   options?: UseQueryOptions<ITimeResultResponseType, Error, any>,
 ) => {
   const { roomId } = useParams();
-  const queryClient = useQueryClient();
-
-  queryClient.invalidateQueries({
-    queryKey: TIME_KEY.GET_TIME_RESULT(roomId!),
-  });
 
   return useQuery({
-    queryKey: TIME_KEY.GET_TIME_RESULT(roomId!),
+    queryKey: [TIME_KEY.GET_TIME_RESULT(roomId!)],
     queryFn: () => getTimeResult(roomId!),
     ...options,
   });
