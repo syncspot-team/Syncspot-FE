@@ -12,6 +12,7 @@ import PlaceTypeFilter, {
 import PlaceList from '@src/components/location/PlaceList';
 import { useCoordinates } from '@src/hooks/location/useCoordinates';
 import { useGetPlaceSearchQuery } from '@src/state/queries/location/useGetPlaceSearchQuery';
+import SomethingWrongErrorPage from '@src/pages/error/SomethingWrongErrorPage';
 
 export default function LocationRecommendationsPage() {
   const navigate = useNavigate();
@@ -25,13 +26,24 @@ export default function LocationRecommendationsPage() {
   const [selectedPlace, setSelectedPlace] = useState<string | null>(null);
 
   const { data: placeSearchData } = useGetPlaceSearchQuery();
+  if (
+    !placeSearchData?.data?.myLocationExistence &&
+    !placeSearchData?.data?.friendLocationExistence
+  ) {
+    return <SomethingWrongErrorPage />;
+  }
+
   const { data: midpointSearchData } = useMidpointSearchQuery({
     enabled:
-      !!placeSearchData?.data?.myLocationExistence ||
-      !!placeSearchData?.data?.friendLocationExistence,
+      placeSearchData?.data?.myLocationExistence ||
+      placeSearchData?.data?.friendLocationExistence,
   });
   const { data: recommendPlaceSearchData, refetch } =
-    useGetRecommendPlaceSearchQuery(selectedPlaceStandard, currentPage);
+    useGetRecommendPlaceSearchQuery(selectedPlaceStandard, currentPage, {
+      enabled:
+        !!placeSearchData?.data?.myLocationExistence ||
+        !!placeSearchData?.data?.friendLocationExistence,
+    });
 
   const coordinates = useCoordinates(
     recommendPlaceSearchData,
