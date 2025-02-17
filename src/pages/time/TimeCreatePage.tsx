@@ -11,6 +11,7 @@ import {
   usePutTimeRoomMutation,
 } from '@src/state/mutations/time';
 import {
+  arraysEqual,
   formatDate,
   formatStringDate,
 } from '@src/components/time/utils/formatDate';
@@ -76,15 +77,27 @@ export default function TimeCreatePage() {
       return;
     }
 
-    const formattedDates = selectedDates.map(formatStringDate);
-    console.log('선택된 날짜들:', selectedDates, 'formatdates', formattedDates);
-    getTimeDatesQuery?.data.existence
-      ? updateTimeRoomMutation({ dates: formattedDates })
-      : createTimeRoomMutation({ dates: formattedDates });
+    const formattedDates = selectedDates.map((value) =>
+      formatStringDate(value, 'yyyy-mm-dd'),
+    );
+
+    if (
+      getTimeDatesQuery?.data.existence &&
+      arraysEqual(getTimeDatesQuery?.data.dates, formattedDates)
+    ) {
+      navigate(PATH.TIME_VOTE(roomId));
+    } else if (
+      getTimeDatesQuery?.data.existence &&
+      !arraysEqual(getTimeDatesQuery?.data.dates, formattedDates)
+    ) {
+      updateTimeRoomMutation({ dates: formattedDates });
+    } else {
+      createTimeRoomMutation({ dates: formattedDates });
+    }
   };
 
   return (
-    <div className="mt-[5rem] max-w-[37.5rem] py-8 my-0 mx-auto">
+    <div className="mt-[3rem] max-w-[37.5rem] py-8 my-0 mx-auto">
       <Calendar
         onChange={() => {}}
         value={null}
