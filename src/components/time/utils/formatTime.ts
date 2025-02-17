@@ -1,4 +1,17 @@
-export const formatTime = (time: number) => (time < 10 ? `0${time}` : time);
+export const formatTime = (time: number) => time.toString().padStart(2, '0');
+
+export const formatStringTime = (
+  time: string,
+  format: '시분' | ':' = '시분',
+) => {
+  const [hour, minute] = time.split(' ')[1].split(':');
+
+  if (format === ':') {
+    return `${hour}:${minute}`;
+  }
+
+  return `${hour}시 ${minute}분`;
+};
 
 export const format12Hour = (): string[] => {
   return Array.from({ length: 13 }, (_, i) => `${String(i).padStart(2, '0')}`);
