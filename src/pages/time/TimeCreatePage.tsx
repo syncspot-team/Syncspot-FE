@@ -66,7 +66,7 @@ export default function TimeCreatePage() {
     }
 
     const formattedDates = selectedDates.map((value) =>
-      formatStringDate(value, 'yyyy-mm-dd'),
+      formatStringDate(value),
     );
 
     if (

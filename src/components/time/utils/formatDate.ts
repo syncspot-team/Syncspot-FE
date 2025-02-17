@@ -1,3 +1,9 @@
+export const DATE_FORMATS = {
+  YYYY_MM_DD: 'yyyy-mm-dd',
+  MMDD: 'mmdd',
+  TIME: 'time',
+};
+
 export const formatDate = (date: string) => {
   // yyyy-mm-dd 문자열
   const [year, month, day] = date.split('-').map(Number);
@@ -15,18 +21,18 @@ export const formatDate = (date: string) => {
 export const formatStringDate = (
   date: Date,
   time?: string,
-  format: 'yyyy-mm-dd' | 'mmdd' | 'time' = 'yyyy-mm-dd',
+  format: (typeof DATE_FORMATS)[keyof typeof DATE_FORMATS] = DATE_FORMATS.YYYY_MM_DD,
 ): string => {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const mmdd = String(date.getMonth() + 1);
   const day = String(date.getDate()).padStart(2, '0');
 
-  if (format === 'mmdd') {
+  if (format === DATE_FORMATS.MMDD) {
     return `${mmdd}월 ${day}일`;
   }
 
-  if (format === 'time') {
+  if (format === DATE_FORMATS.TIME) {
     return `${year}-${month}-${day} ${time}`;
   }
 

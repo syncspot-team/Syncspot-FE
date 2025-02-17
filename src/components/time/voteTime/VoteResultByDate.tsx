@@ -6,7 +6,7 @@ export default function VoteResultByDate({
   clickedDate,
   result,
 }: IVoteResultByDate) {
-  const formatted = formatStringDate(clickedDate, 'yyyy-mm-dd');
+  const formatted = formatStringDate(clickedDate);
   const members = result[formatted] || [];
   return (
     <div className="p-4  bg-gray-light rounded-[1.25rem] text-menu">

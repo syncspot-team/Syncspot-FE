@@ -8,7 +8,7 @@ import {
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ITimeVoteRequest } from '@src/types/time/timeVoteType';
-import { formatStringDate } from '../utils/formatDate';
+import { DATE_FORMATS, formatStringDate } from '../utils/formatDate';
 import { PATH } from '@src/constants/path';
 
 export default function MyVote({
@@ -50,7 +50,7 @@ export default function MyVote({
         memberAvailableEndTime: '',
       };
       const votedDate = myVote.memberAvailableStartTime.split(' ')[0];
-      return formatStringDate(date, 'yyyy-mm-dd') === votedDate;
+      return formatStringDate(date) === votedDate;
     });
     setCheckedStates(updatedCheckedStates);
   }, [dates, myVotes]);
@@ -92,8 +92,8 @@ export default function MyVote({
     const start = `${startHour}:${startMinute}`;
     const end = `${endHour}:${endMinute}`;
 
-    const startTime = formatStringDate(date, start, 'time');
-    const endTime = formatStringDate(date, end, 'time');
+    const startTime = formatStringDate(date, start, DATE_FORMATS.TIME);
+    const endTime = formatStringDate(date, end, DATE_FORMATS.TIME);
 
     const updatedVotes = [...votes];
     updatedVotes[index] = {

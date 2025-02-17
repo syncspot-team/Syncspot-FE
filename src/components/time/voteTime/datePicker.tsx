@@ -2,7 +2,7 @@ import { mergeClassNames } from '@src/utils/mergeClassNames';
 import { useState } from 'react';
 import TimeSelectBox from './timeSelectBox';
 import { ITimeDatePickerProps } from '@src/types/time/timeProps';
-import { formatStringDate } from '../utils/formatDate';
+import { DATE_FORMATS, formatStringDate } from '../utils/formatDate';
 
 export default function DatePicker({
   date,
@@ -54,7 +54,7 @@ export default function DatePicker({
             'text-gray-normal text-menu-selected': !isChecked,
           })}
         >
-          {formatStringDate(date, 'mmdd')}
+          {formatStringDate(date, undefined, DATE_FORMATS.MMDD)}
         </span>
       </div>
       <div
