@@ -32,7 +32,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
               <option
                 key={index}
                 value={formatTime(index)}
-                className="bg-white"
+                className="bg-white-default"
               >
                 {formatTime(index)} 시
               </option>
@@ -43,7 +43,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
               <option
                 key={index}
                 value={formatTime(index * 10)}
-                className="bg-white"
+                className="bg-white-default"
               >
                 {formatTime(index * 10)} 분
               </option>

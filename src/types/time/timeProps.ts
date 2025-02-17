@@ -45,3 +45,9 @@ export interface IVoteResultByDate {
     [date: string]: IMemberAvailability[];
   };
 }
+
+export interface IVotes {
+  memberAvailableStartTime: string;
+  memberAvailableEndTime: string;
+}
+[];

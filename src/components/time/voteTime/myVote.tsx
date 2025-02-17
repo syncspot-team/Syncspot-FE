@@ -1,4 +1,4 @@
-import { ITimeVotedMyProps } from '@src/types/time/timeProps';
+import { ITimeVotedMyProps, IVotes } from '@src/types/time/timeProps';
 import DatePicker from './datePicker';
 import Button from '../../common/button/Button';
 import {
@@ -32,10 +32,7 @@ export default function MyVote({
     : [];
 
   //기본 투표정보 - 존재할경우, 없을경우[]
-  const [votes, setVotes] =
-    useState<
-      { memberAvailableStartTime: string; memberAvailableEndTime: string }[]
-    >(initialVotes);
+  const [votes, setVotes] = useState<IVotes[]>(initialVotes);
 
   // 체크 상태
   const [checkedStates, setCheckedStates] = useState<boolean[]>(
