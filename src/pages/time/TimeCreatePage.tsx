@@ -120,7 +120,10 @@ export default function TimeCreatePage() {
         )}
       </div>
 
-      <Button className="w-full mt-5" onClick={handleCreateClick}>
+      <Button
+        className="w-full mt-4 px-[0.3125rem]"
+        onClick={handleCreateClick}
+      >
         시간 투표 생성
       </Button>
     </div>

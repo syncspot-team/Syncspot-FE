@@ -22,14 +22,14 @@ export default function TimeResultPage() {
       <div className="flex flex-col items-center justify-center w-full gap-4 mt-12 lg:flex-row">
         <Button
           onClick={() => navigate(PATH.TIME_VOTE(roomId))}
-          className="w-full"
+          className="w-full px-[0.3125rem]"
         >
           투표 다시하기
         </Button>
         <Button
           buttonType={'secondary'}
           onClick={() => navigate(PATH.TIME_CREATE(roomId))}
-          className="w-full"
+          className="w-full px-[0.3125rem]"
         >
           투표 재생성하기
         </Button>

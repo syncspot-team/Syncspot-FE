@@ -131,7 +131,7 @@ export default function MyVote({
             />
           );
         })}
-      <Button onClick={handleVote} className="w-full mx-auto">
+      <Button onClick={handleVote} className="w-full px-[0.3125rem]">
         투표하기
       </Button>
     </div>
