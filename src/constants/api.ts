@@ -6,6 +6,9 @@ export const API = {
   SIGN_IN: '/api/members/login', // 로그인
   LOGOUT: '/api/members/logout', // 로그아웃
   JOINED_ROOMS_SEARCH: '/api/member-rooms', // 사용자가 참여한 방 목록 검색
+  USER_INFO_SEARCH: '/api/members/info', // 사용자 정보 조회
+  USER_ADDRESS_UPDATE: '/api/members/address', // 사용자 주소 수정
+  USER_NICKNAME_UPDATE: '/api/members/name', // 사용자 닉네임 수정
   PASSWORD_REISSUE_EMAIL_VERIFICATION:
     '/api/members/verification-request/password-reissue', // 비밀번호 재발급 이메일 인증 요청
   PASSWORD_REISSUE: '/api/members/password-reissue', // 비밀번호 재발급
