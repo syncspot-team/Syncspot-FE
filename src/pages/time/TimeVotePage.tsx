@@ -34,7 +34,7 @@ export default function TimeVotePage() {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row lg:items-start items-center mt-[5rem] w-full max-w-[62.5rem] mx-auto gap-5">
+    <div className="flex flex-col p-4 lg:p-0 lg:flex-row lg:items-start items-center lg:mt-[5rem] mt-12 w-full max-w-[62.5rem] mx-auto gap-5">
       <ClickCalendar
         dates={timeDate.dates}
         result={timeResultRes.data.result}

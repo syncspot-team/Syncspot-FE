@@ -97,7 +97,7 @@ export default function TimeCreatePage() {
   };
 
   return (
-    <div className="mt-[3rem] max-w-[37.5rem] py-8 my-0 mx-auto">
+    <div className="mt-12 max-w-[37.5rem] p-4 lg:p-0 py-8 my-0 mx-auto">
       <Calendar
         onChange={() => {}}
         value={null}

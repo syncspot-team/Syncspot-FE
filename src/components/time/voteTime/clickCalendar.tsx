@@ -29,7 +29,10 @@ export default function ClickCalendar({ dates, result }: ITimeResultProps) {
   }, []);
 
   return (
-    <div className="flex flex-col w-1/2 h-full gap-4" ref={componentRef}>
+    <div
+      className="flex flex-col w-full h-full gap-4 lg:w-1/2"
+      ref={componentRef}
+    >
       <div className="w-full rounded-[1.25rem] p-3 text-blue-dark01 bg-gray-light text-menu-selected">
         <Calendar
           onChange={() => {}}
