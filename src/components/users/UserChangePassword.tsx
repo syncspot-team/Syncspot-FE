@@ -47,7 +47,7 @@ export default function UserChangePassword() {
               value === watch('newPassword') || '비밀번호가 일치하지 않습니다',
           })}
 
-          <Button type="submit" className="w-full ">
+          <Button type="submit" className="max-w-full px-[0.3125rem]">
             완료
           </Button>
         </form>
