@@ -34,6 +34,7 @@ import UserGroupList from '@src/components/users/UserGroupList';
 import UserLogout from '@src/components/users/UserLogout';
 import UserQuit from '@src/components/users/UserQuit';
 import RoomLayout from '@src/components/layout/RoomLayout';
+import UserChangePassword from '@src/components/users/UserChangePassword';
 
 const createAuthRouter = (routeType: ROUTE_TYPE, children: RouteObject[]) => {
   const authRouter = children.map((child: RouteObject) => ({
@@ -92,6 +93,10 @@ const router = createBrowserRouter([
             {
               path: PATH.USERS_GROUP_LISTS,
               element: <UserGroupList />,
+            },
+            {
+              path: PATH.USERS_PASSWORD,
+              element: <UserChangePassword />,
             },
             {
               path: PATH.USERS_LOGOUT,
