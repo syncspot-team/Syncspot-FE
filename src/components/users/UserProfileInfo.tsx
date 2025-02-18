@@ -5,6 +5,7 @@ import { Input } from '@src/components/common/input/Input';
 interface IProfileFormData {
   nickname: string;
   email: string;
+  address: string;
 }
 
 const BUTTON_STYLES = {
@@ -48,7 +49,7 @@ export default function UserProfileInfo() {
 
   return (
     <form onSubmit={handleSubmitProfile(handleProfileSave)}>
-      <div className="flex items-center justify-between mt-0 mb-5 lg:mt-4">
+      <div className="flex items-center justify-between mt-4 mb-5 lg:mb-7">
         <h2 className="text-[1.25rem] lg:text-subtitle text-tertiary font-semibold">
           개인정보
         </h2>
@@ -56,18 +57,24 @@ export default function UserProfileInfo() {
           {renderProfileInfoEditButtons()}
         </div>
       </div>
-      <label className="ml-[0.375rem] text-content-bold">닉네임</label>
+      <label className="ml-[0.375rem] text-[0.9375rem]">닉네임</label>
       <Input
         {...register('nickname')}
         disabled={!isEditing}
         className={`w-full mt-[0.125rem] mb-4 ${isEditing ? 'bg-white-default ring-1 ring-primary' : 'bg-gray-light cursor-not-allowed'}`}
       />
-      <label className="ml-[0.375rem] text-content-bold">아이디(이메일)</label>
+      <label className="ml-[0.375rem] text-[0.9375rem]">아이디(이메일)</label>
       <Input
         {...register('email')}
         type="email"
         disabled={!isEditing}
-        className={`w-full mt-[0.125rem] ${isEditing ? 'bg-white-default ring-1 ring-primary' : 'bg-gray-light cursor-not-allowed'}`}
+        className={`w-full mt-[0.125rem] mb-4 ${isEditing ? 'bg-white-default ring-1 ring-primary' : 'bg-gray-light cursor-not-allowed'}`}
+      />
+      <label className="ml-[0.375rem] text-[0.9375rem]">주소</label>
+      <Input
+        {...register('address')}
+        disabled={!isEditing}
+        className={`w-full mt-[0.125rem]`}
       />
     </form>
   );

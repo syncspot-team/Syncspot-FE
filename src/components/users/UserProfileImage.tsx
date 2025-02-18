@@ -17,7 +17,7 @@ export default function UserProfileImage() {
   };
 
   return (
-    <div className="flex items-center gap-10 mb-10">
+    <div className="flex items-center gap-10 mb-8">
       <img
         src={profileImage}
         alt="프로필 이미지"
