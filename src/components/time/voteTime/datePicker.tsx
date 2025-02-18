@@ -1,5 +1,5 @@
 import { mergeClassNames } from '@src/utils/mergeClassNames';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TimeSelectBox from './timeSelectBox';
 import { ITimeDatePickerProps } from '@src/types/time/timeProps';
 import { DATE_FORMATS, formatStringDate } from '../utils/formatDate';
@@ -29,6 +29,10 @@ export default function DatePicker({
   const [startMinute, setStartMinute] = useState(initialMinuteStart);
   const [endHour, setEndHour] = useState(initialHourEnd);
   const [endMinute, setEndMinute] = useState(initialMinuteEnd);
+
+  useEffect(() => {
+    onChange(startHour, startMinute, endHour, endMinute);
+  }, [startHour, startMinute, endHour, endMinute]);
 
   return (
     <div className="flex flex-col justify-center items-start  bg-white-default rounded-[.75rem] lg:h-[7.5rem] h-36 my-4 p-4">
@@ -72,7 +76,6 @@ export default function DatePicker({
           onChange={(hour: string, minute: string) => {
             setStartHour(hour);
             setStartMinute(minute);
-            onChange(startHour, startMinute, endHour, endMinute);
           }}
         />
         <div className="flex items-center gap-1 w-fit">
@@ -83,8 +86,6 @@ export default function DatePicker({
             onChange={(hour: string, minute: string) => {
               setEndHour(hour);
               setEndMinute(minute);
-              onChange(startHour, startMinute, endHour, endMinute);
-              console.log(endHour, endMinute);
             }}
           />
         </div>
