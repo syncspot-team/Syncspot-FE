@@ -1,5 +1,6 @@
 import IconEditTabler from '@src/assets/icons/IconEditTabler.svg?react';
 import IconAddressBook from '@src/assets/icons/IconAddressBook.svg?react';
+import IconPassword from '@src/assets/icons/IconPassword.svg?react';
 import IconLogout from '@src/assets/icons/IconLogout.svg?react';
 import IconUserQuit from '@src/assets/icons/IconUserQuit.svg?react';
 import { PATH } from '@src/constants/path';
@@ -28,6 +29,11 @@ export const sideMenuItems = [
   {
     text: '계정 설정',
     subItems: [
+      {
+        text: '비밀번호 변경',
+        path: PATH.USERS + '/' + PATH.USERS_PASSWORD,
+        icon: IconPassword,
+      },
       {
         text: '로그아웃',
         path: PATH.USERS + '/' + PATH.USERS_LOGOUT,
