@@ -14,7 +14,6 @@ export default function ClickCalendar({ dates }: ITimeDatesProps) {
 
   //clickCalendar 투표결과 확인
   const { data: timeResultRes } = useGetTimeResultQuery();
-  const result = timeResultRes.data.result;
 
   // 외부 클릭 감지
   useEffect(() => {
@@ -32,6 +31,7 @@ export default function ClickCalendar({ dates }: ITimeDatesProps) {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+  const result = timeResultRes?.data.result;
 
   return (
     <div

@@ -13,7 +13,7 @@ import { PATH } from '@src/constants/path';
 import { useGetTimeVotedQuery } from '@src/state/queries/time';
 
 export default function MyVote({ dates }: ITimeDatesProps) {
-  //투표여부 voteDate 에 myVotes 전달
+  //투표여부 myVotes
   const { data: timeVotedRes } = useGetTimeVotedQuery();
 
   const { mutate: postVote } = usePostTimeVoteMutation();
@@ -23,15 +23,12 @@ export default function MyVote({ dates }: ITimeDatesProps) {
   const navigate = useNavigate();
   const [selectChange, setSelectChange] = useState(false);
 
-  //string 에서 Date 객체로 변환
-  const timeVoted = {
-    myVotesExistence: timeVotedRes.data.myVotesExistence,
-    myVotes: timeVotedRes.data.myVotes,
-  };
+  const myVotesExistence = timeVotedRes?.data.myVotesExistence;
+  const myVotes = timeVotedRes?.data.myVotes;
 
   //투표값 존재할 경우
-  const initialVotes = timeVoted.myVotesExistence
-    ? timeVoted.myVotes.map(
+  const initialVotes = myVotesExistence
+    ? myVotes.map(
         ({ memberAvailableStartTime, memberAvailableEndTime }: IVotes) => ({
           memberAvailableStartTime,
           memberAvailableEndTime,
@@ -58,7 +55,7 @@ export default function MyVote({ dates }: ITimeDatesProps) {
       return formatStringDate(date) === votedDate;
     });
     setCheckedStates(updatedCheckedStates);
-  }, [dates, timeVoted.myVotes]);
+  }, [dates, myVotes]);
 
   const handleCheckboxChange = (index: number) => {
     const updatedCheckedStates = [...checkedStates];
@@ -76,9 +73,9 @@ export default function MyVote({ dates }: ITimeDatesProps) {
       })),
     };
 
-    if (timeVoted.myVotesExistence && !selectChange) {
+    if (myVotesExistence && !selectChange) {
       navigate(PATH.TIME_RESULT(roomId));
-    } else if (timeVoted.myVotesExistence && selectChange) {
+    } else if (myVotesExistence && selectChange) {
       putVote(voteData);
     } else {
       postVote(voteData);
