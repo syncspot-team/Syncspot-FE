@@ -2,13 +2,10 @@ import {
   IMemberAvailability,
   ITimeResult,
 } from '@src/types/time/timeResultType';
-import { ITimeVoted } from './timeVotedResponseType';
 
 export interface ITimeDatesProps {
   dates: Date[];
 }
-
-export interface ITimeVotedMyProps extends ITimeDatesProps, ITimeVoted {}
 
 export interface ITimeDatePickerProps {
   date: Date;
@@ -26,7 +23,6 @@ export interface ITimeDatePickerProps {
   ) => void;
 }
 
-export interface ITimeResultProps extends ITimeDatesProps, ITimeResult {}
 
 export interface ITimeSelectBoxProps {
   initialHour: string;
