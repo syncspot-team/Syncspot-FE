@@ -6,10 +6,9 @@ import {
   usePutTimeVoteMutation,
 } from '@src/state/mutations/time';
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { ITimeVoteRequest } from '@src/types/time/timeVoteType';
 import { DATE_FORMATS, formatStringDate } from '../utils/formatDate';
-import { PATH } from '@src/constants/path';
 import { useGetTimeVotedQuery } from '@src/state/queries/time';
 
 export default function MyVote({ dates }: ITimeDatesProps) {
@@ -20,8 +19,6 @@ export default function MyVote({ dates }: ITimeDatesProps) {
   const { mutate: putVote } = usePutTimeVoteMutation();
 
   const { roomId } = useParams();
-  const navigate = useNavigate();
-  const [selectChange, setSelectChange] = useState(false);
 
   const myVotesExistence = timeVotedRes?.data.myVotesExistence;
   const myVotes = timeVotedRes?.data.myVotes;
@@ -73,9 +70,7 @@ export default function MyVote({ dates }: ITimeDatesProps) {
       })),
     };
 
-    if (myVotesExistence && !selectChange) {
-      navigate(PATH.TIME_RESULT(roomId));
-    } else if (myVotesExistence && selectChange) {
+    if (myVotesExistence) {
       putVote(voteData);
     } else {
       postVote(voteData);
@@ -97,14 +92,14 @@ export default function MyVote({ dates }: ITimeDatesProps) {
     const startTime = formatStringDate(date, start, DATE_FORMATS.TIME);
     const endTime = formatStringDate(date, end, DATE_FORMATS.TIME);
 
-    const updatedVotes = [...votes];
-    updatedVotes[index] = {
-      memberAvailableStartTime: startTime,
-      memberAvailableEndTime: endTime,
-    };
-    setVotes(updatedVotes);
-    setSelectChange(true);
-    console.log(votes);
+    if (checkedStates[index]) {
+      const updatedVotes = [...votes];
+      updatedVotes[index] = {
+        memberAvailableStartTime: startTime,
+        memberAvailableEndTime: endTime,
+      };
+      setVotes(updatedVotes);
+    }
   };
 
   return (
