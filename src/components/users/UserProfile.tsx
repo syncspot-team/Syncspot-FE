@@ -1,6 +1,5 @@
 import UserProfileImage from './UserProfileImage';
 import UserProfileInfo from './UserProfileInfo';
-import UserChangePassword from './UserChangePassword';
 
 export default function UserProfile() {
   return (
@@ -11,7 +10,6 @@ export default function UserProfile() {
         </h3>
         <UserProfileImage />
         <UserProfileInfo />
-        <UserChangePassword />
       </div>
     </>
   );
