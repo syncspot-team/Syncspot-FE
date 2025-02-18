@@ -22,6 +22,7 @@ export const PATH = {
   USERS: '/users',
   USERS_PROFILE: 'profile',
   USERS_GROUP_LISTS: 'group_lists',
+  USERS_PASSWORD:'password',
   USERS_LOGOUT: 'logout',
   USERS_QUIT: 'quit',
 } as const;
