@@ -3,12 +3,13 @@
   -moz-appearance: none; /* Firefox */
   appearance: none; /* 기본 appearance 제거 */
   -ms-expand: none; /* IE10,11에서 기본 화살표 제거 */
-  transition: all 0.2s;
+  transition: color 0.05s;
   height: 2.5rem;
   border-radius: 0.75rem;
   outline: none;
   border: none;
-  padding-right: 30px;
+  padding-right: 1.875rem;
+  padding-left: 1rem;
   background: none;
   background-color: #f8f8fb;
   width: 100%;

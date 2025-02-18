@@ -1,4 +1,10 @@
 export interface ITimeResultResponseType {
+  isSuccess: boolean;
+  status: number;
+  data: ITimeResult;
+}
+
+export interface ITimeResult {
   result: {
     //DB 날짜별 배열, 키
     [date: string]: IMemberAvailability[];

@@ -1,4 +1,8 @@
 export interface ITimeDatesResponseType {
-  existence: boolean;
-  dates: string[];
+  isSuccess: boolean;
+  status: number;
+  data: {
+    existence: boolean;
+    dates: string[];
+  };
 }

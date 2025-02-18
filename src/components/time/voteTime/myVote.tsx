@@ -1,62 +1,113 @@
-import { ITimeVotedMyProps } from '@src/types/time/timeProps';
+import { ITimeVotedMyProps, IVotes } from '@src/types/time/timeProps';
 import DatePicker from './datePicker';
 import Button from '../../common/button/Button';
 import {
   usePostTimeVoteMutation,
   usePutTimeVoteMutation,
 } from '@src/state/mutations/time';
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ITimeVoteRequest } from '@src/types/time/timeVoteType';
+import { DATE_FORMATS, formatStringDate } from '../utils/formatDate';
+import { PATH } from '@src/constants/path';
 
 export default function MyVote({
   dates,
   myVotesExistence,
   myVotes,
 }: ITimeVotedMyProps) {
-  const postVote = usePostTimeVoteMutation();
-  const putVote = usePutTimeVoteMutation();
+  const { mutate: postVote } = usePostTimeVoteMutation();
+  const { mutate: putVote } = usePutTimeVoteMutation();
+
   const { roomId } = useParams();
+  const navigate = useNavigate();
+  const [selectChange, setSelectChange] = useState(false);
 
-  const [votes, setVotes] = useState<{ start: string; end: string }[]>([]);
-
-  const formattedVotes = myVotesExistence
+  //투표값 존재할 경우
+  const initialVotes = myVotesExistence
     ? myVotes.map(({ memberAvailableStartTime, memberAvailableEndTime }) => ({
         memberAvailableStartTime,
         memberAvailableEndTime,
       }))
     : [];
 
+  //기본 투표정보 - 존재할경우, 없을경우[]
+  const [votes, setVotes] = useState<IVotes[]>(initialVotes);
+
+  // 체크 상태
+  const [checkedStates, setCheckedStates] = useState<boolean[]>(
+    Array(dates.length).fill(false),
+  );
+  useEffect(() => {
+    if (initialVotes.length === 0) return;
+
+    const updatedCheckedStates = dates.map((date, index) => {
+      const myVote = initialVotes[index] || {
+        memberAvailableStartTime: '',
+        memberAvailableEndTime: '',
+      };
+      const votedDate = myVote.memberAvailableStartTime.split(' ')[0];
+      return formatStringDate(date) === votedDate;
+    });
+    setCheckedStates(updatedCheckedStates);
+  }, [dates, myVotes]);
+
+  const handleCheckboxChange = (index: number) => {
+    const updatedCheckedStates = [...checkedStates];
+    updatedCheckedStates[index] = !updatedCheckedStates[index];
+    setCheckedStates(updatedCheckedStates);
+  };
+
+  //투표하기
   const handleVote = () => {
     const voteData: ITimeVoteRequest = {
       roomId: roomId,
       dateTime: votes.map((vote) => ({
-        memberAvailableStartTime: vote.start || '',
-        memberAvailableEndTime: vote.end || '',
+        memberAvailableStartTime: vote.memberAvailableStartTime || '',
+        memberAvailableEndTime: vote.memberAvailableEndTime || '',
       })),
     };
 
-    if (myVotesExistence) {
-      // PUT 요청
-      putVote.mutate(voteData);
+    if (myVotesExistence && !selectChange) {
+      navigate(PATH.TIME_RESULT(roomId));
+    } else if (myVotesExistence && selectChange) {
+      putVote(voteData);
     } else {
-      // POST 요청
-      postVote.mutate(voteData);
+      postVote(voteData);
     }
   };
 
-  const handleDateChange = (index: number, start: string, end: string) => {
+  //select 값
+  const handleDateChange = (
+    index: number,
+    date: Date,
+    startHour: string,
+    startMinute: string,
+    endHour: string,
+    endMinute: string,
+  ) => {
+    const start = `${startHour}:${startMinute}`;
+    const end = `${endHour}:${endMinute}`;
+
+    const startTime = formatStringDate(date, start, DATE_FORMATS.TIME);
+    const endTime = formatStringDate(date, end, DATE_FORMATS.TIME);
+
     const updatedVotes = [...votes];
-    updatedVotes[index] = { start, end };
+    updatedVotes[index] = {
+      memberAvailableStartTime: startTime,
+      memberAvailableEndTime: endTime,
+    };
     setVotes(updatedVotes);
+    setSelectChange(true);
+    console.log(votes);
   };
 
   return (
-    <div className="relative h-full">
-      <p className="mt-1 mb-6">참석 일시 투표</p>
+    <div className=" h-full w-full lg:w-1/2 bg-gray-light py-5 px-4 rounded-[1.25rem]">
+      <p className="text-center text-title text-blue-dark02">참석 일시 투표</p>
       {Array.isArray(dates) &&
         dates.map((date, index) => {
-          const myVote = formattedVotes[index] || {
+          const myVote = initialVotes[index] || {
             memberAvailableStartTime: '',
             memberAvailableEndTime: '',
           };
@@ -65,14 +116,24 @@ export default function MyVote({
               key={index}
               date={date}
               myVote={myVote}
-              onChange={(start, end) => handleDateChange(index, start, end)}
+              isChecked={checkedStates[index]}
+              onCheckboxChange={() => handleCheckboxChange(index)}
+              onChange={(startHour, startMinute, endHour, endMinute) =>
+                handleDateChange(
+                  index,
+                  date,
+                  startHour,
+                  startMinute,
+                  endHour,
+                  endMinute,
+                )
+              }
             />
           );
         })}
-      <div className="h-14"></div>
-      <div className="absolute bottom-2 w-[95%] mx-auto">
-        <Button onClick={handleVote}>투표하기</Button>
-      </div>
+      <Button onClick={handleVote} className="w-full px-[0.3125rem]">
+        투표하기
+      </Button>
     </div>
   );
 }

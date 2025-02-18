@@ -6,7 +6,7 @@ import {
   format12Hour,
   format24Hour,
   getTimeIndex,
-} from '@src/utils/formatTime';
+} from '@src/components/time/utils/formatTime';
 import { mergeClassNames } from '@src/utils/mergeClassNames';
 import { useEffect, useState } from 'react';
 import GridTime from './gridTime';
@@ -23,7 +23,8 @@ export default function VoteResultGrid() {
   const hoursTo12 = format12Hour();
   const hoursTo24 = format24Hour();
 
-  const { data } = useGetTimeResultQuery();
+  const { data: resultData } = useGetTimeResultQuery();
+  const data = resultData?.data;
 
   //표시되는 날짜 리스트
   const dateKeys = Object.keys(data?.result || {});
@@ -121,17 +122,17 @@ export default function VoteResultGrid() {
 
   return (
     <div className="flex flex-col items-center justify-center w-full">
-      <div className="flex items-center w-[25%] mx-auto mb-3 justify-evenly mt-4">
+      <div className="flex items-center mx-auto mt-4 mb-3 justify-evenly">
         <button
           onClick={handlePrev}
           className={mergeClassNames(
-            currentIndex === 0 ? 'text-gray-light' : 'text-blue-light02',
+            currentIndex === 0 ? 'text-gray-light' : 'text-blue-normal01',
           )}
           disabled={currentIndex === 0}
         >
           <Arrow className="text-title " />
         </button>
-        <p className="font-bold text-center text-title text-blue-dark03">
+        <p className="font-bold text-center text-subtitle text-blue-dark03">
           {formattedDates[currentIndex]}
         </p>
         <button
@@ -139,7 +140,7 @@ export default function VoteResultGrid() {
           className={mergeClassNames(
             currentIndex === formattedDates.length - 1
               ? 'text-gray-light'
-              : 'text-blue-light02',
+              : 'text-blue-normal01',
           )}
           disabled={currentIndex === formattedDates.length - 1}
         >
