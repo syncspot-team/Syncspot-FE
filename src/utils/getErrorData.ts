@@ -6,7 +6,6 @@ type ErrorCodeType = {
 
 const ERROR_CODE: ErrorCodeType = {
   // 백엔드에서 정의한 에러
-  'C-202': { status: '400', message: '요청 파라미터가 잘못되었습니다.' },
   'C-101': {
     status: '401',
     message: '인증에 실패하였습니다.',
@@ -56,11 +55,15 @@ export const getErrorData = (
   const serverErrorCode = error?.response?.data?.code ?? '';
   const axiosErrorCode = error?.code ?? '';
 
-  if (serverErrorCode in ERROR_CODE) {
+  if (serverErrorCode === 'C-202') {
+    return {
+      status: '400',
+      message:
+        error?.response?.data?.reason[0] ?? '요청 파라미터가 잘못되었습니다.',
+    };
+  } else if (serverErrorCode in ERROR_CODE) {
     return ERROR_CODE[serverErrorCode as keyof typeof ERROR_CODE];
-  }
-  if (axiosErrorCode in ERROR_CODE) {
+  } else if (axiosErrorCode in ERROR_CODE) {
     return ERROR_CODE[axiosErrorCode as keyof typeof ERROR_CODE];
-  }
-  return ERROR_CODE.UNKNOWN;
+  } else return ERROR_CODE.UNKNOWN;
 };
