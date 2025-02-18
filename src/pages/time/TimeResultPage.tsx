@@ -1,11 +1,18 @@
 import Button from '@src/components/common/button/Button';
 import VoteResultGrid from '@src/components/time/resultTime/voteResultGrid';
 import { PATH } from '@src/constants/path';
+import { useGetTimeDatesQuery } from '@src/state/queries/time';
 import { useNavigate, useParams } from 'react-router-dom';
+import SomethingWrongErrorPage from '../error/SomethingWrongErrorPage';
 
 export default function TimeResultPage() {
   const navigate = useNavigate();
   const { roomId } = useParams();
+
+  const { data: timeDatesRes } = useGetTimeDatesQuery();
+  if (!timeDatesRes?.data.existence) {
+    return <SomethingWrongErrorPage />;
+  }
 
   return (
     <div className="flex flex-col bg-gray-light p-4 rounded-[1.25rem] max-w-[56.25rem] lg:mx-auto m-4 mt-8">

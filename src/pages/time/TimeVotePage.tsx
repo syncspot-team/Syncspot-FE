@@ -6,10 +6,14 @@ import {
   useGetTimeVotedQuery,
 } from '@src/state/queries/time';
 import { formatDate } from '@src/components/time/utils/formatDate';
+import SomethingWrongErrorPage from '../error/SomethingWrongErrorPage';
 
 export default function TimeVotePage() {
   //시간투표방 조회하고, dates 로 투표가능한 날짜 파악
   const { data: timeDatesRes } = useGetTimeDatesQuery();
+  if (!timeDatesRes?.data.existence) {
+    return <SomethingWrongErrorPage />;
+  }
 
   //투표여부 voteDate 에 myVotes 전달
   const { data: timeVotedRes } = useGetTimeVotedQuery();
@@ -23,9 +27,7 @@ export default function TimeVotePage() {
   //string 에서 Date 객체로 변환
   const timeDate = {
     existence: timeDatesRes.data.existence,
-    dates: timeDatesRes.data.existence
-      ? timeDatesRes.data.dates.map((date: string) => formatDate(date))
-      : [],
+    dates: timeDatesRes?.data.dates.map((date: string) => formatDate(date)),
   };
   //string 에서 Date 객체로 변환
   const timeVoted = {
