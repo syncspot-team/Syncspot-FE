@@ -8,7 +8,7 @@ export default function UserChangePassword() {
 
   return (
     <>
-      <div className="flex items-center justify-between mt-10 lg:mt-12">
+      <div className="flex items-center justify-between mt-8">
         <h2 className="text-[1.25rem] lg:text-subtitle text-tertiary font-semibold">
           비밀번호
         </h2>

@@ -1,20 +1,20 @@
 import { deleteUserFromRoom } from '@src/apis/onboarding/deleteUserFromRoom';
 import { ROOM_QUERY_KEY } from '@src/state/queries/header/key';
+import { IDeleteUserFromRoomRequest } from '@src/types/onboarding/deleteUserFromRoomRequestType';
 import {
   useMutation,
   UseMutationOptions,
   useQueryClient,
 } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
 
 export const useDeleteUserFromRoomMutation = (
-  options?: UseMutationOptions<any, Error, any>,
+  options?: UseMutationOptions<any, Error, IDeleteUserFromRoomRequest>,
 ) => {
   const queryClient = useQueryClient();
-  const { roomId } = useParams();
 
   return useMutation({
-    mutationFn: () => deleteUserFromRoom(roomId!),
+    mutationFn: ({ selectedRoomId }: IDeleteUserFromRoomRequest) =>
+      deleteUserFromRoom(selectedRoomId),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ROOM_QUERY_KEY.GET_JOINED_ROOM(),
