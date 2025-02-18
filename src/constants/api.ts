@@ -14,6 +14,8 @@ export const API = {
   PASSWORD_REISSUE: '/api/members/password-reissue', // 비밀번호 재발급
   MODIFY_PASSWORD: '/api/members/password', // 비밀번호 수정
   QUIT_USER: '/api/members/delete', // 회원 탈퇴
+  GET_USER_PROFILE_IMAGE: '/api/members/profile', // 사용자 프로필 이미지 조회
+  GET_USER_PRESIGNED_PROFILE_IMAGE: '/api/members/profile/presigned', // 사용자 프로필 이미지 업로드 전 서명 요청
   ROOM_DETAIL_SEARCH: (roomId: string) => `/api/rooms/${roomId}`, // 특정 방 상세 정보 조회
   JOINED_ROOM_CHECK: (roomId: string) =>
     `/api/member-rooms/exists/rooms/${roomId}`, // 사용자가 방 회원인지 확인
