@@ -7,8 +7,6 @@ import { usePatchRoomMemoMutation } from '@src/state/mutations/onboarding/usePat
 import EditableField from '@src/components/onboarding/modal/EditableField';
 import { useDeleteUserFromRoomMutation } from '@src/state/mutations/onboarding/useDeleteUserFromRoomMutation';
 import CustomToast from '../toast/customToast';
-import { useNavigate } from 'react-router-dom';
-import { PATH } from '@src/constants/path';
 
 interface IRoomDetailInfoModalProps {
   room: IRoom;
@@ -35,7 +33,6 @@ export default function RoomDetailInfoModal({
   room,
   onClose,
 }: IRoomDetailInfoModalProps) {
-  const navigate = useNavigate();
   const { data: roomDetailInfoData } = useGetRoomDetailInfoQuery(room.roomId);
   const [roomDetailInfo, setRoomDetailInfo] = useState<IRoomDetailInfo | null>(
     null,
@@ -78,7 +75,7 @@ export default function RoomDetailInfoModal({
 
   const handleDeleteUserFromRoom = () => {
     deleteUserFromRoom(
-      {},
+      { selectedRoomId: room.roomId },
       {
         onSuccess: () => {
           CustomToast({
@@ -86,7 +83,6 @@ export default function RoomDetailInfoModal({
             message: '해당 모임에서 나갔습니다.',
           });
           onClose();
-          navigate(PATH.ONBOARDING);
         },
       },
     );
