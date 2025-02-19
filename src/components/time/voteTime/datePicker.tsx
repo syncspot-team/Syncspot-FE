@@ -1,5 +1,5 @@
 import { mergeClassNames } from '@src/utils/mergeClassNames';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TimeSelectBox from './timeSelectBox';
 import { ITimeDatePickerProps } from '@src/types/time/timeProps';
 import { DATE_FORMATS, formatStringDate } from '../utils/formatDate';
@@ -11,24 +11,30 @@ export default function DatePicker({
   onCheckboxChange,
   onChange,
 }: ITimeDatePickerProps) {
-  // 구조분해할당
-  const startTime = myVote.memberAvailableStartTime
-    ? myVote.memberAvailableStartTime.split(' ')[1].split(':')
-    : ['00', '00'];
-  const endTime = myVote.memberAvailableEndTime
-    ? myVote.memberAvailableEndTime.split(' ')[1].split(':')
-    : ['00', '00'];
+  const [startHour, setStartHour] = useState('00');
+  const [startMinute, setStartMinute] = useState('00');
+  const [endHour, setEndHour] = useState('00');
+  const [endMinute, setEndMinute] = useState('00');
 
-  const initialHourStart = startTime[0]; // hh
-  const initialMinuteStart = startTime[1]; // mm
+  useEffect(() => {
+    if (myVote && myVote.memberAvailableStartTime) {
+      const startTime = myVote.memberAvailableStartTime
+        .split(' ')[1]
+        .split(':');
+      setStartHour(startTime[0]);
+      setStartMinute(startTime[1]);
+    }
 
-  const initialHourEnd = endTime[0]; // hh
-  const initialMinuteEnd = endTime[1]; // mm
+    if (myVote && myVote.memberAvailableEndTime) {
+      const endTime = myVote.memberAvailableEndTime.split(' ')[1].split(':');
+      setEndHour(endTime[0]);
+      setEndMinute(endTime[1]);
+    }
+  }, [myVote]);
 
-  const [startHour, setStartHour] = useState(initialHourStart);
-  const [startMinute, setStartMinute] = useState(initialMinuteStart);
-  const [endHour, setEndHour] = useState(initialHourEnd);
-  const [endMinute, setEndMinute] = useState(initialMinuteEnd);
+  useEffect(() => {
+    onChange(startHour, startMinute, endHour, endMinute);
+  }, [startHour, startMinute, endHour, endMinute]);
 
   return (
     <div className="flex flex-col justify-center items-start  bg-white-default rounded-[.75rem] lg:h-[7.5rem] h-36 my-4 p-4">
@@ -72,7 +78,6 @@ export default function DatePicker({
           onChange={(hour: string, minute: string) => {
             setStartHour(hour);
             setStartMinute(minute);
-            onChange(startHour, startMinute, endHour, endMinute);
           }}
         />
         <div className="flex items-center gap-1 w-fit">
@@ -83,8 +88,6 @@ export default function DatePicker({
             onChange={(hour: string, minute: string) => {
               setEndHour(hour);
               setEndMinute(minute);
-              onChange(startHour, startMinute, endHour, endMinute);
-              console.log(endHour, endMinute);
             }}
           />
         </div>

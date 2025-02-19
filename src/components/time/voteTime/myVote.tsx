@@ -1,4 +1,4 @@
-import { ITimeVotedMyProps, IVotes } from '@src/types/time/timeProps';
+import { ITimeDatesProps, IVotes } from '@src/types/time/timeProps';
 import DatePicker from './datePicker';
 import Button from '../../common/button/Button';
 import {
@@ -6,29 +6,31 @@ import {
   usePutTimeVoteMutation,
 } from '@src/state/mutations/time';
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { ITimeVoteRequest } from '@src/types/time/timeVoteType';
 import { DATE_FORMATS, formatStringDate } from '../utils/formatDate';
-import { PATH } from '@src/constants/path';
+import { useGetTimeVotedQuery } from '@src/state/queries/time';
 
-export default function MyVote({
-  dates,
-  myVotesExistence,
-  myVotes,
-}: ITimeVotedMyProps) {
+export default function MyVote({ dates }: ITimeDatesProps) {
+  //투표여부 myVotes
+  const { data: timeVotedRes } = useGetTimeVotedQuery();
+
   const { mutate: postVote } = usePostTimeVoteMutation();
   const { mutate: putVote } = usePutTimeVoteMutation();
 
   const { roomId } = useParams();
-  const navigate = useNavigate();
-  const [selectChange, setSelectChange] = useState(false);
+
+  const myVotesExistence = timeVotedRes?.data.myVotesExistence;
+  const myVotes = timeVotedRes?.data.myVotes;
 
   //투표값 존재할 경우
   const initialVotes = myVotesExistence
-    ? myVotes.map(({ memberAvailableStartTime, memberAvailableEndTime }) => ({
-        memberAvailableStartTime,
-        memberAvailableEndTime,
-      }))
+    ? myVotes.map(
+        ({ memberAvailableStartTime, memberAvailableEndTime }: IVotes) => ({
+          memberAvailableStartTime,
+          memberAvailableEndTime,
+        }),
+      )
     : [];
 
   //기본 투표정보 - 존재할경우, 없을경우[]
@@ -68,9 +70,7 @@ export default function MyVote({
       })),
     };
 
-    if (myVotesExistence && !selectChange) {
-      navigate(PATH.TIME_RESULT(roomId));
-    } else if (myVotesExistence && selectChange) {
+    if (myVotesExistence) {
       putVote(voteData);
     } else {
       postVote(voteData);
@@ -92,14 +92,14 @@ export default function MyVote({
     const startTime = formatStringDate(date, start, DATE_FORMATS.TIME);
     const endTime = formatStringDate(date, end, DATE_FORMATS.TIME);
 
-    const updatedVotes = [...votes];
-    updatedVotes[index] = {
-      memberAvailableStartTime: startTime,
-      memberAvailableEndTime: endTime,
-    };
-    setVotes(updatedVotes);
-    setSelectChange(true);
-    console.log(votes);
+    if (checkedStates[index]) {
+      const updatedVotes = [...votes];
+      updatedVotes[index] = {
+        memberAvailableStartTime: startTime,
+        memberAvailableEndTime: endTime,
+      };
+      setVotes(updatedVotes);
+    }
   };
 
   return (

@@ -3,13 +3,17 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import IconLeftArrow from '@src/assets/icons/IconLeftArrow.svg?react';
 import IconRightArrow from '@src/assets/icons/IconRightArrow.svg?react';
-import { ITimeResultProps } from '@src/types/time/timeProps';
+import { ITimeDatesProps } from '@src/types/time/timeProps';
 import { useEffect, useRef, useState } from 'react';
 import VoteResultByDate from './VoteResultByDate';
+import { useGetTimeResultQuery } from '@src/state/queries/time';
 
-export default function ClickCalendar({ dates, result }: ITimeResultProps) {
+export default function ClickCalendar({ dates }: ITimeDatesProps) {
   const componentRef = useRef<HTMLDivElement>(null);
   const [clickedDate, setClickedDate] = useState<Date | null>(null);
+
+  //clickCalendar 투표결과 확인
+  const { data: timeResultRes } = useGetTimeResultQuery();
 
   // 외부 클릭 감지
   useEffect(() => {
@@ -27,6 +31,7 @@ export default function ClickCalendar({ dates, result }: ITimeResultProps) {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+  const result = timeResultRes?.data.result;
 
   return (
     <div
@@ -61,7 +66,6 @@ export default function ClickCalendar({ dates, result }: ITimeResultProps) {
           }}
         />
       </div>
-      {/* 화면 확인 후 개선 */}
       {clickedDate && (
         <VoteResultByDate clickedDate={clickedDate} result={result} />
       )}
