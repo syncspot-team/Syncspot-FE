@@ -142,6 +142,21 @@ export default function UserProfileInfo() {
           onClick={(e: React.MouseEvent) => {
             e.preventDefault();
             setIsEditing(false);
+            reset({
+              nickname: initialNickname || '',
+              email: userInfo?.data.email || '',
+              address: {
+                siDo: userInfo?.data.siDo || '',
+                siGunGu: userInfo?.data.siGunGu || '',
+                roadNameAddress: initialAddress || '',
+                addressLatitude: parseFloat(
+                  userInfo?.data.addressLatitude || '0',
+                ),
+                addressLongitude: parseFloat(
+                  userInfo?.data.addressLongitude || '0',
+                ),
+              },
+            });
           }}
         >
           취소

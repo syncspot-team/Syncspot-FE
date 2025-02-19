@@ -26,33 +26,48 @@ export default function UserChangePassword() {
   const { mutate: modifyPassword } = useModifyPasswordMutation();
 
   return (
-    <>
-      <div className="flex flex-col justify-between mt-4 lg:items-start lg:mt-0 lg:px-20">
-        <h2 className="ml-1 text-[1.25rem] lg:text-subtitle text-tertiary font-semibold mb-4">
-          비밀번호 변경
-        </h2>
-        <form
-          onSubmit={handleSubmit(handlePasswordChange)}
-          className="space-y-4"
-        >
-          {renderPasswordField('현재 비밀번호', 'password', {
+    <div className="flex flex-col h-full lg:px-20">
+      <h2 className="my-4 mb-4 lg:mb-8 ml-1 lg:mt-0 lg:ml-0 text-[1.25rem] lg:text-subtitle text-tertiary font-semibold">
+        비밀번호 변경
+      </h2>
+      <form
+        onSubmit={handleSubmit(handlePasswordChange)}
+        className="flex flex-col gap-7 lg:max-w-[40rem]"
+      >
+        {renderPasswordField(
+          '현재 비밀번호',
+          '현재 비밀번호를 입력해주세요',
+          'password',
+          {
             required: '현재 비밀번호를 입력해주세요',
-          })}
-          {renderPasswordField('새 비밀번호', 'newPassword', {
+          },
+        )}
+        {renderPasswordField(
+          '새 비밀번호',
+          '새 비밀번호를 입력해주세요',
+          'newPassword',
+          {
             required: '새 비밀번호를 입력해주세요',
-          })}
-          {renderPasswordField('새 비밀번호 다시 입력', 'confirmPassword', {
+            validate: (value: string) =>
+              value !== watch('password') || '현재 비밀번호와 동일합니다',
+          },
+        )}
+        {renderPasswordField(
+          '새 비밀번호 다시 입력',
+          '새 비밀번호를 다시 입력해주세요',
+          'confirmPassword',
+          {
             required: '비밀번호를 다시 입력해주세요',
             validate: (value: string) =>
               value === watch('newPassword') || '비밀번호가 일치하지 않습니다',
-          })}
+          },
+        )}
 
-          <Button type="submit" className="max-w-full px-[0.3125rem]">
-            완료
-          </Button>
-        </form>
-      </div>
-    </>
+        <Button type="submit" className="w-full px-[0.3125rem] mt-2">
+          완료
+        </Button>
+      </form>
+    </div>
   );
 
   function handlePasswordChange(data: IPasswordFormData) {
@@ -73,18 +88,20 @@ export default function UserChangePassword() {
 
   function renderPasswordField(
     label: string,
+    placeholder: string,
     name: keyof IPasswordFormData,
     validation: object,
   ) {
     return (
-      <div className="flex flex-col">
+      <div className="flex flex-col w-full">
         <label className="ml-[0.375rem] text-description lg:text-content font-semibold">
           {label}
         </label>
         <Input
           {...register(name, validation)}
           type="password"
-          className="w-full mt-1 bg-white-default ring-1 ring-gray-normal py-[0.875rem] pl-[0.625rem]"
+          placeholder={placeholder}
+          className="bg-white-default ring-1 ring-gray-normal py-[0.875rem] pl-[0.625rem]"
           onCopy={(e: React.ClipboardEvent) => {
             e.preventDefault();
             return false;
@@ -95,7 +112,7 @@ export default function UserChangePassword() {
           }}
         />
         {errors[name] && (
-          <p className="mt-1 text-sm text-red-normal">
+          <p className="mt-1 text-description text-error-normal">
             {errors[name]?.message}
           </p>
         )}
