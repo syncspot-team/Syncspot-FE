@@ -32,7 +32,7 @@ export default function UserChangePassword() {
       </h2>
       <form
         onSubmit={handleSubmit(handlePasswordChange)}
-        className="flex flex-col gap-8 lg:max-w-[40rem]"
+        className="flex flex-col gap-7 lg:max-w-[40rem]"
       >
         {renderPasswordField(
           '현재 비밀번호',
@@ -63,7 +63,7 @@ export default function UserChangePassword() {
           },
         )}
 
-        <Button type="submit" className="w-full px-[0.3125rem]">
+        <Button type="submit" className="w-full px-[0.3125rem] mt-2">
           완료
         </Button>
       </form>
@@ -101,7 +101,7 @@ export default function UserChangePassword() {
           {...register(name, validation)}
           type="password"
           placeholder={placeholder}
-          className="mt-1 bg-white-default ring-1 ring-gray-normal py-[0.875rem] pl-[0.625rem]"
+          className="bg-white-default ring-1 ring-gray-normal py-[0.875rem] pl-[0.625rem]"
           onCopy={(e: React.ClipboardEvent) => {
             e.preventDefault();
             return false;
