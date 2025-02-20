@@ -8,12 +8,15 @@ import { PATH } from '@src/constants/path';
 import { useSignInMutation } from '@src/state/mutations/auth/useSignInMutation';
 import Button from '@src/components/common/button/Button';
 import { Input } from '@src/components/common/input/Input';
+import { useSocialLogin } from '@src/hooks/useSocialLogin';
+import { OauthProvider } from '@src/types/oauthType';
 
 export default function SignInPage() {
   const navigate = useNavigate();
   const { register, handleSubmit, watch, reset } = useForm<ISignInRequest>();
   const isFormValid = watch('email') && watch('pw');
   const { mutate: signIn, isPending: isSignInPending } = useSignInMutation();
+  const { handleSocialLogin } = useSocialLogin();
 
   const handleSignIn = (signInPayload: ISignInRequest) => {
     signIn(signInPayload);
@@ -68,15 +71,18 @@ export default function SignInPage() {
         </div>
       </form>
       <div className="flex items-center gap-[1.25rem] cursor-pointer">
-        <span className="hover:translate-y-[-0.25rem]">
-          <IconOauthKakao />
-        </span>
-        <span className="hover:translate-y-[-0.25rem]">
-          <IconOauthNaver />
-        </span>
-        <span className="hover:translate-y-[-0.25rem]">
-          <IconOauthGoogle />
-        </span>
+        <IconOauthKakao
+          onClick={() => handleSocialLogin(OauthProvider.KAKAO)}
+          className="hover:translate-y-[-0.25rem]"
+        />
+        <IconOauthNaver
+          onClick={() => handleSocialLogin(OauthProvider.NAVER)}
+          className="hover:translate-y-[-0.25rem]"
+        />
+        <IconOauthGoogle
+          onClick={() => handleSocialLogin(OauthProvider.GOOGLE)}
+          className="hover:translate-y-[-0.25rem]"
+        />
       </div>
     </div>
   );
