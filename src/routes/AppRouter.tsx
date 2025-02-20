@@ -35,7 +35,10 @@ import UserLogout from '@src/components/users/UserLogout';
 import UserQuit from '@src/components/users/UserQuit';
 import RoomLayout from '@src/components/layout/RoomLayout';
 import UserChangePassword from '@src/components/users/UserChangePassword';
-
+import KakaoLogin from '@src/components/auth/oauth/KakaoLogin';
+import NaverLogin from '@src/components/auth/oauth/NaverLogin';
+import GoogleLogin from '@src/components/auth/oauth/GoogleLogin';
+import Oauth from '@src/components/auth/oauth/Oauth';
 const createAuthRouter = (routeType: ROUTE_TYPE, children: RouteObject[]) => {
   const authRouter = children.map((child: RouteObject) => ({
     element: routeType === 'PRIVATE' ? <PrivateRoute /> : <PublicRoute />,
@@ -79,6 +82,24 @@ const router = createBrowserRouter([
         {
           path: PATH.HELP_PASSWORD_INQUIRY,
           element: <HelpPwInquiryPage />,
+        },
+        {
+          path: PATH.OAUTH,
+          element: <Oauth />,
+          children: [
+            {
+              path: PATH.OAUTH_KAKAO_CALLBACK,
+              element: <KakaoLogin />,
+            },
+            {
+              path: PATH.OAUTH_NAVER_CALLBACK,
+              element: <NaverLogin />,
+            },
+            {
+              path: PATH.OAUTH_GOOGLE_CALLBACK,
+              element: <GoogleLogin />,
+            },
+          ],
         },
       ]),
       ...createAuthRouter('PRIVATE', [

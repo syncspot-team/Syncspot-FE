@@ -22,7 +22,11 @@ export const PATH = {
   USERS: '/users',
   USERS_PROFILE: 'profile',
   USERS_GROUP_LISTS: 'group_lists',
-  USERS_PASSWORD:'password',
+  USERS_PASSWORD: 'password',
   USERS_LOGOUT: 'logout',
   USERS_QUIT: 'quit',
+  OAUTH: '/oauth',
+  OAUTH_KAKAO_CALLBACK: 'kakao/callback',
+  OAUTH_NAVER_CALLBACK: 'naver/callback',
+  OAUTH_GOOGLE_CALLBACK: 'google/callback',
 } as const;
