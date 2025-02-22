@@ -18,12 +18,12 @@ export default function UnknownErrorFallback() {
         <div className="flex flex-col items-center justify-center h-[calc(100dvh-20rem)] mt-16">
           <Lottie animationData={Lottie404} className="size-52 lg:size-96" />
           <div className="flex items-center justify-center gap-2">
-            <span
+            <button
               onClick={handleGoHome}
               className="p-2 rounded-md lg:p-3 bg-blue-normal01 text-white-default hover:bg-blue-normal02 text-description lg:text-content"
             >
               홈으로 돌아가기
-            </span>
+            </button>
             <Link
               to={'https://github.com/Cotato-Syncspot/Syncspot-FE'}
               className="p-2 rounded-md lg:p-3 bg-white-default ring-2 ring-blue-normal01 text-blue-normal01 hover:bg-gray-light text-description lg:text-content"
