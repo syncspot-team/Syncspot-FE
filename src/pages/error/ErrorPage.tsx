@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import CustomToast from '@src/components/common/toast/customToast';
 import { TOAST_TYPE } from '@src/types/toastType';
-import IconGithub from '@src/assets/icons/IconGithub.svg?react';
+import IconGithub from '@src/assets/icons/IconGithub.png';
 
 interface IErrorPageProps {
   status: string;
@@ -65,10 +65,14 @@ const ErrorPage = ({
           {!isUnknownError && (
             <Link
               to={'https://github.com/Cotato-Syncspot/Syncspot-FE'}
-              className="flex items-center justify-center col-span-2 gap-2 p-2 rounded-md lg:p-3 bg-white-default ring-2 ring-black-default hover:bg-gray-light text-description lg:text-content"
+              className="flex items-center justify-center col-span-2 gap-2 p-2 rounded-md lg:p-3 bg-black-default text-white-default ring-2 ring-black-default hover:opacity-80 text-description lg:text-content"
             >
               <span>
-                <IconGithub className="size-4 lg:size-5" />
+                <img
+                  src={IconGithub}
+                  alt="github"
+                  className="size-5 lg:size-6 -mt-[1px]"
+                />
               </span>
               <span>에러 문의하기</span>
             </Link>
