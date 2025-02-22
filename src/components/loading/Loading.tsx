@@ -11,7 +11,7 @@ export const Loading = ({ className }: LoadingProps) => {
     <div
       className={mergeClassNames('flex items-center justify-center', className)}
     >
-      <Lottie animationData={LottieLoading} className="size-48" />
+      <Lottie animationData={LottieLoading} className="size-24 lg:size-48" />
     </div>
   );
 };
