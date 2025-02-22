@@ -32,7 +32,7 @@ const getNewToken = async () => {
     const { accessToken, refreshToken: newRefreshToken } = response.data.data;
     return { accessToken, refreshToken: newRefreshToken };
   } catch (e) {
-    return null;
+    return Promise.reject(e);
   }
 };
 
@@ -66,7 +66,7 @@ instance.interceptors.response.use(
 
     const newToken = await getNewToken();
 
-    if (newToken) {
+    if (newToken.accessToken && newToken.refreshToken) {
       localStorage.setItem(ACCESS_TOKEN, newToken.accessToken);
       localStorage.setItem(REFRESH_TOKEN, newToken.refreshToken);
       config.headers.Authorization = `Bearer ${newToken.accessToken}`;

@@ -7,7 +7,6 @@ import {
 import PrivateRoute from '@src/components/common/routes/PrivateRoute';
 import PublicRoute from '@src/components/common/routes/PublicRoute';
 import { APIErrorBoundary } from '@src/components/error/boundary/APIErrorBoundary';
-import { UnknowErrorBoundary } from '@src/components/error/boundary/UnknowErrorBoundary';
 import { GlobalLoading } from '@src/components/loading/GlobalLoading';
 import { PATH, ROUTE_TYPE } from '@src/constants/path';
 import { Suspense } from 'react';
@@ -39,6 +38,8 @@ import KakaoLogin from '@src/components/auth/oauth/KakaoLogin';
 import NaverLogin from '@src/components/auth/oauth/NaverLogin';
 import GoogleLogin from '@src/components/auth/oauth/GoogleLogin';
 import Oauth from '@src/components/auth/oauth/Oauth';
+import { UnknownErrorBoundary } from '@src/components/error/boundary/UnknownErrorBoundary';
+
 const createAuthRouter = (routeType: ROUTE_TYPE, children: RouteObject[]) => {
   const authRouter = children.map((child: RouteObject) => ({
     element: routeType === 'PRIVATE' ? <PrivateRoute /> : <PublicRoute />,
@@ -51,7 +52,7 @@ const router = createBrowserRouter([
   {
     path: PATH.ROOT,
     element: (
-      <UnknowErrorBoundary>
+      <UnknownErrorBoundary>
         <APIErrorBoundary>
           <Suspense fallback={<GlobalLoading />}>
             <Layout>
@@ -59,7 +60,7 @@ const router = createBrowserRouter([
             </Layout>
           </Suspense>
         </APIErrorBoundary>
-      </UnknowErrorBoundary>
+      </UnknownErrorBoundary>
     ),
     children: [
       {

@@ -1,13 +1,13 @@
 import { ErrorBoundary } from 'react-error-boundary';
-import { UnknowErrorFallback } from './UnknowErrorFallback';
+import UnknownErrorFallback from './UnknownErrorFallback';
 
-export const UnknowErrorBoundary = ({
+export const UnknownErrorBoundary = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
   return (
-    <ErrorBoundary FallbackComponent={UnknowErrorFallback}>
+    <ErrorBoundary FallbackComponent={UnknownErrorFallback}>
       {children}
     </ErrorBoundary>
   );

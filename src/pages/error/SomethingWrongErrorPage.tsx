@@ -16,7 +16,7 @@ export default function SomethingWrongErrorPage() {
         </Link>
         <Link
           to={'https://github.com/Cotato-Syncspot/Syncspot-FE'}
-          className="p-2 rounded-md lg:p-3 bg-white-default ring-2 ring-blue-normal01 text-blue-normal01 hover:bg-gray-light text-description lg:text-content"
+          className="p-2 rounded-md lg:p-3 bg-white-default ring-2 ring-blue-normal01 text-blue-normal01 text-description lg:text-content"
         >
           에러 문의하기
         </Link>
