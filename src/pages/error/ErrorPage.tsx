@@ -51,7 +51,7 @@ const ErrorPage = ({
           </button>
           {!isUnknownError ? (
             <button className="p-2 rounded-md lg:p-3 bg-white-default ring-2 ring-blue-normal01 text-blue-normal01 text-description lg:text-content">
-              다시시도
+              다시 시도
             </button>
           ) : (
             <Link
