@@ -14,10 +14,12 @@ export const APIErrorFallback = ({
     if (errorData.status === '401') {
       return <Navigate to={PATH.SIGN_IN} replace />;
     }
+
     return (
       <ErrorPage
         status={errorData.status}
         message={errorData.message}
+        isUnknownError={errorData.status === 'ERROR'}
         onRetry={resetErrorBoundary}
       />
     );

@@ -24,7 +24,7 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center mx-auto my-0 mt-[8.75rem] px-4">
+    <div className="flex flex-col items-center justify-center lg:mt-[6.75rem] min-h-[calc(100dvh-5rem)] lg:min-h-full px-4 mx-auto my-0">
       <h1 className="mb-6 text-title text-tertiary">싱크스팟 로그인</h1>
       <div className="flex items-center text-menu gap-[0.875rem] mb-6">
         <span className="text-gray-dark text-content lg:text-menu">
