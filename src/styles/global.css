@@ -71,5 +71,15 @@
     * {
       @apply transition-all duration-200 ease-in-out;
     }
+
+    /* input autofill 스타일 설정 */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+      background-color: var(--gray-light) !important;
+      transition: none !important;
+      box-shadow: 0 0 0 30px var(--gray-light) inset !important;
+    }
   }
 }
