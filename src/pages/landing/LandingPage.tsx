@@ -58,12 +58,12 @@ export default function LandingPage() {
           <p className="text-white-default">딱 중간이네! 어떻게 찾았어?</p>
         </motion.div>
       </motion.div>
-      <div className="fixed bottom-10 right-8 lg:right-28">
+      <div className="fixed bottom-10 left-1/2 -translate-x-1/2 w-[80vw] lg:w-auto lg:left-auto lg:translate-x-0 lg:right-28">
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95, transition: { duration: 0.1 } }}
           onClick={handleClickButton}
-          className="flex items-center gap-2 px-6 py-4 bg-white rounded-full shadow-md text-primary bg-white-default hover:shadow-lg animate-customBounce hover:animate-none"
+          className="flex items-center justify-center w-full gap-2 px-6 py-4 bg-white rounded-full shadow-default lg:w-auto text-primary bg-white-default hover:shadow-lg animate-customBounce hover:animate-none"
         >
           <h3 className="text-content lg:text-menu text-blue-dark02">
             모임 장소 찾으러 가기
