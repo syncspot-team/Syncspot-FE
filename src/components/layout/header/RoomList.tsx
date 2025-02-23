@@ -14,7 +14,6 @@ export default function RoomList() {
   const navigate = useNavigate();
   const dropdownRef = useRef<HTMLLIElement>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false);
   const { roomId, setRoomId, setRoomName } = useRoomStore();
   const [selectedRoomName, setSelectedRoomName] = useState('전체 모임 목록');
   const { data: roomList, isLoading } = useGetJoinRoomQuery();
@@ -69,11 +68,6 @@ export default function RoomList() {
     navigate(PATH.LOCATION_ENTER(roomId));
   };
 
-  const handleDropdownToggle = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-    setIsAnimating(true);
-  };
-
   const handleViewAllRooms = () => {
     setIsDropdownOpen(false);
     navigate(PATH.ONBOARDING);
@@ -82,7 +76,7 @@ export default function RoomList() {
   return (
     <li
       ref={dropdownRef}
-      onClick={handleDropdownToggle}
+      onClick={() => setIsDropdownOpen(!isDropdownOpen)}
       className="relative flex items-center cursor-pointer text-blue-dark01 p-2 lg:px-3 bg-blue-light01 rounded-[0.4375rem] whitespace-nowrap gap-[0.5rem]"
     >
       {isLoading ? (
@@ -100,14 +94,9 @@ export default function RoomList() {
             }`}
           />
           <div
-            className={`absolute left-0 top-full w-[7.5rem] lg:w-[8.75rem] mt-1 border border-gray-light rounded-[0.25rem] shadow-lg bg-white-default z-50
-              ${isDropdownOpen ? 'animate-slideDown' : isAnimating ? 'animate-slideUp' : 'hidden'}
+            className={`absolute left-0 top-full w-[7.5rem] lg:w-[8.75rem] mt-1 border border-gray-light rounded-[0.25rem] shadow-lg bg-white-default z-50 transition-all duration-300
+              ${isDropdownOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[-0.625rem] pointer-events-none'}
             `}
-            onAnimationEnd={() => {
-              if (!isDropdownOpen) {
-                setIsAnimating(false);
-              }
-            }}
           >
             <div className="flex flex-col h-full">
               {roomList?.data.length && roomList.data.length > 0 ? (
