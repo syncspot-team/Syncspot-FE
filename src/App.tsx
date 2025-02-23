@@ -31,7 +31,16 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <AppRouter />
       </QueryClientProvider>
-      <ToastContainer limit={1} />
+      <ToastContainer
+        limit={1}
+        style={{
+          top: '1rem',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: 'auto',
+          maxWidth: '90vw',
+        }}
+      />
     </>
   );
 }
