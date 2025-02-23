@@ -17,7 +17,7 @@ export default function MobileSubMenu({
           onClick={(e) => {
             onSubMenuClick(e, subMenu);
           }}
-          className="px-6 py-3 cursor-pointer hover:bg-gray-light text-description"
+          className="px-6 py-4 cursor-pointer [&:not(:last-child)]:border-b hover:bg-gray-light text-description"
         >
           {subMenu.label}
         </li>

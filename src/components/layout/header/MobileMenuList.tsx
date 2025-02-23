@@ -2,8 +2,14 @@ import { useState, useEffect } from 'react';
 import { useMenuItems } from '@src/hooks/header/useMenuItems';
 import { IMenuItem } from '@src/types/header/menuItemType';
 import MobileSubMenu from './MobileSubMenu';
-import AuthButton from './AuthButton';
 import IconDropdown from '@src/assets/icons/IconDropdown.svg?react';
+import IconMenuAccount from '@src/assets/icons/IconMenuAccount.svg?react';
+import IconMenuMidpoint from '@src/assets/icons/IconMenuMidpoint.svg?react';
+import IconMenuPlace from '@src/assets/icons/IconMenuPlace.svg?react';
+import IconMenuTime from '@src/assets/icons/IconMenuTime.svg?react';
+import IconService from '@src/assets/icons/IconMenuService.svg?react';
+import { sideMenuItems } from '@src/components/users/constants/sideMenuItems';
+import { useLoginStore } from '@src/state/store/loginStore';
 
 interface IMobileMenuListProps {
   onCloseMenu: () => void;
@@ -14,6 +20,7 @@ export default function MobileMenuList({
   onCloseMenu,
   isMenuOpen,
 }: IMobileMenuListProps) {
+  const { isLogin } = useLoginStore();
   const [clickedMenu, setClickedMenu] = useState<string | null>(null);
   const menuItems = useMenuItems();
 
@@ -46,18 +53,38 @@ export default function MobileMenuList({
     item.onClick();
   };
 
+  const getMenuIcon = (label: string) => {
+    switch (label) {
+      case '중간 지점 찾기':
+        return <IconMenuMidpoint className="size-5" />;
+      case '장소 투표':
+        return <IconMenuPlace className="size-5" />;
+      case '시간 투표':
+        return <IconMenuTime className="size-5" />;
+      case '서비스 소개':
+        return <IconService className="size-5" />;
+      case '계정 설정':
+        return <IconMenuAccount className="size-5" />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <ul className="flex flex-col w-full cursor-pointer text-gray-dark whitespace-nowrap text-content">
       {menuItems.map((item) => (
         <li key={item.label}>
           <div
-            className="flex items-center justify-between p-4 hover:bg-gray-light"
+            className="flex items-center justify-between p-4 pr-[1.125rem] hover:bg-gray-light"
             onClick={(e) => handleMenuClick(e, item)}
           >
-            <span>{item.label}</span>
+            <div className="flex items-center gap-[0.625rem]">
+              <span className="-mt-[0.125rem]">{getMenuIcon(item.label)}</span>
+              <span>{item.label}</span>
+            </div>
             {item.subMenus && (
               <IconDropdown
-                className={`size-5 transition-transform mr-2 ${
+                className={`size-5 transition-transform ${
                   clickedMenu === item.label ? 'rotate-180' : ''
                 }`}
               />
@@ -73,7 +100,56 @@ export default function MobileMenuList({
           )}
         </li>
       ))}
-      <AuthButton onAuthClick={onCloseMenu} isMobile={true} />
+      {isLogin && (
+        <li>
+          <div
+            className="flex items-center justify-between p-4 hover:bg-gray-light"
+            onClick={(e) =>
+              handleMenuClick(e, {
+                label: '계정 설정',
+                onClick: () => {},
+                subMenus: [],
+              })
+            }
+          >
+            <div className="flex items-center gap-[0.625rem]">
+              <IconMenuAccount className="size-5" />
+              <span>계정 설정</span>
+            </div>
+            <IconDropdown
+              className={`size-5 transition-transform ${
+                clickedMenu === '계정 설정' ? 'rotate-180' : ''
+              }`}
+            />
+          </div>
+          {clickedMenu === '계정 설정' && (
+            <div className="bg-white-default">
+              {sideMenuItems.map((sideItem) => (
+                <div key={sideItem.text}>
+                  <div className="flex items-center gap-3 py-3 pl-6 font-semibold text-description text-gray-dark">
+                    <span>{sideItem.text}</span>
+                  </div>
+                  <div>
+                    {sideItem.subItems.map((subItem) => (
+                      <div
+                        key={subItem.path}
+                        className="flex items-center gap-[0.625rem] px-8 py-4 hover:bg-gray-light text-description"
+                        onClick={() => {
+                          onCloseMenu();
+                          window.location.href = subItem.path;
+                        }}
+                      >
+                        <subItem.icon className="-mt-1 size-5" />
+                        <span>{subItem.text}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </li>
+      )}
     </ul>
   );
 }
