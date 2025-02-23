@@ -34,13 +34,13 @@ export default function MobileMenu() {
       {/* 메뉴 */}
       <div
         ref={menuRef}
-        className={`fixed top-0 right-0 bottom-0 w-[calc(100dvw-9rem)] bg-gray-light z-[100] transition-transform duration-300 overflow-y-auto
+        className={`fixed top-0 right-0 bottom-0 w-[calc(100dvw-9rem)] bg-white-default z-[100] transition-transform duration-300 overflow-y-auto
           ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}
         `}
       >
         {/* 닫기 버튼 */}
-        <div className="flex items-center justify-between p-3 pt-6 pr-4">
-          <IconMainLogo className="p-2 size-11 bg-white-default rounded-default" />
+        <div className="flex items-center justify-between p-3 pt-6 pr-[1.125rem]">
+          <IconMainLogo className="p-2 shadow-md size-11 bg-white-default rounded-default ring-1 ring-gray-light" />
           <IconMobileMenuClose
             onClick={() => setIsMenuOpen(false)}
             className="cursor-pointer size-6 text-gray-dark"
