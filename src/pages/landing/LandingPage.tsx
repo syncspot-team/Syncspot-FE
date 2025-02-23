@@ -65,7 +65,7 @@ export default function LandingPage() {
           onClick={handleClickButton}
           className="flex items-center justify-center w-full gap-2 px-6 py-4 bg-white rounded-full shadow-default lg:w-auto text-primary bg-white-default hover:shadow-lg animate-customBounce hover:animate-none"
         >
-          <h3 className="text-content lg:text-menu text-blue-dark02">
+          <h3 className="font-bold text-content lg:text-menu-selected text-blue-dark02">
             모임 장소 찾으러 가기
           </h3>
           <IconRightHalfArrow className="size-4 text-blue-dark02" />
