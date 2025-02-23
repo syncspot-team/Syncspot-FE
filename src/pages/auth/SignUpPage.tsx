@@ -8,7 +8,7 @@ import KakaoLocationPicker from '@src/components/common/kakao/KakaoLocationPicke
 import { ISelectedLocation } from '@src/components/common/kakao/types';
 import { signupSchema } from '@src/types/auth/SignUpSchema';
 import { SignUpDefaultValues } from '@src/components/auth/constants';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CustomToast from '@src/components/common/toast/customToast';
 import { TOAST_TYPE } from '@src/types/toastType';
 import { useRequestEmailVerificationMutation } from '@src/state/mutations/auth/useRequestEmailVerificationMutation';
@@ -21,12 +21,22 @@ export default function SignUpPage() {
     setValue,
     watch,
     setError,
+    trigger,
     formState: { errors },
   } = useForm<ISignUpFormValues>({
     mode: 'onChange',
     resolver: yupResolver(signupSchema),
     defaultValues: SignUpDefaultValues,
   });
+
+  const password = watch('pw');
+  const confirmPassword = watch('confirmPw');
+
+  useEffect(() => {
+    if (password && confirmPassword) {
+      trigger('confirmPw');
+    }
+  }, [password, confirmPassword, trigger]);
 
   const { mutate: userSignup, isPending: isSignUpPending } =
     useSignUpMutation();
