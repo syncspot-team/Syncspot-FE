@@ -82,7 +82,14 @@ export const customTwMerge = extendTailwindMerge({
       ],
       animate: [
         {
-          animate: ['slideDown', 'slideUp'],
+          animate: [
+            'slideDown',
+            'slideUp',
+            'slideInRight',
+            'slideOutRight',
+            'fadeIn',
+            'fadeOut',
+          ],
         },
       ],
     },
