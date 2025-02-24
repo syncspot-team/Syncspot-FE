@@ -16,8 +16,16 @@ interface IKakaoMap {
 export default function KakaoMap({ coordinates }: IKakaoMap) {
   const mapRef = useRef<any>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const markersRef = useRef<any[]>([]);
+  const markersRef = useRef<Map<string, any>>(new Map());
   const resizeTimeoutRef = useRef<NodeJS.Timeout>();
+  const initialBoundsSet = useRef(false);
+  const previousCoordinates = useRef<ICoordinate[]>([]);
+
+  const DEFAULT_LOCATION = {
+    lat: 37.557527,
+    lng: 126.925595,
+    level: 3,
+  };
 
   const placeMarker = (
     lat: number,
@@ -29,30 +37,43 @@ export default function KakaoMap({ coordinates }: IKakaoMap) {
   ) => {
     const coords = new window.kakao.maps.LatLng(lat, lng);
 
-    // 커스텀 마커 생성
+    // 마커 컨테이너
     const markerContent = document.createElement('div');
-    markerContent.className = `relative flex items-center justify-center size-12`;
+    markerContent.className =
+      'relative flex items-center justify-center size-12';
 
+    // 기본 z-index 설정
+    const baseZIndex = isSelected ? 1000000 : isMyLocation ? 500000 : 100000;
+    markerContent.style.zIndex = String(baseZIndex);
+
+    // 핑 애니메이션
     const ping = document.createElement('div');
-    ping.className = `absolute w-full h-full ${isMyLocation ? 'bg-red-400' : 'bg-indigo-400'} rounded-full opacity-75 animate-ping`;
+    ping.className = `absolute w-full h-full ${
+      isMyLocation ? 'bg-red-400' : 'bg-indigo-400'
+    } rounded-full opacity-75 animate-ping`;
     markerContent.appendChild(ping);
 
+    // 마커 중심점
     const markerElement = document.createElement('div');
-    markerElement.className = `relative ${isMyLocation ? 'bg-red-600' : 'bg-indigo-600'} rounded-full size-3`;
+    markerElement.className = `relative ${
+      isMyLocation ? 'bg-red-600' : 'bg-indigo-600'
+    } rounded-full size-3`;
     markerContent.appendChild(markerElement);
 
+    // 마커 이미지
     const markerSvg = document.createElement('img');
     markerSvg.src = isMyLocation ? '/selectedMarker.svg' : '/marker.svg';
     markerSvg.className = 'absolute size-9';
     markerContent.appendChild(markerSvg);
 
-    // 텍스트 오버레이를 마커 컨텐츠의 일부로 추가
+    // 주소 텍스트
     const addressContent = document.createElement('div');
     addressContent.className = `absolute flex items-center justify-center px-3 py-2 border shadow-md text-menu -top-10 rounded-default whitespace-nowrap ${
       isSelected
         ? 'bg-blue-normal01 text-white-default border-blue-normal01'
         : 'bg-white-default text-black border-primary'
     }`;
+    addressContent.style.zIndex = String(baseZIndex + 1);
     addressContent.textContent = roadNameAddress;
     markerContent.appendChild(addressContent);
 
@@ -61,50 +82,138 @@ export default function KakaoMap({ coordinates }: IKakaoMap) {
       position: coords,
       content: markerContent,
       yAnchor: 1,
-      zIndex: isSelected ? 3000 : isMyLocation ? 2000 : 1,
+      zIndex: baseZIndex,
     });
 
-    // 마우스 호버 이벤트 수정
-    addressContent.addEventListener('mouseenter', () => {
-      customOverlay.setZIndex(4000);
+    // 호버 이벤트
+    const hoverZIndex = 2000000;
+    markerContent.addEventListener('mouseenter', () => {
+      customOverlay.setZIndex(hoverZIndex);
+      markerContent.style.zIndex = String(hoverZIndex);
+      addressContent.style.zIndex = String(hoverZIndex + 1);
       addressContent.style.transform = 'scale(1.05)';
       addressContent.style.boxShadow =
         '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)';
     });
 
-    addressContent.addEventListener('mouseleave', () => {
-      customOverlay.setZIndex(isSelected ? 3000 : isMyLocation ? 2000 : 1);
+    markerContent.addEventListener('mouseleave', () => {
+      customOverlay.setZIndex(baseZIndex);
+      markerContent.style.zIndex = String(baseZIndex);
+      addressContent.style.zIndex = String(baseZIndex + 1);
       addressContent.style.transform = 'scale(1)';
       addressContent.style.boxShadow = '';
     });
 
-    markersRef.current.push(customOverlay);
+    const markerKey = `${lat}-${lng}`;
+    markersRef.current.set(markerKey, customOverlay);
     customOverlay.setMap(map);
+  };
+
+  const isMarkerInBounds = (lat: number, lng: number, map: any) => {
+    const bounds = map.getBounds();
+    const latLng = new window.kakao.maps.LatLng(lat, lng);
+    return bounds.contain(latLng);
+  };
+
+  const areAllMarkersVisible = (coords: ICoordinate[], map: any) => {
+    return coords.every((coord) => isMarkerInBounds(coord.lat, coord.lng, map));
+  };
+
+  const updateMarkerStyle = (overlay: any, coord: ICoordinate) => {
+    const content = overlay.getContent();
+    const addressContent = content.querySelector('div:last-child');
+
+    // 선택 상태에 따라 스타일 업데이트
+    if (coord.isSelected) {
+      overlay.setZIndex(3000);
+      addressContent.className = `absolute flex items-center justify-center px-3 py-2 border shadow-md text-menu -top-10 rounded-default whitespace-nowrap bg-blue-normal01 text-white-default border-blue-normal01`;
+    } else {
+      overlay.setZIndex(coord.isMyLocation ? 2000 : 1);
+      addressContent.className = `absolute flex items-center justify-center px-3 py-2 border shadow-md text-menu -top-10 rounded-default whitespace-nowrap bg-white-default text-black border-primary`;
+    }
   };
 
   const updateMap = () => {
     if (!mapRef.current) return;
 
-    const bounds = new window.kakao.maps.LatLngBounds();
-    markersRef.current.forEach((customOverlay) => {
-      customOverlay.setMap(null);
+    const currentMarkerKeys = new Set(markersRef.current.keys());
+    let shouldUpdateBounds = false;
+
+    // 마커가 삭제되었는지 확인
+    const isMarkerDeleted =
+      coordinates.length < previousCoordinates.current.length;
+
+    // 새로운 마커 추가 또는 기존 마커 업데이트
+    coordinates.forEach((coord) => {
+      const markerKey = `${coord.lat}-${coord.lng}`;
+      currentMarkerKeys.delete(markerKey);
+
+      // 새로운 마커인 경우, 현재 맵 영역에 포함되는지 확인
+      if (!markersRef.current.has(markerKey)) {
+        if (!isMarkerInBounds(coord.lat, coord.lng, mapRef.current)) {
+          shouldUpdateBounds = true;
+        }
+      }
+
+      // 이미 존재하는 마커는 스타일만 업데이트
+      if (markersRef.current.has(markerKey)) {
+        const existingOverlay = markersRef.current.get(markerKey);
+        updateMarkerStyle(existingOverlay, coord);
+        return;
+      }
+
+      // 새로운 마커 생성
+      placeMarker(
+        coord.lat,
+        coord.lng,
+        mapRef.current,
+        coord.isMyLocation,
+        coord.roadNameAddress,
+        coord.isSelected,
+      );
     });
-    markersRef.current = [];
 
-    // 모든 좌표의 최소/최대값을 찾아서 여유 공간을 추가
-    let minLat = Infinity;
-    let maxLat = -Infinity;
-    let minLng = Infinity;
-    let maxLng = -Infinity;
+    // 제거된 마커 정리
+    currentMarkerKeys.forEach((key) => {
+      const overlay = markersRef.current.get(key);
+      if (overlay) {
+        overlay.setMap(null);
+        markersRef.current.delete(key);
+      }
+    });
 
-    coordinates.forEach(({ lat, lng }) => {
+    // bounds 업데이트가 필요한 경우에만 실행
+    if (
+      !initialBoundsSet.current ||
+      shouldUpdateBounds ||
+      isMarkerDeleted ||
+      (coordinates.length > 0 &&
+        !areAllMarkersVisible(coordinates, mapRef.current))
+    ) {
+      const bounds = calculateBounds(coordinates);
+      mapRef.current.setBounds(bounds);
+      if (!initialBoundsSet.current) {
+        initialBoundsSet.current = true;
+      }
+    }
+
+    previousCoordinates.current = [...coordinates];
+  };
+
+  const calculateBounds = (coords: ICoordinate[]) => {
+    const bounds = new window.kakao.maps.LatLngBounds();
+    let minLat = Infinity,
+      maxLat = -Infinity;
+    let minLng = Infinity,
+      maxLng = -Infinity;
+
+    coords.forEach(({ lat, lng }) => {
       minLat = Math.min(minLat, lat);
       maxLat = Math.max(maxLat, lat);
       minLng = Math.min(minLng, lng);
       maxLng = Math.max(maxLng, lng);
     });
 
-    // 위도와 경도 모두에 더 큰 여유 공간 (20프로) 추가
     const latPadding = (maxLat - minLat) * 0.2;
     const lngPadding = (maxLng - minLng) * 0.2;
     bounds.extend(
@@ -114,59 +223,59 @@ export default function KakaoMap({ coordinates }: IKakaoMap) {
       new window.kakao.maps.LatLng(maxLat + latPadding, maxLng + lngPadding),
     );
 
-    // 마커 생성
-    coordinates.forEach(
-      ({ lat, lng, isMyLocation, roadNameAddress, isSelected }) => {
-        placeMarker(
-          lat,
-          lng,
-          mapRef.current,
-          isMyLocation,
-          roadNameAddress,
-          isSelected,
-        );
-      },
-    );
-
-    if (coordinates.length > 0) {
-      setTimeout(() => {
-        if (mapRef.current) {
-          mapRef.current.setBounds(bounds);
-        }
-      }, 100);
-    }
+    return bounds;
   };
 
   const initMap = () => {
     if (!containerRef.current || mapRef.current) return;
 
     const options = {
-      center: new window.kakao.maps.LatLng(37.556328, 126.923634),
-      level: 2,
+      center: new window.kakao.maps.LatLng(
+        coordinates.length > 0 ? coordinates[0].lat : DEFAULT_LOCATION.lat,
+        coordinates.length > 0 ? coordinates[0].lng : DEFAULT_LOCATION.lng,
+      ),
+      level: DEFAULT_LOCATION.level,
     };
 
     const map = new window.kakao.maps.Map(containerRef.current, options);
     mapRef.current = map;
-    updateMap();
+
+    // 초기 마커 생성
+    if (coordinates.length > 0) {
+      updateMap();
+    }
   };
 
   useEffect(() => {
-    if (window.kakao && window.kakao.maps) {
-      window.kakao.maps.load(() => {
-        const checkContainer = () => {
-          if (containerRef.current && containerRef.current.offsetHeight > 0) {
-            initMap();
-          } else {
-            setTimeout(checkContainer, 100);
-          }
-        };
-        checkContainer();
-      });
-    }
+    const loadMap = () => {
+      if (window.kakao && window.kakao.maps) {
+        if (!window.kakao.maps.Map) {
+          window.kakao.maps.load(() => {
+            const checkContainer = () => {
+              if (
+                containerRef.current &&
+                containerRef.current.offsetHeight > 0
+              ) {
+                initMap();
+              } else {
+                setTimeout(checkContainer, 100);
+              }
+            };
+            checkContainer();
+          });
+        } else {
+          initMap();
+        }
+      }
+    };
+
+    loadMap();
   }, []);
 
   useEffect(() => {
-    updateMap();
+    if (mapRef.current) {
+      updateMap();
+    }
   }, [coordinates]);
 
   useEffect(() => {
@@ -178,40 +287,10 @@ export default function KakaoMap({ coordinates }: IKakaoMap) {
       resizeTimeoutRef.current = setTimeout(() => {
         if (mapRef.current) {
           mapRef.current.relayout();
-
-          setTimeout(() => {
-            if (coordinates.length > 0) {
-              const bounds = new window.kakao.maps.LatLngBounds();
-              let minLat = Infinity;
-              let maxLat = -Infinity;
-              let minLng = Infinity;
-              let maxLng = -Infinity;
-
-              coordinates.forEach(({ lat, lng }) => {
-                minLat = Math.min(minLat, lat);
-                maxLat = Math.max(maxLat, lat);
-                minLng = Math.min(minLng, lng);
-                maxLng = Math.max(maxLng, lng);
-              });
-
-              const latPadding = (maxLat - minLat) * 0.2;
-              const lngPadding = (maxLng - minLng) * 0.2;
-              bounds.extend(
-                new window.kakao.maps.LatLng(
-                  minLat - latPadding,
-                  minLng - lngPadding,
-                ),
-              );
-              bounds.extend(
-                new window.kakao.maps.LatLng(
-                  maxLat + latPadding,
-                  maxLng + lngPadding,
-                ),
-              );
-
-              mapRef.current.setBounds(bounds);
-            }
-          }, 100);
+          if (coordinates.length > 0) {
+            const bounds = calculateBounds(coordinates);
+            mapRef.current.setBounds(bounds);
+          }
         }
       }, 200);
     };
@@ -225,5 +304,11 @@ export default function KakaoMap({ coordinates }: IKakaoMap) {
     };
   }, [coordinates]);
 
-  return <div ref={containerRef} className="w-full h-full rounded-default" />;
+  return (
+    <div
+      ref={containerRef}
+      className="w-full h-full rounded-default"
+      style={{ minHeight: '400px' }} // 최소 높이 추가
+    />
+  );
 }
