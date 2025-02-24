@@ -35,7 +35,9 @@ export default function MidpointListItem({
 }: IMidpointListItemProps) {
   const { roomId } = useParams();
   const navigate = useNavigate();
-  const address = location.roadNameAddress || '위치 정보 없음';
+  const address =
+    `${location.siDo} ${location.siGunGu} ${location.roadNameAddress || ''}` ||
+    '위치 정보 없음';
 
   const allLocations = [
     ...(placeSearchData?.data?.myLocations || []),

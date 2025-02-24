@@ -8,8 +8,10 @@ import SomethingWrongErrorPage from '../error/SomethingWrongErrorPage';
 import MidpointListItem from '@src/components/location/MidpointListItem';
 import { useCoordinates } from '@src/hooks/location/useCoordinates';
 import { SEQUENCE } from '@src/components/location/constants';
+import SearchLocationLoading from '@src/components/loading/SearchLocationLoading';
 
 export default function LocationResultPage() {
+  const [isLoading, setIsLoading] = useState(true);
   const [selectedLocationIndex, setSelectedLocationIndex] = useState(0);
 
   const { data: placeSearchData } = useGetPlaceSearchQuery();
@@ -42,12 +44,21 @@ export default function LocationResultPage() {
     }
   }, [selectedMidpoint, refetch]);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   const coordinates = useCoordinates(
     placeSearchData,
     midpointSearchData,
     selectedLocationIndex,
   );
 
+  if (isLoading) return <SearchLocationLoading />;
   if (!midpointSearchData) return <SomethingWrongErrorPage />;
 
   return (

@@ -2,15 +2,13 @@ import Layout from '@src/components/layout/Layout';
 import Lottie from 'lottie-react';
 import Lottie404 from '@src/assets/lotties/Lottie404.json';
 import { PATH } from '@src/constants/path';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import IconGithub from '@src/assets/icons/IconGithub.png';
 
 export default function UnknownErrorFallback() {
-  const navigate = useNavigate();
-
   const handleGoHome = () => {
     localStorage.clear();
-    navigate(PATH.ROOT);
+    window.location.href = PATH.ROOT;
   };
 
   return (
