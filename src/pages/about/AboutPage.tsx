@@ -10,6 +10,7 @@ import IconRightHalfArrow from '@src/assets/icons/IconRightHalfArrow.svg?react';
 import IconSmallDolphin from '@src/assets/icons/IconSmallDolphin.svg?react';
 import { Link } from 'react-router-dom';
 import { PATH } from '@src/constants/path';
+import CustomToast from '@src/components/common/toast/customToast';
 
 export default function AboutPage() {
   return (
@@ -23,13 +24,13 @@ export default function AboutPage() {
         </h1>
         <div className="z-50 flex flex-col gap-4 font-semibold text-content lg:text-menu text-gray-dark">
           <p>
-            한국인의 약속을 편하게 만들기 위해 시작된 서비스가
+            친구와의 약속을 편하게 만들기 위해 시작된 서비스가
             <br />더 많은 사람들을 위한 모두의 서비스가 됩니다.
           </p>
           <p>
-            모임의 중간에서 시간을 절약하는
+            모임의 장소와 시간을 정하는
             <br />
-            당신의 마음이 편안해지고 싶습니다.
+            당신의 마음이 편안해지고 있습니다.
           </p>
         </div>
         <img
@@ -49,12 +50,12 @@ export default function AboutPage() {
         />
         <IconAboutMap className="hidden lg:block size-[12.5rem] absolute top-0 left-[35%] 2xl:left-[30%] 2xl:size-[15rem]" />
         <div className="z-50 flex flex-col gap-2 mt-16 font-semibold lg:gap-4 lg:-mr-10 2xl:mr-10 text-content lg:text-menu text-gray-dark lg:mt-40 2xl:mt-48">
-          <h2 className="z-50 flex flex-col gap-1 mb-10 text-title lg:text-logo text-tertiary">
+          <h2 className="z-50 flex flex-col gap-1 mb-5 text-title lg:text-logo text-tertiary">
             <span>누구에게나 공평한</span>
             <span>중간 지점 찾기</span>
           </h2>
           <p className="mb-10 font-semibold text-gray-dark text-content lg:text-menu">
-            한국어라면 어디든 똑똑히 찾아가 있는 지역을 골라
+            한국어라면 어디든 유동 인구가 많은 지역을 골라
             <br />
             공평한 우리의 중간 지점을 찾아줍니다.
           </p>
@@ -71,7 +72,7 @@ export default function AboutPage() {
       {/* 세 번째 섹션 */}
       <section className="ring-1 ring-blue-normal01 rounded-3xl lg:ring-0 relative flex justify-start items-start pl-8 lg:pl-16 2xl:pl-40 mt-10 lg:mt-32 pb-20 lg:pb-0 h-full lg:min-h-[43.75rem]">
         <div className="z-50 flex flex-col gap-2 mt-10 font-semibold lg:gap-4 text-content lg:text-menu text-gray-dark lg:mt-40 2xl:mt-48">
-          <h2 className="z-50 flex flex-col gap-1 mb-10 text-title lg:text-logo text-tertiary">
+          <h2 className="z-50 flex flex-col gap-1 mb-5 text-title lg:text-logo text-tertiary">
             <span>방금 찾은 장소 기반</span>
             <span>만날 장소 투표</span>
           </h2>
@@ -84,7 +85,7 @@ export default function AboutPage() {
             to={PATH.ONBOARDING}
             className="flex items-center justify-center gap-2 p-4 rounded-lg bg-gray-light hover:bg-gray-light01 hover:bg-gray-200"
           >
-            <span>이번주에 만날 장소 정해보기</span>
+            <span>이번 주에 만날 장소 정해보기</span>
             <IconRightHalfArrow className="size-5" />
           </Link>
         </div>
@@ -104,19 +105,19 @@ export default function AboutPage() {
         />
         <div className="z-50 flex flex-col gap-2 mt-16 font-semibold lg:gap-4 lg:-mr-10 2xl:mr-10 text-content lg:text-menu text-gray-dark lg:mt-40 2xl:mt-48">
           <h2 className="z-50 flex flex-col gap-1 mb-10 text-title lg:text-logo text-tertiary">
-            <span>누구에게나 공평한</span>
-            <span>중간 지점 찾기</span>
+            <span>약속을 완벽하게 정하도록</span>
+            <span>만날 시간 투표</span>
           </h2>
           <p className="mb-10 font-semibold text-gray-dark text-content lg:text-menu">
-            한국어라면 어디든 똑똑히 찾아가 있는 지역을 골라
+            약속에 관한 모든 건 싱크스팟을 통해 정할 수 있도록
             <br />
-            공평한 우리의 중간 지점을 찾아줍니다.
+            만날 시간을 투표로 정합니다.
           </p>
           <Link
-            to="https://www.notion.so/119ec33789248135bbfbc44c41ce3cab?pvs=4"
+            to={PATH.ONBOARDING}
             className="flex items-center justify-center gap-2 p-4 rounded-lg bg-gray-light hover:bg-gray-light01 hover:bg-gray-200"
           >
-            <span>중간 지점을 찾는 원리가 궁금하다면?</span>
+            <span>우리의 모임 시간 정하기</span>
             <IconRightHalfArrow className="size-5" />
           </Link>
         </div>
@@ -144,14 +145,14 @@ export default function AboutPage() {
             아시나요?
           </p>
           <p>
-            팀 '모락(Morak)'은 IT 전문 동아리인 '코테이토(Cotato)'에서 만난
+            팀 '모락(Morak)'은 IT 연합 동아리인 '코테이토(Cotato)'에서 만난
             5명으로 결성된 팀이에요!
           </p>
           <p>
             처음엔 프로젝트가 익숙하지 않은 '감자'였던 팀원들은
             '싱크스팟(Syncspot)'과 각종 프로젝트들을 경험하며
           </p>
-          <p>이느새 감자에서 모락모락 김이 날 정도로 성장했습니다.</p>
+          <p>어느새 감자에서 모락모락 김이 날 정도로 성장했습니다.</p>
         </div>
         <div className="mt-6 text-description lg:text-menu text-gray-dark">
           <p>
@@ -182,9 +183,9 @@ export default function AboutPage() {
               이화여대
             </span>
             <span className="p-1 px-2 rounded-lg bg-primary text-white-default text-description whitespace-nowrap">
-              PM, DE
+              PM
             </span>
-            <span className="text-content lg:text-menu">이솔</span>
+            <span className="text-content lg:text-menu">김기림</span>
             <span className="text-description text-gray-dark lg:mt-[0.125rem]">
               이화여대
             </span>
@@ -220,10 +221,23 @@ export default function AboutPage() {
           </p>
         </div>
         <div className="flex items-center justify-end gap-4 mt-4 lg:gap-6">
-          <span className="p-2 lg:p-4 rounded-full shadow-lg bg-white-default cursor-pointer hover:translate-y-[-0.25rem]">
+          <span
+            onClick={() =>
+              CustomToast({
+                type: 'success',
+                message: '준비중인 서비스 입니다',
+              })
+            }
+            className="p-2 lg:p-4 rounded-full shadow-lg bg-white-default cursor-pointer hover:translate-y-[-0.25rem]"
+          >
             <IconAboutInstagram className="size-8 lg:size-10 lg:block" />
           </span>
-          <span className="p-2 lg:p-4 rounded-full shadow-lg bg-white-default cursor-pointer hover:translate-y-[-0.25rem]">
+          <span
+            onClick={() =>
+              (window.location.href = 'https://github.com/Cotato-Syncspot')
+            }
+            className="p-2 lg:p-4 rounded-full shadow-lg bg-white-default cursor-pointer hover:translate-y-[-0.25rem]"
+          >
             <IconGithub className="size-8 lg:size-10 lg:block" />
           </span>
         </div>
