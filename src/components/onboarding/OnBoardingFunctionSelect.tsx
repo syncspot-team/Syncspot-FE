@@ -41,11 +41,11 @@ export default function OnBoardingFunctionSelect({
   };
 
   return (
-    <div className="flex flex-col items-center mt-[9.375rem]">
+    <div className="flex flex-col items-center mt-[6.25rem] lg:mt-[10.625rem]">
       <h1 className="text-subtitle text-tertiary mb-[1.875rem]">
         무엇을 할까요?
       </h1>
-      <div className="flex flex-col items-center gap-[1.875rem]">
+      <div className="flex flex-col items-center gap-[1.875rem] w-full max-w-[calc(100%-2rem)] lg:max-w-[26.875rem]">
         <FunctionOption
           selectedFunction={selectedFunction}
           setSelectedFunction={setSelectedFunction}
@@ -54,6 +54,7 @@ export default function OnBoardingFunctionSelect({
           buttonType="primary"
           disabled={!selectedFunction}
           onClick={handleDoneClick}
+          className="w-full p-[1.875rem] lg:py-[1.125rem] lg:px-[11.3125rem]"
         >
           완료
         </Button>
