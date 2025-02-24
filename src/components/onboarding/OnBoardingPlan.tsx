@@ -54,24 +54,26 @@ export default function OnBoardingPlan({
 
   return (
     <>
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center min-h-[calc(100dvh-7rem)] lg:min-h-full">
         {roomList.data && roomList.data.length > 0 ? (
-          <div className="flex flex-col items-center mt-[4.6875rem]">
-            <h1 className="text-subtitle text-tertiary mb-[1.875rem]">
+          <div className="flex flex-col items-center lg:mt-[5rem] w-full px-10 lg:w-auto lg:max-w-[34.375rem]">
+            <h1 className="text-[1.25rem] font-semibold lg:text-subtitle text-tertiary mb-[1.875rem]">
               어떤 모임을 계획하고 계시나요?
             </h1>
-            <ul className="flex flex-col items-center w-full gap-[1.25rem] mb-[1.875rem] max-h-[calc(100vh-25rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full p-1">
+            <ul className="flex flex-col items-center w-full gap-[0.625rem] lg:gap-[0.9375rem] mb-[1.875rem] max-h-[calc(100vh-30rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full p-1">
               {roomList.data.map((item: IRoom) => (
                 <li
                   key={item.roomId}
-                  className={`flex items-center justify-between w-full max-w-[26.875rem] text-content text-tertiary bg-gray-light py-[1rem] px-[1.0625rem] rounded-default cursor-pointer ${
+                  className={`flex items-center justify-between w-full  text-content text-tertiary bg-gray-light py-[0.875rem] lg:py-[1rem] px-[1.0625rem] rounded-default cursor-pointer ${
                     clickedRoomId === item.roomId
                       ? 'ring-2 ring-blue-light02 bg-white-default'
                       : ''
                   }`}
                   onClick={() => handleRoomClick(item.roomId, item.roomName)}
                 >
-                  <span>{item.roomName}</span>
+                  <span className="text-description lg:text-content">
+                    {item.roomName}
+                  </span>
                   <span
                     className="hover:translate-y-[-0.1875rem]"
                     onClick={(e) => handleDetailInfoClick(e, item)}
@@ -84,7 +86,7 @@ export default function OnBoardingPlan({
             <Button
               onClick={handleAddButtonClick}
               buttonType="secondary"
-              className="mb-[1.0625rem]"
+              className="mb-[1.0625rem] p-0 w-full lg:py-[1.125rem] lg:px-[12.3125rem]"
             >
               모임 추가
             </Button>
@@ -92,22 +94,26 @@ export default function OnBoardingPlan({
               onClick={handleNextButtonClick}
               buttonType="primary"
               disabled={!clickedRoomId}
+              className="w-full p-0 lg:py-[1.125rem] lg:px-[12.3125rem]"
             >
               다음
             </Button>
           </div>
         ) : (
-          <div className="flex flex-col items-center mt-[4.6875rem]">
+          <div className="flex flex-col items-center lg:mt-[5.625rem]">
             <span>
               <IconBubble />
             </span>
             <span>
-              <IconDolphin className="animate-customBounce" />
+              <IconDolphin className="animate-customBounce size-56 lg:size-80" />
             </span>
             <h1 className="text-menu text-gray-dark my-[1.875rem]">
               모임을 생성하고 서비스를 사용해보세요!
             </h1>
-            <Button onClick={handleAddButtonClick} className="">
+            <Button
+              onClick={handleAddButtonClick}
+              className="w-full p-0 lg:py-[1.125rem] lg:px-[10.3125rem]"
+            >
               모임 생성하기
             </Button>
           </div>

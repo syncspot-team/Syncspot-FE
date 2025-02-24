@@ -10,6 +10,9 @@ import IconMenuTime from '@src/assets/icons/IconMenuTime.svg?react';
 import IconService from '@src/assets/icons/IconMenuService.svg?react';
 import { sideMenuItems } from '@src/components/users/constants/sideMenuItems';
 import { useLoginStore } from '@src/state/store/loginStore';
+import IconRightHalfArrow from '@src/assets/icons/IconRightHalfArrow.svg?react';
+import { useNavigate } from 'react-router-dom';
+import { PATH } from '@src/constants/path';
 
 interface IMobileMenuListProps {
   onCloseMenu: () => void;
@@ -20,6 +23,7 @@ export default function MobileMenuList({
   onCloseMenu,
   isMenuOpen,
 }: IMobileMenuListProps) {
+  const navigate = useNavigate();
   const { isLogin } = useLoginStore();
   const [clickedMenu, setClickedMenu] = useState<string | null>(null);
   const menuItems = useMenuItems();
@@ -100,7 +104,7 @@ export default function MobileMenuList({
           )}
         </li>
       ))}
-      {isLogin && (
+      {isLogin ? (
         <li>
           <div
             className="flex items-center justify-between p-4 hover:bg-gray-light"
@@ -148,6 +152,19 @@ export default function MobileMenuList({
               ))}
             </div>
           )}
+        </li>
+      ) : (
+        <li>
+          <div
+            onClick={() => {
+              onCloseMenu();
+              navigate(PATH.SIGN_IN);
+            }}
+            className="flex items-center gap-2 p-4 pl-5 hover:bg-gray-light"
+          >
+            <span>로그인 하러 가기</span>
+            <IconRightHalfArrow className="size-5" />
+          </div>
         </li>
       )}
     </ul>

@@ -45,12 +45,15 @@ export default function OnBoardingCreate({
   };
 
   return (
-    <div className="flex flex-col items-center mt-[10rem]">
+    <div className="flex flex-col items-center mt-[6.25rem] lg:mt-[10.625rem]">
       <h1 className="text-subtitle text-tertiary mb-[1.875rem]">
         모임 생성하기
       </h1>
-      <form onSubmit={handleSubmit(handleCreateRoom)} className="flex flex-col">
-        <h3 className="text-menu text-tertiary mb-[0.625rem] ml-2">
+      <form
+        onSubmit={handleSubmit(handleCreateRoom)}
+        className="flex flex-col w-full max-w-[calc(100%-2rem)] lg:max-w-[26.875rem]"
+      >
+        <h3 className="text-menu text-tertiary mb-[0.125rem] ml-2">
           모임 이름
         </h3>
         <Input
@@ -70,6 +73,7 @@ export default function OnBoardingCreate({
           buttonType="primary"
           isLoading={isCreateRoomPending || isSaveUserToRoomPending}
           disabled={!isFormValid}
+          className="w-full p-[1.875rem] lg:py-[1.125rem] lg:px-[11.3125rem]"
         >
           생성 완료
         </Button>
