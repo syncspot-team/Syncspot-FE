@@ -1,7 +1,7 @@
 import LottieSearchLocation from '@src/assets/lotties/LottieSeachLocation.json';
 import Lottie from 'lottie-react';
 
-export default function SeachLocationLoading() {
+export default function SearchLocationLoading() {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-white-default">
       <Lottie
