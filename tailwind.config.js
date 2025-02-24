@@ -180,11 +180,21 @@ export default {
           '0%': { opacity: '1' },
           '100%': { opacity: '0' },
         },
+        customBounce: {
+          '0%, 100%': {
+            transform: 'translateY(0)',
+            '-webkit-transform': 'translateY(0)',
+          },
+          '50%': {
+            transform: 'translateY(-25px)',
+            '-webkit-transform': 'translateY(-25px)',
+          },
+        },
       },
       animation: {
         slideDown: 'slideDown 0.2s ease-in-out',
         slideUp: 'slideUp 0.2s ease-in-out',
-        customBounce: 'customBounce 1s ease-in-out infinite',
+        customBounce: 'customBounce 2s ease-in-out infinite',
         slideInRight: 'slideInRight 0.3s ease-in-out',
         slideOutRight: 'slideOutRight 0.3s ease-in-out',
         fadeIn: 'fadeIn 0.3s ease-in-out',
