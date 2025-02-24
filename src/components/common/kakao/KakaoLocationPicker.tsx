@@ -5,6 +5,8 @@ import { Place, ISelectedLocation } from '@src/components/common/kakao/types';
 import { useDebounce } from '@src/hooks/useDebounce';
 import { searchPlacesByKeyword } from '@src/apis/kakao/searchPlacesByKeyword';
 import { Input } from '@src/components/common/input/Input';
+import CustomToast from '@src/components/common/toast/customToast';
+import { TOAST_TYPE } from '@src/types/toastType';
 
 const NO_RESULTS_MESSAGE = '검색 결과가 존재하지 않습니다';
 
@@ -71,6 +73,7 @@ export default function KakaoLocationPicker({
 
   const handlePlaceSelect = async (place: Place) => {
     setIsSearching(false);
+    setSuggestions([]);
     const addressData = await searchAddressInfo(place.road_address_name);
     const location = { place, address: addressData };
     const selectResult = onSelect?.(location);
@@ -79,17 +82,42 @@ export default function KakaoLocationPicker({
     } else {
       setSearchTerm(defaultAddress || '');
     }
-    setSuggestions([]);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
-    setIsSearching(true);
+    const userInput = e.target.value;
+    setSearchTerm(userInput);
+    if (userInput.trim()) {
+      setIsSearching(true);
+    } else {
+      setIsSearching(false);
+      setSuggestions([]);
+    }
   };
 
   const searchPlaces = async (query: string) => {
-    const documents = await searchPlacesByKeyword(query);
-    setSuggestions(documents);
+    try {
+      const documents = await searchPlacesByKeyword(query);
+      const validPlaces = [];
+
+      for (const place of documents) {
+        try {
+          // 각 장소에 대해 주소 정보를 미리 확인
+          const addressData = await searchAddressInfo(place.road_address_name);
+          if (addressData) {
+            validPlaces.push(place);
+          }
+        } catch (error) {}
+      }
+
+      setSuggestions(validPlaces);
+    } catch (error) {
+      CustomToast({
+        type: TOAST_TYPE.ERROR,
+        message: '주소를 찾을 수 없습니다.',
+      });
+      setSuggestions([]);
+    }
   };
 
   useEffect(() => {
