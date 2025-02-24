@@ -28,7 +28,9 @@ export default function LocationEnterPage() {
   const [savedLocations, setSavedLocations] = useState<ILocation[]>([]);
 
   // 장소 목록 조회 쿼리
-  const { data: placeSearchData } = useGetPlaceSearchQuery();
+  const { data: placeSearchData } = useGetPlaceSearchQuery({
+    enabled: !!roomId,
+  });
 
   const { mutate: placeSaveMutation } = usePlaceSaveMutation(); // 장소 저장
   const { mutate: placeUpdateMutation } = usePlaceUpdateMutation(); // 장소 수정
@@ -242,10 +244,7 @@ export default function LocationEnterPage() {
       ...formatLocations(myLocations, true),
       ...formatLocations(friendLocations, false),
     ];
-  }, [
-    JSON.stringify(myLocations?.filter(isValidLocation)),
-    JSON.stringify(friendLocations?.filter(isValidLocation)),
-  ]);
+  }, [myLocations, friendLocations]);
 
   const handleAddLocation = () => {
     appendMyLocation({
