@@ -18,7 +18,7 @@ export const useSignUpMutation = (
         type: TOAST_TYPE.SUCCESS,
         message: '회원가입에 성공하였습니다.',
       });
-      navigate(PATH.SIGN_IN);
+      navigate(PATH.ONBOARDING);
     },
     ...options,
   });
