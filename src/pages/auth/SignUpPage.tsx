@@ -51,6 +51,7 @@ export default function SignUpPage() {
 
   const [isEmailSent, setIsEmailSent] = useState(false);
   const [isEmailVerified, setIsEmailVerified] = useState(false);
+
   const isFormValid =
     watch('email') &&
     watch('pw') &&
@@ -128,6 +129,14 @@ export default function SignUpPage() {
       </h1>
       <form
         onSubmit={handleSubmit(handleSignUp)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            const target = e.target as HTMLElement;
+            if (target.closest('.address-search-container')) {
+              e.preventDefault();
+            }
+          }
+        }}
         className="flex flex-col items-center w-full"
       >
         <span className="ml-2 mb-[0.125rem] text-menu text-tertiary w-full max-w-[26.875rem]">
@@ -255,7 +264,7 @@ export default function SignUpPage() {
         <span className="ml-2 mt-[1rem] mb-[0.125rem] text-menu text-tertiary w-full max-w-[26.875rem]">
           내 주소 (선택)
         </span>
-        <div className="w-full max-w-[26.875rem]">
+        <div className="w-full max-w-[26.875rem] address-search-container">
           <KakaoLocationPicker
             InputClassName="ring-1 ring-gray-normal bg-white-default"
             onSelect={handleLocationSelect}
@@ -266,7 +275,7 @@ export default function SignUpPage() {
           buttonType="primary"
           isLoading={isSignUpPending}
           disabled={!isFormValid}
-          className="mt-[1.75rem] w-full max-w-[26.875rem] px-5"
+          className="my-[1.75rem] w-full max-w-[26.875rem] px-5"
         >
           회원가입
         </Button>
