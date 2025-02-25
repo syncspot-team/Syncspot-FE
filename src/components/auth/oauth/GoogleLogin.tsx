@@ -22,7 +22,6 @@ export default function GoogleLogin() {
           code,
         },
       }).then((res) => {
-        console.log('구글 로그인 후 받은 데이터 값', res.data);
         login(res.data.data.accessToken, res.data.data.refreshToken);
         navigate(PATH.ROOT);
       });

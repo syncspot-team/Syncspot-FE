@@ -23,7 +23,6 @@ export default function NaverLogin() {
           code,
         },
       }).then((res) => {
-        console.log('네이버 로그인 후 받은 데이터 값', res.data.data);
         login(res.data.data.accessToken, res.data.data.refreshToken);
         navigate(PATH.ROOT);
       });
