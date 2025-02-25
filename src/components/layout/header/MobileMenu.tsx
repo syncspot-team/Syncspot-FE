@@ -7,40 +7,24 @@ import MobileMenuList from './MobileMenuList';
 import IconMainLogo from '@src/assets/icons/IconMainLogo.svg?react';
 import IconMobileMenuClose from '@src/assets/icons/IconMobileMenuClose.svg?react';
 import ShareButton from './ShareButton';
-import { PATH } from '@src/constants/path';
-import { useLocation } from 'react-router-dom';
+import { useRenderShareButton } from '@src/hooks/share/useRenderShareButton';
 
 export default function MobileMenu() {
   const menuRef = useRef<HTMLDivElement>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const location = useLocation();
 
   useClickOutside(menuRef, () => setIsMenuOpen(false));
   useResponsiveClose(1024, () => setIsMenuOpen(false));
 
   const selectedRoomId = localStorage.getItem('selectedRoomId');
 
-  function renderShareButton() {
-    if (selectedRoomId) {
-      const validPaths = [
-        PATH.LOCATION_RESULT(selectedRoomId),
-        PATH.LOCATION_RECOMMENDATIONS(selectedRoomId),
-        PATH.PLACE_VOTE(selectedRoomId),
-        PATH.PLACE_RESULT(selectedRoomId),
-        PATH.TIME_VOTE(selectedRoomId),
-        PATH.TIME_RESULT(selectedRoomId),
-        PATH.ABOUT,
-      ];
-      const path = location.pathname;
-      return validPaths.some((validPath) => path.includes(validPath));
-    }
-  }
+  const renderShareButton = useRenderShareButton(selectedRoomId, true);
 
   return (
     <>
       <div className="flex gap-4">
         {/* 공유 */}
-        {renderShareButton() && <ShareButton />}
+        {renderShareButton && <ShareButton />}
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="p-2 hover:bg-gray-light rounded-[0.625rem] *:size-5"
