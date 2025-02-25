@@ -15,6 +15,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { PATH } from '@src/constants/path';
 import { ILocation } from '@src/types/location/placeSearchResponseType';
 import { IPlaceSaveRequestType } from '@src/types/location/placeSaveRequestType';
+import ShareButton from '@src/components/layout/header/ShareButton';
 
 interface ILocationForm {
   myLocations: IPlaceSaveRequestType[];
@@ -296,9 +297,12 @@ export default function LocationEnterPage() {
             ))
           )}
         </ul>
-        <h1 className="text-menu lg:text-subtitle text-tertiary mb-1 lg:mb-[0.375rem] mt-2 lg:mt-4 ml-2">
-          친구가 입력한 장소
-        </h1>
+        <div className="flex items-end justify-between">
+          <h1 className="text-menu lg:text-subtitle text-tertiary mb-1 lg:mb-[0.375rem] mt-2 lg:mt-4 ml-2">
+            친구가 입력한 장소
+          </h1>
+          <ShareButton />
+        </div>
         <div className="max-h-[calc(100vh-38rem)] mb-2 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full">
           {friendLocationFields.length === 0 ? (
             <div className="flex items-center justify-center py-4 text-description lg:text-content text-gray-dark">

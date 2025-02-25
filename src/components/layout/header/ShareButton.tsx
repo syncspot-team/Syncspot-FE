@@ -5,25 +5,27 @@ import { useModal } from '@src/hooks/useModal';
 import { MODAL_TYPE } from '@src/types/modalType';
 
 interface IShareButtonProps {
-  onShareClick: () => void;
+  onShareClick?: () => void;
 }
 
 export default function ShareButton({ onShareClick }: IShareButtonProps) {
   const { modalType, openModal, closeModal } = useModal();
 
   const handleClick = () => {
-    onShareClick();
+    if (onShareClick) {
+      onShareClick();
+    }
     openModal(MODAL_TYPE.SHARE_MEETING_MODAL);
   };
 
   return (
     <>
-      <li
+      <div
         onClick={handleClick}
-        className="rounded-full cursor-pointer p-[5px] shadow-black filter hover:bg-blue-light01"
+        className="rounded-full size-8 flex items-center justify-center cursor-pointer p-[5px] shadow-black hover:bg-blue-light01"
       >
         <IconShare className="size-4" />
-      </li>
+      </div>
       <Modal
         isOpen={modalType === MODAL_TYPE.SHARE_MEETING_MODAL}
         onClose={closeModal}
