@@ -54,6 +54,9 @@ jobs:
           echo "VITE_NAVER_CLIENT_SECRET=${{ secrets.VITE_NAVER_CLIENT_SECRET }}" >> $GITHUB_ENV
           echo "VITE_NAVER_STATE=${{ secrets.VITE_NAVER_STATE }}" >> $GITHUB_ENV
           echo "VITE_NAVER_REDIRECT_URL=${{ secrets.VITE_NAVER_REDIRECT_URL }}" >> $GITHUB_ENV
+          echo "VITE_EMAILJS_SERVICE_ID=${{ secrets.VITE_EMAILJS_SERVICE_ID }}" >> $GITHUB_ENV
+          echo "VITE_EMAILJS_TEMPLATE_ID=${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}" >> $GITHUB_ENV
+          echo "VITE_EMAILJS_PUBLIC_KEY=${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}" >> $GITHUB_ENV
 
       - name: Build
         run: yarn build
