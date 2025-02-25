@@ -5,17 +5,12 @@ import { IMenuItem } from '@src/types/header/menuItemType';
 import DesktopSubMenu from './DesktopSubMenu';
 import AuthButton from './AuthButton';
 import ShareButton from './ShareButton';
-import { useModal } from '@src/hooks/useModal';
-import { MODAL_TYPE } from '@src/types/modalType';
-import Modal from '@src/components/common/modal/Modal';
-import ShareMeetingModal from '@src/components/common/modal/ShareMeetingModal';
 import { PATH } from '@src/constants/path';
 
 export default function DesktopMenu() {
   const menuRef = useRef<HTMLUListElement>(null);
   const [clickedMenu, setClickedMenu] = useState<string | null>(null);
   const menuItems = useMenuItems();
-  const { modalType, openModal, closeModal } = useModal();
 
   useClickOutside(menuRef, () => setClickedMenu(null));
 
@@ -85,18 +80,11 @@ export default function DesktopMenu() {
           <ShareButton
             onShareClick={() => {
               setClickedMenu(null);
-              openModal(MODAL_TYPE.SHARE_MEETING_MODAL);
             }}
           />
         )}
         <AuthButton onAuthClick={() => setClickedMenu(null)} isMobile={false} />
       </ul>
-      <Modal
-        isOpen={modalType === MODAL_TYPE.SHARE_MEETING_MODAL}
-        onClose={closeModal}
-      >
-        <ShareMeetingModal onClose={closeModal} />
-      </Modal>
     </>
   );
 }
