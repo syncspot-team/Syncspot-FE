@@ -6,10 +6,12 @@ import DesktopSubMenu from './DesktopSubMenu';
 import AuthButton from './AuthButton';
 import ShareButton from './ShareButton';
 import { PATH } from '@src/constants/path';
+import { useLocation } from 'react-router-dom';
 
 export default function DesktopMenu() {
   const menuRef = useRef<HTMLUListElement>(null);
   const [clickedMenu, setClickedMenu] = useState<string | null>(null);
+  const location = useLocation();
   const menuItems = useMenuItems();
 
   useClickOutside(menuRef, () => setClickedMenu(null));
@@ -44,12 +46,11 @@ export default function DesktopMenu() {
         PATH.LOCATION_RESULT(selectedRoomId),
         PATH.LOCATION_RECOMMENDATIONS(selectedRoomId),
         PATH.PLACE_RESULT(selectedRoomId),
-        PATH.TIME_CREATE(selectedRoomId),
         PATH.TIME_VOTE(selectedRoomId),
         PATH.TIME_RESULT(selectedRoomId),
         PATH.ABOUT,
       ];
-      const path = window.location.pathname;
+      const path = location.pathname;
       return validPaths.some((validPath) => path.includes(validPath));
     }
   }
