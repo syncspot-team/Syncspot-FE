@@ -143,6 +143,18 @@ export default function KakaoMap({ coordinates }: IKakaoMap) {
     const isMarkerDeleted =
       coordinates.length < previousCoordinates.current.length;
 
+    // 좌표가 없는 경우 기본 위치로 맵 중심 이동
+    if (!coordinates || coordinates.length === 0) {
+      mapRef.current.setCenter(
+        new window.kakao.maps.LatLng(
+          DEFAULT_LOCATION.lat,
+          DEFAULT_LOCATION.lng,
+        ),
+      );
+      mapRef.current.setLevel(DEFAULT_LOCATION.level);
+      return;
+    }
+
     // 새로운 마커 추가 또는 기존 마커 업데이트
     coordinates.forEach((coord) => {
       const markerKey = `${coord.lat}-${coord.lng}`;
@@ -201,6 +213,18 @@ export default function KakaoMap({ coordinates }: IKakaoMap) {
   };
 
   const calculateBounds = (coords: ICoordinate[]) => {
+    // 좌표가 없는 경우 기본 위치의 bounds 반환
+    if (coords.length === 0) {
+      const bounds = new window.kakao.maps.LatLngBounds();
+      bounds.extend(
+        new window.kakao.maps.LatLng(
+          DEFAULT_LOCATION.lat,
+          DEFAULT_LOCATION.lng,
+        ),
+      );
+      return bounds;
+    }
+
     const bounds = new window.kakao.maps.LatLngBounds();
     let minLat = Infinity,
       maxLat = -Infinity;

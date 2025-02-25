@@ -23,7 +23,7 @@ export default function Modal({ isOpen, onClose, children }: IModalProps) {
   return createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="fixed inset-0 bg-overlay" onClick={onClose} />
-      <div className="relative z-50 p-6 bg-white-default rounded-default">
+      <div className="relative z-50 p-6 bg-gray-light rounded-default">
         {children}
       </div>
     </div>,

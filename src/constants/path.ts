@@ -29,4 +29,7 @@ export const PATH = {
   OAUTH_KAKAO_CALLBACK: 'kakao/callback',
   OAUTH_NAVER_CALLBACK: 'naver/callback',
   OAUTH_GOOGLE_CALLBACK: 'google/callback',
+  OAUTH_KAKAO_REDIRECT_URL: 'api/oauth/login/kakao',
+  OAUTH_GOOGLE_REDIRECT_URL: 'api/oauth/login/google',
+  OAUTH_NAVER_REDIRECT_URL: 'api/oauth/login/naver',
 } as const;

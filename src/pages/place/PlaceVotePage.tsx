@@ -6,11 +6,11 @@ import { useGetPlaceVoteRoomCheckQuery } from '@src/state/queries/place/useGetPl
 import { useGetPlaceVoteLookupQuery } from '@src/state/queries/place/useGetPlaceVoteLookupQuery';
 import { usePlaceVoteMutation } from '@src/state/mutations/place/usePlaceVoteMutation';
 import { usePlaceRevoteMutation } from '@src/state/mutations/place/usePlaceRevoteMutation';
-import SomethingWrongErrorPage from '@src/pages/error/SomethingWrongErrorPage';
 import { IPlaceVoteRoomCheckResponseCandidate } from '@src/types/place/placeVoteRoomCheckResponseType';
 import { useNavigate, useParams } from 'react-router-dom';
 import { PATH } from '@src/constants/path';
 import ShareButton from '@src/components/layout/header/ShareButton';
+import PlaceVoteErrorPage from '@src/components/place/PlaceVoteErrorPage';
 
 interface ILocationForm {
   locations: IPlaceVoteRoomCheckResponseCandidate[];
@@ -103,7 +103,7 @@ export default function PlaceVotePage() {
   };
 
   if (!placeVoteRoomCheckData?.data.existence) {
-    return <SomethingWrongErrorPage />;
+    return <PlaceVoteErrorPage />;
   }
 
   return (
