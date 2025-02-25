@@ -10,13 +10,14 @@ export default function KakaoLogin() {
   const { login } = useLoginStore();
   const navigate = useNavigate();
   const code = new URL(window.location.href).searchParams.get('code');
+  const KAKAO_REDIRECT_URL = `${import.meta.env.VITE_BACKEND_URL}/${PATH.OAUTH_KAKAO_REDIRECT_URL}`;
   const [kakaoLoginError, setKakaoLoginError] = useState(false);
 
   const handleKakaoLogin = async () => {
     try {
       await axios({
         method: 'POST',
-        url: `${import.meta.env.VITE_BACKEND_URL}/${PATH.OAUTH_KAKAO_REDIRECT_URL}`,
+        url: KAKAO_REDIRECT_URL,
         data: {
           code,
         },

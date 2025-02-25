@@ -11,13 +11,14 @@ export default function NaverLogin() {
   const navigate = useNavigate();
   const code = new URL(window.location.href).searchParams.get('code');
   const state = new URL(window.location.href).searchParams.get('state');
+  const NAVER_REDIRECT_URL = `${import.meta.env.VITE_BACKEND_URL}/${PATH.OAUTH_NAVER_REDIRECT_URL}`;
   const [naverLoginError, setNaverLoginError] = useState(false);
 
   const handleNaverLogin = async () => {
     try {
       await axios({
         method: 'POST',
-        url: `${import.meta.env.VITE_BACKEND_URL}/${PATH.OAUTH_NAVER_REDIRECT_URL}`,
+        url: NAVER_REDIRECT_URL,
         data: {
           code,
         },

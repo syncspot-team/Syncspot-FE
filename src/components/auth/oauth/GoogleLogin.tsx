@@ -10,13 +10,14 @@ export default function GoogleLogin() {
   const { login } = useLoginStore();
   const navigate = useNavigate();
   const code = new URL(window.location.href).searchParams.get('code');
+  const GOOGLE_REDIRECT_URL = `${import.meta.env.VITE_BACKEND_URL}/${PATH.OAUTH_GOOGLE_REDIRECT_URL}`;
   const [googleLoginError, setGoogleLoginError] = useState(false);
 
   const handleGoogleLogin = async () => {
     try {
       await axios({
         method: 'POST',
-        url: `${import.meta.env.VITE_BACKEND_URL}/${PATH.OAUTH_GOOGLE_REDIRECT_URL}`,
+        url: GOOGLE_REDIRECT_URL,
         data: {
           code,
         },
