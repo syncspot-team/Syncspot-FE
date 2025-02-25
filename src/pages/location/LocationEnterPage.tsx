@@ -228,23 +228,23 @@ export default function LocationEnterPage() {
   const isValidLocation = (loc: (typeof myLocations)[0]) =>
     loc.addressLat !== 0 && loc.addressLong !== 0;
 
-  const coordinates = useMemo(() => {
-    const formatLocations = (
-      locations: typeof myLocations | undefined,
-      isMyLocation: boolean,
-    ) =>
-      locations?.filter(isValidLocation).map((location) => ({
-        lat: location.addressLat,
-        lng: location.addressLong,
-        isMyLocation,
-        roadNameAddress: location.roadNameAddress,
-      })) || [];
+  const formatLocations = (
+    locations: typeof myLocations | undefined,
+    isMyLocation: boolean,
+  ) =>
+    locations?.filter(isValidLocation).map((location) => ({
+      lat: location.addressLat,
+      lng: location.addressLong,
+      isMyLocation,
+      roadNameAddress: location.roadNameAddress,
+    })) || [];
 
-    return [
-      ...formatLocations(myLocations, true),
-      ...formatLocations(friendLocations, false),
-    ];
-  }, [myLocations, friendLocations]);
+  const coordinates = [
+    ...formatLocations(myLocations, true),
+    ...formatLocations(friendLocations, false),
+  ];
+
+  const shouldShowMap = coordinates.length > 0;
 
   const handleAddLocation = () => {
     appendMyLocation({
@@ -335,7 +335,7 @@ export default function LocationEnterPage() {
         </div>
       </div>
       <div className="rounded-default min-h-[31.25rem] lg:min-h-[calc(100vh-8rem)] order-1 lg:order-2">
-        <KakaoMap coordinates={coordinates} />
+        <KakaoMap coordinates={shouldShowMap ? coordinates : []} />
       </div>
     </div>
   );
