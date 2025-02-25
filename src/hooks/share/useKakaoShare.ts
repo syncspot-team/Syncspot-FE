@@ -5,7 +5,7 @@ interface IShareKakao {
   url: string;
 }
 
-export const useShareKakao = ({ descriptionType, url }: IShareKakao) => {
+export function useShareKakao({ descriptionType, url }: IShareKakao) {
   if (window.Kakao) {
     window.Kakao.Share.sendDefault({
       objectType: 'feed',
@@ -30,4 +30,4 @@ export const useShareKakao = ({ descriptionType, url }: IShareKakao) => {
   } else {
     console.error('Kakao SDK is not loaded.');
   }
-};
+}
