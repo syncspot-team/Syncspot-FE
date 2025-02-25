@@ -154,6 +154,7 @@ export default {
       boxShadow: {
         default: '0 0 20px 0 rgba(47, 95, 221, 0.50)',
         focus: '0 0 0 2px rgba(235, 248, 255, 1)',
+        black: '0 0 8px 0 rgba(0,0,0,0.25)',
       },
       keyframes: {
         slideDown: {
