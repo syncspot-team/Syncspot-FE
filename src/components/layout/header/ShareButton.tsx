@@ -12,9 +12,7 @@ export default function ShareButton({ onShareClick }: IShareButtonProps) {
   const { modalType, openModal, closeModal } = useModal();
 
   const handleClick = () => {
-    if (onShareClick) {
-      onShareClick();
-    }
+    onShareClick?.();
     openModal(MODAL_TYPE.SHARE_MEETING_MODAL);
   };
 
@@ -22,7 +20,7 @@ export default function ShareButton({ onShareClick }: IShareButtonProps) {
     <>
       <div
         onClick={handleClick}
-        className="rounded-full size-8 flex items-center justify-center cursor-pointer p-[5px] shadow-black hover:bg-blue-light01"
+        className="rounded-full size-7 flex items-center justify-center cursor-pointer p-[5px] shadow-black hover:bg-blue-light01"
       >
         <IconShare className="size-4" />
       </div>

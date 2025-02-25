@@ -41,7 +41,7 @@ export default function ShareMeetingModal({
   const handleCopyLink = () => {
     navigator.clipboard.writeText(window.location.href);
     setIsCopied(true);
-    setTimeout(() => setIsCopied(false), 2000); // 2초 후 메시지 사라짐
+    setTimeout(() => setIsCopied(false), 2000);
   };
 
   const handleKakaoShare = () => {
@@ -74,7 +74,7 @@ export default function ShareMeetingModal({
           <IconOauthKakao className="size-6" />
           <span>카카오톡</span>
         </button>
-        {!isEmailInput ? (
+        {!isEmailInput && (
           <button
             className="flex items-center w-full gap-2 p-3 rounded-lg hover:bg-gray-light"
             onClick={() => setIsEmailInput(true)}
@@ -82,7 +82,8 @@ export default function ShareMeetingModal({
             <IconEmail className="size-6" />
             <span>이메일</span>
           </button>
-        ) : (
+        )}
+        {isEmailInput && (
           <>
             <div className="flex justify-between w-full gap-2">
               <Input
