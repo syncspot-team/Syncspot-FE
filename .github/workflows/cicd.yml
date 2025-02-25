@@ -54,6 +54,9 @@ jobs:
           echo "VITE_NAVER_CLIENT_SECRET=${{ secrets.VITE_NAVER_CLIENT_SECRET }}" >> $GITHUB_ENV
           echo "VITE_NAVER_STATE=${{ secrets.VITE_NAVER_STATE }}" >> $GITHUB_ENV
           echo "VITE_NAVER_REDIRECT_URL=${{ secrets.VITE_NAVER_REDIRECT_URL }}" >> $GITHUB_ENV
+          echo "VITE_EMAILJS_SERVICE_ID=${{ secrets.VITE_EMAILJS_SERVICE_ID }}" >> $GITHUB_ENV
+          echo "VITE_EMAILJS_TEMPLATE_ID=${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}" >> $GITHUB_ENV
+          echo "VITE_EMAILJS_PUBLIC_KEY=${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}" >> $GITHUB_ENV
 
       - name: Build
         run: yarn build
@@ -95,6 +98,14 @@ jobs:
           echo "VITE_BACKEND_URL=${{ secrets.VITE_BACKEND_URL }}" >> $GITHUB_ENV
           echo "VITE_KAKAO_REST_API_KEY=${{ secrets.VITE_KAKAO_REST_API_KEY }}" >> $GITHUB_ENV
           echo "VITE_KAKAO_JAVASCRIPT_KEY=${{ secrets.VITE_KAKAO_JAVASCRIPT_KEY }}" >> $GITHUB_ENV
+          echo "VITE_KAKAO_REDIRECT_URL=${{ secrets.VITE_KAKAO_REDIRECT_URL }}" >> $GITHUB_ENV
+          echo "VITE_GOOGLE_CLIENT_ID=${{ secrets.VITE_GOOGLE_CLIENT_ID }}" >> $GITHUB_ENV
+          echo "VITE_GOOGLE_CLIENT_SECRET=${{ secrets.VITE_GOOGLE_CLIENT_SECRET }}" >> $GITHUB_ENV
+          echo "VITE_GOOGLE_REDIRECT_URL=${{ secrets.VITE_GOOGLE_REDIRECT_URL }}" >> $GITHUB_ENV
+          echo "VITE_NAVER_CLIENT_ID=${{ secrets.VITE_NAVER_CLIENT_ID }}" >> $GITHUB_ENV
+          echo "VITE_NAVER_CLIENT_SECRET=${{ secrets.VITE_NAVER_CLIENT_SECRET }}" >> $GITHUB_ENV
+          echo "VITE_NAVER_STATE=${{ secrets.VITE_NAVER_STATE }}" >> $GITHUB_ENV
+          echo "VITE_NAVER_REDIRECT_URL=${{ secrets.VITE_NAVER_REDIRECT_URL }}" >> $GITHUB_ENV
 
       - name: Build
         run: yarn build

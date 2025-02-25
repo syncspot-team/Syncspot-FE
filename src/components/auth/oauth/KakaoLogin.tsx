@@ -10,15 +10,18 @@ export default function KakaoLogin() {
   const { login } = useLoginStore();
   const navigate = useNavigate();
   const code = new URL(window.location.href).searchParams.get('code');
+  const KAKAO_REDIRECT_URL = `${import.meta.env.VITE_BACKEND_URL}/${PATH.OAUTH_KAKAO_REDIRECT_URL}`;
   const [kakaoLoginError, setKakaoLoginError] = useState(false);
 
   const handleKakaoLogin = async () => {
     try {
       await axios({
-        method: 'GET',
-        url: `${import.meta.env.VITE_KAKAO_REDIRECT_URL}/?code=${code}`,
+        method: 'POST',
+        url: KAKAO_REDIRECT_URL,
+        data: {
+          code,
+        },
       }).then((res) => {
-        console.log('kakao로그인 후 받은 데이터 값', res.data.data);
         login(res.data.data.accessToken, res.data.data.refreshToken);
         navigate(PATH.ROOT);
       });

@@ -10,15 +10,18 @@ export default function GoogleLogin() {
   const { login } = useLoginStore();
   const navigate = useNavigate();
   const code = new URL(window.location.href).searchParams.get('code');
+  const GOOGLE_REDIRECT_URL = `${import.meta.env.VITE_BACKEND_URL}/${PATH.OAUTH_GOOGLE_REDIRECT_URL}`;
   const [googleLoginError, setGoogleLoginError] = useState(false);
 
   const handleGoogleLogin = async () => {
     try {
       await axios({
-        method: 'GET',
-        url: `${import.meta.env.VITE_GOOGLE_REDIRECT_URL}/?code=${code}`,
+        method: 'POST',
+        url: GOOGLE_REDIRECT_URL,
+        data: {
+          code,
+        },
       }).then((res) => {
-        console.log('구글 로그인 후 받은 데이터 값', res.data);
         login(res.data.data.accessToken, res.data.data.refreshToken);
         navigate(PATH.ROOT);
       });
