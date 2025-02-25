@@ -16,7 +16,20 @@ export const useMidpointSearchQuery = (
     staleTime: 0,
     gcTime: 0,
     queryKey: LOCATION_KEY.GET_MIDPOINT_SEARCH(roomId!),
-    queryFn: () => getMidpointSearch(roomId!),
+    queryFn: async () => {
+      try {
+        return await getMidpointSearch(roomId!);
+      } catch (error) {
+        if (error instanceof Error && error.message.includes('404')) {
+          return {
+            data: [],
+            isSuccess: true,
+            status: 200,
+          } as IMidpointSearchResponseType;
+        }
+        throw error;
+      }
+    },
     ...options,
   });
 };

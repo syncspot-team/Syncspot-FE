@@ -2,7 +2,7 @@ import { useForm, useFieldArray } from 'react-hook-form';
 import KakaoLocationPicker from '@src/components/common/kakao/KakaoLocationPicker';
 import { ISelectedLocation } from '@src/components/common/kakao/types';
 import KakaoMap from '@src/components/common/kakao/KakaoMap';
-import { useMemo, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import IconXmark from '@src/assets/icons/IconXmark.svg?react';
 import Button from '@src/components/common/button/Button';
 import { useMidpointSearchQuery } from '@src/state/queries/location/useMidpointSearchQuery';
@@ -13,10 +13,11 @@ import { IPlaceVoteRoomCheckResponseCandidate } from '@src/types/place/placeVote
 import { IMidpointDataResponseType } from '@src/types/location/midpointSearchResponseType';
 import { TOAST_TYPE } from '@src/types/toastType';
 import CustomToast from '@src/components/common/toast/customToast';
-import SomethingWrongErrorPage from '@src/pages/error/SomethingWrongErrorPage';
 import { useGetPlaceSearchQuery } from '@src/state/queries/location/useGetPlaceSearchQuery';
 import { useNavigate, useParams } from 'react-router-dom';
 import { PATH } from '@src/constants/path';
+import PlaceCreateErrorPage from '@src/components/place/PlaceCreateErrorPage';
+import { Loading } from '@src/components/loading/Loading';
 
 interface ILocationFormItem
   extends Omit<IPlaceVoteRoomCheckResponseCandidate, 'id'> {
@@ -32,15 +33,20 @@ export default function PlaceCreatePage() {
   const navigate = useNavigate();
   const lastLocationRef = useRef<HTMLLIElement>(null);
 
-  const { data: placeVoteRoomCheckData } = useGetPlaceVoteRoomCheckQuery();
-  const { data: placeSearchData } = useGetPlaceSearchQuery({
-    enabled: !placeVoteRoomCheckData?.data.existence,
-  });
-  const { data: midpointSearchData } = useMidpointSearchQuery({
-    enabled:
-      placeSearchData?.data?.myLocationExistence ||
-      placeSearchData?.data?.friendLocationExistence,
-  });
+  const {
+    data: placeVoteRoomCheckData,
+    isLoading: isPlaceVoteRoomCheckLoading,
+  } = useGetPlaceVoteRoomCheckQuery();
+  const { data: placeSearchData, isLoading: isPlaceSearchLoading } =
+    useGetPlaceSearchQuery({
+      enabled: !placeVoteRoomCheckData?.data.existence,
+    });
+  const { data: midpointSearchData, isLoading: isMidpointSearchLoading } =
+    useMidpointSearchQuery({
+      enabled:
+        placeSearchData?.data?.myLocationExistence ||
+        placeSearchData?.data?.friendLocationExistence,
+    });
 
   const { mutate: placeVoteRoomCreateMutation } =
     usePlaceVoteRoomCreateMutation();
@@ -145,14 +151,12 @@ export default function PlaceCreatePage() {
   const isAllLocationsFilled =
     locations.length > 0 && locations.every(isValidLocation);
 
-  const coordinates = useMemo(() => {
-    return locations.filter(isValidLocation).map((location) => ({
-      lat: location.addressLat,
-      lng: location.addressLong,
-      roadNameAddress: location.roadNameAddress,
-      isMyLocation: false,
-    }));
-  }, [locations]);
+  const coordinates = locations.filter(isValidLocation).map((location) => ({
+    lat: location.addressLat,
+    lng: location.addressLong,
+    roadNameAddress: location.roadNameAddress,
+    isMyLocation: false,
+  }));
 
   const handleVoteCreate = () => {
     const payload = {
@@ -181,8 +185,22 @@ export default function PlaceCreatePage() {
     }
   };
 
-  if (!midpointSearchData?.data) {
-    return <SomethingWrongErrorPage />;
+  // 로딩 상태 통합 체크
+  const isLoading =
+    isPlaceVoteRoomCheckLoading ||
+    isPlaceSearchLoading ||
+    isMidpointSearchLoading;
+
+  if (isLoading) {
+    return <Loading className="h-[calc(100vh-8rem)]" />;
+  }
+
+  if (
+    (!placeSearchData?.data.myLocationExistence &&
+      !placeSearchData?.data.friendLocationExistence) ||
+    !midpointSearchData?.data
+  ) {
+    return <PlaceCreateErrorPage />;
   }
 
   return (
