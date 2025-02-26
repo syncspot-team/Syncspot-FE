@@ -3,23 +3,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { IMidpointDataResponseType } from '@src/types/location/midpointSearchResponseType';
 import { PATH } from '@src/constants/path';
 import AddressDisplay from './AddressDisplay';
-import { IPlaceSearchResponseType } from '@src/types/location/placeSearchResponseType';
 
 interface IMidpointListItemProps {
   location: IMidpointDataResponseType;
   index: number;
   isSelected: boolean;
-  placeSearchData: IPlaceSearchResponseType;
   sequence: string;
-  timeSearchData?: {
-    data?: {
-      elements: {
-        distance: { text: string };
-        duration: { text: string };
-      }[];
-    };
-  };
-  isTimeSearchLoading: boolean;
   onSelect: () => void;
 }
 
@@ -27,10 +16,7 @@ export default function MidpointListItem({
   location,
   index,
   isSelected,
-  placeSearchData,
   sequence,
-  timeSearchData,
-  isTimeSearchLoading,
   onSelect,
 }: IMidpointListItemProps) {
   const { roomId } = useParams();
@@ -38,11 +24,6 @@ export default function MidpointListItem({
   const address =
     `${location.siDo} ${location.siGunGu} ${location.roadNameAddress || ''}` ||
     '위치 정보 없음';
-
-  const allLocations = [
-    ...(placeSearchData?.data?.myLocations || []),
-    ...(placeSearchData?.data?.friendLocations || []),
-  ];
 
   const handleNavigate = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -83,33 +64,7 @@ export default function MidpointListItem({
           {location.name}
         </h3>
       </div>
-      {isSelected ? (
-        <>
-          <div className="flex py-4 mb-1 overflow-x-auto scrollbar-hide">
-            {!isTimeSearchLoading && timeSearchData?.data?.elements && (
-              <div className="flex gap-4">
-                {timeSearchData.data.elements.map((element, idx) => (
-                  <div key={idx} className="flex items-center gap-1 w-max">
-                    {element.distance?.text && (
-                      <span className="px-2 py-1 rounded-md bg-primary text-description text-white-default whitespace-nowrap">
-                        {`${allLocations[idx]?.roadNameAddress}에서 ${element.distance.text}`}
-                      </span>
-                    )}
-                    {element.duration?.text && (
-                      <span className="px-2 py-1 rounded-md bg-blue-dark01 text-description text-white-default whitespace-nowrap">
-                        {element.duration.text + '소요'}
-                      </span>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-          <AddressDisplay address={address} />
-        </>
-      ) : (
-        <AddressDisplay address={address} />
-      )}
+      <AddressDisplay address={address} />
     </li>
   );
 }

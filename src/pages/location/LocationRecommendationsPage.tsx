@@ -12,7 +12,7 @@ import PlaceTypeFilter, {
 import PlaceList from '@src/components/location/PlaceList';
 import { useCoordinates } from '@src/hooks/location/useCoordinates';
 import { useGetPlaceSearchQuery } from '@src/state/queries/location/useGetPlaceSearchQuery';
-import SomethingWrongErrorPage from '@src/pages/error/SomethingWrongErrorPage';
+import LocationEnterErrorPage from '@src/components/location/LocationEnterErrorPage';
 
 export default function LocationRecommendationsPage() {
   const navigate = useNavigate();
@@ -25,13 +25,8 @@ export default function LocationRecommendationsPage() {
     useState<PLACE_STANDARDS_TYPE>(PLACE_STANDARDS.ALL);
   const [selectedPlace, setSelectedPlace] = useState<string | null>(null);
 
-  const { data: placeSearchData } = useGetPlaceSearchQuery();
-  if (
-    !placeSearchData?.data?.myLocationExistence &&
-    !placeSearchData?.data?.friendLocationExistence
-  ) {
-    return <SomethingWrongErrorPage />;
-  }
+  const { data: placeSearchData, isLoading: isPlaceSearchLoading } =
+    useGetPlaceSearchQuery();
 
   const { data: midpointSearchData } = useMidpointSearchQuery({
     enabled:
@@ -93,6 +88,14 @@ export default function LocationRecommendationsPage() {
       }
     }
   }, [midpointSearchData, urlLat, urlLng, navigate, roomId]);
+
+  if (
+    !isPlaceSearchLoading &&
+    !placeSearchData?.data?.myLocationExistence &&
+    !placeSearchData?.data?.friendLocationExistence
+  ) {
+    return <LocationEnterErrorPage />;
+  }
 
   return (
     <>

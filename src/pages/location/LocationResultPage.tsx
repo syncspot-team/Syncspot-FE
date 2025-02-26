@@ -4,17 +4,18 @@ import { useMidpointSearchQuery } from '@src/state/queries/location/useMidpointS
 import { useGetPlaceSearchQuery } from '@src/state/queries/location/useGetPlaceSearchQuery';
 import { IMidpointDataResponseType } from '@src/types/location/midpointSearchResponseType';
 import { useMidpointTimeSearchQuery } from '@src/state/queries/location/useMidpointTimeSearchQuery';
-import SomethingWrongErrorPage from '../error/SomethingWrongErrorPage';
 import MidpointListItem from '@src/components/location/MidpointListItem';
 import { useCoordinates } from '@src/hooks/location/useCoordinates';
 import { SEQUENCE } from '@src/components/location/constants';
 import SearchLocationLoading from '@src/components/loading/SearchLocationLoading';
+import LocationEnterErrorPage from '@src/components/location/LocationEnterErrorPage';
 
 export default function LocationResultPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedLocationIndex, setSelectedLocationIndex] = useState(0);
 
-  const { data: placeSearchData } = useGetPlaceSearchQuery();
+  const { data: placeSearchData, isLoading: isPlaceSearchLoading } =
+    useGetPlaceSearchQuery();
   const { data: midpointSearchData } = useMidpointSearchQuery({
     enabled:
       placeSearchData?.data?.myLocationExistence ||
@@ -22,27 +23,24 @@ export default function LocationResultPage() {
   });
 
   const selectedMidpoint = midpointSearchData?.data[selectedLocationIndex];
-  const {
-    data: timeSearchData,
-    isLoading: isTimeSearchLoading,
-    refetch,
-  } = useMidpointTimeSearchQuery(
-    selectedMidpoint?.addressLat || 0,
-    selectedMidpoint?.addressLong || 0,
-    {
-      enabled:
-        !!midpointSearchData?.data &&
-        !!selectedMidpoint &&
-        selectedMidpoint.addressLat !== 0 &&
-        selectedMidpoint.addressLong !== 0,
-    },
-  );
+  const { data: timeSearchData, refetch: refetchMidpointTimeSearch } =
+    useMidpointTimeSearchQuery(
+      selectedMidpoint?.addressLat || 0,
+      selectedMidpoint?.addressLong || 0,
+      {
+        enabled:
+          !!midpointSearchData?.data &&
+          !!selectedMidpoint &&
+          selectedMidpoint.addressLat !== 0 &&
+          selectedMidpoint.addressLong !== 0,
+      },
+    );
 
   useEffect(() => {
     if (selectedMidpoint?.addressLat && selectedMidpoint?.addressLong) {
-      refetch();
+      refetchMidpointTimeSearch();
     }
-  }, [selectedMidpoint, refetch]);
+  }, [selectedMidpoint, refetchMidpointTimeSearch]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -56,10 +54,17 @@ export default function LocationResultPage() {
     placeSearchData,
     midpointSearchData,
     selectedLocationIndex,
+    timeSearchData,
   );
 
   if (isLoading) return <SearchLocationLoading />;
-  if (!midpointSearchData) return <SomethingWrongErrorPage />;
+  if (
+    !isPlaceSearchLoading &&
+    !placeSearchData?.data?.myLocationExistence &&
+    !placeSearchData?.data?.friendLocationExistence
+  )
+    return <LocationEnterErrorPage />;
+  if (!midpointSearchData) return <LocationEnterErrorPage />;
 
   return (
     <div className="grid w-full grid-cols-1 lg:grid-cols-10 px-4 lg:px-[7.5rem] gap-[1.25rem] lg:gap-[0.625rem] mt-[1.5625rem]">
@@ -75,12 +80,7 @@ export default function LocationResultPage() {
                 location={location}
                 index={index}
                 isSelected={selectedLocationIndex === index}
-                placeSearchData={placeSearchData}
                 sequence={SEQUENCE[index]}
-                timeSearchData={
-                  selectedLocationIndex === index ? timeSearchData : undefined
-                }
-                isTimeSearchLoading={isTimeSearchLoading}
                 onSelect={() => setSelectedLocationIndex(index)}
               />
             ),
