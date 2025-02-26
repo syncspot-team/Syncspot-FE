@@ -55,7 +55,7 @@ export default function MidpointListItem({
         <IconRightHalfArrow
           onClick={handleNavigate}
           className={`${
-            isSelected ? 'opacity-100' : 'opacity-0'
+            isSelected ? 'visible' : 'hidden'
           } rounded-[0.4375rem] p-1 text-primary hover:bg-gray-light hover:scale-110`}
         />
       </div>
