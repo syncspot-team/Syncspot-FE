@@ -166,15 +166,30 @@ export default function KakaoMap({ coordinates }: IKakaoMap) {
     const markersDeleted =
       coordinates.length < previousCoordinates.current.length;
 
+    // 좌표가 변경되었는지 확인
+    const coordinatesChanged = coordinates.some((coord, index) => {
+      const prevCoord = previousCoordinates.current[index];
+      return (
+        !prevCoord ||
+        prevCoord.lat !== coord.lat ||
+        prevCoord.lng !== coord.lng ||
+        prevCoord.roadNameAddress !== coord.roadNameAddress
+      );
+    });
+
     // 모든 마커가 보이는지 확인
     const allMarkersVisible = areAllMarkersVisible(coordinates, mapRef.current);
 
     // 바운드 업데이트가 필요한 경우:
     // 1. 초기 바운드가 설정되지 않은 경우
     // 2. 마커가 삭제된 경우
-    // 3. 모든 마커가 현재 맵 영역에 보이지 않는 경우
+    // 3. 좌표가 변경된 경우
+    // 4. 모든 마커가 현재 맵 영역에 보이지 않는 경우
     const shouldUpdateBounds =
-      !initialBoundsSet.current || markersDeleted || !allMarkersVisible;
+      !initialBoundsSet.current ||
+      markersDeleted ||
+      coordinatesChanged ||
+      !allMarkersVisible;
 
     // 좌표가 없는 경우 기본 위치로 이동
     if (coordinates.length === 0) {
@@ -222,6 +237,14 @@ export default function KakaoMap({ coordinates }: IKakaoMap) {
     if (shouldUpdateBounds) {
       const bounds = calculateBounds(coordinates);
       mapRef.current.setBounds(bounds);
+
+      // 약간의 지연 후 한 번 더 바운드를 업데이트하여 마커와 텍스트가 모두 보이도록 함
+      setTimeout(() => {
+        if (mapRef.current) {
+          mapRef.current.setBounds(bounds);
+        }
+      }, 100);
+
       initialBoundsSet.current = true;
     }
 
