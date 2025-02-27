@@ -65,9 +65,7 @@ export default function TimeCreatePage() {
       return;
     }
 
-    const formattedDates = selectedDates.map((value) =>
-      formatStringDate(value),
-    );
+    let formattedDates = selectedDates.map((value) => formatStringDate(value));
 
     if (
       getTimeDatesQuery?.data.existence &&
@@ -88,7 +86,7 @@ export default function TimeCreatePage() {
     <div className="mt-12 max-w-[37.5rem] p-4 lg:p-0 py-8 my-0 mx-auto">
       <Calendar
         onChange={() => {}}
-        value={null}
+        value={selectedDates.length > 0 ? selectedDates[0] : null}
         formatDay={(_locale, date) => date.getDate().toString()}
         navigationLabel={({ date }) =>
           `${date.getFullYear()}년 ${date.getMonth() + 1}월`
@@ -116,7 +114,7 @@ export default function TimeCreatePage() {
             <p key={index}>{formatStringDate(date)}</p>
           ))
         ) : (
-          <p></p>
+          <p>날짜를 선택하세요.</p>
         )}
       </div>
 
@@ -124,7 +122,14 @@ export default function TimeCreatePage() {
         className="w-full mt-4 px-[0.3125rem]"
         onClick={handleCreateClick}
       >
-        시간 투표 생성
+        {getTimeDatesQuery?.data.existence
+          ? arraysEqual(
+              getTimeDatesQuery?.data.dates,
+              selectedDates.map((value) => formatStringDate(value)),
+            )
+            ? '시간 투표 이동'
+            : '시간 투표 재생성'
+          : '시간 투표 생성'}
       </Button>
     </div>
   );
