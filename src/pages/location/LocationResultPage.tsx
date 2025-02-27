@@ -67,26 +67,58 @@ export default function LocationResultPage() {
   if (!midpointSearchData) return <LocationEnterErrorPage />;
 
   return (
-    <div className="grid w-full grid-cols-1 lg:grid-cols-10 px-4 lg:px-[7.5rem] gap-[1.25rem] lg:gap-[0.625rem] mt-[1.5625rem]">
-      <div className="rounded-default h-[31.25rem] lg:min-h-[calc(100vh-8rem)] lg:col-span-6">
-        <KakaoMap coordinates={coordinates} />
+    <>
+      <div className="hidden lg:grid w-full grid-cols-1 lg:grid-cols-10 px-4 lg:px-[7.5rem] gap-[1.25rem] lg:gap-[0.625rem] mt-[1.5625rem]">
+        <div className="rounded-default h-[31.25rem] lg:min-h-[calc(100vh-8rem)] lg:col-span-6">
+          <KakaoMap coordinates={coordinates} />
+        </div>
+        <div className="lg:col-span-4 lg:max-h-[calc(100vh-8rem)]">
+          <ul className="grid grid-cols-1 grid-rows-5 h-full gap-[0.625rem]">
+            {midpointSearchData.data.map(
+              (location: IMidpointDataResponseType, index: number) => (
+                <MidpointListItem
+                  key={index}
+                  location={location}
+                  index={index}
+                  isSelected={selectedLocationIndex === index}
+                  sequence={SEQUENCE[index]}
+                  onSelect={() => setSelectedLocationIndex(index)}
+                />
+              ),
+            )}
+          </ul>
+        </div>
       </div>
-      <div className="lg:col-span-4 lg:max-h-[calc(100vh-8rem)]">
-        <ul className="grid grid-cols-1 grid-rows-5 h-full gap-[0.625rem]">
-          {midpointSearchData.data.map(
-            (location: IMidpointDataResponseType, index: number) => (
-              <MidpointListItem
-                key={index}
-                location={location}
-                index={index}
-                isSelected={selectedLocationIndex === index}
-                sequence={SEQUENCE[index]}
-                onSelect={() => setSelectedLocationIndex(index)}
-              />
-            ),
-          )}
-        </ul>
+
+      <div className="lg:hidden">
+        <div className="fixed inset-0 top-[4.75rem]">
+          <KakaoMap coordinates={coordinates} />
+        </div>
+        <div className="fixed bottom-0 left-0 right-0">
+          <div className="relative w-full pb-6">
+            <div className="flex gap-2 p-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide">
+              {midpointSearchData.data.map(
+                (location: IMidpointDataResponseType, index: number) => (
+                  <div
+                    key={index}
+                    className="snap-center shrink-0 first:pl-0 last:pr-4 w-[calc(100dvw-5rem)]"
+                  >
+                    <div className="bg-white-default">
+                      <MidpointListItem
+                        location={location}
+                        index={index}
+                        isSelected={selectedLocationIndex === index}
+                        sequence={SEQUENCE[index]}
+                        onSelect={() => setSelectedLocationIndex(index)}
+                      />
+                    </div>
+                  </div>
+                ),
+              )}
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
