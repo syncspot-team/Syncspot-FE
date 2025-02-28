@@ -15,8 +15,8 @@ export default function TimeResultPage() {
   }
 
   return (
-    <div className="flex flex-col bg-gray-light p-4 rounded-[1.25rem] max-w-[56.25rem] lg:mx-auto m-4 mt-8">
-      <div className="flex flex-col items-center justify-center gap-4 mx-auto mt-4 text-title text-blue-dark03">
+    <div className="h-full bg-gray-light p-4 rounded-[1.25rem] grid grid-cols-1 lg:mx-[7.5rem] m-4 mt-8">
+      <div className="flex flex-col items-center justify-center gap-4 mx-auto mt-8 text-title text-blue-dark03">
         <p>이번 모임 일시는...</p>
         <p className="text-center text-menu-selected text-gray-dark">
           이번 모임 만남이 가능한 시간을 확인해보세요!

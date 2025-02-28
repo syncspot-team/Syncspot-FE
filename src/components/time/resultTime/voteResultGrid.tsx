@@ -121,8 +121,8 @@ export default function VoteResultGrid() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full">
-      <div className="flex items-center mx-auto mt-4 mb-3 justify-evenly">
+    <div className="flex flex-col items-center justify-center w-full gap-8">
+      <div className="flex items-center mx-auto mt-8 justify-evenly">
         <button
           onClick={handlePrev}
           className={mergeClassNames(
@@ -149,7 +149,7 @@ export default function VoteResultGrid() {
       </div>
 
       {/* 인원 */}
-      <div className="flex flex-row items-center justify-center w-full gap-3 mx-auto my-2">
+      <div className="flex flex-row items-center justify-center w-full gap-3 mx-auto ">
         <span>0/0 가능</span>
         <div
           className="grid h-10 overflow-hidden border-2 border-blue-normal01 rounded-2xl "
