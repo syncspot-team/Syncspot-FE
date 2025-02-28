@@ -34,7 +34,6 @@ export default function DatePicker({
 
   useEffect(() => {
     onChange(startHour, startMinute, endHour, endMinute);
-    console.log(startHour, startMinute, endHour, endMinute);
   }, [startHour, startMinute, endHour, endMinute]);
 
   return (

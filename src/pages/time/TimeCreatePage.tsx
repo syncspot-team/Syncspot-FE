@@ -85,7 +85,6 @@ export default function TimeCreatePage() {
   return (
     <div className="mt-12 max-w-[37.5rem] p-4 lg:p-0 py-8 my-0 mx-auto">
       <Calendar
-        onChange={() => {}}
         value={selectedDates.length > 0 ? selectedDates[0] : null}
         formatDay={(_locale, date) => date.getDate().toString()}
         navigationLabel={({ date }) =>

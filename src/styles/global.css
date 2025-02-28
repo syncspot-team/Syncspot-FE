@@ -73,9 +73,6 @@
     }
 
     /* 트랜지션 해제 */
-    .no-transition {
-      transition: none !important;
-    }
     .no-transition * {
       transition: none !important;
     }
