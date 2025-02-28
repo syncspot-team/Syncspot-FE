@@ -21,7 +21,6 @@ export function useBottomSheet({
   };
 
   const [sheetHeight, setSheetHeight] = useState(dvhToPixels(initialHeight));
-  const [isCollapsed, setIsCollapsed] = useState(false);
   const sheetRef = useRef<HTMLDivElement>(null);
   const dragHandleRef = useRef<HTMLDivElement>(null);
   const startYRef = useRef<number>(0);
@@ -61,12 +60,10 @@ export function useBottomSheet({
       const newHeight = currentHeightRef.current + delta;
 
       if (newHeight < dvhToPixels(minHeight)) {
-        setIsCollapsed(true);
         setSheetHeight(dvhToPixels(minHeight));
       } else if (newHeight > dvhToPixels(maxHeight)) {
         setSheetHeight(dvhToPixels(maxHeight));
       } else {
-        setIsCollapsed(false);
         setSheetHeight(newHeight);
       }
     },
@@ -97,6 +94,5 @@ export function useBottomSheet({
     sheetRef,
     dragHandleRef,
     sheetHeight,
-    isCollapsed,
   };
 }
