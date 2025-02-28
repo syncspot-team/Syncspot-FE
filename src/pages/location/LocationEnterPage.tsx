@@ -17,6 +17,8 @@ import { ILocation } from '@src/types/location/placeSearchResponseType';
 import { IPlaceSaveRequestType } from '@src/types/location/placeSaveRequestType';
 import ShareButton from '@src/components/layout/header/ShareButton';
 import BottomSheet from '@src/components/common/bottomSheet/BottomSheet';
+import { useQueryClient } from '@tanstack/react-query';
+import { ROOM_QUERY_KEY } from '@src/state/queries/header/key';
 
 interface ILocationForm {
   myLocations: IPlaceSaveRequestType[];
@@ -25,6 +27,7 @@ interface ILocationForm {
 
 export default function LocationEnterPage() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { roomId } = useParams();
   const lastLocationRef = useRef<HTMLLIElement>(null);
   const locationListRef = useRef<HTMLUListElement>(null);
@@ -362,7 +365,12 @@ export default function LocationEnterPage() {
             </Button>
             <Button
               buttonType="primary"
-              onClick={() => navigate(PATH.LOCATION_RESULT(roomId!))}
+              onClick={() => {
+                queryClient.invalidateQueries({
+                  queryKey: ROOM_QUERY_KEY.GET_CHECK_LOCATION_ENTER(roomId!),
+                });
+                navigate(PATH.LOCATION_RESULT(roomId!));
+              }}
               disabled={!isAllMyLocationsFilled}
               className="px-[0.3125rem] w-full"
             >
@@ -469,7 +477,12 @@ export default function LocationEnterPage() {
               </Button>
               <Button
                 buttonType="primary"
-                onClick={() => navigate(PATH.LOCATION_RESULT(roomId!))}
+                onClick={() => {
+                  queryClient.invalidateQueries({
+                    queryKey: ROOM_QUERY_KEY.GET_CHECK_LOCATION_ENTER(roomId!),
+                  });
+                  navigate(PATH.LOCATION_RESULT(roomId!));
+                }}
                 disabled={!isAllMyLocationsFilled}
                 className="px-[0.3125rem] w-full"
               >
