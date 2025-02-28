@@ -5,13 +5,14 @@ import { useGetJoinRoomQuery } from '@src/state/queries/header/useGetJoinRoomQue
 import { useRoomStore } from '@src/state/store/roomStore';
 import { OnboardingStepType } from '@src/types/onboarding/onboardingStepType';
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import RoomListItem from './RoomListItem';
 import { IRoom } from '@src/types/header/joinRoomResponseType';
 import { Loading } from '@src/components/loading/Loading';
 
 export default function RoomList() {
   const navigate = useNavigate();
+  const location = useLocation();
   const dropdownRef = useRef<HTMLLIElement>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { roomId, setRoomId, setRoomName } = useRoomStore();
@@ -60,6 +61,10 @@ export default function RoomList() {
       setSelectedRoomName('전체 모임 목록');
     }
   }, [roomList, roomId, urlRoomId]);
+
+  useEffect(() => {
+    setIsDropdownOpen(false);
+  }, [location]);
 
   const handleRoomSelect = (roomId: string, roomName: string) => {
     setRoomId(roomId);

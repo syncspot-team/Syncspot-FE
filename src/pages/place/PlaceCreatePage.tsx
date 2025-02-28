@@ -2,7 +2,7 @@ import { useForm, useFieldArray } from 'react-hook-form';
 import KakaoLocationPicker from '@src/components/common/kakao/KakaoLocationPicker';
 import { ISelectedLocation } from '@src/components/common/kakao/types';
 import KakaoMap from '@src/components/common/kakao/KakaoMap';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import IconXmark from '@src/assets/icons/IconXmark.svg?react';
 import Button from '@src/components/common/button/Button';
 import { useMidpointSearchQuery } from '@src/state/queries/location/useMidpointSearchQuery';
@@ -19,6 +19,7 @@ import { PATH } from '@src/constants/path';
 import ShareButton from '@src/components/layout/header/ShareButton';
 import PlaceCreateErrorPage from '@src/components/place/PlaceCreateErrorPage';
 import { Loading } from '@src/components/loading/Loading';
+import BottomSheet from '@src/components/common/bottomSheet/BottomSheet';
 
 interface ILocationFormItem
   extends Omit<IPlaceVoteRoomCheckResponseCandidate, 'id'> {
@@ -33,15 +34,15 @@ export default function PlaceCreatePage() {
   const { roomId } = useParams();
   const navigate = useNavigate();
   const lastLocationRef = useRef<HTMLLIElement>(null);
+  const locationListRef = useRef<HTMLUListElement>(null);
+  const [bottomSheetHeight, setBottomSheetHeight] = useState(500);
 
   const {
     data: placeVoteRoomCheckData,
     isLoading: isPlaceVoteRoomCheckLoading,
   } = useGetPlaceVoteRoomCheckQuery();
   const { data: placeSearchData, isLoading: isPlaceSearchLoading } =
-    useGetPlaceSearchQuery({
-      enabled: !placeVoteRoomCheckData?.data.existence,
-    });
+    useGetPlaceSearchQuery();
   const { data: midpointSearchData, isLoading: isMidpointSearchLoading } =
     useMidpointSearchQuery({
       enabled:
@@ -108,7 +109,18 @@ export default function PlaceCreatePage() {
 
   useEffect(() => {
     if (lastLocationRef.current) {
-      lastLocationRef.current.scrollIntoView({ behavior: 'smooth' });
+      const isMobile = window.innerWidth < 1024;
+
+      if (isMobile) {
+        lastLocationRef.current.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        if (locationListRef.current) {
+          locationListRef.current?.scrollTo({
+            top: locationListRef.current.scrollHeight,
+            behavior: 'smooth',
+          });
+        }
+      }
     }
   }, [locationFields.length]);
 
@@ -192,86 +204,195 @@ export default function PlaceCreatePage() {
     isPlaceSearchLoading ||
     isMidpointSearchLoading;
 
+  const getScrollAreaStyle = (bottomSheetHeight: number) => {
+    const viewportHeight = window.innerHeight;
+    const threshold = viewportHeight * 0.7;
+
+    if (bottomSheetHeight <= threshold) {
+      return 'max-h-[calc(100dvh-45rem)] overflow-y-auto';
+    } else if (bottomSheetHeight <= viewportHeight * 0.8) {
+      return 'max-h-[calc(100dvh-35rem)] overflow-y-auto';
+    } else if (bottomSheetHeight <= viewportHeight * 0.9) {
+      return 'max-h-[calc(100dvh-25rem)] overflow-y-auto';
+    } else {
+      return 'overflow-visible';
+    }
+  };
+
   if (isLoading) {
     return <Loading className="h-[calc(100vh-8rem)]" />;
   }
 
   if (
-    (!placeSearchData?.data.myLocationExistence &&
-      !placeSearchData?.data.friendLocationExistence) ||
-    !midpointSearchData?.data
+    !placeVoteRoomCheckData?.data.existence &&
+    !placeSearchData?.data?.myLocationExistence &&
+    !placeSearchData?.data?.friendLocationExistence
   ) {
     return <PlaceCreateErrorPage />;
   }
 
   return (
-    <div className="grid w-full grid-cols-1 lg:grid-cols-2 px-4 lg:px-[7.5rem] gap-[0.9375rem] mt-[1.875rem]">
-      <div className="flex flex-col order-2 p-5 rounded-default bg-gray-light lg:order-1 lg:max-h-[calc(100vh-8rem)]">
-        <div className="flex items-center justify-between">
-          <div></div>
-          <h1 className="flex items-center text-nowrap lg:-mr-8  justify-center text-subtitle lg:text-title text-tertiary my-[1.25rem] lg:my-[1.5625rem]">
-            모임 장소 투표 생성 하기
-          </h1>
-          <ShareButton />
-        </div>
-        <div className="hidden lg:flex flex-col items-center text-content text-gray-dark mb-[1.25rem]">
-          <span>우리 같이 투표해요!</span>
-          <span>원하는 모임 장소를 선택한 후 투표를 진행하세요!</span>
-        </div>
-        <ul className="flex flex-col mb-5 max-h-[calc(100vh-25rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full p-1">
-          {locationFields.map((field, index) => (
-            <li
-              key={field.id}
-              ref={index === locationFields.length - 1 ? lastLocationRef : null}
-              className="flex group/location relative items-center justify-between bg-white-default rounded-default mb-[0.625rem] hover:ring-1 hover:ring-gray-normal z-10"
-            >
-              <KakaoLocationPicker
-                InputClassName="w-full text-description lg:text-content bg-white-default py-[1.3125rem] truncate"
-                onSelect={(location) => handleLocationSelect(location, index)}
-                defaultAddress={locations[index]?.roadNameAddress}
-              />
-              <button
-                type="button"
-                onClick={() => removeLocation(index)}
-                className="p-1 mx-2 rounded-[0.5rem] hover:bg-gray-normal absolute right-0 group/deleteButton hidden group-hover/location:block"
+    <>
+      <div className="hidden lg:grid w-full grid-cols-2 px-[7.5rem] gap-[0.9375rem] mt-[1.875rem]">
+        <div className="flex flex-col order-2 p-5 rounded-default bg-gray-light lg:order-1 lg:max-h-[calc(100vh-8rem)]">
+          <div className="flex items-center justify-between">
+            <div></div>
+            <h1 className="flex items-center text-nowrap lg:-mr-8  justify-center text-subtitle lg:text-title text-tertiary my-[1.25rem] lg:my-[1.5625rem]">
+              모임 장소 투표 생성 하기
+            </h1>
+            <ShareButton />
+          </div>
+          <div className="hidden lg:flex flex-col items-center text-content text-gray-dark mb-[1.25rem]">
+            <span>우리 같이 투표해요!</span>
+            <span>원하는 모임 장소를 선택한 후 투표를 진행하세요!</span>
+          </div>
+          <ul
+            ref={locationListRef}
+            className="flex flex-col mb-5 max-h-[calc(100vh-25rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full p-1"
+          >
+            {locationFields.map((field, index) => (
+              <li
+                key={field.id}
+                ref={
+                  index === locationFields.length - 1 ? lastLocationRef : null
+                }
+                className="flex group/location relative items-center justify-between bg-white-default rounded-default mb-[0.625rem] hover:ring-1 hover:ring-gray-normal z-10"
               >
-                <IconXmark className="transition-none size-4 text-gray-normal group-hover/deleteButton:text-gray-dark" />
-              </button>
-            </li>
-          ))}
-        </ul>
-        <div className="flex flex-col mt-auto gap-[0.5rem]">
-          <Button
-            onClick={() => {
-              appendLocation({
-                siDo: '',
-                siGunGu: '',
-                roadNameAddress: '',
-                addressLat: 0,
-                addressLong: 0,
-                name: '',
-              });
-            }}
-            buttonType="secondary"
-            className="w-full px-[0.3125rem]"
-          >
-            장소 추가하기
-          </Button>
-          <Button
-            onClick={handleVoteCreate}
-            buttonType="primary"
-            className="w-full px-[0.3125rem]"
-            disabled={!isAllLocationsFilled}
-          >
-            {placeVoteRoomCheckData?.data.existence
-              ? '투표 재생성하기'
-              : '투표 생성하기'}
-          </Button>
+                <KakaoLocationPicker
+                  InputClassName="w-full text-description lg:text-content bg-white-default py-[1.3125rem] truncate"
+                  onSelect={(location) => handleLocationSelect(location, index)}
+                  defaultAddress={locations[index]?.roadNameAddress}
+                />
+                <button
+                  type="button"
+                  onClick={() => removeLocation(index)}
+                  className="p-1 mx-2 rounded-[0.5rem] hover:bg-gray-normal absolute right-0 group/deleteButton hidden group-hover/location:block"
+                >
+                  <IconXmark className="transition-none size-4 text-gray-normal group-hover/deleteButton:text-gray-dark" />
+                </button>
+              </li>
+            ))}
+          </ul>
+          <div className="flex flex-col mt-auto gap-[0.5rem]">
+            <Button
+              onClick={() => {
+                appendLocation({
+                  siDo: '',
+                  siGunGu: '',
+                  roadNameAddress: '',
+                  addressLat: 0,
+                  addressLong: 0,
+                  name: '',
+                });
+              }}
+              buttonType="secondary"
+              className="w-full px-[0.3125rem]"
+            >
+              장소 추가하기
+            </Button>
+            <Button
+              onClick={handleVoteCreate}
+              buttonType="primary"
+              className="w-full px-[0.3125rem]"
+              disabled={!isAllLocationsFilled}
+            >
+              {placeVoteRoomCheckData?.data.existence
+                ? '투표 재생성하기'
+                : '투표 생성하기'}
+            </Button>
+          </div>
+        </div>
+        <div className="rounded-default min-h-[31.25rem] lg:min-h-[calc(100vh-8rem)] order-1 lg:order-2">
+          <KakaoMap coordinates={coordinates} />
         </div>
       </div>
-      <div className="rounded-default min-h-[31.25rem] lg:min-h-[calc(100vh-8rem)] order-1 lg:order-2">
-        <KakaoMap coordinates={coordinates} />
+
+      <div className="lg:hidden">
+        <div className="fixed inset-0 top-[4.75rem]">
+          <KakaoMap coordinates={coordinates} />
+        </div>
+
+        <BottomSheet
+          minHeight={30}
+          maxHeight={90}
+          initialHeight={50}
+          headerHeight={40}
+          onHeightChange={(height) => setBottomSheetHeight(height)}
+        >
+          <div className="flex flex-col h-full">
+            <div className="flex items-center justify-between px-4">
+              <div></div>
+              <h1 className="flex items-center justify-center my-5 text-nowrap text-subtitle text-tertiary">
+                모임 장소 투표 생성 하기
+              </h1>
+              <ShareButton />
+            </div>
+
+            <div className="flex-1 px-4 overflow-y-auto">
+              <ul
+                className={`flex flex-col p-1 ${getScrollAreaStyle(bottomSheetHeight)} scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full`}
+              >
+                {locationFields.map((field, index) => (
+                  <li
+                    key={field.id}
+                    ref={
+                      index === locationFields.length - 1
+                        ? lastLocationRef
+                        : null
+                    }
+                    className="flex relative items-center justify-between bg-white-default rounded-default mb-[0.625rem] ring-1 ring-gray-normal"
+                  >
+                    <KakaoLocationPicker
+                      InputClassName="w-full text-description bg-white-default py-[1.3125rem] truncate pr-12"
+                      onSelect={(location) =>
+                        handleLocationSelect(location, index)
+                      }
+                      defaultAddress={locations[index]?.roadNameAddress}
+                      usePortal={true}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => removeLocation(index)}
+                      className="p-1 mx-2 rounded-[0.5rem] hover:bg-gray-normal absolute right-0"
+                    >
+                      <IconXmark className="transition-none size-4 text-gray-normal" />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="flex flex-col gap-[0.5rem] px-4 py-6 bg-white-default">
+              <Button
+                onClick={() => {
+                  appendLocation({
+                    siDo: '',
+                    siGunGu: '',
+                    roadNameAddress: '',
+                    addressLat: 0,
+                    addressLong: 0,
+                    name: '',
+                  });
+                }}
+                buttonType="secondary"
+                className="w-full px-[0.3125rem]"
+              >
+                장소 추가하기
+              </Button>
+              <Button
+                onClick={handleVoteCreate}
+                buttonType="primary"
+                className="w-full px-[0.3125rem]"
+                disabled={!isAllLocationsFilled}
+              >
+                {placeVoteRoomCheckData?.data.existence
+                  ? '투표 재생성하기'
+                  : '투표 생성하기'}
+              </Button>
+            </div>
+          </div>
+        </BottomSheet>
       </div>
-    </div>
+    </>
   );
 }
