@@ -33,6 +33,7 @@ export interface ITimeSelectBoxProps {
 export interface ITimeGridProps {
   hours: string[];
   gridColors: string[];
+  gridSize: number;
 }
 
 export interface IVoteResultByDate {
