@@ -18,7 +18,7 @@ export default function BottomSheet({
   headerHeight = 32,
   onHeightChange,
 }: BottomSheetProps) {
-  const { sheetRef, dragHandleRef, sheetHeight, isCollapsed } = useBottomSheet({
+  const { sheetRef, dragHandleRef, sheetHeight } = useBottomSheet({
     minHeight,
     maxHeight,
     initialHeight,
@@ -31,10 +31,6 @@ export default function BottomSheet({
 
   return (
     <>
-      {!isCollapsed && (
-        <div className="fixed inset-0 z-40 bg-black/30 lg:hidden" />
-      )}
-
       <div
         ref={sheetRef}
         className={`fixed bottom-0 left-0 right-0 bg-white-default rounded-t-[1.25rem] shadow-lg transition-transform z-50 lg:hidden`}
