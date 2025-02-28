@@ -22,7 +22,7 @@ export default function MobileMenu() {
 
   return (
     <>
-      <div className="flex gap-4">
+      <div className="flex items-center">
         {/* 공유 */}
         {renderShareButton && <ShareButton />}
         <button

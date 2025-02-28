@@ -40,8 +40,7 @@ export default function ClickCalendar({ dates }: ITimeDatesProps) {
     >
       <div className="w-full rounded-[1.25rem] p-3 text-blue-dark01 bg-gray-light text-menu-selected">
         <Calendar
-          onChange={() => {}}
-          value={null}
+          value={dates.length > 0 ? dates[0] : null}
           locale="ko-KR"
           formatDay={(_locale, date) => date.getDate().toString()}
           navigationLabel={({ date }) =>

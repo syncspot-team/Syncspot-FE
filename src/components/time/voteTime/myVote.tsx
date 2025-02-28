@@ -10,6 +10,7 @@ import { useParams } from 'react-router-dom';
 import { ITimeVoteRequest } from '@src/types/time/timeVoteType';
 import { DATE_FORMATS, formatStringDate } from '../utils/formatDate';
 import { useGetTimeVotedQuery } from '@src/state/queries/time';
+import CustomToast from '@src/components/common/toast/customToast';
 
 export default function MyVote({ dates }: ITimeDatesProps) {
   //투표여부 myVotes
@@ -69,6 +70,20 @@ export default function MyVote({ dates }: ITimeDatesProps) {
         memberAvailableEndTime: vote.memberAvailableEndTime || '',
       })),
     };
+
+    // 시작 시간이 끝 시간보다 빠른 경우
+    const hasInvalidTime = votes.some((vote) => {
+      const startTime = new Date(vote.memberAvailableStartTime);
+      const endTime = new Date(vote.memberAvailableEndTime);
+      return startTime >= endTime;
+    });
+    if (hasInvalidTime) {
+      CustomToast({
+        type: 'error',
+        message: '시작 시간이 종료 시간보다 늦을 수 없습니다.',
+      });
+      return;
+    }
 
     if (myVotesExistence) {
       putVote(voteData);

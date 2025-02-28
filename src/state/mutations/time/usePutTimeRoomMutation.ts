@@ -22,10 +22,6 @@ export const usePutTimeRoomMutation = (
   return useMutation({
     mutationFn: ({ dates }: ITimeRoomRequest) => putTimeRoom({ roomId, dates }),
     onSuccess: () => {
-      const cachedData = queryClient.getQueryData(
-        TIME_KEY.GET_TIME_DATES(roomId!),
-      );
-      console.log(cachedData);
       queryClient.invalidateQueries({
         queryKey: [TIME_KEY.GET_TIME_DATES(roomId!)],
       });
