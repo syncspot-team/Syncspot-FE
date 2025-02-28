@@ -8,6 +8,7 @@ interface BottomSheetProps {
   initialHeight?: number;
   headerHeight?: number;
   onHeightChange?: (height: number) => void;
+  isTime?: boolean;
 }
 
 export default function BottomSheet({
@@ -17,6 +18,7 @@ export default function BottomSheet({
   initialHeight = 50,
   headerHeight = 32,
   onHeightChange,
+  isTime = false,
 }: BottomSheetProps) {
   const { sheetRef, dragHandleRef, sheetHeight, isCollapsed } = useBottomSheet({
     minHeight,
@@ -37,7 +39,7 @@ export default function BottomSheet({
 
       <div
         ref={sheetRef}
-        className={`fixed bottom-0 left-0 right-0 bg-white-default rounded-t-[1.25rem] shadow-lg transition-transform z-50 lg:hidden`}
+        className={`fixed bottom-0 left-0 right-0 ${isTime ? 'bg-gray-light' : 'bg-white-default'}  rounded-t-[1.25rem] shadow-lg transition-transform z-50 lg:hidden`}
         style={{
           height: heightStyle,
           touchAction: 'none',
