@@ -130,6 +130,7 @@ export default function KakaoMap({ coordinates }: IKakaoMap) {
     coord: IKakaoMap['coordinates'][0],
   ) => {
     const content = overlay.getContent();
+    const ping = content.querySelector('div:first-child');
     const addressContent = content.querySelector('div:last-child');
     const markerElement = content.querySelector('div:nth-child(2)');
     const markerSvg = content.querySelector('img');
@@ -140,19 +141,27 @@ export default function KakaoMap({ coordinates }: IKakaoMap) {
       ? `${coord.roadNameAddress}에서 ${coord.duration} 소요`
       : coord.roadNameAddress;
 
+    // isMyLocation에 따른 마커 스타일 변경
+    ping.className = `absolute w-full h-full ${
+      coord.isMyLocation ? 'bg-red-400' : 'bg-indigo-400'
+    } rounded-full opacity-75 animate-ping`;
+
+    markerElement.className = `relative ${
+      coord.isMyLocation ? 'bg-red-600' : 'bg-indigo-600'
+    } rounded-full size-3`;
+
+    markerSvg.src = coord.isMyLocation ? '/selectedMarker.svg' : '/marker.svg';
+
+    // z-index와 주소 스타일 업데이트
     if (coord.isSelected) {
       overlay.setZIndex(3000);
       addressContent.className = `absolute flex flex-nowrap items-center gap-2 px-3 py-2 border shadow-md text-description lg:text-content -top-16 rounded-default whitespace-nowrap bg-blue-normal01 text-white-default border-blue-normal01`;
       addressContent.style.transition = 'none';
-      markerElement.className = `relative bg-indigo-600 rounded-full size-3 scale-110`;
       markerSvg.className = 'absolute scale-110 size-9';
     } else {
       overlay.setZIndex(coord.isMyLocation ? 2000 : 1);
       addressContent.className = `absolute flex flex-nowrap items-center gap-2 px-3 py-2 border shadow-md text-description lg:text-content -top-16 rounded-default whitespace-nowrap bg-white-default text-black border-primary`;
       addressContent.style.transition = 'none';
-      markerElement.className = `relative ${
-        coord.isMyLocation ? 'bg-red-600' : 'bg-indigo-600'
-      } rounded-full size-3`;
       markerSvg.className = 'absolute size-9';
     }
   };
@@ -173,7 +182,8 @@ export default function KakaoMap({ coordinates }: IKakaoMap) {
         !prevCoord ||
         prevCoord.lat !== coord.lat ||
         prevCoord.lng !== coord.lng ||
-        prevCoord.roadNameAddress !== coord.roadNameAddress
+        prevCoord.roadNameAddress !== coord.roadNameAddress ||
+        prevCoord.isMyLocation !== coord.isMyLocation
       );
     });
 
