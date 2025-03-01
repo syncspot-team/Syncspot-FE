@@ -4,11 +4,10 @@ import DesktopSideMenu from '@src/components/users/DesktopSideMenu';
 
 export default function UserPage() {
   return (
-    <div className="w-full px-4 lg:px-[7.5rem] mt-[1.875rem]">
+    <div className="w-full px-4 lg:px-[7.5rem] mt-[1.875rem] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full">
       <div className="lg:hidden">
         <MobileSideMenu />
       </div>
-
       <div className="grid grid-cols-1 lg:grid-cols-10 gap-[0.9375rem]">
         <div className="hidden lg:block lg:col-span-3">
           <DesktopSideMenu />

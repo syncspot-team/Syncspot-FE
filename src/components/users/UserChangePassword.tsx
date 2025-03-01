@@ -27,7 +27,7 @@ export default function UserChangePassword() {
 
   return (
     <div className="flex flex-col h-full lg:px-20">
-      <h2 className="my-4 mb-4 lg:mb-8 ml-1 lg:mt-0 lg:ml-0 text-[1.25rem] lg:text-subtitle text-tertiary font-semibold">
+      <h2 className="my-4 mb-4 ml-1 font-semibold lg:mb-8 lg:mt-0 lg:ml-0 text-content lg:text-subtitle text-tertiary">
         비밀번호 변경
       </h2>
       <form

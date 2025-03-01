@@ -33,11 +33,11 @@ export default function UserQuit() {
 
   return (
     <div className="flex flex-col h-full lg:px-20">
-      <h3 className="my-4 mb-8 ml-1 lg:mt-0 lg:ml-0 text-[1.25rem] lg:text-subtitle text-tertiary font-semibold">
+      <h3 className="my-4 mb-8 ml-1 font-semibold lg:mt-0 lg:ml-0 text-content lg:text-subtitle text-tertiary">
         회원 탈퇴
       </h3>
-      <div className="flex flex-col gap-6">
-        <h4 className="font-semibold text-menu lg:text-subtitle">
+      <div className="flex flex-col gap-6 pb-6">
+        <h4 className="font-semibold text-content lg:text-subtitle">
           정말 탈퇴하시겠어요?
         </h4>
 
@@ -68,7 +68,7 @@ export default function UserQuit() {
           <p className="font-semibold underline text-content lg:text-menu">
             떠나시는 이유를 알려주세요
           </p>
-          <p className="text-description lg:text-content text-gray-dark whitespace-nowrap">
+          <p className="text-description lg:text-content text-gray-dark">
             싱크스팟을 아끼고 사랑해주신 시간에 감사드립니다.
             <br />
             서비스를 이용하며 느끼셨던 점을 저희에게 공유해주시면
@@ -86,7 +86,7 @@ export default function UserQuit() {
 
         <Button
           buttonType="quit"
-          className="w-full"
+          className="w-full px-[0.3125rem]"
           onClick={handleQuit}
           disabled={!withdrawalReason.trim()}
         >
