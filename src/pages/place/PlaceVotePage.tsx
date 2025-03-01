@@ -80,6 +80,7 @@ export default function PlaceVotePage() {
     lng: location.addressLong,
     roadNameAddress: location.roadNameAddress,
     isMyLocation: location.id === selectedLocationId,
+    isSelected: location.id === selectedLocationId,
   }));
 
   const handleVoteSubmit = () => {
