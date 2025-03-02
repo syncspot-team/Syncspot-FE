@@ -34,8 +34,8 @@ export default function TimeResultPage() {
   }
 
   return (
-    <div className="h-full bg:white-default lg:bg-gray-light p-4 pt-0 lg:p-4 rounded-[1.25rem] grid grid-cols-1 lg:mx-[7.5rem] lg:mt-8">
-      <div className="flex flex-col justify-center w-full gap-2 mx-4 mt-4 lg:gap-4 lg:mt-8 lg:mx-auto lg:items-center text-menu-selected lg:text-title text-blue-dark02">
+    <div className="h-full bg:white-default lg:bg-gray-light p-4 pt-0 lg:p-4 rounded-[1.25rem] grid grid-cols-1 lg:mx-[7.5rem] lg:mt-[1.875rem]">
+      <div className="flex flex-col justify-center w-full gap-2 mx-2 mt-4 lg:gap-4 lg:mt-8 lg:mx-auto lg:items-center text-menu-selected lg:text-title text-blue-dark02">
         <p>이번 모임 일시는...</p>
         <p className="lg:text-center text-description lg:text-menu-selected text-gray-dark">
           이번 모임 만남이 가능한 시간을 확인해보세요!
