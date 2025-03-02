@@ -11,7 +11,7 @@ export const APIErrorFallback = ({
 }: FallbackProps) => {
   if (isAxiosError(error)) {
     const errorData = getErrorData(error);
-    if (errorData.status === '401') {
+    if (error.response?.data?.code !== 'A-003' && errorData.status === '401') {
       return <Navigate to={PATH.SIGN_IN} replace />;
     }
 
