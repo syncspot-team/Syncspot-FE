@@ -8,6 +8,7 @@ import {
 import { useNavigate, useParams } from 'react-router-dom';
 import SomethingWrongErrorPage from '../error/SomethingWrongErrorPage';
 import { useEffect, useState } from 'react';
+import { Loading } from '@src/components/loading/Loading';
 
 export default function TimeResultPage() {
   const navigate = useNavigate();
@@ -27,8 +28,14 @@ export default function TimeResultPage() {
     };
   }, []);
 
-  const { data: timeDatesRes } = useGetTimeDatesQuery();
-  const { data: timeVotedRes } = useGetTimeVotedQuery();
+  const { data: timeDatesRes, isLoading: timeDatesLoading } =
+    useGetTimeDatesQuery();
+  const { data: timeVotedRes, isLoading: timeVotedLoading } =
+    useGetTimeVotedQuery();
+
+  if (timeDatesLoading || timeVotedLoading) {
+    return <Loading />;
+  }
   if (!timeDatesRes?.data.existence) {
     return <SomethingWrongErrorPage />;
   }

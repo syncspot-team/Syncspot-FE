@@ -5,6 +5,7 @@ import { formatDate } from '@src/components/time/utils/formatDate';
 import SomethingWrongErrorPage from '../error/SomethingWrongErrorPage';
 import BottomSheet from '@src/components/common/bottomSheet/BottomSheet';
 import { useEffect, useState } from 'react';
+import { Loading } from '@src/components/loading/Loading';
 
 export default function TimeVotePage() {
   const bottomSheetHeight = window.innerHeight * 0.5;
@@ -24,8 +25,14 @@ export default function TimeVotePage() {
   }, []);
 
   //시간투표방 조회하고, dates 로 투표가능한 날짜 파악
-  const { data: timeDatesRes } = useGetTimeDatesQuery();
-  if (!timeDatesRes?.data.existence) {
+  const { data: timeDatesRes, isLoading: timeDatesLoading } =
+    useGetTimeDatesQuery();
+
+  if (timeDatesLoading) {
+    return <Loading />;
+  }
+
+  if (!timeDatesLoading && !timeDatesRes?.data?.existence) {
     return <SomethingWrongErrorPage />;
   }
   //string 에서 Date 객체로 변환
