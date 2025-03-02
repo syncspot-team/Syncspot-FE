@@ -13,6 +13,10 @@ import PlaceList from '@src/components/location/PlaceList';
 import { useCoordinates } from '@src/hooks/location/useCoordinates';
 import { useGetPlaceSearchQuery } from '@src/state/queries/location/useGetPlaceSearchQuery';
 import LocationEnterErrorPage from '@src/components/location/LocationEnterErrorPage';
+import BottomSheet from '@src/components/common/bottomSheet/BottomSheet';
+import IconLeftArrow from '@src/assets/icons/IconLeftArrow.svg?react';
+import IconRightArrow from '@src/assets/icons/IconRightArrow.svg?react';
+import { IPlaceContent } from '@src/types/location/recommendPlaceSearchResponseType';
 
 export default function LocationRecommendationsPage() {
   const navigate = useNavigate();
@@ -99,27 +103,104 @@ export default function LocationRecommendationsPage() {
 
   return (
     <>
-      <div className="grid w-full grid-cols-1 lg:grid-cols-2 px-4 lg:px-[7.5rem] gap-[0.9375rem] mt-[1.375rem]">
-        <h3 className=" hidden lg:flex items-center text-[1.25rem] font-semibold text-blue-dark01 ml-2">
-          {searchParams.get('location')}
-        </h3>
-        <PlaceTypeFilter
-          selectedType={selectedPlaceStandard}
-          onTypeChange={handlePlaceStandardChange}
-        />
+      <div className="hidden lg:block">
+        <div className="grid w-full grid-cols-1 lg:grid-cols-2 px-4 lg:px-[7.5rem] gap-[0.9375rem] mt-[1.375rem]">
+          <h3 className="flex items-center text-[1.25rem] font-semibold text-blue-dark01 ml-2">
+            {searchParams.get('location')}
+          </h3>
+          <PlaceTypeFilter
+            selectedType={selectedPlaceStandard}
+            onTypeChange={handlePlaceStandardChange}
+          />
+        </div>
+        <div className="grid w-full grid-cols-1 lg:grid-cols-2 px-4 lg:px-[7.5rem] gap-[0.9375rem] mt-[0.4375rem]">
+          <div className="rounded-default h-[31.25rem] lg:h-[calc(100vh-10rem)]">
+            <KakaoMap coordinates={coordinates} />
+          </div>
+          <PlaceList
+            recommendPlaces={recommendPlaceSearchData?.data.content || []}
+            selectedPlace={selectedPlace}
+            currentPage={currentPage}
+            totalPages={recommendPlaceSearchData?.data.totalPages || 0}
+            onPlaceSelect={setSelectedPlace}
+            onPageChange={handlePageChange}
+          />
+        </div>
       </div>
-      <div className="grid w-full grid-cols-1 lg:grid-cols-2 px-4 lg:px-[7.5rem] gap-[0.9375rem] mt-[0.4375rem]">
-        <div className="rounded-default h-[31.25rem] lg:h-[calc(100vh-10rem)]">
+
+      <div className="lg:hidden">
+        <div className="fixed inset-0 top-[4.75rem]">
           <KakaoMap coordinates={coordinates} />
         </div>
-        <PlaceList
-          recommendPlaces={recommendPlaceSearchData?.data.content || []}
-          selectedPlace={selectedPlace}
-          currentPage={currentPage}
-          totalPages={recommendPlaceSearchData?.data.totalPages || 0}
-          onPlaceSelect={setSelectedPlace}
-          onPageChange={handlePageChange}
-        />
+        <BottomSheet minHeight={10} maxHeight={72} initialHeight={50}>
+          <div className="flex flex-col h-full">
+            <div className="sticky top-0 px-4">
+              <h3 className="text-[1.125rem] font-semibold text-blue-dark01 mb-3">
+                {searchParams.get('location')}에서부터
+              </h3>
+              <PlaceTypeFilter
+                selectedType={selectedPlaceStandard}
+                onTypeChange={handlePlaceStandardChange}
+              />
+            </div>
+            <div className="flex-1 px-4 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full">
+              <div className="mt-4">
+                {recommendPlaceSearchData?.data.content.map(
+                  (place: IPlaceContent) => (
+                    <div
+                      key={place.name}
+                      className={`p-4 rounded-lg mb-3 cursor-pointer ${
+                        selectedPlace === place.name
+                          ? 'bg-blue-100 opacity-95 ring-2 ring-blue-normal01'
+                          : 'ring-1 ring-primary'
+                      }`}
+                      onClick={() => setSelectedPlace(place.name)}
+                    >
+                      <div className="flex items-start justify-between mb-[0.125rem]">
+                        <h3 className="font-semibold text-blue-dark01 text-content">
+                          {place.name}
+                        </h3>
+                        <span className="text-description text-gray-dark">
+                          {place.distance}m
+                        </span>
+                      </div>
+                      <p className="text-description text-gray-dark">
+                        {place.roadNameAddress}
+                      </p>
+                    </div>
+                  ),
+                )}
+              </div>
+              <div className="flex items-center justify-center gap-3 py-4">
+                <div className="w-[2.5rem]">
+                  {currentPage > 0 && (
+                    <button
+                      onClick={() => handlePageChange(currentPage - 1)}
+                      className="p-2"
+                    >
+                      <IconLeftArrow />
+                    </button>
+                  )}
+                </div>
+                <span className="text-description">
+                  {currentPage + 1} /{' '}
+                  {recommendPlaceSearchData?.data.totalPages || 1}
+                </span>
+                <div className="w-[2.5rem]">
+                  {currentPage <
+                    (recommendPlaceSearchData?.data.totalPages || 1) - 1 && (
+                    <button
+                      onClick={() => handlePageChange(currentPage + 1)}
+                      className="p-2"
+                    >
+                      <IconRightArrow />
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </BottomSheet>
       </div>
     </>
   );

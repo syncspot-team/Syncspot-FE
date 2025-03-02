@@ -31,10 +31,10 @@ function RoomList({
 
   return (
     <>
-      <h3 className="my-4 mb-4 lg:mb-6 ml-1 lg:mt-0 lg:ml-0 font-semibold text-[1.25rem] lg:text-subtitle text-tertiary">
+      <h3 className="my-4 mb-4 ml-1 font-semibold lg:mb-6 lg:mt-0 lg:ml-0 text-content lg:text-subtitle text-tertiary">
         전체 모임 목록
       </h3>
-      <ul className="flex-1 flex flex-col items-center w-full gap-[0.625rem] lg:gap-[0.75rem] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full">
+      <ul className="flex-1 flex flex-col items-center w-full gap-[0.625rem] lg:gap-[0.75rem] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full pb-6">
         {roomListData.map((item: IRoom) => (
           <li
             key={item.roomId}
@@ -58,12 +58,12 @@ function EmptyRoomList() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col items-center mt-[4.6875rem]">
+    <div className="flex flex-col items-center pb-6">
       <span>
         <IconBubble />
       </span>
       <span>
-        <IconDolphin className="animate-customBounce" />
+        <IconDolphin className="animate-customBounce size-64" />
       </span>
       <h1 className="text-menu text-gray-dark my-[1.875rem]">
         모임을 생성하고 서비스를 사용해보세요!
@@ -76,7 +76,7 @@ function EmptyRoomList() {
             },
           });
         }}
-        className=""
+        className="w-full px-[0.3125rem]"
       >
         모임 생성하기
       </Button>

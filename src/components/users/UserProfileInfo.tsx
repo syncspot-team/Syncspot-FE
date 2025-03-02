@@ -93,27 +93,33 @@ export default function UserProfileInfo() {
   return (
     <form onSubmit={handleSubmitProfile(handleProfileSave)}>
       <div className="flex items-center justify-between mt-4 mb-5 lg:mb-7">
-        <h2 className="text-[1.25rem] lg:text-subtitle text-tertiary font-semibold">
+        <h2 className="font-semibold text-content lg:text-subtitle text-tertiary">
           개인정보
         </h2>
         <div className="flex items-center gap-2">
           {renderProfileInfoEditButtons()}
         </div>
       </div>
-      <label className="ml-[0.375rem] text-[0.9375rem]">닉네임</label>
+      <label className="ml-[0.375rem] text-description lg:text-content">
+        닉네임
+      </label>
       <Input
         {...register('nickname')}
         disabled={!isEditing}
         className={`w-full mt-[0.125rem] mb-4 ${isEditing ? 'bg-white-default ring-1 ring-primary' : 'bg-gray-light cursor-not-allowed'}`}
       />
-      <label className="ml-[0.375rem] text-[0.9375rem]">아이디(이메일)</label>
+      <label className="ml-[0.375rem] text-description lg:text-content">
+        아이디(이메일)
+      </label>
       <Input
         {...register('email')}
         type="email"
         disabled={true}
         className={`w-full mt-[0.125rem] mb-4 bg-gray-light cursor-not-allowed`}
       />
-      <label className="ml-[0.375rem] text-[0.9375rem]">주소</label>
+      <label className="ml-[0.375rem] text-description lg:text-content">
+        주소
+      </label>
       {isEditing ? (
         <KakaoLocationPicker
           defaultAddress={currentAddress}

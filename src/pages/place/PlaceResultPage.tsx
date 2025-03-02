@@ -9,16 +9,21 @@ import { useGetPlaceVoteRoomCheckQuery } from '@src/state/queries/place/useGetPl
 import { useGetPlaceVoteResultQuery } from '@src/state/queries/place/useGetPlaceVoteResultQuery';
 import SomethingWrongErrorPage from '@src/pages/error/SomethingWrongErrorPage';
 import { PlaceVoteResultDataType } from '@src/types/place/placeVoteResultResponseType';
+import IconDolphin from '@src/assets/icons/IconDolphin.svg?react';
 
 export default function PlaceResultPage() {
   const { modalType, openModal, closeModal } = useModal();
   const { roomId } = useParams();
   const navigate = useNavigate();
 
-  const { data: placeVoteRoomCheckData } = useGetPlaceVoteRoomCheckQuery();
-  const { data: placeVoteResultData } = useGetPlaceVoteResultQuery({
-    enabled: placeVoteRoomCheckData?.data.existence,
-  });
+  const {
+    data: placeVoteRoomCheckData,
+    isLoading: isPlaceVoteRoomCheckLoading,
+  } = useGetPlaceVoteRoomCheckQuery();
+  const { data: placeVoteResultData, isLoading: isPlaceVoteResultLoading } =
+    useGetPlaceVoteResultQuery({
+      enabled: placeVoteRoomCheckData?.data.existence,
+    });
 
   const locations: PlaceVoteResultDataType[] = (
     placeVoteResultData?.data ?? []
@@ -28,14 +33,14 @@ export default function PlaceResultPage() {
   );
   const hasVotes = locations.some((location) => location.count > 0);
 
-  if (!placeVoteRoomCheckData?.data.existence) {
+  if (!isPlaceVoteRoomCheckLoading && !placeVoteRoomCheckData?.data.existence) {
     return <SomethingWrongErrorPage />;
   }
 
   return (
     <>
-      <div className="flex flex-col items-center py-6 bg-gray-light mt-[1.875rem] min-h-[calc(100vh-8rem)]">
-        <div className="flex flex-col justify-center items-center max-w-[43.75rem]">
+      <div className="flex flex-col items-center py-6 bg-gray-light mt-[1.875rem] min-h-[calc(100dvh-8rem)] lg:max-h-[calc(100dvh-7rem)] mx-4 lg:mx-[7.5rem] rounded-md">
+        <div className="flex flex-col justify-center items-center w-full lg:max-w-[43.75rem] h-[calc(100dvh-10rem)] lg:h-full px-4 lg:px-0">
           <h1 className="mb-6 lg:mb-2 text-subtitle lg:text-title text-blue-dark02">
             투표 결과
           </h1>
@@ -43,32 +48,34 @@ export default function PlaceResultPage() {
             이번 모임 만남이 가능한 장소를 확인해보세요!
           </p>
 
-          {!hasVotes ? (
-            <p className=" flex flex-col justify-center items-center mb-8 text-subtitle text-gray-dark min-h-[calc(100vh-30rem)]">
-              아직 투표한 사람이 없습니다...
-            </p>
+          {!isPlaceVoteResultLoading && !hasVotes ? (
+            <div className="flex flex-col">
+              <IconDolphin className="size-60 lg:size-80 animate-customBounce" />
+              <p className="flex justify-center my-1 lg:my-5 text-content lg:text-menu text-gray-dark">
+                아직 투표한 사람이 없습니다...
+              </p>
+            </div>
           ) : (
-            <ul className="mb-8 flex flex-col gap-3 max-h-[calc(100vh-26rem)] lg:max-h-[calc(100vh-28rem)] w-[28rem] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full">
+            <ul className="w-full mb-8 flex flex-col gap-3 max-h-[calc(100dvh-15rem)] lg:max-h-[calc(100dvh-25rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full">
               {locations.map((location) => (
                 <li
                   key={location.id}
                   className="flex items-center gap-4 *:text-description *:lg:text-content"
                 >
-                  <span className="py-6 px-8 rounded-lg shadow-sm text-menu-selected text-primary bg-white-default w-[7rem] text-center truncate">
+                  <span className="p-3 text-center truncate rounded-lg shadow-sm lg:py-6 lg:px-8 text-menu-selected text-primary bg-white-default">
                     {location.count}표
                   </span>
-                  <span className="py-6 px-4 rounded-lg shadow-sm text-left text-menu bg-white-default w-[21rem] truncate">
+                  <span className="flex-1 p-3 text-left truncate rounded-lg shadow-sm lg:py-6 lg:px-4 text-content lg:text-menu bg-white-default">
                     {location.name}
                   </span>
                 </li>
               ))}
             </ul>
           )}
-
-          <div className="mt-6 lg:mt-2">
+          <div className="w-full">
             <Button
               buttonType="primary"
-              className="mb-[0.625rem] w-[28rem]"
+              className="mb-[0.625rem] w-full px-[0.3125rem] lg:px-0"
               onClick={() => {
                 navigate(PATH.PLACE_VOTE(roomId!));
               }}
@@ -77,7 +84,7 @@ export default function PlaceResultPage() {
             </Button>
             <Button
               buttonType="primary"
-              className="w-[28rem]"
+              className="w-full px-[0.3125rem] lg:px-0"
               onClick={() => {
                 openModal(MODAL_TYPE.RECREATE_VOTE_MODAL);
               }}
@@ -87,7 +94,6 @@ export default function PlaceResultPage() {
           </div>
         </div>
       </div>
-
       <Modal isOpen={modalType !== null} onClose={closeModal}>
         {modalType === MODAL_TYPE.RECREATE_VOTE_MODAL && (
           <RecreateVoteModal
