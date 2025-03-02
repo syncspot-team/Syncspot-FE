@@ -11,13 +11,13 @@ export default function Copied({ url }: IShare) {
   };
 
   return (
-    <div className="flex flex-col w-full ">
-      <span className="ml-3 text-gray-dark">클릭하여 링크 복사</span>
+    <div className="flex flex-col w-full py-2 lg:py-4">
+      <span className="px-1 lg:px-2 text-gray-dark">클릭하여 링크 복사</span>
       <button
         onClick={handleCopyLink}
-        className="relative flex flex-col w-full p-3 text-left rounded-lg hover:bg-gray-light"
+        className="relative flex flex-col w-full text-left rounded-lg hover:bg-gray-200"
       >
-        <span className="block overflow-x-scroll scrollbar-hide whitespace-nowrap text-gray-dark">
+        <span className="block px-1 py-2 overflow-x-scroll lg:py-4 scrollbar-hide whitespace-nowrap text-gray-dark">
           {url}
         </span>
         {isCopied && (

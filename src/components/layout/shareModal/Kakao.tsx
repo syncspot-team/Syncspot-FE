@@ -39,7 +39,7 @@ export default function KakaoShare({ url }: IShare) {
   };
   return (
     <button
-      className="flex items-center w-full gap-2 p-3 rounded-lg hover:bg-gray-light"
+      className="flex items-center w-full gap-2 p-2 rounded-lg lg:p-4 hover:bg-gray-200"
       onClick={handleKakaoShare}
     >
       <IconOauthKakao className="size-6" />

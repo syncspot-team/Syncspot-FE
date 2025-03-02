@@ -4,6 +4,7 @@ import { useState } from 'react';
 import KakaoShare from '@src/components/layout/shareModal/Kakao';
 import EmailButton from '@src/components/layout/shareModal/EmailButton';
 import EmailInput from '@src/components/layout/shareModal/EmailInput';
+import Copied from '@src/components/layout/shareModal/Copied';
 
 interface IShareMeetingModalProps {
   onClose: () => void;
@@ -23,7 +24,7 @@ export default function ShareMeetingModal({
         모임 공유하기
       </h2>
 
-      <div className="flex flex-col w-full gap-3 lg:text-content text-description">
+      <div className="flex flex-col w-full lg:text-content text-description">
         <KakaoShare url={url} />
         {!isEmailInput ? (
           <div onClick={() => setIsEmailInput(true)}>
@@ -32,7 +33,7 @@ export default function ShareMeetingModal({
         ) : (
           <EmailInput url={url} onClick={() => setIsEmailInput(false)} />
         )}
-
+        <Copied url={url} />
         <button
           onClick={onClose}
           className="w-full p-3 mt-4 bg-gray-200 rounded-lg hover:bg-gray-normal"

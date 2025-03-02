@@ -21,19 +21,19 @@ export default function EmailInput({ url, onClick }: IEmailInputProps) {
 
   return (
     <>
-      <div className="flex justify-between w-full h-12 gap-2 text-description">
+      <div className="flex justify-between w-full h-10 gap-2 lg:h-14 text-description">
         <Input
           type="email"
           placeholder="받는 사람 이메일 주소"
           value={toEmail}
           onChange={(e) => setToEmail(e.target.value)}
-          className="flex-1 py-[0.75rem] border"
+          className="flex-1 py-2 border lg:py-4"
         />
         <button
           onClick={handleEmailShare}
           disabled={loading}
           className={mergeClassNames(
-            'rounded-lg w-12 text-white-default bg-blue-normal01',
+            'rounded-lg lg:w-14 w-10 text-white-default bg-blue-normal01',
             { loading: 'bg-gray-light' },
           )}
         >
