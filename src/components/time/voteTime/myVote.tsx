@@ -11,7 +11,6 @@ import { ITimeVoteRequest } from '@src/types/time/timeVoteType';
 import { DATE_FORMATS, formatStringDate } from '../utils/formatDate';
 import { useGetTimeVotedQuery } from '@src/state/queries/time';
 import CustomToast from '@src/components/common/toast/customToast';
-import { mergeClassNames } from '@src/utils/mergeClassNames';
 
 export default function MyVote({ dates, bottomSheetHeight }: IMyVoteProps) {
   //투표여부 myVotes
@@ -21,8 +20,6 @@ export default function MyVote({ dates, bottomSheetHeight }: IMyVoteProps) {
   const { mutate: putVote } = usePutTimeVoteMutation();
 
   const { roomId } = useParams();
-
-  const isMobile = window.innerWidth < 1024;
 
   const myVotesExistence = timeVotedRes?.data.myVotesExistence;
   const myVotes = timeVotedRes?.data.myVotes;
@@ -137,12 +134,7 @@ export default function MyVote({ dates, bottomSheetHeight }: IMyVoteProps) {
       <p className="hidden text-center text-title text-blue-dark02 lg:block">
         참석 일시 투표
       </p>
-      <div
-        className={mergeClassNames(
-          'mb-2',
-          isMobile ? getScrollAreaStyle(bottomSheetHeight) : '',
-        )}
-      >
+      <div className={`mb-2 ${getScrollAreaStyle(bottomSheetHeight)}`}>
         {Array.isArray(dates) &&
           dates.map((date, index) => {
             const myVote = initialVotes[index] || {
@@ -170,7 +162,7 @@ export default function MyVote({ dates, bottomSheetHeight }: IMyVoteProps) {
             );
           })}
       </div>
-      <Button onClick={handleVote} className="w-full  px-[0.3125rem]">
+      <Button onClick={handleVote} className="w-full px-[0.3125rem]">
         투표하기
       </Button>
     </div>
