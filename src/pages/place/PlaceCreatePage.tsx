@@ -204,21 +204,6 @@ export default function PlaceCreatePage() {
     isPlaceSearchLoading ||
     isMidpointSearchLoading;
 
-  const getScrollAreaStyle = (bottomSheetHeight: number) => {
-    const viewportHeight = window.innerHeight;
-    const threshold = viewportHeight * 0.7;
-
-    if (bottomSheetHeight <= threshold) {
-      return 'max-h-[calc(100dvh-45rem)] overflow-y-auto';
-    } else if (bottomSheetHeight <= viewportHeight * 0.8) {
-      return 'max-h-[calc(100dvh-35rem)] overflow-y-auto';
-    } else if (bottomSheetHeight <= viewportHeight * 0.9) {
-      return 'max-h-[calc(100dvh-25rem)] overflow-y-auto';
-    } else {
-      return 'overflow-visible';
-    }
-  };
-
   if (isLoading) {
     return <Loading className="h-[calc(100vh-8rem)]" />;
   }
@@ -313,14 +298,14 @@ export default function PlaceCreatePage() {
         </div>
 
         <BottomSheet
-          minHeight={30}
+          minHeight={40}
           maxHeight={90}
           initialHeight={50}
           headerHeight={40}
           onHeightChange={(height) => setBottomSheetHeight(height)}
         >
           <div className="flex flex-col h-full">
-            <div className="flex items-center justify-between px-4">
+            <div className="flex items-center justify-between px-4 bg-white-default">
               <div></div>
               <h1 className="flex items-center justify-center my-5 text-nowrap text-subtitle text-tertiary">
                 모임 장소 투표 생성 하기
@@ -328,10 +313,10 @@ export default function PlaceCreatePage() {
               <ShareButton />
             </div>
 
-            <div className="flex-1 px-4 overflow-y-auto">
-              <ul
-                className={`flex flex-col p-1 ${getScrollAreaStyle(bottomSheetHeight)} scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full`}
-              >
+            <div
+              className={`flex-1 px-4 overflow-y-auto ${bottomSheetHeight <= 40 ? 'hidden' : ''}`}
+            >
+              <ul className="flex flex-col p-1 scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full">
                 {locationFields.map((field, index) => (
                   <li
                     key={field.id}
@@ -362,7 +347,7 @@ export default function PlaceCreatePage() {
               </ul>
             </div>
 
-            <div className="flex flex-col gap-[0.5rem] px-4 py-6 bg-white-default">
+            <div className="flex flex-col gap-[0.5rem] px-4 py-6 bg-white-default mt-auto">
               <Button
                 onClick={() => {
                   appendLocation({
