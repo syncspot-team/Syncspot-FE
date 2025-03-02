@@ -20,7 +20,9 @@ const getNewToken = async () => {
     const refreshToken = localStorage.getItem(REFRESH_TOKEN);
 
     if (!refreshToken) {
-      throw new Error('No refresh token available');
+      localStorage.clear();
+      window.location.href = '/';
+      return null;
     }
 
     const response = await axios.get(REFRESH_URL, {
@@ -32,6 +34,9 @@ const getNewToken = async () => {
     const { accessToken, refreshToken: newRefreshToken } = response.data.data;
     return { accessToken, refreshToken: newRefreshToken };
   } catch (e) {
+    /* 리프레쉬 토큰 만료되었을 경우 처리 */
+    localStorage.clear();
+    window.location.href = '/';
     return null;
   }
 };
@@ -66,11 +71,7 @@ instance.interceptors.response.use(
 
     const newToken = await getNewToken();
 
-    if (!newToken) {
-      return Promise.reject(error);
-    }
-
-    if (newToken.accessToken && newToken.refreshToken) {
+    if (newToken?.accessToken && newToken?.refreshToken) {
       localStorage.setItem(ACCESS_TOKEN, newToken.accessToken);
       localStorage.setItem(REFRESH_TOKEN, newToken.refreshToken);
       config.headers.Authorization = `Bearer ${newToken.accessToken}`;
