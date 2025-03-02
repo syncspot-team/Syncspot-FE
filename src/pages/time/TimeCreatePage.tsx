@@ -83,8 +83,10 @@ export default function TimeCreatePage() {
   };
 
   return (
-    <div className="lg:mt-[1.875rem] h-[calc(100vh-80px)] lg:h-[calc(100vh-120px)] relative max-w-[43.75rem] p-4 lg:p-0  mx-auto">
-      <div className="px-12 pb-12 ">
+    <div
+      className={`lg:mt-[1.875rem] h-[calc(100vh-80px)] lg:h-[calc(100vh-120px)] relative max-w-[50rem] p-4 lg:p-0  mx-auto`}
+    >
+      <div className="pb-4 lg:px-[6.25rem]  mx-auto ">
         <Calendar
           value={selectedDates.length > 0 ? selectedDates[0] : null}
           formatDay={(_locale, date) => date.getDate().toString()}
@@ -108,12 +110,14 @@ export default function TimeCreatePage() {
           onClickDay={handleDateClick}
         />
       </div>
-
-      <div className="grid grid-cols-2 gap-4 -mt-4 whitespace-nowrap lg:gap-2 lg:-mt-8 lg:grid-cols-5 text-menu-selected text-tertiary ">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 my-auto min-h-[9rem] lg:min-h-0 lg:h-fit whitespace-nowrap lg:grid-cols-5 text-tertiary ">
         {selectedDates.length > 0 ? (
           selectedDates.map((date, index) => (
-            <div className="flex p-2 px-3 mx-auto rounded-full bg-blue-light02 text-content">
-              <p key={index}>{formatStringDate(date)}</p>
+            <div
+              key={index}
+              className="flex p-2 px-3 mx-auto rounded-full bg-blue-light02 max-w-[8.4375rem] h-10 text-description lg:text-content"
+            >
+              <p>{formatStringDate(date)}</p>
               <button
                 className="ml-2 text-red-normal"
                 onClick={() => {
@@ -132,7 +136,7 @@ export default function TimeCreatePage() {
       </div>
 
       <Button
-        className="w-auto px-[0.3125rem] absolute bottom-0 left-4 right-4 lg:left-0 lg:right-0"
+        className="w-full my-4 px-[0.3125rem] "
         onClick={handleCreateClick}
       >
         {getTimeDatesQuery?.data.existence

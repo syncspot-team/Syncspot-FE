@@ -15,6 +15,7 @@ export default function VoteResultByDate({
     <div
       className={mergeClassNames({
         'p-4 bg-gray-light rounded-[1.25rem] text-menu': !isMobile,
+        'w-[17.5rem]': isMobile,
       })}
     >
       {members.length === 0 && (
@@ -36,12 +37,17 @@ export default function VoteResultByDate({
             { 'text-description gap-2': isMobile },
           )}
         >
-          <div className="w-1/3 p-3 mx-auto text-center bg-white-default rounded-default">
-            {memberInfo?.memberName}
+          <div className="w-2/5 p-3 mx-auto text-center bg-white-default rounded-default">
+            <span
+              className="block w-full overflow-hidden whitespace-nowrap text-ellipsis"
+              title={memberInfo?.memberName}
+            >
+              {memberInfo?.memberName}
+            </span>
           </div>
           <div
             className={mergeClassNames(
-              'w-2/3 p-3 mx-auto text-center whitespace-nowrap bg-white-default rounded-default ',
+              'w-3/5 p-3 mx-auto text-center whitespace-nowrap bg-white-default rounded-default ',
               { 'text-blue-dark03 w-full': isMobile },
             )}
           >
