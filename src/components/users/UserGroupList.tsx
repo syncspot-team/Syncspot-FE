@@ -58,12 +58,12 @@ function EmptyRoomList() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col items-center mt-[4.6875rem]">
+    <div className="flex flex-col items-center pb-6">
       <span>
         <IconBubble />
       </span>
       <span>
-        <IconDolphin className="animate-customBounce" />
+        <IconDolphin className="animate-customBounce size-64" />
       </span>
       <h1 className="text-menu text-gray-dark my-[1.875rem]">
         모임을 생성하고 서비스를 사용해보세요!
@@ -76,7 +76,7 @@ function EmptyRoomList() {
             },
           });
         }}
-        className=""
+        className="w-full px-[0.3125rem]"
       >
         모임 생성하기
       </Button>
