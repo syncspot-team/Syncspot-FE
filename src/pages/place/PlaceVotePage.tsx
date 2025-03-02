@@ -117,9 +117,8 @@ export default function PlaceVotePage() {
     <>
       <div className="hidden lg:grid w-full grid-cols-2 px-[7.5rem] gap-[0.9375rem] mt-[1.875rem]">
         <div className="flex flex-col order-2 p-5 rounded-default bg-gray-light lg:order-1 lg:max-h-[calc(100vh-8rem)]">
-          <div className="flex items-center justify-between">
-            <div></div>
-            <h1 className="flex items-center lg:-mr-8 justify-center text-subtitle lg:text-title text-tertiary my-[1.25rem] lg:my-[1.5625rem]">
+          <div className="flex items-center justify-between my-[1.25rem] lg:my-[1.5625rem]">
+            <h1 className="w-full ml-10 text-center text-subtitle lg:text-title text-tertiary ">
               모임 장소 투표하기
             </h1>
             <ShareButton />
@@ -177,13 +176,9 @@ export default function PlaceVotePage() {
           onHeightChange={(height) => setBottomSheetHeight(height)}
         >
           <div className="flex flex-col h-full">
-            <div className="flex items-center justify-between px-4 bg-white-default">
-              <div></div>
-              <h1 className="flex items-center justify-center my-5 text-nowrap text-subtitle text-tertiary">
-                모임 장소 투표하기
-              </h1>
-              <ShareButton />
-            </div>
+            <h1 className="flex items-center justify-center my-5 text-nowrap text-subtitle text-tertiary">
+              모임 장소 투표하기
+            </h1>
 
             <div
               className={`flex-1 px-4 overflow-y-auto ${bottomSheetHeight <= 40 ? 'hidden' : ''}`}

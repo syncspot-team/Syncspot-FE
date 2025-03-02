@@ -5,7 +5,8 @@ import { IMenuItem } from '@src/types/header/menuItemType';
 import DesktopSubMenu from './DesktopSubMenu';
 import AuthButton from './AuthButton';
 import ShareButton from './ShareButton';
-import { useRenderShareButton } from '@src/hooks/share/useRenderShareButton';
+import { renderShareButton } from '@src/utils/renderShareButton';
+import { useLocation } from 'react-router-dom';
 
 export default function DesktopMenu() {
   const menuRef = useRef<HTMLUListElement>(null);
@@ -14,8 +15,13 @@ export default function DesktopMenu() {
 
   useClickOutside(menuRef, () => setClickedMenu(null));
 
+  const location = useLocation();
   const selectedRoomId = localStorage.getItem('selectedRoomId');
-  const renderShareButton = useRenderShareButton(selectedRoomId, true);
+  const IsRenderShareButton = renderShareButton(
+    selectedRoomId,
+    false,
+    location,
+  );
 
   function handleMenuClick(
     e: React.MouseEvent<HTMLDivElement>,
@@ -61,7 +67,7 @@ export default function DesktopMenu() {
             )}
           </li>
         ))}
-        {renderShareButton && (
+        {IsRenderShareButton && (
           <ShareButton
             onShareClick={() => {
               setClickedMenu(null);

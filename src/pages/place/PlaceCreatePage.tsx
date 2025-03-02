@@ -16,10 +16,10 @@ import CustomToast from '@src/components/common/toast/customToast';
 import { useGetPlaceSearchQuery } from '@src/state/queries/location/useGetPlaceSearchQuery';
 import { useNavigate, useParams } from 'react-router-dom';
 import { PATH } from '@src/constants/path';
-import ShareButton from '@src/components/layout/header/ShareButton';
 import PlaceCreateErrorPage from '@src/components/place/PlaceCreateErrorPage';
 import { Loading } from '@src/components/loading/Loading';
 import BottomSheet from '@src/components/common/bottomSheet/BottomSheet';
+import ShareButton from '@src/components/layout/header/ShareButton';
 
 interface ILocationFormItem
   extends Omit<IPlaceVoteRoomCheckResponseCandidate, 'id'> {
@@ -220,9 +220,8 @@ export default function PlaceCreatePage() {
     <>
       <div className="hidden lg:grid w-full grid-cols-2 px-[7.5rem] gap-[0.9375rem] mt-[1.875rem]">
         <div className="flex flex-col order-2 p-5 rounded-default bg-gray-light lg:order-1 lg:max-h-[calc(100vh-8rem)]">
-          <div className="flex items-center justify-between">
-            <div></div>
-            <h1 className="flex items-center text-nowrap lg:-mr-8  justify-center text-subtitle lg:text-title text-tertiary my-[1.25rem] lg:my-[1.5625rem]">
+          <div className="flex items-center justify-between w-full">
+            <h1 className="w-full  text-center pl-10 text-subtitle lg:text-title text-tertiary my-[1.25rem] lg:my-[1.5625rem]">
               모임 장소 투표 생성 하기
             </h1>
             <ShareButton />
@@ -305,9 +304,8 @@ export default function PlaceCreatePage() {
           onHeightChange={(height) => setBottomSheetHeight(height)}
         >
           <div className="flex flex-col h-full">
-            <div className="flex items-center justify-between px-4 bg-white-default">
-              <div></div>
-              <h1 className="flex items-center justify-center my-5 text-nowrap text-subtitle text-tertiary">
+            <div className="flex items-center justify-between px-4 mb-5 ">
+              <h1 className="w-full pl-10 text-center text-subtitle text-tertiary">
                 모임 장소 투표 생성 하기
               </h1>
               <ShareButton />
