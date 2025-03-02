@@ -28,12 +28,12 @@ export default function TimeSelectBox({
   }, [initialHour, initialMinute]);
 
   return (
-    <div className="flex items-center justify-center w-full gap-4 ">
-      <div className="relative inline-block w-[5.75rem]">
+    <div className="flex items-center justify-center w-full gap-4">
+      <div className="relative max-w-[6.25rem] w-full">
         <Select selectType="hour" value={hour} onChange={handleHourChange} />
       </div>
 
-      <div className="relative inline-block w-[5.75rem]">
+      <div className="relative max-w-[6.25rem] w-full">
         <Select
           selectType="minute"
           value={minute}

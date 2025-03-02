@@ -29,6 +29,28 @@ export const format24Hour = (): string[] => {
   );
 };
 
+export const format6Hour = (): string[] => {
+  return Array.from({ length: 7 }, (_, i) => `${String(i).padStart(2, '0')}`);
+};
+export const format612Hour = (): string[] => {
+  return Array.from(
+    { length: 7 },
+    (_, i) => `${String(i + 6).padStart(2, '0')}`,
+  );
+};
+export const format18Hour = (): string[] => {
+  return Array.from(
+    { length: 7 },
+    (_, i) => `${String(i + 12).padStart(2, '0')}`,
+  );
+};
+export const format624Hour = (): string[] => {
+  return Array.from(
+    { length: 7 },
+    (_, i) => `${String(i + 18).padStart(2, '0')}`,
+  );
+};
+
 export const getTimeIndex = (timeString: string): number => {
   const time = timeString.split(' ')[1]; // YYYY-MM-DD HH:mm 형식에서 시간 추출
   const [hour, minute] = time.split(':').map(Number);

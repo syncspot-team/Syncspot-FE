@@ -50,7 +50,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             ))}
         </select>
         <span className="custom-arrow">
-          <IconTimeDropdown className="text-title" />
+          <IconTimeDropdown className="size-4" />
         </span>
       </>
     );

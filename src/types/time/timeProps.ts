@@ -4,6 +4,10 @@ export interface ITimeDatesProps {
   dates: Date[];
 }
 
+export interface IMyVoteProps extends ITimeDatesProps {
+  bottomSheetHeight: number;
+}
+
 export interface ITimeDatePickerProps {
   date: Date;
   myVote: {
@@ -29,6 +33,7 @@ export interface ITimeSelectBoxProps {
 export interface ITimeGridProps {
   hours: string[];
   gridColors: string[];
+  gridSize: number;
 }
 
 export interface IVoteResultByDate {
@@ -36,6 +41,7 @@ export interface IVoteResultByDate {
   result: {
     [date: string]: IMemberAvailability[];
   };
+  isMobile: boolean;
 }
 
 export interface IVotes {

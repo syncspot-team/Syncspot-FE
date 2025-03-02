@@ -65,7 +65,7 @@ export default function DatePicker({
       </div>
       <div
         className={mergeClassNames(
-          'flex items-center lg:justify-between gap-1 lg:flex-row flex-col w-full',
+          'flex items-center lg:justify-between gap-1 flex-row w-full',
           {
             'text-gray-normal pointer-events-none': !isChecked,
             'text-black-default': isChecked,
@@ -80,17 +80,15 @@ export default function DatePicker({
             setStartMinute(minute);
           }}
         />
-        <div className="flex items-center gap-1 w-fit">
-          <p>~</p>
-          <TimeSelectBox
-            initialHour={endHour}
-            initialMinute={endMinute}
-            onChange={(hour: string, minute: string) => {
-              setEndHour(hour);
-              setEndMinute(minute);
-            }}
-          />
-        </div>
+        <p>~</p>
+        <TimeSelectBox
+          initialHour={endHour}
+          initialMinute={endMinute}
+          onChange={(hour: string, minute: string) => {
+            setEndHour(hour);
+            setEndMinute(minute);
+          }}
+        />
       </div>
     </div>
   );

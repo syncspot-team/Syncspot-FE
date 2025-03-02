@@ -7,13 +7,19 @@ import { ITimeDatesProps } from '@src/types/time/timeProps';
 import { useEffect, useRef, useState } from 'react';
 import VoteResultByDate from './VoteResultByDate';
 import { useGetTimeResultQuery } from '@src/state/queries/time';
+import Modal from '@src/components/common/modal/Modal';
+import { MODAL_TYPE } from '@src/types/modalType';
+import { useModal } from '@src/hooks/useModal';
 
 export default function ClickCalendar({ dates }: ITimeDatesProps) {
   const componentRef = useRef<HTMLDivElement>(null);
   const [clickedDate, setClickedDate] = useState<Date | null>(null);
+  const isMobile = window.innerWidth < 1024;
 
   //clickCalendar 투표결과 확인
   const { data: timeResultRes } = useGetTimeResultQuery();
+
+  const { modalType, openModal, closeModal } = useModal();
 
   // 외부 클릭 감지
   useEffect(() => {
@@ -31,14 +37,12 @@ export default function ClickCalendar({ dates }: ITimeDatesProps) {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
   const result = timeResultRes?.data.result;
 
   return (
-    <div
-      className="flex flex-col w-full h-full gap-4 lg:w-1/2"
-      ref={componentRef}
-    >
-      <div className="w-full rounded-[1.25rem] p-3 text-blue-dark01 bg-gray-light text-menu-selected">
+    <div className="flex flex-col h-full gap-4" ref={componentRef}>
+      <div className="rounded-[1.25rem] p-3 text-blue-dark01 bg-gray-light text-menu-selected">
         <Calendar
           value={dates.length > 0 ? dates[0] : null}
           locale="ko-KR"
@@ -62,11 +66,30 @@ export default function ClickCalendar({ dates }: ITimeDatesProps) {
           }}
           onClickDay={(date) => {
             setClickedDate(date);
+            openModal(MODAL_TYPE.TIME_RESULT_MODAL);
           }}
         />
       </div>
-      {clickedDate && (
-        <VoteResultByDate clickedDate={clickedDate} result={result} />
+      {clickedDate && !isMobile && (
+        <div className="hidden lg:block">
+          <VoteResultByDate
+            clickedDate={clickedDate}
+            result={result}
+            isMobile={isMobile}
+          />
+        </div>
+      )}
+      {clickedDate && isMobile && (
+        <Modal
+          isOpen={modalType === MODAL_TYPE.TIME_RESULT_MODAL}
+          onClose={closeModal}
+        >
+          <VoteResultByDate
+            clickedDate={clickedDate}
+            result={result}
+            isMobile={isMobile}
+          />
+        </Modal>
       )}
     </div>
   );

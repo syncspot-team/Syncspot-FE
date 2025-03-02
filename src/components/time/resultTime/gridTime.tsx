@@ -1,9 +1,15 @@
 import { ITimeGridProps } from '@src/types/time/timeProps';
 import { mergeClassNames } from '@src/utils/mergeClassNames';
 
-export default function GridTime({ hours, gridColors }: ITimeGridProps) {
+export default function GridTime({
+  hours,
+  gridColors,
+  gridSize,
+}: ITimeGridProps) {
+  const gridTemplateColumns = `repeat(${gridSize * 12}, 1fr)`;
+
   return (
-    <div className="flex flex-col w-[80%] mt-4 ">
+    <div className="flex flex-col w-full mt-4 ">
       {/* 시간 표시 */}
       <div className="flex justify-between w-full mb-1 ">
         {hours.map((hour, index) => (
@@ -16,7 +22,7 @@ export default function GridTime({ hours, gridColors }: ITimeGridProps) {
       {/* 그리드 */}
       <div
         className="grid w-full overflow-hidden border-2 h-14 border-blue-normal01 rounded-2xl"
-        style={{ gridTemplateColumns: `repeat(72, 1fr)` }}
+        style={{ gridTemplateColumns }}
       >
         {gridColors.map((color, index) => (
           <div

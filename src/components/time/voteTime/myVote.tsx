@@ -1,4 +1,4 @@
-import { ITimeDatesProps, IVotes } from '@src/types/time/timeProps';
+import { IMyVoteProps, IVotes } from '@src/types/time/timeProps';
 import DatePicker from './datePicker';
 import Button from '../../common/button/Button';
 import {
@@ -12,7 +12,7 @@ import { DATE_FORMATS, formatStringDate } from '../utils/formatDate';
 import { useGetTimeVotedQuery } from '@src/state/queries/time';
 import CustomToast from '@src/components/common/toast/customToast';
 
-export default function MyVote({ dates }: ITimeDatesProps) {
+export default function MyVote({ dates, bottomSheetHeight }: IMyVoteProps) {
   //투표여부 myVotes
   const { data: timeVotedRes } = useGetTimeVotedQuery();
 
@@ -117,35 +117,51 @@ export default function MyVote({ dates }: ITimeDatesProps) {
     }
   };
 
+  //bottomSheet 스크롤
+  const getScrollAreaStyle = (bottomSheetHeight: number) => {
+    const viewportHeight = window.innerHeight;
+    const threshold = viewportHeight;
+
+    if (bottomSheetHeight <= threshold) {
+      return `max-h-[100dvh] overflow-y-auto`;
+    } else {
+      return 'overflow-visible';
+    }
+  };
+
   return (
-    <div className=" h-full w-full lg:w-1/2 bg-gray-light py-5 px-4 rounded-[1.25rem]">
-      <p className="text-center text-title text-blue-dark02">참석 일시 투표</p>
-      {Array.isArray(dates) &&
-        dates.map((date, index) => {
-          const myVote = initialVotes[index] || {
-            memberAvailableStartTime: '',
-            memberAvailableEndTime: '',
-          };
-          return (
-            <DatePicker
-              key={index}
-              date={date}
-              myVote={myVote}
-              isChecked={checkedStates[index]}
-              onCheckboxChange={() => handleCheckboxChange(index)}
-              onChange={(startHour, startMinute, endHour, endMinute) =>
-                handleDateChange(
-                  index,
-                  date,
-                  startHour,
-                  startMinute,
-                  endHour,
-                  endMinute,
-                )
-              }
-            />
-          );
-        })}
+    <div className="flex flex-col h-full justify-between pb-4 bg-gray-light lg:py-5 px-4 lg:rounded-[1.25rem]">
+      <p className="hidden text-center text-title text-blue-dark02 lg:block">
+        참석 일시 투표
+      </p>
+      <div className={`mb-2 ${getScrollAreaStyle(bottomSheetHeight)}`}>
+        {Array.isArray(dates) &&
+          dates.map((date, index) => {
+            const myVote = initialVotes[index] || {
+              memberAvailableStartTime: '',
+              memberAvailableEndTime: '',
+            };
+            return (
+              <DatePicker
+                key={index}
+                date={date}
+                myVote={myVote}
+                isChecked={checkedStates[index]}
+                onCheckboxChange={() => handleCheckboxChange(index)}
+                onChange={(startHour, startMinute, endHour, endMinute) =>
+                  handleDateChange(
+                    index,
+                    date,
+                    startHour,
+                    startMinute,
+                    endHour,
+                    endMinute,
+                  )
+                }
+              />
+            );
+          })}
+      </div>
       <Button onClick={handleVote} className="w-full px-[0.3125rem]">
         투표하기
       </Button>
