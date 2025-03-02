@@ -32,7 +32,7 @@ const getNewToken = async () => {
     const { accessToken, refreshToken: newRefreshToken } = response.data.data;
     return { accessToken, refreshToken: newRefreshToken };
   } catch (e) {
-    return Promise.reject(e);
+    return null;
   }
 };
 
@@ -65,6 +65,10 @@ instance.interceptors.response.use(
     config.sent = true; // 무한 재요청 방지를 위한 코드
 
     const newToken = await getNewToken();
+
+    if (!newToken) {
+      return Promise.reject(error);
+    }
 
     if (newToken.accessToken && newToken.refreshToken) {
       localStorage.setItem(ACCESS_TOKEN, newToken.accessToken);

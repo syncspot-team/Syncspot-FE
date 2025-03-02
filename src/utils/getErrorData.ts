@@ -10,6 +10,10 @@ const ERROR_CODE: ErrorCodeType = {
     status: '401',
     message: '인증에 실패하였습니다.',
   },
+  'A-003': {
+    status: '401',
+    message: 'Refresh Token이 만료되었습니다.',
+  },
   'A-004': {
     status: '402',
     message: 'Access Token을 재발급해야합니다.',
