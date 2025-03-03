@@ -333,8 +333,8 @@ export default function LocationEnterPage() {
               ))
             )}
           </ul>
-          <div className="flex items-end justify-between">
-            <h1 className="text-menu lg:text-subtitle text-tertiary mb-1 lg:mb-[0.375rem] mt-2 lg:mt-4 ml-2">
+          <div className="flex items-center mb-1 lg:mb-[0.375rem] mt-2 lg:mt-4 ml-2 justify-between">
+            <h1 className=" text-menu lg:text-subtitle text-tertiary">
               친구가 입력한 장소
             </h1>
             <ShareButton />
@@ -441,12 +441,9 @@ export default function LocationEnterPage() {
                 )}
               </ul>
 
-              <div className="flex items-end justify-between">
-                <h1 className="mt-2 mb-1 ml-2 text-menu text-tertiary">
-                  친구가 입력한 장소
-                </h1>
-                <ShareButton />
-              </div>
+              <h1 className="mt-2 mb-1 ml-2 text-menu text-tertiary">
+                친구가 입력한 장소
+              </h1>
               <div
                 className={`mb-2 ${getScrollAreaStyle(bottomSheetHeight)} scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full transition-all duration-300 ease-in-out`}
               >

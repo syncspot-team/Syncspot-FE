@@ -7,7 +7,8 @@ import MobileMenuList from './MobileMenuList';
 import IconMainLogo from '@src/assets/icons/IconMainLogo.svg?react';
 import IconMobileMenuClose from '@src/assets/icons/IconMobileMenuClose.svg?react';
 import ShareButton from './ShareButton';
-import { useRenderShareButton } from '@src/hooks/share/useRenderShareButton';
+import { renderShareButton } from '@src/utils/renderShareButton';
+import { useLocation } from 'react-router-dom';
 
 export default function MobileMenu() {
   const menuRef = useRef<HTMLDivElement>(null);
@@ -16,15 +17,15 @@ export default function MobileMenu() {
   useClickOutside(menuRef, () => setIsMenuOpen(false));
   useResponsiveClose(1024, () => setIsMenuOpen(false));
 
+  const location = useLocation();
   const selectedRoomId = localStorage.getItem('selectedRoomId');
-
-  const renderShareButton = useRenderShareButton(selectedRoomId, true);
+  const IsRenderShareButton = renderShareButton(selectedRoomId, true, location);
 
   return (
     <>
       <div className="flex items-center">
         {/* 공유 */}
-        {renderShareButton && <ShareButton />}
+        {IsRenderShareButton && <ShareButton />}
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="p-2 hover:bg-gray-light rounded-[0.625rem] *:size-5"

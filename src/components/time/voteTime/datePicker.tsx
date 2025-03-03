@@ -37,7 +37,7 @@ export default function DatePicker({
   }, [startHour, startMinute, endHour, endMinute]);
 
   return (
-    <div className="flex flex-col justify-center items-start bg-white-default rounded-[.75rem] lg:h-[7.5rem] h-36 my-4 p-4 no-transition">
+    <div className="flex flex-col justify-center items-start bg-white-default rounded-[.75rem] lg:h-[7.5rem] h-28 my-4 p-4 no-transition">
       <div className="flex items-center mb-2 pointer-events-auto">
         <label className="flex items-center cursor-pointer">
           <input

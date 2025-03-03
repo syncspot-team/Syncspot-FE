@@ -83,34 +83,52 @@ export default function TimeCreatePage() {
   };
 
   return (
-    <div className="mt-12 max-w-[37.5rem] p-4 lg:p-0 py-8 my-0 mx-auto">
-      <Calendar
-        value={selectedDates.length > 0 ? selectedDates[0] : null}
-        formatDay={(_locale, date) => date.getDate().toString()}
-        navigationLabel={({ date }) =>
-          `${date.getFullYear()}년 ${date.getMonth() + 1}월`
-        }
-        prevLabel={<IconLeftArrow className="size-7" />}
-        nextLabel={<IconRightArrow className="size-7" />}
-        prev2Label={null}
-        next2Label={null}
-        minDetail="month"
-        maxDetail="month"
-        showNeighboringMonth={true}
-        className="w-full border-none calendar-custom"
-        calendarType="gregory"
-        tileClassName={({ date }) => {
-          return selectedDates.some((d) => d.getTime() === date.getTime())
-            ? 'selected-date'
-            : '';
-        }}
-        onClickDay={handleDateClick}
-      />
-
-      <div className="flex flex-col items-center justify-center mt-3 text-menu-selected text-tertiary ">
+    <div
+      className={`lg:mt-[1.875rem] h-[calc(100vh-80px)] lg:h-[calc(100vh-120px)] relative max-w-[50rem] p-4 lg:p-0  mx-auto`}
+    >
+      <div className="pb-4 lg:px-[6.25rem]  mx-auto ">
+        <Calendar
+          value={selectedDates.length > 0 ? selectedDates[0] : null}
+          formatDay={(_locale, date) => date.getDate().toString()}
+          navigationLabel={({ date }) =>
+            `${date.getFullYear()}년 ${date.getMonth() + 1}월`
+          }
+          prevLabel={<IconLeftArrow className="size-7" />}
+          nextLabel={<IconRightArrow className="size-7" />}
+          prev2Label={null}
+          next2Label={null}
+          minDetail="month"
+          maxDetail="month"
+          showNeighboringMonth={true}
+          className="w-full border-none calendar-custom"
+          calendarType="gregory"
+          tileClassName={({ date }) => {
+            return selectedDates.some((d) => d.getTime() === date.getTime())
+              ? 'selected-date'
+              : '';
+          }}
+          onClickDay={handleDateClick}
+        />
+      </div>
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 my-auto min-h-[9rem] lg:min-h-0 lg:h-fit whitespace-nowrap lg:grid-cols-5 text-tertiary ">
         {selectedDates.length > 0 ? (
           selectedDates.map((date, index) => (
-            <p key={index}>{formatStringDate(date)}</p>
+            <div
+              key={index}
+              className="flex p-2 px-3 mx-auto rounded-full bg-blue-light02 max-w-[8.4375rem] h-10 text-description lg:text-content"
+            >
+              <p>{formatStringDate(date)}</p>
+              <button
+                className="ml-2 text-red-normal"
+                onClick={() => {
+                  setSelectedDates((prev) =>
+                    prev.filter((d) => d.getTime() !== date.getTime()),
+                  );
+                }}
+              >
+                X
+              </button>
+            </div>
           ))
         ) : (
           <p>날짜를 선택하세요.</p>
@@ -118,7 +136,7 @@ export default function TimeCreatePage() {
       </div>
 
       <Button
-        className="w-full mt-4 px-[0.3125rem]"
+        className="w-full my-4 px-[0.3125rem] "
         onClick={handleCreateClick}
       >
         {getTimeDatesQuery?.data.existence

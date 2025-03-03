@@ -5,6 +5,12 @@
 
 .react-calendar {
   background-color: transparent;
+  font-size: 0.875rem;
+}
+@media (min-width: 1024px) {
+  .react-calendar {
+    font-size: 1rem;
+  }
 }
 
 /* 요일 헤더 간격 조정 */
@@ -53,7 +59,12 @@
   align-items: center;
   transition: none !important;
   color: #000;
-  font-size: 1rem;
+  font-size: 0.875rem;
+}
+@media (min-width: 1024px) {
+  .calendar-custom .react-calendar__tile {
+    font-size: 1rem;
+  }
 }
 
 /* 타일 컨테이너 간격 조정 */
@@ -153,11 +164,12 @@
   align-items: center;
   justify-content: space-between;
   padding: 0;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
   position: relative;
   width: 17.5rem;
   margin-left: auto;
   margin-right: auto;
+  font: 1rem;
 }
 
 /* 네비게이션 버튼 (화살표 아이콘) */
@@ -171,13 +183,19 @@
 .calendar-custom .react-calendar__navigation__label {
   font-family: 'SUIT', sans-serif;
   font-weight: 600;
-  font-size: 1.5rem;
+  font-size: 1rem;
   color: #1a3c95;
   flex: 1;
   text-align: center;
   position: static;
   transform: none;
   white-space: nowrap;
+}
+
+@media (min-width: 1024px) {
+  .calendar-custom .react-calendar__navigation__label {
+    font-size: 1.5rem;
+  }
 }
 
 /* 네비게이션 버튼 hover/focus 상태 */
@@ -189,8 +207,13 @@
 /* 요일 헤더 스타일링 */
 .calendar-custom .react-calendar__month-view__weekdays__weekday {
   font-family: 'SUIT', sans-serif;
-  font-size: 1rem; /* 18px */
+  font-size: 0.875rem;
   padding: 1rem 0;
+}
+@media (min-width: 1024px) {
+  .calendar-custom .react-calendar__month-view__weekdays__weekday {
+    font-size: 1rem; /* 16px */
+  }
 }
 
 /* 요일 헤더의 abbr 태그 밑줄 제거 */
