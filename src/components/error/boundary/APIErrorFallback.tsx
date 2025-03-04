@@ -17,9 +17,9 @@ export const APIErrorFallback = ({
 
     return (
       <ErrorPage
-        status={errorData.status}
-        message={errorData.message}
-        isUnknownError={errorData.status === 'ERROR'}
+        status={errorData?.status}
+        message={errorData?.message}
+        isUnknownError={errorData?.status === 'ERROR'}
         onRetry={resetErrorBoundary}
       />
     );

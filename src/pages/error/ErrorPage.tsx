@@ -2,7 +2,7 @@ import Layout from '@src/components/layout/Layout';
 import Lottie from 'lottie-react';
 import Lottie404 from '@src/assets/lotties/Lottie404.json';
 import { PATH } from '@src/constants/path';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import CustomToast from '@src/components/common/toast/customToast';
 import { TOAST_TYPE } from '@src/types/toastType';
@@ -16,19 +16,17 @@ interface IErrorPageProps {
 }
 
 const ErrorPage = ({
-  status,
-  message,
-  isUnknownError,
+  status = 'ERROR',
+  message = '알 수 없는 오류가 발생했습니다.',
+  isUnknownError = true,
   onRetry,
 }: IErrorPageProps) => {
-  const navigate = useNavigate();
-
   const handleHomeClick = () => {
     onRetry();
     if (isUnknownError) {
       localStorage.clear();
     }
-    navigate(PATH.ROOT);
+    window.location.href = PATH.ROOT;
   };
 
   useEffect(() => {

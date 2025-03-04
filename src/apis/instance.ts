@@ -63,7 +63,7 @@ instance.interceptors.response.use(
   async (error) => {
     const { config, response } = error;
     //  402에러가 아니거나 재요청이거나 refresh 요청인 경우 그냥 에러 발생
-    if (response.status !== 402 || config.sent || config.url === REFRESH_URL) {
+    if (response?.status !== 402 || config.sent || config.url === REFRESH_URL) {
       return Promise.reject(error);
     }
 
