@@ -1,0 +1,88 @@
+name: Auto Tag and Release
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+
+jobs:
+  tag-and-release:
+    if: github.event.pull_request.merged == true || github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate HeadVer version
+        id: version
+        run: |
+          # Get current year and week number (ISO-8601)
+          YEARWEEK=$(date +'%y%V')
+
+          # Get build number (using run number)
+          BUILD=${{ github.run_number }}
+
+          # Get HEAD version from version.txt (create if not exists)
+          HEAD_VERSION=0
+          if [ -f version.txt ]; then
+            HEAD_VERSION=$(cat version.txt)
+          else
+            echo "0" > version.txt
+          fi
+
+          # Construct full version
+          VERSION="${HEAD_VERSION}.${YEARWEEK}.${BUILD}"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Generated version: $VERSION"
+
+      - name: Create and push tag
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git tag -a v${{ steps.version.outputs.version }} -m "Version ${{ steps.version.outputs.version }}"
+          git push origin v${{ steps.version.outputs.version }}
+
+      - name: Get commit messages since last release
+        id: get_changes
+        run: |
+          # 마지막 태그 이후의 모든 커밋 메시지를 가져옵니다
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          if [ -z "$LAST_TAG" ]; then
+            # 첫 번째 릴리즈인 경우
+            CHANGES=$(git log --pretty=format:"* %s" ${{ github.sha }})
+          else
+            CHANGES=$(git log --pretty=format:"* %s" ${LAST_TAG}..${{ github.sha }})
+          fi
+          # GitHub Actions에서 사용할 수 있도록 포맷팅
+          CHANGES="${CHANGES//'%'/'%25'}"
+          CHANGES="${CHANGES//$'\n'/'%0A'}"
+          CHANGES="${CHANGES//$'\r'/'%0D'}"
+          echo "changes=${CHANGES}" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ steps.version.outputs.version }}
+          name: Release v${{ steps.version.outputs.version }}
+          body: |
+            ## 변경사항
+            ${{ steps.get_changes.outputs.changes }}
+
+            ## 기술 정보
+            - 커밋: ${{ github.sha }}
+            - 브랜치: ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+          # 릴리즈에 첨부할 파일들을 지정할 수 있습니다
+          # files: |
+          #   dist/*.jar
+          #   dist/*.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
