@@ -396,7 +396,7 @@ export default function LocationEnterPage() {
           onHeightChange={(height) => setBottomSheetHeight(height)}
         >
           <div className="flex flex-col h-full">
-            <h1 className="flex items-center justify-center my-5 text-subtitle text-tertiary">
+            <h1 className="flex items-center justify-center my-4 text-subtitle text-tertiary">
               모임 정보 입력
             </h1>
             <div className="flex-1 px-4 overflow-y-auto">
@@ -422,7 +422,7 @@ export default function LocationEnterPage() {
                       className="flex relative items-center justify-between bg-white-default rounded-default mb-[0.625rem] ring-1 ring-gray-normal lg:ring-0 lg:hover:ring-1 lg:hover:ring-gray-normal"
                     >
                       <KakaoLocationPicker
-                        InputClassName="w-full text-description bg-white-default py-[1.3125rem] truncate pr-12"
+                        InputClassName="w-full text-description bg-white-default py-[1.0625rem] truncate pr-12"
                         onSelect={(location) =>
                           handleLocationSelect(location, index)
                         }
@@ -455,7 +455,7 @@ export default function LocationEnterPage() {
                   friendLocationFields.map((field) => (
                     <div
                       key={field.id}
-                      className="w-full text-description text-gray-dark truncate mb-[0.625rem] py-[1.3125rem] pl-[0.9375rem] cursor-not-allowed opacity-70"
+                      className="w-full text-description text-gray-dark truncate mb-[0.625rem] py-[1.0625rem] pl-[0.9375rem] cursor-not-allowed opacity-70 bg-gray-light rounded-default"
                     >
                       {field.roadNameAddress}
                     </div>

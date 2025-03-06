@@ -19,6 +19,14 @@
     url('../assets/fonts/Pretendard-Regular.woff2') format('woff2');
 }
 
+@font-face {
+  font-family: TT Interphases Pro Trl Variable;
+  font-weight: normal;
+  src:
+    local('TT Interphases Pro Trl Variable'),
+    url('../assets/fonts/TTInterphasesProTrlVariable.woff2') format('woff2');
+}
+
 @layer base {
   html {
     overflow-x: hidden;

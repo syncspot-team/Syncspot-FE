@@ -84,7 +84,7 @@ export default function PlaceResultPage() {
             </Button>
             <Button
               buttonType="primary"
-              className="w-full px-[0.3125rem] lg:px-0"
+              className="w-full px-[0.3125rem] lg:px-0 bg-gray-normal hover:bg-gray-400"
               onClick={() => {
                 openModal(MODAL_TYPE.RECREATE_VOTE_MODAL);
               }}

@@ -4,6 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
+        tt: 'TT Interphases Pro Trl Variable',
         suit: 'SUIT',
         pre: 'Pretendard',
       },
