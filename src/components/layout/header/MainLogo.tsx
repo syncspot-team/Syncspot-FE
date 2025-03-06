@@ -12,7 +12,7 @@ export default function MainLogo() {
     >
       <div className="flex items-center gap-[0.3125rem]">
         <IconMainLogo className="size-[1.5rem] lg:size-[2rem]" />
-        <span className="-mt-2 text-title lg:text-logo text-tertiary">
+        <span className="-mt-2 text-title lg:text-logo text-tertiary font-tt">
           syncspot
         </span>
       </div>
