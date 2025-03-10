@@ -1,5 +1,6 @@
 <div align="center">
-    <img src="https://github.com/user-attachments/assets/414c6915-f91c-4fe0-8be5-eb4f6c92523c" width="1000" />
+    <img src="https://github.com/user-attachments/assets/414c6915-f91c-4fe0-8be5-eb4f6c92523c" width="1000" /> 
+    <p><a href="https://syncspot.kr/" target="_blank" style="font-size: 20px; font-weight: bold; margin-bottom: 20px;">👉🏻 syncspot 구경하기</a></p>
     <img src="https://img.shields.io/badge/Node.js-22.7.0-339933?logo=nodedotjs"/>
     <img src="https://img.shields.io/badge/React-18.3.1-61DAFB?logo=react"/>
     <img src="https://img.shields.io/badge/TypeScript-5.6.3-3178C6?logo=typescript"/>
@@ -15,7 +16,7 @@
     <img src="https://img.shields.io/badge/ESLint-9.13.0-4B32C3?logo=eslint"/>
 </div>
 
-## [👉🏻 syncspot 구경하기](https://syncspot.kr/)
+##
 
 [![CI/CD](https://github.com/Cotato-Syncspot/Syncspot-FE/actions/workflows//cicd.yml/badge.svg)](https://github.com/Cotato-Syncspot/Syncspot-FE/actions/workflows//cicd.yml)
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FCotato-Syncspot%2FSyncspot-FE&count_bg=%235786FF&title_bg=%23555555&icon=googlemaps.svg&icon_color=%23E7E7E7&title=syncspot&edge_flat=false)](https://hits.seeyoufarm.com)
@@ -36,8 +37,16 @@
 
 ![시간투표](https://github.com/user-attachments/assets/cc9f5002-8a2b-4392-83df-afb426581b48)
 
-## 팀 '모락 (Morak)'
+## 🤔 기술적 고민 (작성 예정...)
+
+### 태윤
+
+### 다희
+
+## 🍻 팀 '모락 (Morak)'
 
 ![KakaoTalk_Photo_2025-03-10-12-49-34 006](https://github.com/user-attachments/assets/5aa12558-7a1c-4a3b-9f9b-61526b8e729c)
 
 ![KakaoTalk_Photo_2025-03-10-12-49-34 007](https://github.com/user-attachments/assets/5e0309a3-0b8f-48cd-8461-c25b1d4a5504)
+
+## 🐬 Developers
