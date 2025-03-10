@@ -1,6 +1,5 @@
 <div align="center">
-    <img src="https://github.com/user-attachments/assets/414c6915-f91c-4fe0-8be5-eb4f6c92523c" width="1000" /> 
-    <p><a href="https://syncspot.kr/" target="_blank" style="font-size: 20px; font-weight: bold; margin-bottom: 20px;">👉🏻 syncspot 구경하기</a></p>
+    <img src="https://github.com/user-attachments/assets/414c6915-f91c-4fe0-8be5-eb4f6c92523c" width="1000" />  <br/><br/>
     <img src="https://img.shields.io/badge/Node.js-22.7.0-339933?logo=nodedotjs"/>
     <img src="https://img.shields.io/badge/React-18.3.1-61DAFB?logo=react"/>
     <img src="https://img.shields.io/badge/TypeScript-5.6.3-3178C6?logo=typescript"/>
@@ -16,37 +15,42 @@
     <img src="https://img.shields.io/badge/ESLint-9.13.0-4B32C3?logo=eslint"/>
 </div>
 
-##
+## [👉🏻 syncspot 구경하기](https://syncspot.kr/)
 
 [![CI/CD](https://github.com/Cotato-Syncspot/Syncspot-FE/actions/workflows//cicd.yml/badge.svg)](https://github.com/Cotato-Syncspot/Syncspot-FE/actions/workflows//cicd.yml)
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FCotato-Syncspot%2FSyncspot-FE&count_bg=%235786FF&title_bg=%23555555&icon=googlemaps.svg&icon_color=%23E7E7E7&title=syncspot&edge_flat=false)](https://hits.seeyoufarm.com)
 
-### 모두가 편하게 만날 수 있는 지름길, Syncspot!<br/>
+## 모두가 편하게 만날 수 있는 지름길, Syncspot!<br/>
 
 ![소개](https://github.com/user-attachments/assets/20714dbf-f7e4-4b94-9028-804873fc5af7)
 
-### | 우리가 만날 수 있는 중간 지점을 찾아줘요!
+## | 우리가 만날 수 있는 중간 지점을 찾아줘요!
 
 ![중간지점](https://github.com/user-attachments/assets/2c53e942-5e9b-48eb-a338-dd966cc48e81)
 
-### | 중간 지점 장소에 대해 만날 장소를 투표로 정할 수 있어요!
+## | 중간 지점 장소에 대해 만날 장소를 투표로 정할 수 있어요!
 
 ![장소투표](https://github.com/user-attachments/assets/360e4c3d-0caa-46a4-b570-8a6d8092714b)
 
-### | 모임 시간을 투표로 정할 수 있어요!
+## | 모임 시간을 투표로 정할 수 있어요!
 
 ![시간투표](https://github.com/user-attachments/assets/cc9f5002-8a2b-4392-83df-afb426581b48)
 
-## 🤔 기술적 고민 (작성 예정...)
+# 🤔 기술적 고민 (작성 예정...)
 
-### 태윤
+## 태윤
 
-### 다희
+## 다희
 
-## 🍻 팀 '모락 (Morak)'
+# 🍻 팀 '모락 (Morak)'
 
 ![KakaoTalk_Photo_2025-03-10-12-49-34 006](https://github.com/user-attachments/assets/5aa12558-7a1c-4a3b-9f9b-61526b8e729c)
 
 ![KakaoTalk_Photo_2025-03-10-12-49-34 007](https://github.com/user-attachments/assets/5e0309a3-0b8f-48cd-8461-c25b1d4a5504)
 
-## 🐬 Developers
+
+# 🐬 Developers
+|                                               [김태윤](https://github.com/Cllaude99)                                                |                                                  [채다희](https://github.com/chae-dahee)                                                  |                                               [윤찬호](https://github.com/yooooonshine)                                                |                                                   [신예진](https://github.com/shinyj0)                                                   | 
+| :--------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------: | 
+| <img width="204" alt="cllaude99" src="https://github.com/user-attachments/assets/14d58bcf-6e2b-4abc-ba28-647323eca9e2"> | <img width="204" alt="채다희" src="https://github.com/user-attachments/assets/eafb84c4-858a-4c52-a3fd-50dd1a5bf8b0"> | <img width="204" alt="윤찬호" src="https://github.com/user-attachments/assets/91e8ebe7-61f4-4b3c-8005-868869772289"> | <img width="204" alt="신예진" src="https://github.com/user-attachments/assets/df456ca0-e3d9-4a5d-b4df-05ef762f4e73"> | 
+|                                                                 **FE**                                                                 |                                                                    **FE**                                                                     |                                                                    **BE**                                                                     |                                                                    **BE**                                                                     |
