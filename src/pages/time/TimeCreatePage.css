@@ -105,39 +105,33 @@
 /* 타일 hover 효과 제거 */
 .react-calendar__tile:enabled:hover,
 .react-calendar__tile:enabled:focus {
-  background-color: #5786ff;
+  background-color: #377bff;
   color: white;
-}
-
-/* 선택된 날짜 스타일 */
-.react-calendar__tile--active {
-  background-color: #5786ff;
-  color: white;
-  transition: none;
-}
-/* 선택되어있는 날짜 스타일링 */
-.selected-date {
-  background-color: #bcd7ff !important;
-  transition: none;
-}
-.selected-date > abbr {
-  color: #377bff !important;
 }
 
 /* 선택된 날짜 hover 시에도 같은 색상 유지 */
 .react-calendar__tile--active:enabled:hover,
 .react-calendar__tile--active:enabled:focus {
-  background-color: #5786ff !important;
-  color: white;
+  background-color: #377bff !important;
+  color: #white;
+}
+
+/* 선택되어있는 날짜 스타일링 */
+.selected-date {
+  background-color: #7a9fff;
   transition: none;
 }
+.selected-date > abbr {
+  color: white;
+}
+/* 선택, 호버 스타일링 */
 .selected-date:enabled:hover {
-  background-color: #5786ff !important;
+  background-color: #377bff !important;
   transition: none !important;
   cursor: hover;
 }
 .selected-date > abbr:hover {
-  color: white !important;
+  color: white;
 }
 
 /* tileDisabled 스타일 */
