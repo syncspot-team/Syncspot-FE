@@ -9,8 +9,8 @@ import {
   ITimeRoomRequest,
   ITimeRoomResponse,
 } from '@src/types/time/timeRoomType';
-import { TIME_KEY } from '@src/state/queries/time/key';
 import { PATH } from '@src/constants/path';
+import { ROOM_QUERY_KEY } from '@src/state/queries/header/key';
 
 export const usePostTimeRoomMutation = (
   options?: UseMutationOptions<ITimeRoomResponse, Error, ITimeRoomRequest>,
@@ -24,8 +24,9 @@ export const usePostTimeRoomMutation = (
       postTimeRoom({ roomId, dates }),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [TIME_KEY.GET_TIME_DATES(roomId!)],
+        queryKey: ROOM_QUERY_KEY.GET_TIME_VOTE_ROOM_EXISTS(roomId!),
       });
+
       navigate(PATH.TIME_VOTE(roomId));
     },
     ...options,

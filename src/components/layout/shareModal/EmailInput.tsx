@@ -14,7 +14,7 @@ export default function EmailInput({ url, onClick }: IEmailInputProps) {
   const { sendEmail, loading, error, success } = useEmailShare();
 
   const handleEmailShare = () => {
-    const message = `안녕하세요 \n\nSyncSpot 중간 지점 찾기 링크 공유합니다:\n\n${url}\n\nSyncSpot\nMORAK team`;
+    const message = `${url}\n\nsyncspot\nMORAK team`;
     sendEmail({ toEmail, message });
     setToEmail('');
   };

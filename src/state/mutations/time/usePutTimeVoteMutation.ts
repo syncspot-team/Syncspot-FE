@@ -24,10 +24,10 @@ export const usePutTimeVoteMutation = (
       putTimeVote({ roomId, dateTime }),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [TIME_KEY.GET_TIME_VOTED(roomId!)],
+        queryKey: TIME_KEY.GET_TIME_LOOKUP(roomId!),
       });
       queryClient.invalidateQueries({
-        queryKey: [TIME_KEY.GET_TIME_RESULT(roomId!)],
+        queryKey: TIME_KEY.GET_TIME_RESULT(roomId!),
       });
 
       navigate(PATH.TIME_RESULT(roomId));

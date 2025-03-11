@@ -10,7 +10,7 @@ export const useGetTimeDatesQuery = (
   const { roomId } = useParams();
 
   return useQuery({
-    queryKey: [TIME_KEY.GET_TIME_DATES(roomId!)],
+    queryKey: TIME_KEY.GET_TIME_DATES(roomId!),
     queryFn: () => getTimeDates(roomId!),
     ...options,
   });
