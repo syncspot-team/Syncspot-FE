@@ -236,11 +236,15 @@ export default function VoteResultGrid({ isMobile }: VoteResultGridProps) {
 
   return (
     <div className="flex flex-col items-center justify-center w-full lg:gap-8">
-      <div className="flex items-center mx-auto mt-4 lg:mt-8 justify-evenly">
+      <div className="flex items-center mx-auto mt-4 lg:mt-8 justify-evenly no-transition">
         <button
           onClick={handlePrev}
           className={mergeClassNames(
-            currentIndex === 0 ? 'text-gray-light' : 'text-blue-normal01',
+            currentIndex === 0
+              ? isMobile
+                ? 'text-white-default'
+                : 'text-gray-light'
+              : 'text-blue-normal01',
           )}
           disabled={currentIndex === 0}
         >
@@ -253,7 +257,9 @@ export default function VoteResultGrid({ isMobile }: VoteResultGridProps) {
           onClick={handleNext}
           className={mergeClassNames(
             currentIndex === formattedDates.length - 1
-              ? 'text-gray-light'
+              ? isMobile
+                ? 'text-white-default'
+                : 'text-gray-light'
               : 'text-blue-normal01',
           )}
           disabled={currentIndex === formattedDates.length - 1}

@@ -79,6 +79,7 @@ export default function DatePicker({
             setStartHour(hour);
             setStartMinute(minute);
           }}
+          isChecked={isChecked}
         />
         <p>~</p>
         <TimeSelectBox
@@ -88,6 +89,7 @@ export default function DatePicker({
             setEndHour(hour);
             setEndMinute(minute);
           }}
+          isChecked={isChecked}
         />
       </div>
     </div>

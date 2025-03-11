@@ -14,10 +14,11 @@ type SelectType = (typeof SELECT_TYPES)[keyof typeof SELECT_TYPES];
 type SelectProps = React.SelectHTMLAttributes<HTMLSelectElement> & {
   selectType: SelectType;
   value: string;
+  isChecked: boolean;
 };
 
 export const Select = forwardRef<HTMLSelectElement, SelectProps>(
-  ({ className, selectType, value, ...props }, ref) => {
+  ({ className, selectType, value, isChecked, ...props }, ref) => {
     return (
       <>
         <select
@@ -49,7 +50,12 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
               </option>
             ))}
         </select>
-        <span className="custom-arrow">
+        <span
+          className={mergeClassNames('custom-arrow', {
+            'text-gray-normal': !isChecked,
+            'text-blue-normal01': isChecked,
+          })}
+        >
           <IconTimeDropdown className="size-4" />
         </span>
       </>
