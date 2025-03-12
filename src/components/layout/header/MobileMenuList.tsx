@@ -13,6 +13,7 @@ import { useLoginStore } from '@src/state/store/loginStore';
 import IconRightHalfArrow from '@src/assets/icons/IconRightHalfArrow.svg?react';
 import { useNavigate } from 'react-router-dom';
 import { PATH } from '@src/constants/path';
+import { useGetUserInfoQuery } from '@src/state/queries/users/useGetUserInfoQuery';
 
 interface IMobileMenuListProps {
   onCloseMenu: () => void;
@@ -27,6 +28,7 @@ export default function MobileMenuList({
   const { isLogin } = useLoginStore();
   const [clickedMenu, setClickedMenu] = useState<string | null>(null);
   const menuItems = useMenuItems();
+  const { data: userInfo } = useGetUserInfoQuery();
 
   useEffect(() => {
     if (!isMenuOpen) {
@@ -134,19 +136,27 @@ export default function MobileMenuList({
                     <span>{sideItem.text}</span>
                   </div>
                   <div>
-                    {sideItem.subItems.map((subItem) => (
-                      <div
-                        key={subItem.path}
-                        className="flex items-center gap-[0.625rem] px-8 py-4 hover:bg-gray-light text-description"
-                        onClick={() => {
-                          onCloseMenu();
-                          window.location.href = subItem.path;
-                        }}
-                      >
-                        <subItem.icon className="-mt-1 size-5" />
-                        <span>{subItem.text}</span>
-                      </div>
-                    ))}
+                    {sideItem.subItems
+                      .filter(
+                        (subItem) =>
+                          !(
+                            userInfo?.data.isOauth &&
+                            subItem.text === '비밀번호 변경'
+                          ),
+                      )
+                      .map((subItem) => (
+                        <div
+                          key={subItem.path}
+                          className="flex items-center gap-[0.625rem] px-8 py-4 hover:bg-gray-light text-description"
+                          onClick={() => {
+                            onCloseMenu();
+                            window.location.href = subItem.path;
+                          }}
+                        >
+                          <subItem.icon className="-mt-1 size-5" />
+                          <span>{subItem.text}</span>
+                        </div>
+                      ))}
                   </div>
                 </div>
               ))}
