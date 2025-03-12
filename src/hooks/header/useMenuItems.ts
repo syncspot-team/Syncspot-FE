@@ -6,8 +6,11 @@ import { useGetPlaceVoteRoomExistsQuery } from '@src/state/queries/header/useGet
 import { useGetTimeViteRoomExistsQuery } from '@src/state/queries/header/useGetTimeViteRoomExistsQuery';
 import { useGetPlaceVotedQuery } from '@src/state/queries/header/useGetPlaceVotedQuery';
 import { useGetTimeVotedQuery } from '@src/state/queries/header/useGetTimeVotedQuery';
+import { MODAL_TYPE, ModalType } from '@src/types/modalType';
 
-export const useMenuItems = () => {
+type OpenModalFunction = (type: ModalType, link: string) => void;
+
+export const useMenuItems = (openModal: OpenModalFunction) => {
   const { roomId } = useRoomStore();
   const navigateWithRoomCheck = useNavigateWithRoomCheck();
   const { data: placeSearchResponse } = useGetCheckLocationEnterQuery();
@@ -47,9 +50,17 @@ export const useMenuItems = () => {
       subMenus: [
         {
           label: placeVoteRoomExists?.data.existence
-            ? '장소 투표 재생성'
+            ? '장소 새 투표 생성'
             : '장소 투표 생성',
-          onClick: () => navigateWithRoomCheck(PATH.PLACE_CREATE(roomId)),
+          onClick: () => {
+            placeVoteRoomExists?.data.existence
+              ? openModal(
+                  MODAL_TYPE.RECREATE_VOTE_MODAL,
+                  PATH.PLACE_CREATE(roomId),
+                )
+              : navigateWithRoomCheck(PATH.PLACE_CREATE(roomId));
+          },
+          // navigateTo: PATH.PLACE_CREATE(roomId),
         },
         ...(placeVoteRoomExists?.data.existence
           ? [
@@ -57,8 +68,11 @@ export const useMenuItems = () => {
                 label: placeVoted?.data.existence
                   ? '장소 재투표하기'
                   : '장소 투표하기',
-                onClick: () => navigateWithRoomCheck(PATH.PLACE_VOTE(roomId)),
+                onClick: () => {
+                  navigateWithRoomCheck(PATH.PLACE_VOTE(roomId));
+                },
               },
+
               {
                 label: '장소 투표 결과',
                 onClick: () => navigateWithRoomCheck(PATH.PLACE_RESULT(roomId)),
@@ -73,9 +87,16 @@ export const useMenuItems = () => {
       subMenus: [
         {
           label: timeVoteRoomExists?.data.existence
-            ? '시간 투표 재생성'
+            ? '시간 새 투표 생성'
             : '시간 투표 생성',
-          onClick: () => navigateWithRoomCheck(PATH.TIME_CREATE(roomId)),
+          onClick: () => {
+            timeVoteRoomExists?.data.existence
+              ? openModal(
+                  MODAL_TYPE.RECREATE_VOTE_MODAL,
+                  PATH.TIME_CREATE(roomId),
+                )
+              : navigateWithRoomCheck(PATH.TIME_CREATE(roomId));
+          },
         },
         ...(timeVoteRoomExists?.data.existence
           ? [
