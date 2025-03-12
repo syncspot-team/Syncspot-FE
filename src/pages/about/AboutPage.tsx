@@ -11,7 +11,7 @@ import IconSmallDolphin from '@src/assets/icons/IconSmallDolphin.svg?react';
 import IconBubbleOne from '@src/assets/icons/IconBubbleOne.svg?react';
 import IconBubbleTwo from '@src/assets/icons/IconBubbleTwo.svg?react';
 import IconAboutSyncspot from '@src/assets/icons/IconAboutSyncspot.svg?react';
-import IconAboutMidpoint from '@src/assets/icons/IconMobileMidpoint.svg?react';
+import IconMobileMidpoint from '@src/assets/icons/IconMobileMidpoint.png';
 import IconAboutPlaceVote from '@src/assets/icons/IconMobilePlaceVote.svg?react';
 import IconAboutTimeVoteMobile from '@src/assets/icons/IconMobileTimeVote.svg?react';
 import { Link } from 'react-router-dom';
@@ -122,7 +122,11 @@ export default function AboutPage() {
             <h3 className="mb-4 text-menu-selected text-primary">
               중간 지점 찾기
             </h3>
-            <IconAboutMidpoint className="w-full mb-4" />
+            <img
+              src={IconMobileMidpoint}
+              alt="IconMobileMidpoint"
+              className="w-full mb-4"
+            />
             <h3 className="text-description">
               한국이라면 어디든 유동인구가 많은 지역을 골라
             </h3>
