@@ -23,7 +23,13 @@ export const usePutTimeRoomMutation = (
     mutationFn: ({ dates }: ITimeRoomRequest) => putTimeRoom({ roomId, dates }),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [TIME_KEY.GET_TIME_DATES(roomId!)],
+        queryKey: TIME_KEY.GET_TIME_DATES(roomId!),
+      });
+      queryClient.invalidateQueries({
+        queryKey: TIME_KEY.GET_TIME_LOOKUP(roomId!),
+      });
+      queryClient.invalidateQueries({
+        queryKey: TIME_KEY.GET_TIME_RESULT(roomId!),
       });
       navigate(PATH.TIME_VOTE(roomId));
     },

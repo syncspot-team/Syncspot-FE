@@ -24,36 +24,39 @@ export default function MyVote({ dates, bottomSheetHeight }: IMyVoteProps) {
   const myVotesExistence = timeVotedRes?.data.myVotesExistence;
   const myVotes = timeVotedRes?.data.myVotes;
 
-  //투표값 존재할 경우
-  const initialVotes = myVotesExistence
-    ? myVotes.map(
-        ({ memberAvailableStartTime, memberAvailableEndTime }: IVotes) => ({
-          memberAvailableStartTime,
-          memberAvailableEndTime,
-        }),
-      )
-    : [];
-
   //기본 투표정보 - 존재할경우, 없을경우[]
-  const [votes, setVotes] = useState<IVotes[]>(initialVotes);
+  const [votes, setVotes] = useState<IVotes[]>([]);
 
   // 체크 상태
   const [checkedStates, setCheckedStates] = useState<boolean[]>(
     Array(dates.length).fill(false),
   );
   useEffect(() => {
-    if (initialVotes.length === 0) return;
-
-    const updatedCheckedStates = dates.map((date, index) => {
-      const myVote = initialVotes[index] || {
-        memberAvailableStartTime: '',
-        memberAvailableEndTime: '',
-      };
-      const votedDate = myVote.memberAvailableStartTime.split(' ')[0];
-      return formatStringDate(date) === votedDate;
-    });
-    setCheckedStates(updatedCheckedStates);
-  }, [dates, myVotes]);
+    if (myVotesExistence) {
+      //초기값
+      const newVotes = myVotes.map(
+        ({ memberAvailableStartTime, memberAvailableEndTime }: IVotes) => ({
+          memberAvailableStartTime,
+          memberAvailableEndTime,
+        }),
+      );
+      setVotes(newVotes);
+      // 체크 상태 업데이트
+      const updatedCheckedStates = dates.map((date, index) => {
+        const myVote = newVotes[index] || {
+          memberAvailableStartTime: '',
+          memberAvailableEndTime: '',
+        };
+        const votedDate = myVote.memberAvailableStartTime.split(' ')[0];
+        return formatStringDate(date) === votedDate;
+      });
+      setCheckedStates(updatedCheckedStates);
+    } else {
+      // 투표 데이터가 없을 경우 초기화
+      setCheckedStates(Array(dates.length).fill(false));
+      setVotes([]);
+    }
+  }, [myVotesExistence, myVotes, dates]);
 
   const handleCheckboxChange = (index: number) => {
     const updatedCheckedStates = [...checkedStates];
@@ -61,7 +64,7 @@ export default function MyVote({ dates, bottomSheetHeight }: IMyVoteProps) {
     setCheckedStates(updatedCheckedStates);
   };
 
-  //투표하기
+  //투표하기 핸들러
   const handleVote = () => {
     const voteData: ITimeVoteRequest = {
       roomId: roomId,
@@ -92,7 +95,7 @@ export default function MyVote({ dates, bottomSheetHeight }: IMyVoteProps) {
     }
   };
 
-  //select 값
+  //select 값 핸들러
   const handleDateChange = (
     index: number,
     date: Date,
@@ -137,7 +140,7 @@ export default function MyVote({ dates, bottomSheetHeight }: IMyVoteProps) {
       <div className={`mb-2 ${getScrollAreaStyle(bottomSheetHeight)}`}>
         {Array.isArray(dates) &&
           dates.map((date, index) => {
-            const myVote = initialVotes[index] || {
+            const myVote = votes[index] || {
               memberAvailableStartTime: '',
               memberAvailableEndTime: '',
             };

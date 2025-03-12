@@ -6,6 +6,7 @@ export default function TimeSelectBox({
   initialHour,
   initialMinute,
   onChange,
+  isChecked,
 }: ITimeSelectBoxProps) {
   const [hour, setHour] = useState(initialHour);
   const [minute, setMinute] = useState(initialMinute);
@@ -30,7 +31,12 @@ export default function TimeSelectBox({
   return (
     <div className="flex items-center justify-center w-full gap-4">
       <div className="relative max-w-[6.25rem] w-full">
-        <Select selectType="hour" value={hour} onChange={handleHourChange} />
+        <Select
+          selectType="hour"
+          value={hour}
+          onChange={handleHourChange}
+          isChecked={isChecked}
+        />
       </div>
 
       <div className="relative max-w-[6.25rem] w-full">
@@ -38,6 +44,7 @@ export default function TimeSelectBox({
           selectType="minute"
           value={minute}
           onChange={handleMinuteChange}
+          isChecked={isChecked}
         />
       </div>
     </div>

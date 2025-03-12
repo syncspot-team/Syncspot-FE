@@ -28,6 +28,7 @@ export interface ITimeSelectBoxProps {
   initialHour: string;
   initialMinute: string;
   onChange: (start: string, end: string) => void;
+  isChecked: boolean;
 }
 
 export interface ITimeGridProps {

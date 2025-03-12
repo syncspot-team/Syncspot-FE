@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import IconLeftArrow from '@src/assets/icons/IconLeftArrow.svg?react';
 import IconRightArrow from '@src/assets/icons/IconRightArrow.svg?react';
 import Button from '@src/components/common/button/Button';
@@ -10,26 +10,13 @@ import {
   usePostTimeRoomMutation,
   usePutTimeRoomMutation,
 } from '@src/state/mutations/time';
-import {
-  arraysEqual,
-  formatDate,
-  formatStringDate,
-} from '@src/components/time/utils/formatDate';
-import { useNavigate, useParams } from 'react-router-dom';
-import { PATH } from '@src/constants/path';
+import { formatStringDate } from '@src/components/time/utils/formatDate';
 import { useGetTimeDatesQuery } from '@src/state/queries/time';
 
 export default function TimeCreatePage() {
-  const navigate = useNavigate();
-  const { roomId } = useParams();
   const [selectedDates, setSelectedDates] = useState<Date[]>([]);
 
   const { data: getTimeDatesQuery } = useGetTimeDatesQuery();
-
-  useEffect(() => {
-    getTimeDatesQuery?.data.existence &&
-      setSelectedDates(getTimeDatesQuery.data.dates.map(formatDate));
-  }, [roomId, getTimeDatesQuery]);
 
   const { mutate: createTimeRoomMutation } = usePostTimeRoomMutation();
 
@@ -67,15 +54,7 @@ export default function TimeCreatePage() {
 
     let formattedDates = selectedDates.map((value) => formatStringDate(value));
 
-    if (
-      getTimeDatesQuery?.data.existence &&
-      arraysEqual(getTimeDatesQuery?.data.dates, formattedDates)
-    ) {
-      navigate(PATH.TIME_VOTE(roomId));
-    } else if (
-      getTimeDatesQuery?.data.existence &&
-      !arraysEqual(getTimeDatesQuery?.data.dates, formattedDates)
-    ) {
+    if (getTimeDatesQuery?.data.existence) {
       updateTimeRoomMutation({ dates: formattedDates });
     } else {
       createTimeRoomMutation({ dates: formattedDates });
@@ -84,9 +63,9 @@ export default function TimeCreatePage() {
 
   return (
     <div
-      className={`lg:mt-[1.875rem] h-[calc(100vh-80px)] lg:h-[calc(100vh-120px)] relative max-w-[50rem] p-4 lg:p-0  mx-auto`}
+      className={`lg:mt-4 h-[calc(100vh-80px)] lg:h-[calc(100vh-120px)] relative max-w-[50rem] p-4 lg:p-0  mx-auto`}
     >
-      <div className="pb-4 lg:px-[6.25rem]  mx-auto ">
+      <div className="pb-4 lg:px-[6.25rem] lg:h-[632px] min-h-[26.5rem] mb-4 mx-auto ">
         <Calendar
           value={selectedDates.length > 0 ? selectedDates[0] : null}
           formatDay={(_locale, date) => date.getDate().toString()}
@@ -110,16 +89,16 @@ export default function TimeCreatePage() {
           onClickDay={handleDateClick}
         />
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 my-auto min-h-[9rem] lg:min-h-0 lg:h-fit whitespace-nowrap lg:grid-cols-5 text-tertiary ">
+      <div className="grid grid-cols-2 sm:grid-cols-3 mx-10 lg:mx-0 gap-2 my-auto min-h-[9rem] lg:min-h-0 lg:h-fit whitespace-nowrap lg:grid-cols-5 text-tertiary ">
         {selectedDates.length > 0 ? (
           selectedDates.map((date, index) => (
             <div
               key={index}
-              className="flex p-2 px-3 mx-auto rounded-full bg-blue-light02 max-w-[8.4375rem] h-10 text-description lg:text-content"
+              className="flex p-2 px-3 mx-auto rounded-full bg-blue-light02 max-w-[8.4375rem] flex-row items-center h-10 text-description lg:text-content "
             >
               <p>{formatStringDate(date)}</p>
               <button
-                className="ml-2 text-red-normal"
+                className="ml-2 text-red-normal hover:text-subtitle "
                 onClick={() => {
                   setSelectedDates((prev) =>
                     prev.filter((d) => d.getTime() !== date.getTime()),
@@ -131,7 +110,7 @@ export default function TimeCreatePage() {
             </div>
           ))
         ) : (
-          <p>날짜를 선택하세요.</p>
+          <p className="h-10">날짜를 선택하세요.</p>
         )}
       </div>
 
@@ -139,14 +118,7 @@ export default function TimeCreatePage() {
         className="w-full my-4 px-[0.3125rem] "
         onClick={handleCreateClick}
       >
-        {getTimeDatesQuery?.data.existence
-          ? arraysEqual(
-              getTimeDatesQuery?.data.dates,
-              selectedDates.map((value) => formatStringDate(value)),
-            )
-            ? '시간 투표 이동'
-            : '시간 투표 재생성'
-          : '시간 투표 생성'}
+        시간 투표 생성
       </Button>
     </div>
   );

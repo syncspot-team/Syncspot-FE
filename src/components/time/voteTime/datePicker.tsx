@@ -23,14 +23,20 @@ export default function DatePicker({
         .split(':');
       setStartHour(startTime[0]);
       setStartMinute(startTime[1]);
+    } else {
+      setStartHour('00');
+      setStartMinute('00');
     }
 
     if (myVote && myVote.memberAvailableEndTime) {
       const endTime = myVote.memberAvailableEndTime.split(' ')[1].split(':');
       setEndHour(endTime[0]);
       setEndMinute(endTime[1]);
+    } else {
+      setEndHour('00');
+      setEndMinute('00');
     }
-  }, [myVote.memberAvailableStartTime, myVote.memberAvailableEndTime]);
+  }, [myVote]);
 
   useEffect(() => {
     onChange(startHour, startMinute, endHour, endMinute);
@@ -79,6 +85,7 @@ export default function DatePicker({
             setStartHour(hour);
             setStartMinute(minute);
           }}
+          isChecked={isChecked}
         />
         <p>~</p>
         <TimeSelectBox
@@ -88,6 +95,7 @@ export default function DatePicker({
             setEndHour(hour);
             setEndMinute(minute);
           }}
+          isChecked={isChecked}
         />
       </div>
     </div>

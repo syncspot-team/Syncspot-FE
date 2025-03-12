@@ -10,7 +10,7 @@ export default function RecreateVoteModal({
   return (
     <div className="flex flex-col items-center w-full">
       <h2 className="mb-2 text-subtitle lg:text-title text-tertiary">
-        투표 재생성하기
+        새 투표 생성하기
       </h2>
       <p className="mb-6 text-description lg:text-content text-gray-dark">
         기존의 투표를 삭제하고 새로운 투표를 생성하시겠습니까?
