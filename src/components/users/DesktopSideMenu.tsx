@@ -1,9 +1,12 @@
 import SideMenuItem from './SideMenuItem';
 import { sideMenuItems } from './constants/sideMenuItems';
 import { useGetUserInfoQuery } from '@src/state/queries/users/useGetUserInfoQuery';
-
+import { useLoginStore } from '@src/state/store/loginStore';
 export default function DesktopSideMenu() {
-  const { data: userInfo } = useGetUserInfoQuery();
+  const { isLogin } = useLoginStore();
+  const { data: userInfo } = useGetUserInfoQuery({
+    enabled: isLogin,
+  });
 
   return (
     <div className="bg-gray-light rounded-default p-3 min-h-[calc(100vh-9.375rem)]">
@@ -16,7 +19,9 @@ export default function DesktopSideMenu() {
             {item.subItems
               .filter(
                 (subItem) =>
-                  !(userInfo?.data.isOauth && subItem.text === '비밀번호 변경'),
+                  !(
+                    userInfo?.data?.isOauth && subItem.text === '비밀번호 변경'
+                  ),
               )
               .map((subItem) => (
                 <SideMenuItem
