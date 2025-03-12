@@ -136,60 +136,35 @@ export default function MobileMenuList({
                 }`}
               />
             </div>
-          )}
-        </li>
-      ))}
-      {isLogin ? (
-        <li>
-          <div
-            className="flex items-center justify-between p-4 hover:bg-gray-light"
-            onClick={(e) =>
-              handleMenuClick(e, {
-                label: '계정 설정',
-                onClick: () => {},
-                subMenus: [],
-              })
-            }
-          >
-            <div className="flex items-center gap-[0.625rem]">
-              <IconMenuAccount className="size-5" />
-              <span>계정 설정</span>
-            </div>
-            <IconDropdown
-              className={`size-5 transition-transform ${
-                clickedMenu === '계정 설정' ? 'rotate-180' : ''
-              }`}
-            />
-          </div>
-          {clickedMenu === '계정 설정' && (
-            <div className="bg-white-default">
-              {sideMenuItems.map((sideItem) => (
-                <div key={sideItem.text}>
-                  <div className="flex items-center gap-3 py-3 pl-6 font-semibold text-description text-gray-dark">
-                    <span>{sideItem.text}</span>
-                  </div>
-                  <div>
-                    {sideItem.subItems
-                      .filter(
-                        (subItem) =>
-                          !(
-                            userInfo?.data.isOauth &&
-                            subItem.text === '비밀번호 변경'
-                          ),
-                      )
-                      .map((subItem) => (
-                        <div
-                          key={subItem.path}
-                          className="flex items-center gap-[0.625rem] px-8 py-4 hover:bg-gray-light text-description"
-                          onClick={() => {
-                            onCloseMenu();
-                            window.location.href = subItem.path;
-                          }}
-                        >
-                          <subItem.icon className="-mt-1 size-5" />
-                          <span>{subItem.text}</span>
-                        </div>
-                      ))}
+            {clickedMenu === '계정 설정' && (
+              <div className="bg-white-default">
+                {sideMenuItems.map((sideItem) => (
+                  <div key={sideItem.text}>
+                    <div className="flex items-center gap-3 py-3 pl-6 font-semibold text-description text-gray-dark">
+                      <span>{sideItem.text}</span>
+                    </div>
+                    <div>
+                      {sideItem.subItems
+                        .filter(
+                          (subItem) =>
+                            !(
+                              userInfo?.data.isOauth &&
+                              subItem.text === '비밀번호 변경'
+                            ),
+                        )
+                        .map((subItem) => (
+                          <div
+                            key={subItem.path}
+                            className="flex items-center gap-[0.625rem] px-8 py-4 hover:bg-gray-light text-description"
+                            onClick={() => {
+                              onCloseMenu();
+                              window.location.href = subItem.path;
+                            }}
+                          >
+                            <subItem.icon className="-mt-1 size-5" />
+                            <span>{subItem.text}</span>
+                          </div>
+                        ))}
                     </div>
                   </div>
                 ))}
