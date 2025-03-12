@@ -17,6 +17,7 @@ import { useModal } from '@src/hooks/useModal';
 import Modal from '@src/components/common/modal/Modal';
 import { MODAL_TYPE } from '@src/types/modalType';
 import RecreateVoteModal from '@src/components/common/modal/RecreateVoteModal';
+import { useGetUserInfoQuery } from '@src/state/queries/users/useGetUserInfoQuery';
 
 interface IMobileMenuListProps {
   onCloseMenu: () => void;
@@ -32,6 +33,7 @@ export default function MobileMenuList({
   const { isLogin } = useLoginStore();
   const [clickedMenu, setClickedMenu] = useState<string | null>(null);
   const menuItems = useMenuItems(openModal);
+  const { data: userInfo } = useGetUserInfoQuery();
 
   useEffect(() => {
     if (!isMenuOpen) {
@@ -134,15 +136,48 @@ export default function MobileMenuList({
                 }`}
               />
             </div>
-            {clickedMenu === '계정 설정' && (
-              <div className="bg-white-default">
-                {sideMenuItems.map((sideItem) => (
-                  <div key={sideItem.text}>
-                    <div className="flex items-center gap-3 py-3 pl-6 font-semibold text-description text-gray-dark">
-                      <span>{sideItem.text}</span>
-                    </div>
-                    <div>
-                      {sideItem.subItems.map((subItem) => (
+          )}
+        </li>
+      ))}
+      {isLogin ? (
+        <li>
+          <div
+            className="flex items-center justify-between p-4 hover:bg-gray-light"
+            onClick={(e) =>
+              handleMenuClick(e, {
+                label: '계정 설정',
+                onClick: () => {},
+                subMenus: [],
+              })
+            }
+          >
+            <div className="flex items-center gap-[0.625rem]">
+              <IconMenuAccount className="size-5" />
+              <span>계정 설정</span>
+            </div>
+            <IconDropdown
+              className={`size-5 transition-transform ${
+                clickedMenu === '계정 설정' ? 'rotate-180' : ''
+              }`}
+            />
+          </div>
+          {clickedMenu === '계정 설정' && (
+            <div className="bg-white-default">
+              {sideMenuItems.map((sideItem) => (
+                <div key={sideItem.text}>
+                  <div className="flex items-center gap-3 py-3 pl-6 font-semibold text-description text-gray-dark">
+                    <span>{sideItem.text}</span>
+                  </div>
+                  <div>
+                    {sideItem.subItems
+                      .filter(
+                        (subItem) =>
+                          !(
+                            userInfo?.data.isOauth &&
+                            subItem.text === '비밀번호 변경'
+                          ),
+                      )
+                      .map((subItem) => (
                         <div
                           key={subItem.path}
                           className="flex items-center gap-[0.625rem] px-8 py-4 hover:bg-gray-light text-description"

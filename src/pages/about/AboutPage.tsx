@@ -11,7 +11,7 @@ import IconSmallDolphin from '@src/assets/icons/IconSmallDolphin.svg?react';
 import IconBubbleOne from '@src/assets/icons/IconBubbleOne.svg?react';
 import IconBubbleTwo from '@src/assets/icons/IconBubbleTwo.svg?react';
 import IconAboutSyncspot from '@src/assets/icons/IconAboutSyncspot.svg?react';
-import IconAboutMidpoint from '@src/assets/icons/IconMobileMidpoint.svg?react';
+import IconMobileMidpoint from '@src/assets/icons/IconMobileMidpoint.png';
 import IconAboutPlaceVote from '@src/assets/icons/IconMobilePlaceVote.svg?react';
 import IconAboutTimeVoteMobile from '@src/assets/icons/IconMobileTimeVote.svg?react';
 import { Link } from 'react-router-dom';
@@ -122,7 +122,11 @@ export default function AboutPage() {
             <h3 className="mb-4 text-menu-selected text-primary">
               중간 지점 찾기
             </h3>
-            <IconAboutMidpoint className="w-full mb-4" />
+            <img
+              src={IconMobileMidpoint}
+              alt="IconMobileMidpoint"
+              className="w-full mb-4"
+            />
             <h3 className="text-description">
               한국이라면 어디든 유동인구가 많은 지역을 골라
             </h3>
@@ -183,13 +187,18 @@ export default function AboutPage() {
               <br />
               공평한 우리의 중간 지점을 찾아줍니다.
             </p>
-            <Link
-              to="https://www.notion.so/119ec33789248135bbfbc44c41ce3cab?pvs=4"
+            <button
+              onClick={() =>
+                CustomToast({
+                  type: 'success',
+                  message: '준비중인 서비스 입니다',
+                })
+              }
               className="flex items-center justify-center gap-2 p-4 rounded-lg bg-gray-light hover:bg-gray-light01 hover:bg-gray-200"
             >
               <span>중간 지점을 찾는 원리가 궁금하다면?</span>
               <IconRightHalfArrow className="size-5" />
-            </Link>
+            </button>
           </div>
         </section>
 
@@ -350,10 +359,8 @@ export default function AboutPage() {
         <div className="flex items-center justify-center gap-4 mt-4 lg:justify-end lg:gap-6">
           <span
             onClick={() =>
-              CustomToast({
-                type: 'success',
-                message: '준비중인 서비스 입니다',
-              })
+              (window.location.href =
+                'https://www.instagram.com/syncspot_official?igsh=MWp5MjdzaHNtc2xsMg%3D%3D&utm_source=qr')
             }
             className="p-2 lg:p-4 rounded-full shadow-lg bg-white-default cursor-pointer hover:translate-y-[-0.25rem]"
           >

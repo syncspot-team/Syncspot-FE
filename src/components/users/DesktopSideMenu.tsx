@@ -1,7 +1,10 @@
 import SideMenuItem from './SideMenuItem';
 import { sideMenuItems } from './constants/sideMenuItems';
+import { useGetUserInfoQuery } from '@src/state/queries/users/useGetUserInfoQuery';
 
 export default function DesktopSideMenu() {
+  const { data: userInfo } = useGetUserInfoQuery();
+
   return (
     <div className="bg-gray-light rounded-default p-3 min-h-[calc(100vh-9.375rem)]">
       {sideMenuItems.map((item) => (
@@ -10,12 +13,17 @@ export default function DesktopSideMenu() {
             <span>{item.text}</span>
           </div>
           <div className="mb-3 ml-5">
-            {item.subItems.map((subItem) => (
-              <SideMenuItem
-                key={subItem.path}
-                item={{ ...subItem, isMobile: false }}
-              />
-            ))}
+            {item.subItems
+              .filter(
+                (subItem) =>
+                  !(userInfo?.data.isOauth && subItem.text === '비밀번호 변경'),
+              )
+              .map((subItem) => (
+                <SideMenuItem
+                  key={subItem.path}
+                  item={{ ...subItem, isMobile: false }}
+                />
+              ))}
           </div>
         </div>
       ))}
