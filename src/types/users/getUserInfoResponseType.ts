@@ -9,5 +9,6 @@ export interface IGetUserInfoResponse {
     roadNameAddress: string;
     addressLatitude: number;
     addressLongitude: number;
+    isOauth: boolean;
   };
 }
