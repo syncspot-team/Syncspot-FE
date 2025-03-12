@@ -89,7 +89,7 @@ export default function PlaceResultPage() {
                 openModal(MODAL_TYPE.RECREATE_VOTE_MODAL);
               }}
             >
-              투표 재생성하기
+              새 투표 생성하기
             </Button>
           </div>
         </div>
