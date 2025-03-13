@@ -64,9 +64,9 @@ export default function OnBoardingPlan({
               {roomList.data.map((item: IRoom) => (
                 <li
                   key={item.roomId}
-                  className={`flex items-center justify-between w-full  text-content text-tertiary bg-gray-light py-[0.875rem] lg:py-[1rem] px-[1.0625rem] rounded-default cursor-pointer ${
+                  className={`flex items-center justify-between w-full text-content text-tertiary bg-gray-light py-[0.875rem] lg:py-[1.25rem] px-[1.0625rem] rounded-default cursor-pointer ${
                     clickedRoomId === item.roomId
-                      ? 'ring-2 ring-blue-light02 bg-white-default'
+                      ? 'ring-2 ring-blue-light02 bg-white-default '
                       : ''
                   }`}
                   onClick={() => handleRoomClick(item.roomId, item.roomName)}
@@ -86,9 +86,9 @@ export default function OnBoardingPlan({
             <Button
               onClick={handleAddButtonClick}
               buttonType="secondary"
-              className="mb-[1.0625rem] p-0 w-full lg:py-[1.125rem] lg:px-[12.3125rem]"
+              className="mb-[1.0625rem] p-0 w-full lg:py-[1.125rem] lg:px-[12.3125rem] bg-white-default text-gray-dark hover:bg-white-default border border-gray-normal"
             >
-              모임 추가
+              + 모임 생성하기
             </Button>
             <Button
               onClick={handleNextButtonClick}
