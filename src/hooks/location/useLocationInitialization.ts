@@ -66,6 +66,28 @@ export function useLocationInitialization({
             },
           },
         );
+      } else if (placeSearchData.data.myLocations.length === 0) {
+        // 내 장소가 없고 기본 주소도 없는 경우, 빈 입력 칸 하나 추가
+        reset({
+          myLocations: [
+            {
+              siDo: '',
+              siGunGu: '',
+              roadNameAddress: '',
+              addressLat: 0,
+              addressLong: 0,
+            },
+          ],
+          friendLocations: placeSearchData.data.friendLocations.map(
+            (place: ILocation) => ({
+              siDo: place.siDo,
+              siGunGu: place.siGunGu,
+              roadNameAddress: place.roadNameAddress,
+              addressLat: place.addressLat,
+              addressLong: place.addressLong,
+            }),
+          ),
+        });
       } else {
         setSavedLocations(placeSearchData.data.myLocations);
         reset({
