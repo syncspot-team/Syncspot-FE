@@ -17,15 +17,15 @@ export default function EditableField({
   onEditToggle,
 }: IEditableFieldProps) {
   return (
-    <div className="flex items-center justify-between gap-2">
+    <div className="relative flex items-center justify-between gap-2">
       {isEditing ? (
         <Input
           value={value}
           onChange={onChange}
-          className="flex-1 py-1 pl-2 rounded-lg bg-white-default ring-1 ring-gray-normal text-description lg:text-content"
+          className="flex-1 py-3 pl-2 rounded-lg bg-white-default ring-1 ring-gray-normal text-description lg:text-content"
         />
       ) : (
-        <p className="flex-1 truncate text-description lg:text-content">
+        <p className="flex-1 p-3 pl-4 truncate rounded-lg text-description lg:text-content bg-gray-light text-blue-dark03">
           {displayValue}
         </p>
       )}
@@ -38,7 +38,7 @@ export default function EditableField({
         </span>
       ) : (
         <IconEditPen
-          className="cursor-pointer p-1 rounded-[0.5rem] hover:bg-gray-light"
+          className="cursor-pointer p-1 rounded-[0.5rem] absolute right-2 hover:bg-white-default text-blue-dark03"
           onClick={onEditToggle}
         />
       )}
