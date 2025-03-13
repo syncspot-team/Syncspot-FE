@@ -19,6 +19,7 @@ import ShareButton from '@src/components/layout/header/ShareButton';
 import BottomSheet from '@src/components/common/bottomSheet/BottomSheet';
 import { useQueryClient } from '@tanstack/react-query';
 import { ROOM_QUERY_KEY } from '@src/state/queries/header/key';
+import { useGetUserInfoQuery } from '@src/state/queries/users/useGetUserInfoQuery';
 
 interface ILocationForm {
   myLocations: IPlaceSaveRequestType[];
@@ -38,6 +39,7 @@ export default function LocationEnterPage() {
   const { data: placeSearchData } = useGetPlaceSearchQuery({
     enabled: !!roomId,
   });
+  const { data: userInfo } = useGetUserInfoQuery();
 
   const { mutate: placeSaveMutation } = usePlaceSaveMutation(); // 장소 저장
   const { mutate: placeUpdateMutation } = usePlaceUpdateMutation(); // 장소 수정
@@ -73,30 +75,68 @@ export default function LocationEnterPage() {
 
   useEffect(() => {
     if (placeSearchData?.data) {
-      setSavedLocations(placeSearchData.data.myLocations);
+      // 내 장소가 없고, 사용자의 기본 주소가 있는 경우에만 자동 저장
+      if (
+        placeSearchData.data.myLocations.length === 0 &&
+        userInfo?.data?.existAddress &&
+        userInfo.data?.addressLatitude &&
+        userInfo.data?.addressLongitude
+      ) {
+        const defaultLocation = {
+          siDo: userInfo.data.siDo,
+          siGunGu: userInfo.data.siGunGu,
+          roadNameAddress: userInfo.data.roadNameAddress,
+          addressLat: userInfo.data.addressLatitude,
+          addressLong: userInfo.data.addressLongitude,
+        };
 
-      reset({
-        myLocations: placeSearchData.data.myLocations.map(
-          (place: ILocation) => ({
-            siDo: place.siDo,
-            siGunGu: place.siGunGu,
-            roadNameAddress: place.roadNameAddress,
-            addressLat: place.addressLat,
-            addressLong: place.addressLong,
-          }),
-        ),
-        friendLocations: placeSearchData.data.friendLocations.map(
-          (place: ILocation) => ({
-            siDo: place.siDo,
-            siGunGu: place.siGunGu,
-            roadNameAddress: place.roadNameAddress,
-            addressLat: place.addressLat,
-            addressLong: place.addressLong,
-          }),
-        ),
-      });
+        placeSaveMutation(
+          { placeSavePayload: defaultLocation },
+          {
+            onSuccess: (data) => {
+              setSavedLocations([
+                { ...defaultLocation, placeId: data.data.placeId },
+              ]);
+              reset({
+                myLocations: [defaultLocation],
+                friendLocations: placeSearchData.data.friendLocations.map(
+                  (place: ILocation) => ({
+                    siDo: place.siDo,
+                    siGunGu: place.siGunGu,
+                    roadNameAddress: place.roadNameAddress,
+                    addressLat: place.addressLat,
+                    addressLong: place.addressLong,
+                  }),
+                ),
+              });
+            },
+          },
+        );
+      } else {
+        setSavedLocations(placeSearchData.data.myLocations);
+        reset({
+          myLocations: placeSearchData.data.myLocations.map(
+            (place: ILocation) => ({
+              siDo: place.siDo,
+              siGunGu: place.siGunGu,
+              roadNameAddress: place.roadNameAddress,
+              addressLat: place.addressLat,
+              addressLong: place.addressLong,
+            }),
+          ),
+          friendLocations: placeSearchData.data.friendLocations.map(
+            (place: ILocation) => ({
+              siDo: place.siDo,
+              siGunGu: place.siGunGu,
+              roadNameAddress: place.roadNameAddress,
+              addressLat: place.addressLat,
+              addressLong: place.addressLong,
+            }),
+          ),
+        });
+      }
     }
-  }, [placeSearchData?.data, reset]);
+  }, [placeSearchData?.data, userInfo?.data, reset, placeSaveMutation]);
 
   useEffect(() => {
     if (
