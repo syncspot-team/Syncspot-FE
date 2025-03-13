@@ -58,6 +58,7 @@ export const getErrorData = (
 ) => {
   const serverErrorCode = error?.response?.data?.code ?? '';
   const axiosErrorCode = error?.code ?? '';
+  console.log(error);
 
   if (serverErrorCode === 'C-202') {
     return {

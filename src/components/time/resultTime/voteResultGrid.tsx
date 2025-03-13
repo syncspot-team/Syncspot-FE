@@ -9,11 +9,12 @@ import {
   format612Hour,
   format624Hour,
   format6Hour,
-  getTimeIndex,
 } from '@src/components/time/utils/formatTime';
 import { mergeClassNames } from '@src/utils/mergeClassNames';
 import { useEffect, useState } from 'react';
 import GridTime from './gridTime';
+import { fillGridColors } from '../utils/fillGridColors';
+import { formatStringDate } from '../utils/formatDate';
 
 interface VoteResultGridProps {
   isMobile: boolean;
@@ -57,11 +58,8 @@ export default function VoteResultGrid({ isMobile }: VoteResultGridProps) {
   //표시되는 날짜 리스트
   const dateKeys = Object.keys(data?.result || {});
   const formattedDates = dateKeys.map((date) => {
-    // const year = date.split('-')[0];
-    const month = date.split('-')[1];
-    const day = date.split('-')[2];
-
-    return `${month}월 ${day}일`;
+    const [year, month, day] = date.split('-').map(Number);
+    return formatStringDate(new Date(year, month - 1, day), undefined, 'MMDD'); // 'MMDD' 형식 사용
   });
 
   //날짜 화살표
@@ -86,138 +84,10 @@ export default function VoteResultGrid({ isMobile }: VoteResultGridProps) {
     logNowDateData();
   }, [data?.result, currentIndex]);
 
-  // 막대그래프 색상 적용
-  const fillGridColors = (nowDateData: IMemberAvailability[]) => {
-    const morGridColors = Array(72).fill(items[0].color);
-    const afterGridColors = Array(72).fill(items[0].color);
-    const grid6Color = Array(36).fill(items[0].color);
-    const grid12Color = Array(36).fill(items[0].color);
-    const grid18Color = Array(36).fill(items[0].color);
-    const grid24Color = Array(36).fill(items[0].color);
-
-    // 시간대별 개수
-    const morCount = Array(72).fill(0);
-    const afterCount = Array(72).fill(0);
-    const count6 = Array(36).fill(0);
-    const count12 = Array(36).fill(0);
-    const count18 = Array(36).fill(0);
-    const count24 = Array(36).fill(0);
-
-    nowDateData.forEach((item) => {
-      // dateTime이 존재하는 경우에만 처리
-      if (item.dateTime.length > 0) {
-        item.dateTime.forEach((dateTimeItem) => {
-          // 각 dateTime 항목을 순회
-          const startTime = dateTimeItem.memberAvailableStartTime;
-          const endTime = dateTimeItem.memberAvailableEndTime;
-          const startIndex = getTimeIndex(startTime);
-          const endIndex = getTimeIndex(endTime);
-
-          // 0~12시 범위
-          if (startIndex >= 0 && startIndex <= 72) {
-            for (let i = startIndex; i < Math.min(endIndex, 72); i++) {
-              morCount[i]++;
-            }
-          }
-          // 12~24시 범위
-          if (endIndex > 72) {
-            for (
-              let i = Math.max(startIndex - 72, 0);
-              i < Math.min(endIndex - 72, 72);
-              i++
-            ) {
-              afterCount[i]++;
-            }
-          }
-
-          // 0~6 범위
-          if (startIndex < 36) {
-            for (let i = startIndex; i < Math.min(endIndex, 36); i++) {
-              count6[i]++;
-            }
-          }
-
-          // 6~12 범위
-          if (endIndex > 36 && startIndex < 72) {
-            for (
-              let i = Math.max(startIndex - 36, 0);
-              i < Math.min(endIndex - 36, 36);
-              i++
-            ) {
-              count12[i]++;
-            }
-          }
-
-          // 12~18 범위
-          if (endIndex > 72 && startIndex < 108) {
-            for (
-              let i = Math.max(startIndex - 72, 0);
-              i < Math.min(endIndex - 72, 36);
-              i++
-            ) {
-              count18[i]++;
-            }
-          }
-
-          // 18~24 범위
-          if (endIndex > 108) {
-            for (
-              let i = Math.max(startIndex - 108, 0);
-              i < Math.min(endIndex - 108, 36);
-              i++
-            ) {
-              count24[i]++;
-            }
-          }
-        });
-      }
-    });
-
-    // 색상 적용
-    morCount.forEach((count, index) => {
-      if (count > 0) {
-        morGridColors[index] = items[Math.min(count, items.length - 1)].color;
-      }
-    });
-    afterCount.forEach((count, index) => {
-      if (count > 0) {
-        afterGridColors[index] = items[Math.min(count, items.length - 1)].color;
-      }
-    });
-    count6.forEach((count, index) => {
-      if (count > 0) {
-        grid6Color[index] = items[Math.min(count, items.length - 1)].color;
-      }
-    });
-    count12.forEach((count, index) => {
-      if (count > 0) {
-        grid12Color[index] = items[Math.min(count, items.length - 1)].color;
-      }
-    });
-    count18.forEach((count, index) => {
-      if (count > 0) {
-        grid18Color[index] = items[Math.min(count, items.length - 1)].color;
-      }
-    });
-    count24.forEach((count, index) => {
-      if (count > 0) {
-        grid24Color[index] = items[Math.min(count, items.length - 1)].color;
-      }
-    });
-
-    return {
-      morGridColors,
-      afterGridColors,
-      grid6Color,
-      grid12Color,
-      grid18Color,
-      grid24Color,
-    };
-  };
-
   const logNowDateData = () => {
     const nowDateKey = dateKeys[currentIndex];
     const nowDateData: IMemberAvailability[] = data?.result[nowDateKey] || [];
+    //막대그래프 색상 적용
     const {
       morGridColors,
       afterGridColors,
@@ -226,6 +96,7 @@ export default function VoteResultGrid({ isMobile }: VoteResultGridProps) {
       grid18Color,
       grid24Color,
     } = fillGridColors(nowDateData);
+
     setMorGridColors(morGridColors);
     setAfterGridColors(afterGridColors);
     setGrid6Color(grid6Color);
