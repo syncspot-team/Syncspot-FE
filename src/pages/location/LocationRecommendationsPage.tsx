@@ -1,6 +1,11 @@
 import KakaoMap from '@src/components/common/kakao/KakaoMap';
 import { useState, useEffect } from 'react';
-import { useSearchParams, useNavigate, useParams } from 'react-router-dom';
+import {
+  useSearchParams,
+  useNavigate,
+  useParams,
+  Link,
+} from 'react-router-dom';
 import { useGetRecommendPlaceSearchQuery } from '@src/state/queries/location/useGetRecommendPlaceSearchQuery';
 import { useMidpointSearchQuery } from '@src/state/queries/location/useMidpointSearchQuery';
 import { IMidpointDataResponseType } from '@src/types/location/midpointSearchResponseType';
@@ -17,6 +22,10 @@ import BottomSheet from '@src/components/common/bottomSheet/BottomSheet';
 import IconLeftArrow from '@src/assets/icons/IconLeftArrow.svg?react';
 import IconRightArrow from '@src/assets/icons/IconRightArrow.svg?react';
 import { IPlaceContent } from '@src/types/location/recommendPlaceSearchResponseType';
+import IconLinkPin from '@src/assets/icons/IconLinkPin.svg?react';
+import IconStudy from '@src/assets/icons/IconStudy.svg?react';
+import IconCafe from '@src/assets/icons/IconCafe.svg?react';
+import IconRestaurant from '@src/assets/icons/IconRestaurant.svg?react';
 
 export default function LocationRecommendationsPage() {
   const navigate = useNavigate();
@@ -101,10 +110,21 @@ export default function LocationRecommendationsPage() {
     return <LocationEnterErrorPage />;
   }
 
+  const PLACE_ICONS = {
+    STUDY: IconStudy,
+    CAFE: IconCafe,
+    RESTAURANT: IconRestaurant,
+  } as const;
+
+  const getPlaceIcon = (place: any) => {
+    const Icon = PLACE_ICONS[place.placeStandard as keyof typeof PLACE_ICONS];
+    return Icon ? <Icon className="size-5" /> : null;
+  };
+
   return (
     <>
       <div className="hidden lg:block">
-        <div className="grid w-full grid-cols-1 lg:grid-cols-2 px-4 lg:px-[7.5rem] gap-[0.9375rem] mt-[1.375rem]">
+        <div className="grid w-full grid-cols-1 lg:grid-cols-2 px-4 lg:px-[7.5rem] gap-[0.9375rem] mt-4 pb-2">
           <h3 className="flex items-center text-[1.25rem] font-semibold text-blue-dark01 ml-2">
             {searchParams.get('location')}
           </h3>
@@ -135,7 +155,7 @@ export default function LocationRecommendationsPage() {
         <BottomSheet minHeight={10} maxHeight={72} initialHeight={50}>
           <div className="flex flex-col h-full">
             <div className="sticky top-0 px-4">
-              <h3 className="text-[1.125rem] font-semibold text-blue-dark01 mb-3">
+              <h3 className="text-[1.125rem] font-semibold text-blue-dark02 mb-3">
                 {searchParams.get('location')}에서부터
               </h3>
               <PlaceTypeFilter
@@ -151,21 +171,39 @@ export default function LocationRecommendationsPage() {
                       key={place.name}
                       className={`p-4 rounded-lg mb-3 cursor-pointer ${
                         selectedPlace === place.name
-                          ? 'bg-blue-100 opacity-95 ring-2 ring-blue-normal01'
+                          ? 'bg-blue-light01 opacity-95 ring-2 ring-blue-normal01'
                           : 'ring-1 ring-primary'
                       }`}
                       onClick={() => setSelectedPlace(place.name)}
                     >
                       <div className="flex items-start justify-between mb-[0.125rem]">
+                        <div className="flex items-center justify-center gap-2">
+                          <p className="flex-shrink-0">{getPlaceIcon(place)}</p>
+                          <p className="text-description text-blue-dark02">
+                            {place.placeStandard}
+                            {/* FILTER_ITEMS */}
+                          </p>
+                        </div>
+                        {selectedPlace === place.name && (
+                          <span className="text-description text-gray-dark">
+                            {place.distance}m
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex items-center gap-2">
                         <h3 className="font-semibold text-blue-dark01 text-content">
                           {place.name}
                         </h3>
-                        <span className="text-description text-gray-dark">
-                          {place.distance}m
-                        </span>
+                        <Link to={place.placeUrl} target="_blank">
+                          <IconLinkPin className="flex-shrink-0 size-3 hover:scale-110" />
+                        </Link>
                       </div>
                       <p className="text-description text-gray-dark">
-                        {place.roadNameAddress}
+                        {place.siDo +
+                          ' ' +
+                          place.siGunGu +
+                          ' ' +
+                          place.roadNameAddress}
                       </p>
                     </div>
                   ),

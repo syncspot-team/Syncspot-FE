@@ -36,30 +36,30 @@ export default function UserChangePassword() {
       >
         {renderPasswordField(
           '현재 비밀번호',
-          '현재 비밀번호를 입력해주세요',
+          '현재 비밀번호를 입력해주세요.',
           'password',
           {
-            required: '현재 비밀번호를 입력해주세요',
+            required: '현재 비밀번호를 입력해주세요.',
           },
         )}
         {renderPasswordField(
           '새 비밀번호',
-          '새 비밀번호를 입력해주세요',
+          '새 비밀번호를 입력해주세요.',
           'newPassword',
           {
-            required: '새 비밀번호를 입력해주세요',
+            required: '새 비밀번호를 입력해주세요.',
             validate: (value: string) =>
-              value !== watch('password') || '현재 비밀번호와 동일합니다',
+              value !== watch('password') || '현재 비밀번호와 동일합니다.',
           },
         )}
         {renderPasswordField(
           '새 비밀번호 다시 입력',
-          '새 비밀번호를 다시 입력해주세요',
+          '새 비밀번호를 다시 입력해주세요.',
           'confirmPassword',
           {
-            required: '비밀번호를 다시 입력해주세요',
+            required: '비밀번호를 다시 입력해주세요.',
             validate: (value: string) =>
-              value === watch('newPassword') || '비밀번호가 일치하지 않습니다',
+              value === watch('newPassword') || '비밀번호가 일치하지 않습니다.',
           },
         )}
 
@@ -94,14 +94,14 @@ export default function UserChangePassword() {
   ) {
     return (
       <div className="flex flex-col w-full">
-        <label className="ml-[0.375rem] text-description lg:text-content font-semibold">
+        <label className="ml-[0.375rem] mb-3 text-description lg:text-content font-semibold">
           {label}
         </label>
         <Input
           {...register(name, validation)}
           type="password"
           placeholder={placeholder}
-          className="bg-white-default ring-1 ring-gray-normal py-[0.875rem] pl-[0.625rem]"
+          className="bg-white-default ring-1 ring-gray-normal py-4 pl-[0.625rem]"
           onCopy={(e: React.ClipboardEvent) => {
             e.preventDefault();
             return false;

@@ -133,11 +133,13 @@ export default function MyVote({ dates, bottomSheetHeight }: IMyVoteProps) {
   };
 
   return (
-    <div className="flex flex-col h-full justify-between pb-4 bg-gray-light lg:py-5 px-4 lg:rounded-[1.25rem]">
-      <p className="hidden text-center text-title text-blue-dark02 lg:block">
+    <div className="flex flex-col h-full justify-between pb-4 bg-gray-light lg:pt-12 lg:pb-6 lg:px-12 px-4 lg:rounded-[1.25rem]">
+      <p className="hidden mb-4 text-center text-title text-blue-dark02 lg:block">
         참석 일시 투표
       </p>
-      <div className={`mb-2 ${getScrollAreaStyle(bottomSheetHeight)}`}>
+      <div
+        className={`mb-2 lg:max-h-[calc(100vh-20rem)] ${getScrollAreaStyle(bottomSheetHeight)}`}
+      >
         {Array.isArray(dates) &&
           dates.map((date, index) => {
             const myVote = votes[index] || {

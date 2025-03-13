@@ -91,6 +91,8 @@
   position: relative;
   padding: 0;
   text-align: center;
+  color: #292929;
+  font-weight: 400;
 }
 
 /* 타일 그룹 컨테이너 스타일링 */

@@ -100,37 +100,37 @@ export default function UserProfileInfo() {
           {renderProfileInfoEditButtons()}
         </div>
       </div>
-      <label className="ml-[0.375rem] text-description lg:text-content">
+      <label className="ml-[0.375rem] text-blue-dark03  text-description lg:text-content">
         닉네임
       </label>
       <Input
         {...register('nickname')}
         disabled={!isEditing}
-        className={`w-full mt-[0.125rem] mb-4 ${isEditing ? 'bg-white-default ring-1 ring-primary' : 'bg-gray-light cursor-not-allowed'}`}
+        className={`w-full text-blue-dark03  my-4 ${isEditing ? 'bg-white-default ring-1 ring-primary' : 'bg-gray-light cursor-not-allowed'}`}
       />
-      <label className="ml-[0.375rem] text-description lg:text-content">
+      <label className="ml-[0.375rem] text-blue-dark03  text-description lg:text-content">
         아이디(이메일)
       </label>
       <Input
         {...register('email')}
         type="email"
         disabled={true}
-        className={`w-full mt-[0.125rem] mb-4 bg-gray-light cursor-not-allowed`}
+        className={`w-full  text-blue-dark03  my-4 bg-gray-light cursor-not-allowed`}
       />
-      <label className="ml-[0.375rem] text-description lg:text-content">
+      <label className="ml-[0.375rem] text-blue-dark03  text-description lg:text-content">
         주소
       </label>
       {isEditing ? (
         <KakaoLocationPicker
           defaultAddress={currentAddress}
           onSelect={handleLocationSelect}
-          InputClassName={`mt-[0.125rem] ${isEditing ? 'bg-white-default ring-1 ring-primary' : 'bg-gray-light cursor-not-allowed'}`}
+          InputClassName={`my-4  ${isEditing ? 'bg-white-default ring-1 ring-primary' : 'bg-gray-light cursor-not-allowed'}`}
         />
       ) : (
         <Input
           value={currentAddress || '선택된 주소가 없습니다'}
           disabled
-          className="w-full mt-[0.125rem] bg-gray-light cursor-not-allowed"
+          className="w-full my-4 cursor-not-allowed text-blue-dark03 bg-gray-light"
         />
       )}
     </form>

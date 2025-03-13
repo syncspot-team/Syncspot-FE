@@ -29,8 +29,8 @@ export default function TimeSelectBox({
   }, [initialHour, initialMinute]);
 
   return (
-    <div className="flex items-center justify-center w-full gap-4">
-      <div className="relative max-w-[6.25rem] w-full">
+    <div className="flex items-center justify-center w-full gap-2 lg:gap-4">
+      <div className="relative w-full">
         <Select
           selectType="hour"
           value={hour}
@@ -39,7 +39,7 @@ export default function TimeSelectBox({
         />
       </div>
 
-      <div className="relative max-w-[6.25rem] w-full">
+      <div className="relative w-full">
         <Select
           selectType="minute"
           value={minute}

@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import IconLeftArrow from '@src/assets/icons/IconLeftArrow.svg?react';
-import IconRightArrow from '@src/assets/icons/IconRightArrow.svg?react';
+import IconArrow from '@src/assets/icons/IconTriangle.svg?react';
 import Button from '@src/components/common/button/Button';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
@@ -63,17 +62,19 @@ export default function TimeCreatePage() {
 
   return (
     <div
-      className={`lg:mt-4 h-[calc(100vh-80px)] lg:h-[calc(100vh-120px)] relative max-w-[50rem] p-4 lg:p-0  mx-auto`}
+      className={`lg:mt-4 h-[calc(100vh-80px)] lg:px-[6.25rem] lg:h-[calc(100vh-120px)] relative max-w-[50rem] p-4 lg:p-0  mx-auto`}
     >
-      <div className="pb-4 lg:px-[6.25rem] lg:h-[632px] min-h-[26.5rem] mb-4 mx-auto ">
+      <div className="pb-4 mx-auto mb-4 ">
         <Calendar
           value={selectedDates.length > 0 ? selectedDates[0] : null}
           formatDay={(_locale, date) => date.getDate().toString()}
           navigationLabel={({ date }) =>
             `${date.getFullYear()}년 ${date.getMonth() + 1}월`
           }
-          prevLabel={<IconLeftArrow className="size-7" />}
-          nextLabel={<IconRightArrow className="size-7" />}
+          prevLabel={<IconArrow className="size-7 text-blue-normal01" />}
+          nextLabel={
+            <IconArrow className="rotate-180 size-7 text-blue-normal01" />
+          }
           prev2Label={null}
           next2Label={null}
           minDetail="month"
@@ -89,16 +90,16 @@ export default function TimeCreatePage() {
           onClickDay={handleDateClick}
         />
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 mx-10 lg:mx-0 gap-2 my-auto min-h-[9rem] lg:min-h-0 lg:h-fit whitespace-nowrap lg:grid-cols-5 text-tertiary ">
+      <div className="grid grid-cols-3 gap-6 my-auto sm:grid-cols-5 whitespace-nowrap text-tertiary ">
         {selectedDates.length > 0 ? (
           selectedDates.map((date, index) => (
             <div
               key={index}
               className="flex p-2 px-3 mx-auto rounded-full bg-blue-light02 max-w-[8.4375rem] flex-row items-center h-10 text-description lg:text-content "
             >
-              <p>{formatStringDate(date)}</p>
+              <p>{formatStringDate(date, undefined, 'mmdd')}</p>
               <button
-                className="ml-2 text-red-normal hover:text-subtitle "
+                className="ml-2 text-[#ff0000] hover:text-subtitle "
                 onClick={() => {
                   setSelectedDates((prev) =>
                     prev.filter((d) => d.getTime() !== date.getTime()),
@@ -115,7 +116,7 @@ export default function TimeCreatePage() {
       </div>
 
       <Button
-        className="w-full my-4 px-[0.3125rem] "
+        className="w-full mt-8 px-[0.3125rem] "
         onClick={handleCreateClick}
       >
         시간 투표 생성
