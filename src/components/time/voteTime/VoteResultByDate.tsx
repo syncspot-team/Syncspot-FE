@@ -41,7 +41,7 @@ export default function VoteResultByDate({
             <div
               className={mergeClassNames(
                 'p-3 w-2/5 mx-auto text-center bg-white-default rounded-default',
-                { 'min-w-[6.25rem] ': isMobile },
+                { 'min-w-[6.25rem] bg-blue-light01': isMobile },
               )}
             >
               <span
@@ -53,8 +53,8 @@ export default function VoteResultByDate({
             </div>
             <div
               className={mergeClassNames(
-                'p-3 mx-auto w-3/5 text-center whitespace-nowrap bg-white-default rounded-default ',
-                { 'text-blue-dark03 w-full': isMobile },
+                'p-3 mx-auto w-3/5 text-center text-blue-dark03 whitespace-nowrap bg-white-default rounded-default ',
+                { 'w-full bg-gray-light': isMobile },
               )}
             >
               {memberInfo?.dateTime?.map((time, tIndex) => {

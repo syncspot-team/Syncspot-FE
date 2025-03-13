@@ -23,3 +23,12 @@
   transform: translateY(-50%);
   pointer-events: none;
 }
+
+@media (min-width: 1024px) {
+  .custom-select {
+    padding-left: 0.9375rem;
+  }
+  .custom-arrow {
+    right: 0.625rem;
+  }
+}

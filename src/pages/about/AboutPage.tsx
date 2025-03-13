@@ -348,6 +348,13 @@ export default function AboutPage() {
             <span className="mr-2 lg:mr-4 text-description text-gray-dark lg:mt-[0.125rem]">
               홍익대
             </span>
+            <span className="p-1 rounded-lg lg:p-1 lg:px-2 bg-primary text-white-default text-[0.625rem] whitespace-nowrap">
+              BE
+            </span>
+            <span className="text-content lg:text-menu">신예진</span>
+            <span className="mr-2 lg:mr-4 text-description text-gray-dark lg:mt-[0.125rem]">
+              숙명여대
+            </span>
           </div>
         </div>
         <div className="mt-6 text-description lg:text-menu text-gray-dark">
