@@ -1,9 +1,8 @@
 import { useForm, useFieldArray } from 'react-hook-form';
 import KakaoLocationPicker from '@src/components/common/kakao/KakaoLocationPicker';
 import { ISelectedLocation } from '@src/components/common/kakao/types';
-import Button from '@src/components/common/button/Button';
 import KakaoMap from '@src/components/common/kakao/KakaoMap';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import IconXmark from '@src/assets/icons/IconXmark.svg?react';
 import { useGetPlaceSearchQuery } from '../../state/queries/location/useGetPlaceSearchQuery';
 import { usePlaceSaveMutation } from '@src/state/mutations/location/usePlaceSaveMutation';
@@ -11,15 +10,15 @@ import { usePlaceUpdateMutation } from '@src/state/mutations/location/usePlaceUp
 import { usePlaceDeleteMutation } from '@src/state/mutations/location/usePlaceDeleteMutation';
 import CustomToast from '@src/components/common/toast/customToast';
 import { TOAST_TYPE } from '@src/types/toastType';
-import { useNavigate, useParams } from 'react-router-dom';
-import { PATH } from '@src/constants/path';
+import { useParams } from 'react-router-dom';
 import { ILocation } from '@src/types/location/placeSearchResponseType';
 import { IPlaceSaveRequestType } from '@src/types/location/placeSaveRequestType';
 import ShareButton from '@src/components/layout/header/ShareButton';
 import BottomSheet from '@src/components/common/bottomSheet/BottomSheet';
-import { useQueryClient } from '@tanstack/react-query';
-import { ROOM_QUERY_KEY } from '@src/state/queries/header/key';
 import { useGetUserInfoQuery } from '@src/state/queries/users/useGetUserInfoQuery';
+import { useLocationInitialization } from '@src/hooks/location/useLocationInitialization';
+import { useAutoScroll } from '@src/hooks/location/useAutoScroll';
+import LocationActionButtons from '@src/components/location/LocationEnterPage/LocationActionButtons';
 
 interface ILocationForm {
   myLocations: IPlaceSaveRequestType[];
@@ -27,19 +26,16 @@ interface ILocationForm {
 }
 
 export default function LocationEnterPage() {
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
   const { roomId } = useParams();
   const lastLocationRef = useRef<HTMLLIElement>(null);
   const locationListRef = useRef<HTMLUListElement>(null);
   const [savedLocations, setSavedLocations] = useState<ILocation[]>([]);
   const [bottomSheetHeight, setBottomSheetHeight] = useState(500);
 
-  // 장소 목록 조회 쿼리
+  const { data: userInfo } = useGetUserInfoQuery();
   const { data: placeSearchData } = useGetPlaceSearchQuery({
     enabled: !!roomId,
   });
-  const { data: userInfo } = useGetUserInfoQuery();
 
   const { mutate: placeSaveMutation } = usePlaceSaveMutation(); // 장소 저장
   const { mutate: placeUpdateMutation } = usePlaceUpdateMutation(); // 장소 수정
@@ -73,91 +69,21 @@ export default function LocationEnterPage() {
     myLocations.length > 0 &&
     myLocations.every((loc) => loc.addressLat !== 0 && loc.addressLong !== 0);
 
-  useEffect(() => {
-    if (placeSearchData?.data) {
-      // 내 장소가 없고, 사용자의 기본 주소가 있는 경우에만 자동 저장
-      if (
-        placeSearchData.data.myLocations.length === 0 &&
-        userInfo?.data?.existAddress &&
-        userInfo.data?.addressLatitude &&
-        userInfo.data?.addressLongitude
-      ) {
-        const defaultLocation = {
-          siDo: userInfo.data.siDo,
-          siGunGu: userInfo.data.siGunGu,
-          roadNameAddress: userInfo.data.roadNameAddress,
-          addressLat: userInfo.data.addressLatitude,
-          addressLong: userInfo.data.addressLongitude,
-        };
+  // 장소 초기화
+  useLocationInitialization({
+    placeSearchData,
+    userInfo,
+    reset,
+    setSavedLocations,
+  });
 
-        placeSaveMutation(
-          { placeSavePayload: defaultLocation },
-          {
-            onSuccess: (data) => {
-              setSavedLocations([
-                { ...defaultLocation, placeId: data.data.placeId },
-              ]);
-              reset({
-                myLocations: [defaultLocation],
-                friendLocations: placeSearchData.data.friendLocations.map(
-                  (place: ILocation) => ({
-                    siDo: place.siDo,
-                    siGunGu: place.siGunGu,
-                    roadNameAddress: place.roadNameAddress,
-                    addressLat: place.addressLat,
-                    addressLong: place.addressLong,
-                  }),
-                ),
-              });
-            },
-          },
-        );
-      } else {
-        setSavedLocations(placeSearchData.data.myLocations);
-        reset({
-          myLocations: placeSearchData.data.myLocations.map(
-            (place: ILocation) => ({
-              siDo: place.siDo,
-              siGunGu: place.siGunGu,
-              roadNameAddress: place.roadNameAddress,
-              addressLat: place.addressLat,
-              addressLong: place.addressLong,
-            }),
-          ),
-          friendLocations: placeSearchData.data.friendLocations.map(
-            (place: ILocation) => ({
-              siDo: place.siDo,
-              siGunGu: place.siGunGu,
-              roadNameAddress: place.roadNameAddress,
-              addressLat: place.addressLat,
-              addressLong: place.addressLong,
-            }),
-          ),
-        });
-      }
-    }
-  }, [placeSearchData?.data, userInfo?.data, reset, placeSaveMutation]);
-
-  useEffect(() => {
-    if (
-      lastLocationRef.current &&
-      myLocationFields.length >
-        (placeSearchData?.data?.myLocations?.length || 0)
-    ) {
-      const isMobile = window.innerWidth < 1024;
-
-      if (isMobile) {
-        lastLocationRef.current.scrollIntoView({ behavior: 'smooth' });
-      } else {
-        if (locationListRef.current) {
-          locationListRef.current?.scrollTo({
-            top: locationListRef.current.scrollHeight,
-            behavior: 'smooth',
-          });
-        }
-      }
-    }
-  }, [myLocationFields.length, placeSearchData?.data?.myLocations?.length]);
+  // 장소 목록 자동 스크롤
+  useAutoScroll({
+    lastLocationRef,
+    locationListRef,
+    currentLocationsCount: myLocationFields.length,
+    savedLocationsCount: placeSearchData?.data?.myLocations?.length || 0,
+  });
 
   const handleLocationSelect = (location: ISelectedLocation, index: number) => {
     const { place, address } = location;
@@ -395,28 +321,11 @@ export default function LocationEnterPage() {
               ))
             )}
           </div>
-          <div className="flex flex-col mt-auto gap-[0.5rem]">
-            <Button
-              buttonType="secondary"
-              onClick={handleAddLocation}
-              className="px-[0.3125rem] w-full"
-            >
-              장소 추가하기
-            </Button>
-            <Button
-              buttonType="primary"
-              onClick={() => {
-                queryClient.invalidateQueries({
-                  queryKey: ROOM_QUERY_KEY.GET_CHECK_LOCATION_ENTER(roomId!),
-                });
-                navigate(PATH.LOCATION_RESULT(roomId!));
-              }}
-              disabled={!isAllMyLocationsFilled}
-              className="px-[0.3125rem] w-full"
-            >
-              중간 지점 찾기
-            </Button>
-          </div>
+          <LocationActionButtons
+            isAllMyLocationsFilled={isAllMyLocationsFilled}
+            onAddLocation={handleAddLocation}
+            className="mt-auto gap-[0.5rem]"
+          />
         </div>
         <div className="rounded-default min-h-[calc(100vh-8rem)] order-1 lg:order-2">
           <KakaoMap coordinates={shouldShowMap ? coordinates : []} />
@@ -504,28 +413,11 @@ export default function LocationEnterPage() {
               </div>
             </div>
 
-            <div className="flex flex-col gap-[0.5rem] px-4 py-6 bg-white-default">
-              <Button
-                buttonType="secondary"
-                onClick={handleAddLocation}
-                className="px-[0.3125rem] w-full"
-              >
-                장소 추가하기
-              </Button>
-              <Button
-                buttonType="primary"
-                onClick={() => {
-                  queryClient.invalidateQueries({
-                    queryKey: ROOM_QUERY_KEY.GET_CHECK_LOCATION_ENTER(roomId!),
-                  });
-                  navigate(PATH.LOCATION_RESULT(roomId!));
-                }}
-                disabled={!isAllMyLocationsFilled}
-                className="px-[0.3125rem] w-full"
-              >
-                중간 지점 찾기
-              </Button>
-            </div>
+            <LocationActionButtons
+              isAllMyLocationsFilled={isAllMyLocationsFilled}
+              onAddLocation={handleAddLocation}
+              className="px-4 py-6 bg-white-default"
+            />
           </div>
         </BottomSheet>
       </div>
