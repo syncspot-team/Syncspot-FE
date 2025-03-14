@@ -69,7 +69,7 @@ export default function LocationEnterPage() {
     myLocations.length > 0 &&
     myLocations.every((loc) => loc.addressLat !== 0 && loc.addressLong !== 0);
 
-  // 장소 초기화
+  // 초기 데이터값 설정
   useLocationInitialization({
     placeSearchData,
     userInfo,
