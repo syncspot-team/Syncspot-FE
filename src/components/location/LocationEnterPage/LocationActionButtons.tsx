@@ -8,12 +8,12 @@ import { mergeClassNames } from '@src/utils/mergeClassNames';
 interface LocationActionButtonsProps {
   className?: string;
   isAllMyLocationsFilled: boolean;
-  onAddLocation: () => void;
+  handleAddLocation: () => void;
 }
 
 export default function LocationActionButtons({
   isAllMyLocationsFilled,
-  onAddLocation,
+  handleAddLocation,
   className,
 }: LocationActionButtonsProps) {
   const { roomId } = useParams();
@@ -31,7 +31,7 @@ export default function LocationActionButtons({
     <div className={mergeClassNames('flex flex-col gap-[0.5rem]', className)}>
       <Button
         buttonType="secondary"
-        onClick={onAddLocation}
+        onClick={handleAddLocation}
         className="px-[0.3125rem] w-full"
       >
         장소 추가하기

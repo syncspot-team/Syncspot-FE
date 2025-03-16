@@ -1,9 +1,9 @@
 import KakaoMap from '@src/components/common/kakao/KakaoMap';
-import KakaoLocationPicker from '@src/components/common/kakao/KakaoLocationPicker';
-import IconXmark from '@src/assets/icons/IconXmark.svg?react';
 import ShareButton from '@src/components/layout/header/ShareButton';
 import LocationActionButtons from '@src/components/location/LocationEnterPage/LocationActionButtons';
 import { LocationEnterProps } from '@src/pages/location/LocationEnterPage';
+import FriendLocationList from '@src/components/location/LocationEnterPage/FriendLocationList';
+import MyLocationList from '@src/components/location/LocationEnterPage/MyLocationList';
 
 export default function DesktopLocationEnter({
   lastLocationRef,
@@ -26,63 +26,27 @@ export default function DesktopLocationEnter({
         <h1 className="mb-[0.375rem] ml-2 text-subtitle text-tertiary">
           내가 입력한 장소
         </h1>
-        <ul
-          ref={locationListRef}
+        <MyLocationList
+          locationListRef={locationListRef}
+          lastLocationRef={lastLocationRef}
+          locations={myLocationFields}
+          onLocationSelect={handleLocationSelect}
+          onDeleteLocation={handleDeleteLocation}
           className="flex flex-col p-1 max-h-[calc(100vh-38rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full"
-        >
-          {myLocationFields.length === 0 ? (
-            <li className="flex items-center justify-center py-4 text-content text-gray-dark">
-              아래 장소 추가하기 버튼을 클릭해 장소를 추가해보세요!
-            </li>
-          ) : (
-            myLocationFields.map((field, index) => (
-              <li
-                key={field.id}
-                ref={
-                  index === myLocationFields.length - 1 ? lastLocationRef : null
-                }
-                className="flex group/location relative items-center justify-between bg-white-default rounded-default mb-[0.625rem] hover:ring-1 hover:ring-gray-normal z-10"
-              >
-                <KakaoLocationPicker
-                  InputClassName="w-full text-content bg-white-default py-[1.3125rem] truncate"
-                  onSelect={(location) => handleLocationSelect(location, index)}
-                  defaultAddress={field.roadNameAddress}
-                  usePortal={true}
-                />
-                <button
-                  type="button"
-                  onClick={() => handleDeleteLocation(index)}
-                  className="p-1 mx-2 rounded-[0.5rem] hover:bg-gray-normal absolute right-0 hidden group-hover/location:block"
-                >
-                  <IconXmark className="transition-none size-4 text-gray-normal group-hover/deleteButton:text-gray-dark" />
-                </button>
-              </li>
-            ))
-          )}
-        </ul>
+        />
+
         <div className="flex items-center mb-[0.375rem] mt-4 ml-2 justify-between">
           <h1 className="text-subtitle text-tertiary">친구가 입력한 장소</h1>
           <ShareButton />
         </div>
-        <div className="max-h-[calc(100vh-38rem)] mb-2 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full">
-          {friendLocationFields.length === 0 ? (
-            <div className="flex items-center justify-center py-4 text-content text-gray-dark">
-              아직 친구가 장소를 입력하지 않았습니다
-            </div>
-          ) : (
-            friendLocationFields.map((field) => (
-              <div
-                key={field.id}
-                className="w-full text-content bg-white-default rounded-default truncate mb-[0.625rem] py-[1.3125rem] pl-[0.9375rem] cursor-not-allowed opacity-70"
-              >
-                {field.roadNameAddress || '위치 정보 없음'}
-              </div>
-            ))
-          )}
-        </div>
+        <FriendLocationList
+          locations={friendLocationFields}
+          className="max-h-[calc(100vh-38rem)] mb-2 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full"
+        />
+
         <LocationActionButtons
           isAllMyLocationsFilled={isAllMyLocationsFilled}
-          onAddLocation={handleAddLocation}
+          handleAddLocation={handleAddLocation}
           className="mt-auto gap-[0.5rem]"
         />
       </div>
