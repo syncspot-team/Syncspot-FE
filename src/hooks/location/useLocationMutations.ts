@@ -7,7 +7,7 @@ import CustomToast from '@src/components/common/toast/customToast';
 import { TOAST_TYPE } from '@src/types/toastType';
 import { IPlaceSaveRequestType } from '@src/types/location/placeSaveRequestType';
 import { UseFormSetValue } from 'react-hook-form';
-import React from 'react';
+import { useState } from 'react';
 
 interface INewLocation {
   siDo: string;
@@ -35,22 +35,19 @@ interface ILocationForm {
 }
 
 interface UseLocationMutationsProps {
-  savedLocations: ILocation[];
-  setSavedLocations: React.Dispatch<React.SetStateAction<ILocation[]>>;
   myLocations: IPlaceSaveRequestType[];
   friendLocations: IPlaceSaveRequestType[];
-  setValue: UseFormSetValue<ILocationForm>;
+  setLocationValue: UseFormSetValue<ILocationForm>;
   removeMyLocation: (index: number) => void;
 }
 
 export function useLocationMutations({
-  savedLocations,
-  setSavedLocations,
   myLocations,
   friendLocations,
-  setValue,
+  setLocationValue,
   removeMyLocation,
 }: UseLocationMutationsProps) {
+  const [savedLocations, setSavedLocations] = useState<ILocation[]>([]);
   const { mutate: placeSaveMutation } = usePlaceSaveMutation();
   const { mutate: placeUpdateMutation } = usePlaceUpdateMutation();
   const { mutate: placeDeleteMutation } = usePlaceDeleteMutation();
@@ -154,7 +151,7 @@ export function useLocationMutations({
 
   const updateLocationState = (newLocation: INewLocation, index: number) => {
     Object.entries(newLocation).forEach(([key, value]) => {
-      setValue(
+      setLocationValue(
         `myLocations.${index}.${key}` as `myLocations.${number}.${keyof INewLocation}`,
         value,
       );
@@ -162,6 +159,8 @@ export function useLocationMutations({
   };
 
   return {
+    savedLocations,
+    setSavedLocations,
     handleLocationSelect,
     handleDeleteLocation,
   };

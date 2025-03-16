@@ -6,13 +6,10 @@ export interface ILocationForm {
   friendLocations: IPlaceSaveRequestType[];
 }
 
-const isValidLocation = (loc: { addressLat: number; addressLong: number }) =>
-  loc.addressLat !== 0 && loc.addressLong !== 0;
-
 export function useLocationForm() {
   const {
     control,
-    setValue,
+    setValue: setLocationValue,
     watch,
     reset: resetLocation,
   } = useForm<ILocationForm>({
@@ -38,6 +35,9 @@ export function useLocationForm() {
 
   const myLocations = watch('myLocations');
   const friendLocations = watch('friendLocations');
+
+  const isValidLocation = (loc: { addressLat: number; addressLong: number }) =>
+    loc.addressLat !== 0 && loc.addressLong !== 0;
 
   const isAllMyLocationsFilled =
     myLocations.length > 0 && myLocations.every(isValidLocation);
@@ -70,7 +70,7 @@ export function useLocationForm() {
 
   return {
     control,
-    setValue,
+    setLocationValue,
     resetLocation,
     myLocationFields,
     friendLocationFields,

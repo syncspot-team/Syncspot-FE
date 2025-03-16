@@ -43,13 +43,12 @@ export default function LocationEnterPage() {
   const lastLocationRef = useRef<HTMLLIElement>(null);
   const locationListRef = useRef<HTMLUListElement>(null);
 
-  const { savedLocations, setSavedLocations, placeSearchData, userInfo } =
-    useLocationData();
+  const { placeSearchData, userInfo } = useLocationData();
 
   const {
     myLocationFields,
     friendLocationFields,
-    setValue,
+    setLocationValue,
     resetLocation,
     removeMyLocation,
     handleAddLocation,
@@ -60,12 +59,15 @@ export default function LocationEnterPage() {
     shouldShowMap,
   } = useLocationForm();
 
-  const { handleLocationSelect, handleDeleteLocation } = useLocationMutations({
+  const {
+    handleLocationSelect,
+    handleDeleteLocation,
     savedLocations,
     setSavedLocations,
+  } = useLocationMutations({
     myLocations,
     friendLocations,
-    setValue,
+    setLocationValue,
     removeMyLocation,
   });
 
