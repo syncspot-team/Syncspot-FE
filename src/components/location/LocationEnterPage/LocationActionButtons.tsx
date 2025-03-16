@@ -1,24 +1,22 @@
-import Button from '@src/components/common/button/Button';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
-import { ROOM_QUERY_KEY } from '@src/state/queries/header/key';
-import { PATH } from '@src/constants/path';
+import Button from '@src/components/common/button/Button';
 import { mergeClassNames } from '@src/utils/mergeClassNames';
+import { PATH } from '@src/constants/path';
+import { ROOM_QUERY_KEY } from '@src/state/queries/header/key';
+import { useLocationContext } from '@src/components/location/LocationEnterPage/LocationContext';
 
 interface LocationActionButtonsProps {
   className?: string;
-  isAllMyLocationsFilled: boolean;
-  handleAddLocation: () => void;
 }
 
 export default function LocationActionButtons({
-  isAllMyLocationsFilled,
-  handleAddLocation,
   className,
 }: LocationActionButtonsProps) {
   const { roomId } = useParams();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { handleAddLocation, isAllMyLocationsFilled } = useLocationContext();
 
   const handleFindMiddlePoint = () => {
     queryClient.invalidateQueries({

@@ -1,39 +1,26 @@
-interface ILocationField {
-  id: string;
-  siDo: string;
-  siGunGu: string;
-  roadNameAddress: string;
-  addressLat: number;
-  addressLong: number;
-}
+import { useLocationContext } from '@src/components/location/LocationEnterPage/LocationContext';
 
 interface FriendLocationListProps {
-  locations: ILocationField[];
   className?: string;
 }
 
 export default function FriendLocationList({
-  locations,
   className,
 }: FriendLocationListProps) {
-  if (locations.length === 0) {
-    return (
-      <div className="flex items-center justify-center py-4 text-content text-gray-dark">
-        아직 친구가 장소를 입력하지 않았습니다
-      </div>
-    );
-  }
+  const { friendLocationFields } = useLocationContext();
 
   return (
-    <div className={className}>
-      {locations.map((field) => (
-        <div
-          key={field.id}
-          className="w-full text-content bg-white-default rounded-default truncate mb-[0.625rem] py-[1.3125rem] pl-[0.9375rem] cursor-not-allowed opacity-70"
+    <ul className={className}>
+      {friendLocationFields.map((location) => (
+        <li
+          key={location.id}
+          className="p-3 mb-2 rounded-default bg-white-default lg:py-[1.25rem] cursor-not-allowed lg:ring-0 ring-1 ring-gray-normal"
         >
-          {field.roadNameAddress || '위치 정보 없음'}
-        </div>
+          <p className="truncate text-gray-dark text-description lg:text-content">
+            {location.roadNameAddress}
+          </p>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }

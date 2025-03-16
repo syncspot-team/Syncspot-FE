@@ -2,23 +2,14 @@ import KakaoMap from '@src/components/common/kakao/KakaoMap';
 import BottomSheet from '@src/components/common/bottomSheet/BottomSheet';
 import LocationActionButtons from '@src/components/location/LocationEnterPage/LocationActionButtons';
 import { useState } from 'react';
-import { LocationEnterProps } from '@src/pages/location/LocationEnterPage';
 import MyLocationList from '@src/components/location/LocationEnterPage/MyLocationList';
 import FriendLocationList from '@src/components/location/LocationEnterPage/FriendLocationList';
+import { useLocationContext } from '@src/components/location/LocationEnterPage/LocationContext';
+import ShareButton from '@src/components/layout/header/ShareButton';
 
-export default function MobileLocationEnter({
-  lastLocationRef,
-  locationListRef,
-  myLocationFields,
-  friendLocationFields,
-  handleLocationSelect,
-  handleDeleteLocation,
-  handleAddLocation,
-  isAllMyLocationsFilled,
-  coordinates,
-  shouldShowMap,
-}: LocationEnterProps) {
+export default function MobileLocationEnter() {
   const [bottomSheetHeight, setBottomSheetHeight] = useState(500);
+  const { coordinates, shouldShowMap } = useLocationContext();
 
   const getScrollAreaStyle = (bottomSheetHeight: number) => {
     const viewportHeight = window.innerHeight;
@@ -57,28 +48,19 @@ export default function MobileLocationEnter({
               내가 입력한 장소
             </h1>
             <MyLocationList
-              locationListRef={locationListRef}
-              lastLocationRef={lastLocationRef}
-              locations={myLocationFields}
-              onLocationSelect={handleLocationSelect}
-              onDeleteLocation={handleDeleteLocation}
               className={`flex flex-col p-1 ${getScrollAreaStyle(bottomSheetHeight)} scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full transition-all duration-300 ease-in-out`}
             />
-
-            <h1 className="mt-2 mb-1 ml-2 text-menu text-tertiary">
-              친구가 입력한 장소
-            </h1>
+            <div className="flex items-center justify-between">
+              <h1 className="mt-2 mb-1 ml-2 text-menu text-tertiary">
+                친구가 입력한 장소
+              </h1>
+              <ShareButton />
+            </div>
             <FriendLocationList
-              locations={friendLocationFields}
-              className={`mb-2 ${getScrollAreaStyle(bottomSheetHeight)} scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full transition-all duration-300 ease-in-out`}
+              className={`mb-2 ${getScrollAreaStyle(bottomSheetHeight)} scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full transition-all duration-300 ease-in-out p-1`}
             />
           </div>
-
-          <LocationActionButtons
-            isAllMyLocationsFilled={isAllMyLocationsFilled}
-            handleAddLocation={handleAddLocation}
-            className="px-4 py-6 bg-white-default"
-          />
+          <LocationActionButtons className="px-4 py-6 bg-white-default" />
         </div>
       </BottomSheet>
     </>

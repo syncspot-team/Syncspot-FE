@@ -1,61 +1,40 @@
 import KakaoLocationPicker from '@src/components/common/kakao/KakaoLocationPicker';
 import IconXmark from '@src/assets/icons/IconXmark.svg?react';
-import { ISelectedLocation } from '@src/components/common/kakao/types';
-
-interface ILocationField {
-  id: string;
-  siDo: string;
-  siGunGu: string;
-  roadNameAddress: string;
-  addressLat: number;
-  addressLong: number;
-}
+import { useLocationContext } from '@src/components/location/LocationEnterPage/LocationContext';
 
 interface MyLocationListProps {
-  locationListRef: React.RefObject<HTMLUListElement>;
-  lastLocationRef: React.RefObject<HTMLLIElement>;
-  locations: ILocationField[];
-  onLocationSelect: (location: ISelectedLocation, index: number) => boolean;
-  onDeleteLocation: (index: number) => void;
   className?: string;
 }
 
-export default function MyLocationList({
-  locationListRef,
-  lastLocationRef,
-  locations,
-  onLocationSelect,
-  onDeleteLocation,
-  className,
-}: MyLocationListProps) {
-  if (locations.length === 0) {
-    return (
-      <li className="flex items-center justify-center py-4 text-content text-gray-dark">
-        아래 장소 추가하기 버튼을 클릭해 장소를 추가해보세요!
-      </li>
-    );
-  }
+export default function MyLocationList({ className }: MyLocationListProps) {
+  const {
+    locationListRef,
+    lastLocationRef,
+    myLocationFields,
+    handleLocationSelect,
+    handleDeleteLocation,
+  } = useLocationContext();
 
   return (
     <ul ref={locationListRef} className={className}>
-      {locations.map((field, index) => (
+      {myLocationFields.map((location, index) => (
         <li
-          key={field.id}
-          ref={index === locations.length - 1 ? lastLocationRef : null}
-          className="flex group/location relative items-center justify-between bg-white-default rounded-default mb-[0.625rem] ring-1 ring-gray-normal z-10"
+          key={location.id}
+          ref={index === myLocationFields.length - 1 ? lastLocationRef : null}
+          className="relative mb-2 rounded-md"
         >
           <KakaoLocationPicker
-            InputClassName="w-full text-content bg-white-default py-[1.3125rem] truncate"
-            onSelect={(location) => onLocationSelect(location, index)}
-            defaultAddress={field.roadNameAddress}
-            usePortal={true}
+            InputClassName="w-full bg-white-default ring-1 ring-gray-normal lg:py-[1.25rem] text-description lg:text-content"
+            onSelect={(selectedLocation) =>
+              handleLocationSelect(selectedLocation, index)
+            }
+            defaultAddress={location.roadNameAddress}
           />
           <button
-            type="button"
-            onClick={() => onDeleteLocation(index)}
-            className="p-1 mx-2 rounded-[0.5rem] hover:bg-gray-normal absolute right-0 group"
+            onClick={() => handleDeleteLocation(index)}
+            className="absolute p-1 transform -translate-y-1/2 rounded-full right-2 top-1/2 hover:bg-gray-light"
           >
-            <IconXmark className="transition-none size-4 text-gray-normal group-hover:text-white-default" />
+            <IconXmark className="size-3 lg:size-4 text-gray-dark" />
           </button>
         </li>
       ))}

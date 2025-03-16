@@ -1,22 +1,13 @@
 import KakaoMap from '@src/components/common/kakao/KakaoMap';
 import ShareButton from '@src/components/layout/header/ShareButton';
 import LocationActionButtons from '@src/components/location/LocationEnterPage/LocationActionButtons';
-import { LocationEnterProps } from '@src/pages/location/LocationEnterPage';
 import FriendLocationList from '@src/components/location/LocationEnterPage/FriendLocationList';
 import MyLocationList from '@src/components/location/LocationEnterPage/MyLocationList';
+import { useLocationContext } from '@src/components/location/LocationEnterPage/LocationContext';
 
-export default function DesktopLocationEnter({
-  lastLocationRef,
-  locationListRef,
-  myLocationFields,
-  friendLocationFields,
-  handleLocationSelect,
-  handleDeleteLocation,
-  handleAddLocation,
-  isAllMyLocationsFilled,
-  coordinates,
-  shouldShowMap,
-}: LocationEnterProps) {
+export default function DesktopLocationEnter() {
+  const { coordinates, shouldShowMap } = useLocationContext();
+
   return (
     <div className="grid w-full grid-cols-2 px-[7.5rem] gap-[0.9375rem] mt-[1.5625rem]">
       <div className="flex flex-col order-2 p-5 rounded-default bg-gray-light lg:order-1 lg:max-h-[calc(100vh-8rem)]">
@@ -26,29 +17,13 @@ export default function DesktopLocationEnter({
         <h1 className="mb-[0.375rem] ml-2 text-subtitle text-tertiary">
           내가 입력한 장소
         </h1>
-        <MyLocationList
-          locationListRef={locationListRef}
-          lastLocationRef={lastLocationRef}
-          locations={myLocationFields}
-          onLocationSelect={handleLocationSelect}
-          onDeleteLocation={handleDeleteLocation}
-          className="flex flex-col p-1 max-h-[calc(100vh-38rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full"
-        />
-
+        <MyLocationList className="flex flex-col p-1 max-h-[calc(100vh-38rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full" />
         <div className="flex items-center mb-[0.375rem] mt-4 ml-2 justify-between">
           <h1 className="text-subtitle text-tertiary">친구가 입력한 장소</h1>
           <ShareButton />
         </div>
-        <FriendLocationList
-          locations={friendLocationFields}
-          className="max-h-[calc(100vh-38rem)] mb-2 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full"
-        />
-
-        <LocationActionButtons
-          isAllMyLocationsFilled={isAllMyLocationsFilled}
-          handleAddLocation={handleAddLocation}
-          className="mt-auto gap-[0.5rem]"
-        />
+        <FriendLocationList className="max-h-[calc(100vh-38rem)] mb-2 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full p-1" />
+        <LocationActionButtons className="mt-auto gap-[0.5rem]" />
       </div>
       <div className="rounded-default min-h-[calc(100vh-8rem)] order-1 lg:order-2">
         <KakaoMap coordinates={shouldShowMap ? coordinates : []} />
