@@ -1,32 +1,56 @@
 import { useRef } from 'react';
 import { useLocationData } from './useLocationData';
-import { useAutoScroll } from '@src/hooks/location/useAutoScroll';
+import { useLocationForm } from './useLocationForm';
+import { useAutoScroll } from './useAutoScroll';
 import { useLocationMutations } from './useLocationMutations';
+import { useLocationInitialization } from './useLocationInitialization';
 
 export function useLocationEnter() {
   const lastLocationRef = useRef<HTMLLIElement>(null);
   const locationListRef = useRef<HTMLUListElement>(null);
 
-  const locationData = useLocationData();
+  const { savedLocations, setSavedLocations, placeSearchData, userInfo } =
+    useLocationData();
 
-  const locationMutations = useLocationMutations({
-    savedLocations: locationData.savedLocations,
-    setSavedLocations: locationData.setSavedLocations,
-    myLocations: locationData.myLocations,
-    friendLocations: locationData.friendLocations,
-    setValue: locationData.setValue,
-    removeMyLocation: locationData.removeMyLocation,
+  const {
+    myLocationFields,
+    friendLocationFields,
+    setValue,
+    resetLocation,
+    removeMyLocation,
+    myLocations,
+    friendLocations,
+    appendMyLocation,
+    isAllMyLocationsFilled,
+    coordinates,
+    shouldShowMap,
+  } = useLocationForm();
+
+  useLocationInitialization({
+    placeSearchData,
+    userInfo,
+    resetLocation,
+    setSavedLocations,
+  });
+
+  const { handleLocationSelect, handleDeleteLocation } = useLocationMutations({
+    savedLocations,
+    setSavedLocations,
+    myLocations,
+    friendLocations,
+    setValue,
+    removeMyLocation,
   });
 
   useAutoScroll({
     lastLocationRef,
     locationListRef,
-    currentLocationsCount: locationData.myLocationFields.length,
-    savedLocationsCount: locationData.savedLocations.length,
+    currentLocationsCount: myLocationFields.length,
+    savedLocationsCount: savedLocations.length,
   });
 
   const handleAddLocation = () => {
-    locationData.appendMyLocation({
+    appendMyLocation({
       siDo: '',
       siGunGu: '',
       roadNameAddress: '',
@@ -36,10 +60,15 @@ export function useLocationEnter() {
   };
 
   return {
-    ...locationData,
-    ...locationMutations,
     lastLocationRef,
     locationListRef,
+    myLocationFields,
+    friendLocationFields,
+    handleLocationSelect,
+    handleDeleteLocation,
     handleAddLocation,
+    isAllMyLocationsFilled,
+    coordinates,
+    shouldShowMap,
   };
 }

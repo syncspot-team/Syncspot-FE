@@ -16,14 +16,14 @@ interface ILocationForm {
 interface UseLocationInitializationProps {
   placeSearchData: IPlaceSearchResponseType | undefined;
   userInfo: IGetUserInfoResponse | undefined;
-  reset: UseFormReset<ILocationForm>;
+  resetLocation: UseFormReset<ILocationForm>;
   setSavedLocations: (locations: ILocation[]) => void;
 }
 
 export function useLocationInitialization({
   placeSearchData,
   userInfo,
-  reset,
+  resetLocation,
   setSavedLocations,
 }: UseLocationInitializationProps) {
   const { mutate: placeSaveMutation } = usePlaceSaveMutation();
@@ -51,7 +51,7 @@ export function useLocationInitialization({
               setSavedLocations([
                 { ...defaultLocation, placeId: data.data.placeId },
               ]);
-              reset({
+              resetLocation({
                 myLocations: [defaultLocation],
                 friendLocations: placeSearchData.data.friendLocations.map(
                   (place: ILocation) => ({
@@ -67,8 +67,7 @@ export function useLocationInitialization({
           },
         );
       } else if (placeSearchData.data.myLocations.length === 0) {
-        // 내 장소가 없고 기본 주소도 없는 경우, 빈 입력 칸 하나 추가
-        reset({
+        resetLocation({
           myLocations: [
             {
               siDo: '',
@@ -90,7 +89,7 @@ export function useLocationInitialization({
         });
       } else {
         setSavedLocations(placeSearchData.data.myLocations);
-        reset({
+        resetLocation({
           myLocations: placeSearchData.data.myLocations.map(
             (place: ILocation) => ({
               siDo: place.siDo,
@@ -115,7 +114,7 @@ export function useLocationInitialization({
   }, [
     placeSearchData?.data,
     userInfo?.data,
-    reset,
+    resetLocation,
     placeSaveMutation,
     setSavedLocations,
   ]);

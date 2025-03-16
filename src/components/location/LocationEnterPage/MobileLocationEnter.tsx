@@ -4,22 +4,21 @@ import IconXmark from '@src/assets/icons/IconXmark.svg?react';
 import BottomSheet from '@src/components/common/bottomSheet/BottomSheet';
 import LocationActionButtons from '@src/components/location/LocationEnterPage/LocationActionButtons';
 import { useState } from 'react';
-import { useLocationEnter } from '@src/hooks/location/useLocationEnter';
+import { LocationEnterProps } from '@src/pages/location/LocationEnterPage';
 
-export default function MobileLocationEnter() {
+export default function MobileLocationEnter({
+  lastLocationRef,
+  locationListRef,
+  myLocationFields,
+  friendLocationFields,
+  handleLocationSelect,
+  handleDeleteLocation,
+  handleAddLocation,
+  isAllMyLocationsFilled,
+  coordinates,
+  shouldShowMap,
+}: LocationEnterProps) {
   const [bottomSheetHeight, setBottomSheetHeight] = useState(500);
-  const {
-    lastLocationRef,
-    locationListRef,
-    myLocationFields,
-    friendLocationFields,
-    handleLocationSelect,
-    handleDeleteLocation,
-    handleAddLocation,
-    isAllMyLocationsFilled,
-    coordinates,
-    shouldShowMap,
-  } = useLocationEnter();
 
   const getScrollAreaStyle = (bottomSheetHeight: number) => {
     const viewportHeight = window.innerHeight;

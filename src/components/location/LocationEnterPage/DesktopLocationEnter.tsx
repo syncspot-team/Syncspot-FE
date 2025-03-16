@@ -3,22 +3,20 @@ import KakaoLocationPicker from '@src/components/common/kakao/KakaoLocationPicke
 import IconXmark from '@src/assets/icons/IconXmark.svg?react';
 import ShareButton from '@src/components/layout/header/ShareButton';
 import LocationActionButtons from '@src/components/location/LocationEnterPage/LocationActionButtons';
-import { useLocationEnter } from '@src/hooks/location/useLocationEnter';
+import { LocationEnterProps } from '@src/pages/location/LocationEnterPage';
 
-export default function DesktopLocationEnter() {
-  const {
-    lastLocationRef,
-    locationListRef,
-    myLocationFields,
-    friendLocationFields,
-    handleLocationSelect,
-    handleDeleteLocation,
-    handleAddLocation,
-    isAllMyLocationsFilled,
-    coordinates,
-    shouldShowMap,
-  } = useLocationEnter();
-
+export default function DesktopLocationEnter({
+  lastLocationRef,
+  locationListRef,
+  myLocationFields,
+  friendLocationFields,
+  handleLocationSelect,
+  handleDeleteLocation,
+  handleAddLocation,
+  isAllMyLocationsFilled,
+  coordinates,
+  shouldShowMap,
+}: LocationEnterProps) {
   return (
     <div className="grid w-full grid-cols-2 px-[7.5rem] gap-[0.9375rem] mt-[1.5625rem]">
       <div className="flex flex-col order-2 p-5 rounded-default bg-gray-light lg:order-1 lg:max-h-[calc(100vh-8rem)]">
