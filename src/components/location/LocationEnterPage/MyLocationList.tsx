@@ -21,10 +21,10 @@ export default function MyLocationList({ className }: MyLocationListProps) {
         <li
           key={location.id}
           ref={index === myLocationFields.length - 1 ? lastLocationRef : null}
-          className="relative mb-2 rounded-md"
+          className="relative mb-2 rounded-md group"
         >
           <KakaoLocationPicker
-            InputClassName="w-full bg-white-default ring-1 ring-gray-normal lg:py-[1.25rem] text-description lg:text-content"
+            InputClassName="w-full bg-white-default ring-1 ring-gray-normal lg:ring-0 lg:hover:ring-1 lg:hover:ring-gray-normal lg:py-[1.25rem] text-description lg:text-content"
             onSelect={(selectedLocation) =>
               handleLocationSelect(selectedLocation, index)
             }
@@ -32,7 +32,7 @@ export default function MyLocationList({ className }: MyLocationListProps) {
           />
           <button
             onClick={() => handleDeleteLocation(index)}
-            className="absolute p-1 transform -translate-y-1/2 rounded-full right-2 top-1/2 hover:bg-gray-light"
+            className="absolute block p-1 transform -translate-y-1/2 rounded-full lg:hidden right-2 top-1/2 hover:bg-gray-light lg:group-hover:block"
           >
             <IconXmark className="size-3 lg:size-4 text-gray-dark" />
           </button>
