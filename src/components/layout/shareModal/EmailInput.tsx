@@ -39,7 +39,7 @@ export default function EmailInput({ url, onClick }: IEmailInputProps) {
         >
           {loading ? '...' : '전송'}
         </button>
-        <div onClick={onClick} className="my-auto hover:cursor-pointer">
+        <div onClick={onClick} className="my-auto cursor-pointer">
           X
         </div>
       </div>

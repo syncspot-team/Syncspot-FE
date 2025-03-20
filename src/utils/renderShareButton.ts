@@ -7,7 +7,7 @@ export function renderShareButton(
   location: Location,
 ) {
   if (selectedRoomId === null) {
-    return false;
+    return location.pathname === PATH.ABOUT;
   }
 
   const commonPaths = [
