@@ -6,23 +6,12 @@ import DesktopSubMenu from './DesktopSubMenu';
 import AuthButton from './AuthButton';
 import ShareButton from './ShareButton';
 import { renderShareButton } from '@src/utils/renderShareButton';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useModal } from '@src/hooks/useModal';
-import Modal from '@src/components/common/modal/Modal';
-import { MODAL_TYPE } from '@src/types/modalType';
-import RecreateVoteModal from '@src/components/common/modal/RecreateVoteModal';
+import { useLocation } from 'react-router-dom';
 
 export default function DesktopMenu() {
-  const navigate = useNavigate();
-  const { modalType, openModal, closeModal } = useModal();
-  const [modalLink, setModalLink] = useState<string | null>(null);
-
   const menuRef = useRef<HTMLUListElement>(null);
   const [clickedMenu, setClickedMenu] = useState<string | null>(null);
-  const menuItems = useMenuItems((type, link) => {
-    openModal(type);
-    setModalLink(link || null);
-  });
+  const menuItems = useMenuItems();
 
   useClickOutside(menuRef, () => setClickedMenu(null));
 
@@ -87,21 +76,6 @@ export default function DesktopMenu() {
         )}
         <AuthButton onAuthClick={() => setClickedMenu(null)} isMobile={false} />
       </ul>
-      <Modal
-        isOpen={modalType === MODAL_TYPE.RECREATE_VOTE_MODAL}
-        onClose={closeModal}
-      >
-        <RecreateVoteModal
-          onConfirm={() => {
-            if (modalLink) {
-              navigate(modalLink);
-            }
-
-            closeModal(); // 모달 닫기
-          }}
-          onClose={closeModal}
-        />
-      </Modal>
     </>
   );
 }

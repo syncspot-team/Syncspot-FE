@@ -42,7 +42,7 @@ export default function TimeVotePage() {
   };
 
   return (
-    <div className="w-full grid grid-cols-1 lg:grid-cols-2 px-4 lg:px-[7.5rem] gap-[0.9375rem] mt-[1.875rem] mx-auto lg:p-0 lg:flex-row lg:items-start">
+    <div className="w-full grid grid-cols-1 lg:grid-cols-2 px-4 lg:px-[7.5rem] gap-[0.9375rem] mt-0 lg:mt-[1.875rem] mx-auto lg:p-0 lg:flex-row lg:items-start">
       <ClickCalendar dates={timeDate.dates} />
       {!isMobile ? (
         // 데스크탑

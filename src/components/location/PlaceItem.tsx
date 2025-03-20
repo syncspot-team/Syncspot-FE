@@ -33,7 +33,7 @@ export default function PlaceItem({
     <li
       className={`flex flex-col justify-center p-4 pb-[0.625rem] cursor-pointer rounded-[0.625rem] shadow-sm ${
         isSelected
-          ? 'bg-blue-100 opacity-95 ring-2 ring-blue-normal01'
+          ? 'bg-blue-light01 opacity-95 ring-2 ring-blue-normal01'
           : 'ring-1 ring-primary'
       }`}
       onClick={() => onSelect(place.name)}
@@ -41,34 +41,37 @@ export default function PlaceItem({
       <div className="flex items-center gap-2">
         <span className="flex-shrink-0">{getPlaceIcon()}</span>
         <span className="text-content text-blue-dark02">
-          {place.roadNameAddress}
+          {place.placeStandard}
+          {/* FILTER_ITEMS */}
         </span>
+        {isSelected && (
+          <div className="flex items-center gap-2">
+            {place.distance && (
+              <span className="px-2 py-1 rounded-lg bg-blue-light02 text-blue-dark02 text-description">
+                {`${searchParams.get('location')}에서 ${place.distance}m`}
+              </span>
+            )}
+            {/* {place.phoneNumber && (
+            <span className="px-2 py-1 rounded-lg bg-primary text-white-default text-description">
+              {place.phoneNumber}
+            </span>
+          )} */}
+          </div>
+        )}
       </div>
       <div className="flex items-center gap-2">
         <span className="text-[1.25rem] text-blue-dark01 my-1">
           {place.name}
         </span>
-        {isSelected && (
-          <Link to={place.placeUrl} target="_blank">
-            <IconLinkPin className="flex-shrink-0 size-4 hover:scale-110" />
-          </Link>
-        )}
+
+        <Link to={place.placeUrl} target="_blank">
+          <IconLinkPin className="flex-shrink-0 size-4 hover:scale-110" />
+        </Link>
       </div>
-      {isSelected && (
-        <div className="flex items-center gap-2">
-          {place.distance && (
-            <span className="px-2 py-1 rounded-lg bg-primary text-white-default text-description">
-              {`${searchParams.get('location')}에서 ${place.distance}m`}
-            </span>
-          )}
-          {place.phoneNumber && (
-            <span className="px-2 py-1 rounded-lg bg-primary text-white-default text-description">
-              {place.phoneNumber}
-            </span>
-          )}
-        </div>
-      )}
-      <AddressDisplay address={place.siDo + ' ' + place.siGunGu} />
+
+      <AddressDisplay
+        address={place.siDo + ' ' + place.siGunGu + ' ' + place.roadNameAddress}
+      />
     </li>
   );
 }

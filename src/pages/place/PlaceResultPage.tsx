@@ -39,8 +39,8 @@ export default function PlaceResultPage() {
 
   return (
     <>
-      <div className="flex flex-col items-center py-6 bg-gray-light mt-[1.875rem] min-h-[calc(100dvh-8rem)] lg:max-h-[calc(100dvh-7rem)] mx-4 lg:mx-[7.5rem] rounded-md">
-        <div className="flex flex-col justify-center items-center w-full lg:max-w-[43.75rem] h-[calc(100dvh-10rem)] lg:h-full px-4 lg:px-0">
+      <div className="flex flex-col items-center py-6 mt-[1.875rem] min-h-[calc(100dvh-8rem)] lg:max-h-[calc(100dvh-7rem)] mx-4 lg:mx-[7.5rem] rounded-md">
+        <div className="flex flex-col justify-center items-center w-full lg:max-w-[43.75rem] lg:h-full px-4 lg:px-0">
           <h1 className="mb-6 lg:mb-2 text-subtitle lg:text-title text-blue-dark02">
             투표 결과
           </h1>
@@ -49,30 +49,30 @@ export default function PlaceResultPage() {
           </p>
 
           {!isPlaceVoteResultLoading && !hasVotes ? (
-            <div className="flex flex-col">
-              <IconDolphin className="size-60 lg:size-80 animate-customBounce" />
+            <div className="flex flex-col items-center justify-center my-4">
+              <IconDolphin className="my-4 size-52 lg:size-80 animate-customBounce" />
               <p className="flex justify-center my-1 lg:my-5 text-content lg:text-menu text-gray-dark">
                 아직 투표한 사람이 없습니다...
               </p>
             </div>
           ) : (
-            <ul className="w-full mb-8 flex flex-col gap-3 max-h-[calc(100dvh-15rem)] lg:max-h-[calc(100dvh-25rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full">
+            <ul className="w-full lg:w-2/3 mb-8 flex flex-col gap-3 max-h-[calc(100dvh-15rem)] lg:max-h-[calc(100dvh-25rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full">
               {locations.map((location) => (
                 <li
                   key={location.id}
                   className="flex items-center gap-4 *:text-description *:lg:text-content"
                 >
-                  <span className="p-3 text-center truncate rounded-lg shadow-sm lg:py-6 lg:px-8 text-menu-selected text-primary bg-white-default">
+                  <span className="w-12 p-3 text-center truncate rounded-lg shadow-sm lg:w-24 lg:py-6 text-menu-selected text-primary bg-blue-light01">
                     {location.count}표
                   </span>
-                  <span className="flex-1 p-3 text-left truncate rounded-lg shadow-sm lg:py-6 lg:px-4 text-content lg:text-menu bg-white-default">
+                  <span className="flex-1 p-3 text-center truncate rounded-lg shadow-sm lg:text-left text-blue-dark03 lg:py-6 lg:px-4 text-content lg:text-menu bg-gray-light">
                     {location.name}
                   </span>
                 </li>
               ))}
             </ul>
           )}
-          <div className="w-full">
+          <div className="w-full lg:px-[7rem] my-auto ">
             <Button
               buttonType="primary"
               className="mb-[0.625rem] w-full px-[0.3125rem] lg:px-0"

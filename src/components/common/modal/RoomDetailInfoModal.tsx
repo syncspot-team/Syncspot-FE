@@ -94,7 +94,9 @@ export default function RoomDetailInfoModal({
         모임 정보
       </h1>
       <div className="flex flex-col w-full mb-3">
-        <h3 className="text-content lg:text-menu text-blue-dark03">이름</h3>
+        <h3 className="mb-[0.375rem] ml-3 text-content lg:text-menu text-blue-dark03">
+          이름
+        </h3>
         <EditableField
           isEditing={isEditingName}
           value={roomName}
@@ -105,7 +107,9 @@ export default function RoomDetailInfoModal({
       </div>
 
       <div className="flex flex-col w-full mb-3">
-        <h3 className="text-content lg:text-menu text-blue-dark03">메모</h3>
+        <h3 className="ml-3 text-content lg:text-menu text-blue-dark03 mb-[0.375rem]">
+          메모
+        </h3>
         <EditableField
           isEditing={isEditingMemo}
           value={memo}
@@ -120,7 +124,10 @@ export default function RoomDetailInfoModal({
       </h1>
       <ul className="max-h-[10rem] w-full overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full p-1">
         {roomDetailInfo?.data.emails?.map((email: string) => (
-          <li key={email} className="p-2 text-description text-blue-dark03">
+          <li
+            key={email}
+            className="p-4 rounded-lg text-description text-blue-dark03 bg-gray-light"
+          >
             {email}
           </li>
         ))}
@@ -128,7 +135,7 @@ export default function RoomDetailInfoModal({
 
       <Button
         onClick={handleDeleteUserFromRoom}
-        className="w-full mt-4 px-[0.3125rem]"
+        className="w-full mt-4 px-[0.3125rem] bg-gray-dark hover:bg-gray-dark"
       >
         모임 나가기
       </Button>

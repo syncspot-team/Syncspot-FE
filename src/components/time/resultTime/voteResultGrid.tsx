@@ -107,15 +107,11 @@ export default function VoteResultGrid({ isMobile }: VoteResultGridProps) {
 
   return (
     <div className="flex flex-col items-center justify-center w-full lg:gap-8">
-      <div className="flex items-center mx-auto mt-4 lg:mt-8 justify-evenly no-transition">
+      <div className="flex items-center mx-auto mt-4 mb-4 lg:mb-0 lg:mt-8 justify-evenly no-transition">
         <button
           onClick={handlePrev}
           className={mergeClassNames(
-            currentIndex === 0
-              ? isMobile
-                ? 'text-white-default'
-                : 'text-gray-light'
-              : 'text-blue-normal01',
+            currentIndex === 0 ? 'text-white-default' : 'text-blue-normal01',
           )}
           disabled={currentIndex === 0}
         >
@@ -140,7 +136,7 @@ export default function VoteResultGrid({ isMobile }: VoteResultGridProps) {
       </div>
 
       {/* 인원 */}
-      <div className="flex flex-row items-center justify-center w-full gap-3 mx-auto ">
+      <div className="flex flex-row items-center justify-center w-full gap-3 mx-auto text-blue-dark03 ">
         <span>0/0 가능</span>
         <div
           className="grid h-10 overflow-hidden border-2 border-blue-normal01 rounded-2xl "

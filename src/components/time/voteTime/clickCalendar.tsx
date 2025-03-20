@@ -1,8 +1,7 @@
 import '@pages/time/TimeCreatePage.css';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import IconLeftArrow from '@src/assets/icons/IconLeftArrow.svg?react';
-import IconRightArrow from '@src/assets/icons/IconRightArrow.svg?react';
+import IconArrow from '@src/assets/icons/IconTriangle.svg?react';
 import { ITimeDatesProps } from '@src/types/time/timeProps';
 import { useEffect, useRef, useState } from 'react';
 import VoteResultByDate from './VoteResultByDate';
@@ -41,8 +40,8 @@ export default function ClickCalendar({ dates }: ITimeDatesProps) {
   const result = timeResultRes?.data.result;
 
   return (
-    <div className="flex flex-col h-full gap-4" ref={componentRef}>
-      <div className="rounded-[1.25rem] p-3 text-blue-dark01 bg-gray-light text-menu-selected">
+    <div className="flex flex-col h-full gap-4 " ref={componentRef}>
+      <div className="rounded-[1.25rem] lg:p-12 p-3 text-blue-dark01 lg:bg-gray-light text-menu-selected">
         <Calendar
           value={dates.length > 0 ? dates[0] : null}
           locale="ko-KR"
@@ -50,8 +49,10 @@ export default function ClickCalendar({ dates }: ITimeDatesProps) {
           navigationLabel={({ date }) =>
             `${date.getFullYear()}년 ${date.getMonth() + 1}월`
           }
-          prevLabel={<IconLeftArrow className="size-7" />}
-          nextLabel={<IconRightArrow className="size-7" />}
+          prevLabel={<IconArrow className="size-7 text-blue-normal01" />}
+          nextLabel={
+            <IconArrow className="rotate-180 size-7 text-blue-normal01" />
+          }
           prev2Label={null}
           next2Label={null}
           minDetail="month"

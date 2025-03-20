@@ -153,7 +153,7 @@ export default function SignUpPage() {
             type="button"
             onClick={handleRequestEmailVerification}
             disabled={isEmailVerified}
-            className="absolute right-3 top-[1.875rem] -translate-y-1/2 h-[2.125rem] whitespace-nowrap text-description bg-gray-normal p-2 text-white-default rounded-md hover:enabled:bg-gray-dark cursor-pointer disabled:cursor-not-allowed"
+            className="absolute right-3 top-[1.875rem] -translate-y-1/2 h-[2.125rem] whitespace-nowrap text-description bg-gray-normal p-[0.375rem] text-white-default rounded-md hover:enabled:bg-gray-dark cursor-pointer disabled:cursor-not-allowed"
           >
             {isRequestEmailVerificationPending
               ? '확인중...'
@@ -186,7 +186,9 @@ export default function SignUpPage() {
                 type="button"
                 onClick={handleConfirmEmailVerification}
                 disabled={isEmailVerified}
-                className="absolute right-3 top-[1.875rem] -translate-y-1/2 h-[2.125rem] whitespace-nowrap text-description bg-gray-normal p-2 text-white-default rounded-md hover:enabled:bg-gray-dark cursor-pointer disabled:cursor-not-allowed"
+                className={`absolute right-3 top-[1.875rem] -translate-y-1/2 h-[2.125rem] whitespace-nowrap text-description ${
+                  watch('code') ? 'bg-primary' : 'bg-gray-normal'
+                } p-[0.375rem] text-white-default rounded-md hover:enabled:bg-gray-dark cursor-pointer disabled:cursor-not-allowed`}
               >
                 {isConfirmEmailVerificationPending
                   ? '확인중...'

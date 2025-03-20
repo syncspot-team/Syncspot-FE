@@ -20,7 +20,7 @@ export default function ShareButton({ onShareClick }: IShareButtonProps) {
     <>
       <div
         onClick={handleClick}
-        className="rounded-full size-7 flex items-center justify-center cursor-pointer p-[5px] shadow-black hover:bg-blue-light01"
+        className="rounded-full size-5 lg:size-7 flex items-center justify-center cursor-pointer p-[5px] shadow-black hover:bg-blue-light01 mr-2 mt-1 lg:mt-0 lg:mr-3"
       >
         <IconShare className="size-4" />
       </div>
