@@ -18,7 +18,6 @@
 ## [👉🏻 syncspot 구경하기](https://syncspot.kr/)
 
 [![CI/CD](https://github.com/Cotato-Syncspot/Syncspot-FE/actions/workflows//cicd.yml/badge.svg)](https://github.com/Cotato-Syncspot/Syncspot-FE/actions/workflows//cicd.yml)
-[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FCotato-Syncspot%2FSyncspot-FE&count_bg=%235786FF&title_bg=%23555555&icon=googlemaps.svg&icon_color=%23E7E7E7&title=syncspot&edge_flat=false)](https://hits.seeyoufarm.com)
 
 ## 모두가 편하게 만날 수 있는 지름길, Syncspot!<br/>
 
