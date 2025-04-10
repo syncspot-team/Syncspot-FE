@@ -14,7 +14,7 @@ import { mergeClassNames } from '@src/utils/mergeClassNames';
 import { useEffect, useState } from 'react';
 import GridTime from './gridTime';
 import { fillGridColors } from '../utils/fillGridColors';
-import { formatStringDate } from '../utils/formatDate';
+import { DATE_FORMATS, formatStringDate } from '../utils/formatDate';
 
 interface VoteResultGridProps {
   isMobile: boolean;
@@ -59,7 +59,11 @@ export default function VoteResultGrid({ isMobile }: VoteResultGridProps) {
   const dateKeys = Object.keys(data?.result || {});
   const formattedDates = dateKeys.map((date) => {
     const [year, month, day] = date.split('-').map(Number);
-    return formatStringDate(new Date(year, month - 1, day), undefined, 'MMDD'); // 'MMDD' 형식 사용
+    return formatStringDate(
+      new Date(year, month - 1, day),
+      undefined,
+      DATE_FORMATS.MMDD,
+    );
   });
 
   //날짜 화살표

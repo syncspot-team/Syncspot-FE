@@ -17,5 +17,5 @@ export interface IMemberAvailability {
   dateTime: {
     memberAvailableStartTime: string;
     memberAvailableEndTime: string;
-  }[];
+  };
 }
