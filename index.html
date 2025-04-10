@@ -17,21 +17,22 @@
     />
     <meta name="author" content="모락 Morak" />
     <meta name="robots" content="index, nofollow" />
-    <!-- Google tag (gtag.js) -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-C9MK6BJSX3"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag('js', new Date());
-
-      gtag('config', 'G-C9MK6BJSX3');
-    </script>
   </head>
+  <!-- Google tag (gtag.js) -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=%VITE_GOOGLE_ANALYTICS_ID%"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', '%VITE_GOOGLE_ANALYTICS_ID%');
+  </script>
+  <!------------------------>
   <body>
     <div id="root"></div>
     <div id="modal"></div>

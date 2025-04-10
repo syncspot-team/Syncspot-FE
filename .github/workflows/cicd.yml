@@ -57,6 +57,7 @@ jobs:
           echo "VITE_EMAILJS_SERVICE_ID=${{ secrets.VITE_EMAILJS_SERVICE_ID }}" >> $GITHUB_ENV
           echo "VITE_EMAILJS_TEMPLATE_ID=${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}" >> $GITHUB_ENV
           echo "VITE_EMAILJS_PUBLIC_KEY=${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}" >> $GITHUB_ENV
+          echo "VITE_GOOGLE_ANALYTICS_ID=${{ secrets.VITE_GOOGLE_ANALYTICS_ID }}" >> $GITHUB_ENV
 
       - name: Build
         run: yarn build
@@ -109,6 +110,7 @@ jobs:
           echo "VITE_EMAILJS_SERVICE_ID=${{ secrets.VITE_EMAILJS_SERVICE_ID }}" >> $GITHUB_ENV
           echo "VITE_EMAILJS_TEMPLATE_ID=${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}" >> $GITHUB_ENV
           echo "VITE_EMAILJS_PUBLIC_KEY=${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}" >> $GITHUB_ENV
+          echo "VITE_GOOGLE_ANALYTICS_ID=${{ secrets.VITE_GOOGLE_ANALYTICS_ID }}" >> $GITHUB_ENV
 
       - name: Build
         run: yarn build
