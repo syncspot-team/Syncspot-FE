@@ -30,47 +30,47 @@ export default function VoteResultByDate({
         </span>
       )}
       <div className="space-y-4">
-        {members.map((memberInfo, mIndex) => (
-          <div
-            key={mIndex}
-            className={mergeClassNames(
-              'flex flex-row justify-around gap-4 mx-auto text-blue-normal01 ',
-              { 'text-description gap-2': isMobile },
-            )}
-          >
+        {members.map((memberInfo, mIndex) => {
+          const { memberAvailableStartTime, memberAvailableEndTime } =
+            memberInfo.dateTime;
+
+          const startTime = formatStringTime(memberAvailableStartTime);
+          const endTime = formatStringTime(memberAvailableEndTime);
+
+          return (
             <div
+              key={mIndex}
               className={mergeClassNames(
-                'p-3 w-2/5 mx-auto text-center bg-white-default rounded-default',
-                { 'min-w-[6.25rem] bg-blue-light01': isMobile },
+                'flex flex-row justify-around gap-4 mx-auto text-blue-normal01 ',
+                { 'text-description gap-2': isMobile },
               )}
             >
-              <span
-                className="block overflow-hidden whitespace-nowrap text-ellipsis"
-                title={memberInfo?.memberName}
+              <div
+                className={mergeClassNames(
+                  'p-3 w-2/5 mx-auto text-center bg-white-default rounded-default',
+                  { 'min-w-[6.25rem] bg-blue-light01': isMobile },
+                )}
               >
-                {memberInfo?.memberName}
-              </span>
+                <span
+                  className="block overflow-hidden whitespace-nowrap text-ellipsis"
+                  title={memberInfo?.memberName}
+                >
+                  {memberInfo?.memberName}
+                </span>
+              </div>
+              <div
+                className={mergeClassNames(
+                  'p-3 mx-auto w-3/5 text-center text-blue-dark03 whitespace-nowrap bg-white-default rounded-default ',
+                  { 'w-full bg-gray-light': isMobile },
+                )}
+              >
+                <div className="text-center">
+                  {startTime} ~ {endTime}
+                </div>
+              </div>
             </div>
-            <div
-              className={mergeClassNames(
-                'p-3 mx-auto w-3/5 text-center text-blue-dark03 whitespace-nowrap bg-white-default rounded-default ',
-                { 'w-full bg-gray-light': isMobile },
-              )}
-            >
-              {memberInfo?.dateTime?.map((time, tIndex) => {
-                const startTime = formatStringTime(
-                  time.memberAvailableStartTime,
-                );
-                const endTime = formatStringTime(time.memberAvailableEndTime);
-                return (
-                  <div key={tIndex} className="text-center">
-                    {startTime} ~ {endTime}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
