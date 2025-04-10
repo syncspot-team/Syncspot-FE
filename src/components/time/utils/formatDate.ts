@@ -25,11 +25,12 @@ export const formatStringDate = (
 ): string => {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
-  const mmdd = String(date.getMonth() + 1);
+  const mm = String(date.getMonth() + 1);
+  const dd = String(date.getDate() + 1);
   const day = String(date.getDate()).padStart(2, '0');
 
   if (format === DATE_FORMATS.MMDD) {
-    return `${mmdd}월 ${day}일`;
+    return `${mm}월 ${dd}일`;
   }
 
   if (format === DATE_FORMATS.TIME) {
