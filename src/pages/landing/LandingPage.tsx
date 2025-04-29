@@ -2,6 +2,7 @@ import IconRightHalfArrow from '@src/assets/icons/IconRightHalfArrow.svg?react';
 import { useNavigate } from 'react-router-dom';
 import { PATH } from '@src/constants/path';
 import { motion } from 'motion/react';
+import LandingBackgroundImage from '@src/assets/images/LandingBackgroundImage.webp';
 
 export default function LandingPage() {
   const navigate = useNavigate();
@@ -36,7 +37,10 @@ export default function LandingPage() {
 
   return (
     <div className="relative">
-      <div className="fixed inset-0 w-full h-full object-cover -z-10 bg-cover bg-center bg-no-repeat bg-[url('/src/assets/images/LandingBackGroundImage.svg')]" />
+      <div
+        className="fixed inset-0 object-cover w-full h-full bg-center bg-no-repeat bg-cover -z-10"
+        style={{ backgroundImage: `url(${LandingBackgroundImage})` }}
+      />
       <motion.div
         variants={containerVariants}
         initial="hidden"
