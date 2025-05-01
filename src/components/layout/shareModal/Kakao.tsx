@@ -9,11 +9,7 @@ export interface IShare {
 }
 
 export default function KakaoShare({ url }: IShare) {
-  const selectedRoomId = localStorage.getItem('selectedRoomId');
-
-  if (selectedRoomId === null) {
-    return false;
-  }
+  const selectedRoomId = localStorage.getItem('selectedRoomId') || '123';
 
   const pathToShareTypeMap: Record<string, ShareType> = {
     [PATH.LOCATION_ENTER(selectedRoomId)]: SHARE_TYPE.LOCATION_ENTER,
