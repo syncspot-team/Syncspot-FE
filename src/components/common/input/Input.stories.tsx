@@ -130,7 +130,7 @@ export const Password: Story = {
   },
 };
 
-export const Disabled: Story = {
+export const DisabledAddress: Story = {
   args: {
     type: 'text',
     placeholder: '선택된 주소가 없습니다',
@@ -141,7 +141,7 @@ export const Disabled: Story = {
     docs: {
       description: {
         story:
-          '비활성화된 입력 필드입니다. 사용자가 입력할 수 없는 상태를 나타냅니다.',
+          '비활성화된 입력 필드입니다. 사용자가 입력할 수 없는 상태를 나타냅니다. 기본 주소값이 있을경우, 기본 주소값을 표시합니다.',
       },
     },
   },
