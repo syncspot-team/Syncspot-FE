@@ -6,6 +6,7 @@
 @font-face {
   font-family: SUIT;
   font-weight: normal;
+  font-display: swap;
   src:
     local('SUIT'),
     url('../assets/fonts/SUIT-Regular.woff2') format('woff2');
@@ -14,6 +15,7 @@
 @font-face {
   font-family: Pretendard;
   font-weight: normal;
+  font-display: swap;
   src:
     local('Pretendard Regular'),
     url('../assets/fonts/Pretendard-Regular.woff2') format('woff2');
@@ -22,6 +24,7 @@
 @font-face {
   font-family: TT Interphases Pro Trl Variable;
   font-weight: normal;
+  font-display: swap;
   src:
     local('TT Interphases Pro Trl Variable'),
     url('../assets/fonts/TTInterphasesProTrlVariable.woff2') format('woff2');
