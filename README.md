@@ -35,9 +35,17 @@
 
 ![시간투표](https://github.com/user-attachments/assets/cc9f5002-8a2b-4392-83df-afb426581b48)
 
-# 🤔 기술적 고민 (작성 예정...)
+# 🤔 기술적 고민
 
 ## 태윤
+### [🥯 바텀시트를 구현하며 고민했던 과정](https://cllaude-blog.vercel.app/18-bottomsheet/)
+### [🍸 History API와 퍼널 패턴으로 구현한 자연스러운 온보딩 흐름](https://cllaude-blog.vercel.app/17-Funnel/)
+### [🫧 디바운스를 통해 불필요한 API 호출을 줄여보자](https://cllaude-blog.vercel.app/16-debounce/)
+### [🤠 React Query를 사용한 이유](https://cllaude-blog.vercel.app/8-react-query/)
+### [📐 하나의 컴포넌트에 하나의 책임을](https://cllaude-blog.vercel.app/2-solid/)
+### [🤞 크로스 브라우징 테스트]()
+### [🧪 테스트 코드 작성]()
+### [🤔 사용자의 피드백을 바탕으로 개선한 경험. feat 변경이 쉬운 코드를 작성하기 위한 고민]()
 
 ## 다희
 
