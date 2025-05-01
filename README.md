@@ -40,12 +40,14 @@
 ## 태윤
 ### [🥯 바텀시트를 구현하며 고민했던 과정](https://cllaude-blog.vercel.app/18-bottomsheet/)
 ### [🍸 History API와 퍼널 패턴으로 구현한 자연스러운 온보딩 흐름](https://cllaude-blog.vercel.app/17-Funnel/)
+### [🚨 React에서 에러를 선언적으로 처리하기](https://cllaude-blog.vercel.app/7-error_boundary/)
 ### [🫧 디바운스를 통해 불필요한 API 호출을 줄여보자](https://cllaude-blog.vercel.app/16-debounce/)
 ### [🤠 React Query를 사용한 이유](https://cllaude-blog.vercel.app/8-react-query/)
 ### [📐 하나의 컴포넌트에 하나의 책임을](https://cllaude-blog.vercel.app/2-solid/)
 ### [🤞 크로스 브라우징 테스트]()
 ### [🧪 테스트 코드 작성]()
 ### [🤔 사용자의 피드백을 바탕으로 개선한 경험. feat 변경이 쉬운 코드를 작성하기 위한 고민]()
+### [🚀 FE 정적 배포 경험](https://cllaude-blog.vercel.app/5-deploy/)
 
 ## 다희
 
