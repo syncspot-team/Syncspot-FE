@@ -5,14 +5,45 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import tseslint from 'typescript-eslint';
 import prettier from 'eslint-plugin-prettier';
 
-export default tseslint.config(
+// typescript-eslint 권장 설정 직접 가져오기
+const tsRecommended = {
+  linterOptions: {
+    reportUnusedDisableDirectives: true,
+  },
+  files: ['**/*.{ts,tsx}'],
+  languageOptions: {
+    parser: tseslint.parser,
+    parserOptions: {
+      sourceType: 'module',
+      projectService: true,
+    },
+  },
+  plugins: {
+    '@typescript-eslint': tseslint.plugin,
+  },
+  rules: {
+    '@typescript-eslint/no-explicit-any': 'warn',
+    '@typescript-eslint/no-unused-vars': 'warn',
+  },
+};
+
+// prettier 설정
+const prettierConfig = {
+  files: ['**/*.{js,jsx,ts,tsx}'],
+  plugins: {
+    prettier: prettier,
+  },
+  rules: {
+    'prettier/prettier': 'error',
+  },
+};
+
+export default [
   { ignores: ['dist'] },
+  js.configs.recommended,
+  tsRecommended,
+  prettierConfig,
   {
-    extends: [
-      js.configs.recommended,
-      ...tseslint.configs.recommended,
-      'plugin:prettier/recommended',
-    ],
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2020,
@@ -21,7 +52,6 @@ export default tseslint.config(
     plugins: {
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
-      prettier,
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
@@ -29,7 +59,6 @@ export default tseslint.config(
         'warn',
         { allowConstantExport: true },
       ],
-      'prettier/prettier': 'error',
     },
   },
-);
+];
