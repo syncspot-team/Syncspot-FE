@@ -26,6 +26,8 @@ import IconLinkPin from '@src/assets/icons/IconLinkPin.svg?react';
 import IconStudy from '@src/assets/icons/IconStudy.svg?react';
 import IconCafe from '@src/assets/icons/IconCafe.svg?react';
 import IconRestaurant from '@src/assets/icons/IconRestaurant.svg?react';
+import SearchLocationLoading from '@src/components/loading/SearchLocationLoading';
+import LocationRecommendationsSkeleton from '@src/components/skeleton/LocationRecommendationsSkeleton';
 
 export default function LocationRecommendationsPage() {
   const navigate = useNavigate();
@@ -37,21 +39,30 @@ export default function LocationRecommendationsPage() {
   const [selectedPlaceStandard, setSelectedPlaceStandard] =
     useState<PLACE_STANDARDS_TYPE>(PLACE_STANDARDS.ALL);
   const [selectedPlace, setSelectedPlace] = useState<string | null>(null);
+  const [isInitialAppLoad, setIsInitialAppLoad] = useState(() => {
+    return sessionStorage.getItem('hasLoadedRecommendations') !== 'true';
+  });
+  const [isFiltering, setIsFiltering] = useState(false);
 
   const { data: placeSearchData, isLoading: isPlaceSearchLoading } =
     useGetPlaceSearchQuery();
 
-  const { data: midpointSearchData } = useMidpointSearchQuery({
-    enabled:
-      placeSearchData?.data?.myLocationExistence ||
-      placeSearchData?.data?.friendLocationExistence,
-  });
-  const { data: recommendPlaceSearchData, refetch } =
-    useGetRecommendPlaceSearchQuery(selectedPlaceStandard, currentPage, {
+  const { data: midpointSearchData, isLoading: isMidpointSearchLoading } =
+    useMidpointSearchQuery({
       enabled:
-        !!placeSearchData?.data?.myLocationExistence ||
-        !!placeSearchData?.data?.friendLocationExistence,
+        placeSearchData?.data?.myLocationExistence ||
+        placeSearchData?.data?.friendLocationExistence,
     });
+  const {
+    data: recommendPlaceSearchData,
+    isLoading: isRecommendLoading,
+    isFetching: isRecommendFetching,
+    refetch,
+  } = useGetRecommendPlaceSearchQuery(selectedPlaceStandard, currentPage, {
+    enabled:
+      !!placeSearchData?.data?.myLocationExistence ||
+      !!placeSearchData?.data?.friendLocationExistence,
+  });
 
   const coordinates = useCoordinates(
     recommendPlaceSearchData,
@@ -60,20 +71,22 @@ export default function LocationRecommendationsPage() {
   );
 
   const handlePageChange = (page: number) => {
+    setIsFiltering(true);
     setCurrentPage(page);
   };
 
   const handlePlaceStandardChange = (standard: PLACE_STANDARDS_TYPE) => {
+    setIsFiltering(true);
     setSelectedPlaceStandard(standard);
     setCurrentPage(0);
   };
 
-  // 장소 타입 또는 페이지 변경 시 추천 장소 목록 다시 불러오기
   useEffect(() => {
-    refetch();
+    refetch().finally(() => {
+      setIsFiltering(false);
+    });
   }, [selectedPlaceStandard, currentPage, refetch]);
 
-  // 추천 장소 목록이 있을 때 첫 번째 장소를 선택
   useEffect(() => {
     if (recommendPlaceSearchData?.data.content.length > 0) {
       setSelectedPlace(recommendPlaceSearchData.data.content[0].name);
@@ -84,7 +97,31 @@ export default function LocationRecommendationsPage() {
     selectedPlaceStandard,
   ]);
 
-  // url에 쿼리로 있는 위도, 경도에 대해 해당 값이 중간점 검색 데이터에 존재하는지 유효성 확인
+  useEffect(() => {
+    if (
+      isInitialAppLoad &&
+      !isPlaceSearchLoading &&
+      !isMidpointSearchLoading &&
+      !isRecommendLoading &&
+      midpointSearchData &&
+      recommendPlaceSearchData
+    ) {
+      const timer = setTimeout(() => {
+        sessionStorage.setItem('hasLoadedRecommendations', 'true');
+        setIsInitialAppLoad(false);
+      }, 1000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [
+    isInitialAppLoad,
+    isPlaceSearchLoading,
+    isMidpointSearchLoading,
+    isRecommendLoading,
+    midpointSearchData,
+    recommendPlaceSearchData,
+  ]);
+
   useEffect(() => {
     if (!urlLat || !urlLng || !searchParams.get('location')) {
       navigate(PATH.LOCATION_RESULT(roomId!));
@@ -100,10 +137,22 @@ export default function LocationRecommendationsPage() {
         navigate(PATH.LOCATION_RESULT(roomId!));
       }
     }
-  }, [midpointSearchData, urlLat, urlLng, navigate, roomId]);
+  }, [midpointSearchData, urlLat, urlLng, navigate, roomId, searchParams]);
+
+  if (isInitialAppLoad) {
+    return <SearchLocationLoading />;
+  }
 
   if (
-    !isPlaceSearchLoading &&
+    isPlaceSearchLoading ||
+    isMidpointSearchLoading ||
+    !midpointSearchData ||
+    (isRecommendLoading && !recommendPlaceSearchData)
+  ) {
+    return <LocationRecommendationsSkeleton />;
+  }
+
+  if (
     !placeSearchData?.data?.myLocationExistence &&
     !placeSearchData?.data?.friendLocationExistence
   ) {
@@ -121,6 +170,9 @@ export default function LocationRecommendationsPage() {
     return Icon ? <Icon className="size-5" /> : null;
   };
 
+  const isRefreshing =
+    !isFiltering && isRecommendFetching && recommendPlaceSearchData;
+
   return (
     <>
       <div className="hidden lg:block">
@@ -134,22 +186,39 @@ export default function LocationRecommendationsPage() {
           />
         </div>
         <div className="grid w-full grid-cols-1 lg:grid-cols-2 px-4 lg:px-[7.5rem] gap-[0.9375rem] mt-[0.4375rem]">
-          <div className="rounded-default h-[31.25rem] lg:h-[calc(100vh-10rem)]">
+          <div className="rounded-default h-[31.25rem] lg:h-[calc(100vh-10rem)] relative">
+            {isRefreshing && (
+              <div className="absolute z-10 top-2 right-2">
+                <div className="w-6 h-6 rounded-full border-3 border-blue-light01 border-t-blue-normal01 animate-spin"></div>
+              </div>
+            )}
             <KakaoMap coordinates={coordinates} />
           </div>
-          <PlaceList
-            recommendPlaces={recommendPlaceSearchData?.data.content || []}
-            selectedPlace={selectedPlace}
-            currentPage={currentPage}
-            totalPages={recommendPlaceSearchData?.data.totalPages || 0}
-            onPlaceSelect={setSelectedPlace}
-            onPageChange={handlePageChange}
-          />
+          <div className="relative">
+            {isRefreshing && (
+              <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/50">
+                <div className="w-8 h-8 border-4 rounded-full border-blue-light01 border-t-blue-normal01 animate-spin"></div>
+              </div>
+            )}
+            <PlaceList
+              recommendPlaces={recommendPlaceSearchData?.data.content || []}
+              selectedPlace={selectedPlace}
+              currentPage={currentPage}
+              totalPages={recommendPlaceSearchData?.data.totalPages || 0}
+              onPlaceSelect={setSelectedPlace}
+              onPageChange={handlePageChange}
+            />
+          </div>
         </div>
       </div>
 
       <div className="lg:hidden">
         <div className="fixed inset-0 top-[4.75rem]">
+          {isRefreshing && (
+            <div className="absolute z-10 top-2 right-2">
+              <div className="w-6 h-6 rounded-full border-3 border-blue-light01 border-t-blue-normal01 animate-spin"></div>
+            </div>
+          )}
           <KakaoMap coordinates={coordinates} />
         </div>
         <BottomSheet minHeight={10} maxHeight={72} initialHeight={50}>
@@ -164,7 +233,12 @@ export default function LocationRecommendationsPage() {
               />
             </div>
             <div className="flex-1 px-4 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-normal scrollbar-track-transparent scrollbar-thumb-rounded-full">
-              <div className="mt-4">
+              <div className="relative mt-4">
+                {isRefreshing && (
+                  <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/50">
+                    <div className="w-8 h-8 border-4 rounded-full border-blue-light01 border-t-blue-normal01 animate-spin"></div>
+                  </div>
+                )}
                 {recommendPlaceSearchData?.data.content.map(
                   (place: IPlaceContent) => (
                     <div
@@ -181,7 +255,6 @@ export default function LocationRecommendationsPage() {
                           <p className="flex-shrink-0">{getPlaceIcon(place)}</p>
                           <p className="text-description text-blue-dark02">
                             {place.placeStandard}
-                            {/* FILTER_ITEMS */}
                           </p>
                         </div>
                         {selectedPlace === place.name && (
