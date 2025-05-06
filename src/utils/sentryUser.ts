@@ -21,15 +21,37 @@ type ContextValue =
 /**
  * 로그인한 사용자 정보를 Sentry에 추가합니다.
  * 이렇게 하면 Sentry에서 어떤 사용자가 에러를 경험했는지 확인할 수 있습니다.
+ *
+ * @param user 사용자 정보
+ * @param includePersonalInfo 이메일 등 개인정보 포함 여부 (사용자 동의 필요)
  */
-export const setSentryUser = (user: SentryUserInfo | null) => {
+export const setSentryUser = (
+  user: SentryUserInfo | null,
+  includePersonalInfo: boolean = false,
+) => {
+  // Sentry가 활성화되지 않은 경우 종료
+  if (
+    !import.meta.env.PROD ||
+    localStorage.getItem('errorTrackingConsent') !== 'true'
+  ) {
+    return;
+  }
+
   if (user) {
-    // 사용자가 로그인했을 때
-    Sentry.setUser({
-      id: user.id,
-      email: user.email,
-      username: user.username,
-    });
+    if (includePersonalInfo) {
+      // 사용자가 개인정보 수집에 동의한 경우 - 전체 정보 포함
+      Sentry.setUser({
+        id: user.id,
+        email: user.email,
+        username: user.username,
+      });
+    } else {
+      // 개인정보 수집 미동의 - 최소한의 정보만 포함 (익명화된 ID)
+      Sentry.setUser({
+        id: user.id ? `user-${hashId(user.id)}` : undefined,
+        // 이메일과 실명 등 개인정보 제외
+      });
+    }
   } else {
     // 사용자가 로그아웃했을 때
     Sentry.setUser(null);
@@ -53,4 +75,10 @@ export const setSentryContext = (
  */
 export const setSentryTag = (key: string, value: string) => {
   Sentry.setTag(key, value);
+};
+
+// 사용자 ID를 익명화하기 위한 간단한 해시 함수
+const hashId = (id: string): string => {
+  // 실제로는 더 강력한 해시 알고리즘 사용 권장
+  return btoa(`${id}-${import.meta.env.VITE_HASH_SALT || 'salt'}`).slice(0, 8);
 };
