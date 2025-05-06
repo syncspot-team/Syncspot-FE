@@ -41,7 +41,7 @@ const queryClient = new QueryClient({
           });
         } else {
           // 기타 알 수 없는 에러 타입
-          captureException('Unknown error occurred');
+          captureException(new Error('Unknown error occurred'));
 
           CustomToast({
             type: TOAST_TYPE.ERROR,
