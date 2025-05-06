@@ -9,6 +9,11 @@ import { captureApiError } from './utils/sentryCapture';
 import { isAxiosError } from 'axios';
 import { captureException } from './utils/sentryCapture';
 
+// Sentry 보고 플래그가 추가된 에러 인터페이스
+interface SentryReportedError extends Error {
+  _sentryReported?: boolean;
+}
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -17,6 +22,11 @@ const queryClient = new QueryClient({
     },
     mutations: {
       onError: (error: unknown) => {
+        // 에러에 보고 플래그 추가
+        if (error instanceof Error) {
+          (error as SentryReportedError)._sentryReported = true;
+        }
+
         if (isAxiosError(error)) {
           // Axios 에러인 경우 - API 에러로 처리
           const errorData = getErrorData(error);
