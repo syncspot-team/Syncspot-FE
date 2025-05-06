@@ -3,6 +3,8 @@ import CustomToast from './customToast';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { TOAST_TYPE } from '@src/types/toastType';
+import Button from '@src/components/common/button/Button';
+import { toast } from 'react-toastify';
 
 const meta = {
   title: 'Common/CustomToast',
@@ -47,10 +49,22 @@ export const Success: Story = {
     type: TOAST_TYPE.SUCCESS,
     message: '성공적으로 처리되었습니다.',
   },
+  render: (args) => {
+    const handleClick = () => {
+      toast.success(args.message);
+    };
+
+    return (
+      <div>
+        <Button onClick={handleClick}>성공 토스트 표시</Button>
+        <ToastContainer position="top-center" />
+      </div>
+    );
+  },
   parameters: {
     docs: {
       description: {
-        story: '성공 메시지를 표시하는 토스트입니다.',
+        story: '버튼을 클릭하면 성공 메시지를 표시하는 토스트가 나타납니다.',
       },
     },
   },

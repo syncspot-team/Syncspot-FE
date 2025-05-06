@@ -4,12 +4,15 @@ import { useShareKakao } from '@src/hooks/share/useKakaoShare';
 import { SHARE_TYPE, ShareType } from '@src/types/shareType';
 import { PATH } from '@src/constants/path';
 
+const DEFAULT_ROOM_ID = 'defaultRoomId';
+
 export interface IShare {
   url: string;
 }
 
 export default function KakaoShare({ url }: IShare) {
-  const selectedRoomId = localStorage.getItem('selectedRoomId') || '123';
+  const selectedRoomId =
+    localStorage.getItem('selectedRoomId') || DEFAULT_ROOM_ID;
 
   const pathToShareTypeMap: Record<string, ShareType> = {
     [PATH.LOCATION_ENTER(selectedRoomId)]: SHARE_TYPE.LOCATION_ENTER,

@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { useBottomSheet } from '@src/hooks/useBottomSheet';
 
-export interface BottomSheetProps {
+interface BottomSheetProps {
   children: ReactNode;
   minHeight?: number;
   maxHeight?: number;

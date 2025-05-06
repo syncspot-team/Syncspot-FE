@@ -1,5 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import ShareMeetingModal from './ShareMeetingModal';
+import { useEffect } from 'react';
+
+const TEST_STORAGE_KEY = 'storybookSelectedRoomId';
 
 const meta = {
   title: 'Common/Modal/ShareMeetingModal',
@@ -16,8 +19,14 @@ const meta = {
   },
   decorators: [
     (Story) => {
-      // localStorage에 selectedRoomId 설정
-      localStorage.setItem('selectedRoomId', '123');
+      useEffect(() => {
+        // 테스트용 localStorage 설정
+        localStorage.setItem(TEST_STORAGE_KEY, 'testRoomId');
+        return () => {
+          localStorage.removeItem(TEST_STORAGE_KEY);
+        };
+      }, []);
+
       return <Story />;
     },
   ],
