@@ -1,9 +1,4 @@
-import {
-  createBrowserRouter,
-  Outlet,
-  RouteObject,
-  RouterProvider,
-} from 'react-router-dom';
+import { Outlet, RouteObject, RouterProvider } from 'react-router-dom';
 import PrivateRoute from '@src/components/common/routes/PrivateRoute';
 import PublicRoute from '@src/components/common/routes/PublicRoute';
 import { APIErrorBoundary } from '@src/components/error/boundary/APIErrorBoundary';
@@ -38,7 +33,8 @@ import KakaoLogin from '@src/components/auth/oauth/KakaoLogin';
 import NaverLogin from '@src/components/auth/oauth/NaverLogin';
 import GoogleLogin from '@src/components/auth/oauth/GoogleLogin';
 import Oauth from '@src/components/auth/oauth/Oauth';
-import { UnknownErrorBoundary } from '@src/components/error/boundary/UnknownErrorBoundary';
+import { SentryErrorBoundary } from '@src/components/error/boundary/SentryErrorBoundary';
+import { sentryCreateBrowserRouter } from '@src/utils/sentryRouterIntegration';
 
 const createAuthRouter = (routeType: ROUTE_TYPE, children: RouteObject[]) => {
   const authRouter = children.map((child: RouteObject) => ({
@@ -48,11 +44,12 @@ const createAuthRouter = (routeType: ROUTE_TYPE, children: RouteObject[]) => {
   return authRouter;
 };
 
-const router = createBrowserRouter([
+// Sentry와 통합된 브라우저 라우터 사용
+const router = sentryCreateBrowserRouter([
   {
     path: PATH.ROOT,
     element: (
-      <UnknownErrorBoundary>
+      <SentryErrorBoundary>
         <APIErrorBoundary>
           <Suspense fallback={<GlobalLoading />}>
             <Layout>
@@ -60,7 +57,7 @@ const router = createBrowserRouter([
             </Layout>
           </Suspense>
         </APIErrorBoundary>
-      </UnknownErrorBoundary>
+      </SentryErrorBoundary>
     ),
     children: [
       {

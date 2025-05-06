@@ -33,7 +33,7 @@ const getNewToken = async () => {
 
     const { accessToken, refreshToken: newRefreshToken } = response.data.data;
     return { accessToken, refreshToken: newRefreshToken };
-  } catch (e) {
+  } catch {
     /* 리프레쉬 토큰 만료되었을 경우 처리 */
     localStorage.clear();
     window.location.href = '/';
