@@ -1,13 +1,15 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AppRouter } from './routes/AppRouter';
 import { ToastContainer } from 'react-toastify';
-import { getErrorData } from './utils/getErrorData';
-import { TOAST_TYPE } from './types/toastType';
-import CustomToast from './components/common/toast/customToast';
+import { TOAST_TYPE } from '@src/shared/types/toastType';
+import { CustomToast } from '@src/shared/ui';
 import 'react-toastify/dist/ReactToastify.css';
-import { captureApiError } from './utils/sentryCapture';
+import {
+  getErrorData,
+  captureApiError,
+  captureException,
+} from '@src/shared/utils';
 import { isAxiosError } from 'axios';
-import { captureException } from './utils/sentryCapture';
 
 // Sentry 보고 플래그가 추가된 에러 인터페이스
 interface SentryReportedError extends Error {

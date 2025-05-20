@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client';
-import App from './App.tsx';
-import './styles/global.css';
-import { initSentry } from './utils/sentry';
+import App from './app/App.tsx';
+import './app/styles/global.css';
+import { initSentry } from './shared/utils';
 
 /* Sentry 초기화 */
 initSentry();

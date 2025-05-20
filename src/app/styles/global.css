@@ -9,7 +9,7 @@
   font-display: swap;
   src:
     local('SUIT'),
-    url('../assets/fonts/SUIT-Regular.woff2') format('woff2');
+    url('../../shared/assets/fonts/SUIT-Regular.woff2') format('woff2');
 }
 
 @font-face {
@@ -18,7 +18,7 @@
   font-display: swap;
   src:
     local('Pretendard Regular'),
-    url('../assets/fonts/Pretendard-Regular.woff2') format('woff2');
+    url('../../shared/assets/fonts/Pretendard-Regular.woff2') format('woff2');
 }
 
 @font-face {
@@ -27,7 +27,8 @@
   font-display: swap;
   src:
     local('TT Interphases Pro Trl Variable'),
-    url('../assets/fonts/TTInterphasesProTrlVariable.woff2') format('woff2');
+    url('../../shared/assets/fonts/TTInterphasesProTrlVariable.woff2')
+      format('woff2');
 }
 
 @layer base {

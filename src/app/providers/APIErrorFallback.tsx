@@ -1,0 +1,36 @@
+import { FallbackProps } from 'react-error-boundary';
+import { isAxiosError } from 'axios';
+import { getErrorData } from '@src/shared/utils';
+import ErrorPage from '@src/pages/error/ErrorPage';
+import { Navigate } from 'react-router-dom';
+import { PATH } from '@src/shared/constants';
+
+export default function APIErrorFallback({
+  error,
+  resetErrorBoundary,
+}: FallbackProps) {
+  if (isAxiosError(error)) {
+    const errorData = getErrorData(error);
+
+    if (error.response?.data?.code === 'A-003') {
+      localStorage.clear();
+      window.location.href = PATH.ROOT;
+      return;
+    }
+
+    if (errorData.status === '401') {
+      return <Navigate to={PATH.SIGN_IN} replace />;
+    }
+
+    return (
+      <ErrorPage
+        status={errorData?.status}
+        message={errorData?.message}
+        isUnknownError={errorData?.status === 'ERROR'}
+        onRetry={resetErrorBoundary}
+      />
+    );
+  } else {
+    throw error;
+  }
+}
