@@ -1,4 +1,4 @@
-import { PATH } from '@src/constants/path';
+import { PATH } from '@src/shared/constants';
 import { useRoomStore } from '@src/state/store/roomStore';
 import { useNavigateWithRoomCheck } from './useNavigateWithRoomCheck';
 import { useGetCheckLocationEnterQuery } from '@src/state/queries/header/useGetCheckLocationEnterQuery';

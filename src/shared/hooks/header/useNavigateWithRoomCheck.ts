@@ -1,8 +1,8 @@
-import CustomToast from '@src/components/common/toast/customToast';
-import { PATH } from '@src/constants/path';
+import { CustomToast } from '@src/shared/ui';
+import { PATH } from '@src/shared/constants';
 import { useLoginStore } from '@src/state/store/loginStore';
 import { useRoomStore } from '@src/state/store/roomStore';
-import { TOAST_TYPE } from '@src/types/toastType';
+import { TOAST_TYPE } from '@src/shared/types/toastType';
 import { useNavigate } from 'react-router-dom';
 
 export const useNavigateWithRoomCheck = () => {

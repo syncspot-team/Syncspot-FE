@@ -1,9 +1,9 @@
-import { IMidpointDataResponseType } from '@src/types/location/midpointSearchResponseType';
-import { IPlaceSearchResponseType } from '@src/types/location/placeSearchResponseType';
-import { IMidpointSearchResponseType } from '@src/types/location/midpointSearchResponseType';
-import { IRecommendPlaceSearchResponseType } from '@src/types/location/recommendPlaceSearchResponseType';
+import { IMidpointDataResponseType } from '@src/shared/types/location/midpointSearchResponseType';
+import { IPlaceSearchResponseType } from '@src/shared/types/location/placeSearchResponseType';
+import { IMidpointSearchResponseType } from '@src/shared/types/location/midpointSearchResponseType';
+import { IRecommendPlaceSearchResponseType } from '@src/shared/types/location/recommendPlaceSearchResponseType';
 import { useSearchParams } from 'react-router-dom';
-import { IMidpointTimeSearchResponseType } from '@src/types/location/midpointTimeSearchResponseType';
+import { IMidpointTimeSearchResponseType } from '@src/shared/types/location/midpointTimeSearchResponseType';
 
 type PlaceDataType =
   | IPlaceSearchResponseType

@@ -2,10 +2,10 @@ import { usePlaceSaveMutation } from '@src/state/mutations/location/usePlaceSave
 import { usePlaceUpdateMutation } from '@src/state/mutations/location/usePlaceUpdateMutation';
 import { usePlaceDeleteMutation } from '@src/state/mutations/location/usePlaceDeleteMutation';
 import { ISelectedLocation } from '@src/components/common/kakao/types';
-import { ILocation } from '@src/types/location/placeSearchResponseType';
-import CustomToast from '@src/components/common/toast/customToast';
-import { TOAST_TYPE } from '@src/types/toastType';
-import { IPlaceSaveRequestType } from '@src/types/location/placeSaveRequestType';
+import { ILocation } from '@src/shared/types/location/placeSearchResponseType';
+import { CustomToast } from '@src/shared/ui';
+import { TOAST_TYPE } from '@src/shared/types/toastType';
+import { IPlaceSaveRequestType } from '@src/shared/types/location/placeSaveRequestType';
 import { UseFormSetValue } from 'react-hook-form';
 import { useState } from 'react';
 

@@ -1,4 +1,4 @@
-import { ShareType } from '@src/types/shareType';
+import { ShareType } from '@src/shared/types/shareType';
 
 interface IShareKakao {
   descriptionType: ShareType;

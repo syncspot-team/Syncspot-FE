@@ -1,4 +1,4 @@
-import { OAuthProvider, OAuthConfig } from '@src/types/oauthType';
+import { OAuthProvider, OAuthConfig } from '@src/shared/types/oauthType';
 
 export function useSocialLogin() {
   const oauthConfig: Record<OAuthProvider, OAuthConfig> = {

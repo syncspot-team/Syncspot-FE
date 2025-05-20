@@ -1,4 +1,4 @@
-import { IPlaceSaveRequestType } from '@src/types/location/placeSaveRequestType';
+import { IPlaceSaveRequestType } from '@src/shared/types/location/placeSaveRequestType';
 import { useForm, useFieldArray } from 'react-hook-form';
 
 export interface ILocationForm {
