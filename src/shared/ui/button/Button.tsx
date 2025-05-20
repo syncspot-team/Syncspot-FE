@@ -1,11 +1,10 @@
-import { ButtonHTMLAttributes } from 'react';
+import React, { ButtonHTMLAttributes } from 'react';
 import { cva, VariantProps } from 'class-variance-authority';
-import { mergeClassNames } from '../../../utils/mergeClassNames';
+import { mergeClassNames } from '@src/shared/utils';
 
 export const ButtonVariants = cva(
   `
   flex items-center justify-center  
-  w-[26.25rem] h-[3.4375rem] py-[1.125rem] px-[12.3125rem]
   rounded-default text-white-default truncate
   disabled:cursor-not-allowed
   disabled:bg-disabled
@@ -18,14 +17,21 @@ export const ButtonVariants = cva(
         primary: 'bg-primary hover:bg-secondary',
         secondary: 'bg-gray-normal hover:bg-gray-400',
         quit: 'bg-gray-normal enabled:bg-red-normal',
+        tab: 'bg-transparent hover:bg-gray-light text-gray-dark',
       },
-      fontSize: {
+      fontsize: {
         default: 'text-content lg:text-menu',
+        description: 'text-description',
+      },
+      width: {
+        default: 'w-[26.25rem] h-[3.4375rem] py-[1.125rem] px-[12.3125rem]',
+        tab: 'px-4 py-2',
       },
     },
     defaultVariants: {
       buttonType: 'primary',
-      fontSize: 'default',
+      fontsize: 'default',
+      width: 'default',
     },
   },
 );
@@ -42,7 +48,8 @@ interface IButtonProps
 
 export default function Button({
   buttonType,
-  fontSize,
+  fontsize,
+  width,
   className,
   children,
   onClick,
@@ -52,7 +59,7 @@ export default function Button({
   return (
     <button
       className={mergeClassNames(
-        ButtonVariants({ buttonType, fontSize, className }),
+        ButtonVariants({ buttonType, fontsize, width, className }),
       )}
       onClick={onClick}
       disabled={disabled || isLoading}

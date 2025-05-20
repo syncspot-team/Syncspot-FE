@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react';
 import CustomToast from './customToast';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { TOAST_TYPE } from '@src/types/toastType';
-import Button from '@src/components/common/button/Button';
+import { TOAST_TYPE } from '@src/shared/types/toastType';
+import { Button } from '@src/shared/ui';
 import { toast } from 'react-toastify';
 
 const meta = {
