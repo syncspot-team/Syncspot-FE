@@ -1,6 +1,6 @@
-import LottieLoading from '@src/assets/lotties/LottieLoading.json';
+import LottieLoading from '@src/shared/assets/lotties/LottieLoading.json';
 import Lottie from 'lottie-react';
-import { mergeClassNames } from '@src/utils/mergeClassNames';
+import { mergeClassNames } from '@src/shared/utils';
 
 interface LoadingProps {
   className?: string;

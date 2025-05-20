@@ -1,6 +1,6 @@
-import { API } from '@src/constants/api';
-import { IPlaceRevoteRequestType } from '@src/types/place/placeRevoteRequestType';
-import getAPIResponseData from '@src/utils/getAPIResponseData';
+import { API } from '@src/shared/constants';
+import { IPlaceRevoteRequestType } from '@src/shared/types/place/placeRevoteRequestType';
+import { getAPIResponseData } from '@src/shared/utils';
 
 export const putPlaceRevote = async (
   roomId: string,

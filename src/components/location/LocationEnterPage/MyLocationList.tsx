@@ -1,5 +1,5 @@
 import KakaoLocationPicker from '@src/components/common/kakao/KakaoLocationPicker';
-import IconXmark from '@src/assets/icons/IconXmark.svg?react';
+import IconXmark from '@src/shared/assets/icons/IconXmark.svg?react';
 import { useLocationContext } from '@src/components/location/LocationEnterPage/LocationContext';
 
 interface MyLocationListProps {

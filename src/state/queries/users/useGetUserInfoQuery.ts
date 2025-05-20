@@ -1,7 +1,7 @@
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { getUserInfo } from '@src/apis/users/getUserInfo';
 import { USER_QUERY_KEY } from './key';
-import { IGetUserInfoResponse } from '@src/types/users/getUserInfoResponseType';
+import { IGetUserInfoResponse } from '@src/shared/types/users/getUserInfoResponseType';
 
 export const useGetUserInfoQuery = (
   options?: Omit<

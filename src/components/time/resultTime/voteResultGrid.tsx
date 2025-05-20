@@ -1,7 +1,7 @@
-import Arrow from '@src/assets/icons/IconTriangle.svg?react';
+import Arrow from '@src/shared/assets/icons/IconTriangle.svg?react';
 import { useGetTimeResultQuery } from '@src/state/queries/time';
-import { items } from '@src/types/time/GridColor';
-import { IMemberAvailability } from '@src/types/time/timeResultType';
+import { items } from '@src/shared/types/time/GridColor';
+import { IMemberAvailability } from '@src/shared/types/time/timeResultType';
 import {
   format12Hour,
   format18Hour,
@@ -10,7 +10,7 @@ import {
   format624Hour,
   format6Hour,
 } from '@src/components/time/utils/formatTime';
-import { mergeClassNames } from '@src/utils/mergeClassNames';
+import { mergeClassNames } from '@src/shared/utils';
 import { useEffect, useState } from 'react';
 import GridTime from './gridTime';
 import { fillGridColors } from '../utils/fillGridColors';

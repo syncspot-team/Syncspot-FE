@@ -1,10 +1,10 @@
 import { useForm } from 'react-hook-form';
-import { Input } from '../common/input/Input';
+import { Input } from '../../shared/ui/input/Input';
 import { useModifyPasswordMutation } from '@src/state/mutations/user/useModifyPasswordMutations';
-import CustomToast from '../common/toast/customToast';
-import Button from '../common/button/Button';
+import CustomToast from '../../shared/ui/toast/customToast';
+import Button from '../../shared/ui/button/Button';
 import { useNavigate } from 'react-router-dom';
-import { PATH } from '@src/constants/path';
+import { PATH } from '@src/shared/constants';
 
 interface IPasswordFormData {
   password: string;

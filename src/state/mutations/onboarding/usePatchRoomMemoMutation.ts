@@ -1,6 +1,6 @@
 import { patchRoomMemo } from '@src/apis/onboarding/patchRoomMemo';
 import { ROOM_QUERY_KEY } from '@src/state/queries/header/key';
-import { IPatchRoomMemoRequestType } from '@src/types/onboarding/patchRoomMemoRequestType';
+import { IPatchRoomMemoRequestType } from '@src/shared/types/onboarding/patchRoomMemoRequestType';
 import {
   useMutation,
   UseMutationOptions,

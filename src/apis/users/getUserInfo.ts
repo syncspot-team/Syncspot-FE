@@ -1,6 +1,6 @@
-import { API } from '@src/constants/api';
-import { IGetUserInfoResponse } from '@src/types/users/getUserInfoResponseType';
-import getAPIResponseData from '@src/utils/getAPIResponseData';
+import { API } from '@src/shared/constants';
+import { IGetUserInfoResponse } from '@src/shared/types/users/getUserInfoResponseType';
+import { getAPIResponseData } from '@src/shared/utils';
 
 export const getUserInfo = async () => {
   return getAPIResponseData<IGetUserInfoResponse, void>({

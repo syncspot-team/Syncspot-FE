@@ -1,4 +1,4 @@
-import { ONBOARDING_FUNCTION_TYPE } from '@src/types/onboarding/onboardingFunctionType';
+import { ONBOARDING_FUNCTION_TYPE } from '@src/shared/types/onboarding/onboardingFunctionType';
 
 const FUNCTION_OPTIONS = [
   {

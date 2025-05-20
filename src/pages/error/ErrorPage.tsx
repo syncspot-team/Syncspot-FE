@@ -1,12 +1,12 @@
-import Layout from '@src/components/layout/Layout';
+import { Layout } from '@src/app/layout';
 import Lottie from 'lottie-react';
-import Lottie404 from '@src/assets/lotties/Lottie404.json';
-import { PATH } from '@src/constants/path';
+import Lottie404 from '@src/shared/assets/lotties/Lottie404.json';
+import { PATH } from '@src/shared/constants';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
-import CustomToast from '@src/components/common/toast/customToast';
-import { TOAST_TYPE } from '@src/types/toastType';
-import IconGithub from '@src/assets/icons/IconGithub.png';
+import { CustomToast } from '@src/shared/ui';
+import { TOAST_TYPE } from '@src/shared/types/toastType';
+import IconGithub from '@src/shared/assets/icons/IconGithub.png';
 
 interface IErrorPageProps {
   status: string;

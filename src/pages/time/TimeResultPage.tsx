@@ -1,6 +1,6 @@
-import Button from '@src/components/common/button/Button';
+import { Button } from '@src/shared/ui';
 import VoteResultGrid from '@src/components/time/resultTime/voteResultGrid';
-import { PATH } from '@src/constants/path';
+import { PATH } from '@src/shared/constants';
 import {
   useGetTimeDatesQuery,
   useGetTimeVotedQuery,
@@ -11,8 +11,8 @@ import { useEffect, useState } from 'react';
 import { Loading } from '@src/components/loading/Loading';
 import Modal from '@src/components/common/modal/Modal';
 import RecreateVoteModal from '@src/components/common/modal/RecreateVoteModal';
-import { MODAL_TYPE } from '@src/types/modalType';
-import { useModal } from '@src/hooks/useModal';
+import { MODAL_TYPE } from '@src/shared/types/modalType';
+import { useModal } from '@src/shared/hooks/useModal';
 
 export default function TimeResultPage() {
   const navigate = useNavigate();

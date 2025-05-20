@@ -1,5 +1,5 @@
-import { ITimeGridProps } from '@src/types/time/timeProps';
-import { mergeClassNames } from '@src/utils/mergeClassNames';
+import { ITimeGridProps } from '@src/shared/types/time/timeProps';
+import { mergeClassNames } from '@src/shared/utils';
 
 export default function GridTime({
   hours,

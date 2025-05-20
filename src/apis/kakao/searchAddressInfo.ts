@@ -1,5 +1,5 @@
 import { kakaoInstance } from '@src/apis/kakaoInstance';
-import { KakaoAddressSearchResponse } from '@src/types/kakao/searchAddressInfoResponseType';
+import { KakaoAddressSearchResponse } from '@src/shared/types/kakao/searchAddressInfoResponseType';
 
 export const searchAddressInfo = async (address: string) => {
   try {

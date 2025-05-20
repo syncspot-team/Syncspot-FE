@@ -1,5 +1,5 @@
 import { Loading } from '@src/components/loading/Loading';
-import { PATH } from '@src/constants/path';
+import { PATH } from '@src/shared/constants';
 import SomethingWrongErrorPage from '@src/pages/error/SomethingWrongErrorPage';
 import axios from 'axios';
 import { useEffect, useState } from 'react';

@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { useBottomSheet } from '@src/hooks/useBottomSheet';
+import { useBottomSheet } from '@src/shared/hooks/useBottomSheet';
 
 interface BottomSheetProps {
   children: ReactNode;

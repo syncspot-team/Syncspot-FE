@@ -1,9 +1,9 @@
-import { API } from '@src/constants/api';
+import { API } from '@src/shared/constants';
 import {
   IPatchRoomMemoRequestPayloadType,
   IPatchRoomMemoRequestType,
-} from '@src/types/onboarding/patchRoomMemoRequestType';
-import getAPIResponseData from '@src/utils/getAPIResponseData';
+} from '@src/shared/types/onboarding/patchRoomMemoRequestType';
+import { getAPIResponseData } from '@src/shared/utils';
 
 export const patchRoomMemo = async ({
   roomId,

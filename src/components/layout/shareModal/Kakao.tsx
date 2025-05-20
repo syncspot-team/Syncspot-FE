@@ -1,8 +1,8 @@
-import IconOauthKakao from '@src/assets/icons/IconOauthKakao.svg?react';
-import { useShareKakao } from '@src/hooks/share/useKakaoShare';
+import IconOauthKakao from '@src/shared/assets/icons/IconOauthKakao.svg?react';
+import { useShareKakao } from '@src/shared/hooks/share/useKakaoShare';
 
-import { SHARE_TYPE, ShareType } from '@src/types/shareType';
-import { PATH } from '@src/constants/path';
+import { SHARE_TYPE, ShareType } from '@src/shared/types/shareType';
+import { PATH } from '@src/shared/constants';
 
 const DEFAULT_ROOM_ID = 'defaultRoomId';
 
@@ -28,10 +28,12 @@ export default function KakaoShare({ url }: IShare) {
     [PATH.ABOUT]: SHARE_TYPE.ABOUT,
   };
 
+  const shareKakao = useShareKakao;
+
   const handleKakaoShare = () => {
     const descriptionType = pathToShareTypeMap[window.location.pathname];
     if (descriptionType) {
-      useShareKakao({ descriptionType, url });
+      shareKakao({ descriptionType, url });
     } else {
       console.error('매칭되는 SHARE_TYPE이 없습니다.');
     }

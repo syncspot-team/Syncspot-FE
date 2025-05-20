@@ -1,6 +1,6 @@
-import { API } from '@src/constants/api';
-import { IJoinedRoomCheckResponseType } from '@src/types/common/joinedRoomCheckResponseType';
-import getAPIResponseData from '@src/utils/getAPIResponseData';
+import { API } from '@src/shared/constants';
+import { IJoinedRoomCheckResponseType } from '@src/shared/types/common/joinedRoomCheckResponseType';
+import { getAPIResponseData } from '@src/shared/utils';
 
 export const getJoinedRoomCheck = async (roomId: string) => {
   return getAPIResponseData<IJoinedRoomCheckResponseType, void>({

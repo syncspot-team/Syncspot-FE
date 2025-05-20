@@ -2,7 +2,7 @@ import { postConfirmEmailVerification } from '@src/apis/auth/postConfirmEmailVer
 import {
   ISignUpConfirmEmailVerificationResponseType,
   ISignUpConfirmEmailVerificationType,
-} from '@src/types/auth/SignUpVerificationType';
+} from '@src/shared/types/auth/SignUpVerificationType';
 import { useMutation, UseMutationOptions } from '@tanstack/react-query';
 
 export const useConfirmEmailVerificationMutation = (

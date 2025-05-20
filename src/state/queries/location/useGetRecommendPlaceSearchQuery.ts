@@ -1,5 +1,5 @@
 import { getRecommendPlaceSearch } from '@src/apis/location/getRecommendPlaceSearch';
-import { IRecommendPlaceSearchResponseType } from '@src/types/location/recommendPlaceSearchResponseType';
+import { IRecommendPlaceSearchResponseType } from '@src/shared/types/location/recommendPlaceSearchResponseType';
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { LOCATION_KEY } from './key';

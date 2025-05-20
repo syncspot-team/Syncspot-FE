@@ -1,7 +1,7 @@
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { useRoomStore } from '@src/state/store/roomStore';
 import { ROOM_QUERY_KEY } from './key';
-import { ITimeVotedResponseType } from '@src/types/time/timeVotedResponseType';
+import { ITimeVotedResponseType } from '@src/shared/types/time/timeVotedResponseType';
 import { getTimeVoted } from '@src/apis/time/getTimeVoted';
 
 export const useGetTimeVotedQuery = (

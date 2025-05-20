@@ -1,9 +1,9 @@
-import { API } from '@src/constants/api';
+import { API } from '@src/shared/constants';
 import {
   ITimeRoomRequest,
   ITimeRoomResponse,
-} from '@src/types/time/timeRoomType';
-import getAPIResponseData from '@src/utils/getAPIResponseData';
+} from '@src/shared/types/time/timeRoomType';
+import { getAPIResponseData } from '@src/shared/utils';
 
 export const postTimeRoom = async ({ roomId, dates }: ITimeRoomRequest) => {
   return getAPIResponseData<ITimeRoomResponse, ITimeRoomRequest>({

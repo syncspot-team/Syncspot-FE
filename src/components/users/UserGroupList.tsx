@@ -1,17 +1,17 @@
-import { useModal } from '@src/hooks/useModal';
-import IconDetailInfo from '@src/assets/icons/IconDetailInfo.svg?react';
+import { useModal } from '@src/shared/hooks/useModal';
+import IconDetailInfo from '@src/shared/assets/icons/IconDetailInfo.svg?react';
 import { useState } from 'react';
 import Modal from '../common/modal/Modal';
 import RoomDetailInfoModal from '../common/modal/RoomDetailInfoModal';
-import { MODAL_TYPE, ModalType } from '@src/types/modalType';
-import IconBubble from '@src/assets/icons/IconBubblePlan.svg?react';
-import IconDolphin from '@src/assets/icons/IconDolphin.svg?react';
-import Button from '@src/components/common/button/Button';
+import { MODAL_TYPE, ModalType } from '@src/shared/types/modalType';
+import IconBubble from '@src/shared/assets/icons/IconBubblePlan.svg?react';
+import IconDolphin from '@src/shared/assets/icons/IconDolphin.svg?react';
+import { Button } from '@src/shared/ui';
 import { useNavigate } from 'react-router-dom';
-import { PATH } from '@src/constants/path';
-import { OnboardingStepType } from '@src/types/onboarding/onboardingStepType';
+import { PATH } from '@src/shared/constants';
+import { OnboardingStepType } from '@src/shared/types/onboarding/onboardingStepType';
 import { useGetJoinRoomQuery } from '@src/state/queries/header/useGetJoinRoomQuery';
-import { IRoom } from '@src/types/header/joinRoomResponseType';
+import { IRoom } from '@src/shared/types/header/joinRoomResponseType';
 import { Loading } from '@src/components/loading/Loading';
 
 function RoomList({

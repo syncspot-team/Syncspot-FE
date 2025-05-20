@@ -1,7 +1,7 @@
-import Button from '@src/components/common/button/Button';
-import { PATH } from '@src/constants/path';
+import { Button } from '@src/shared/ui';
+import { PATH } from '@src/shared/constants';
 import { useNavigate } from 'react-router-dom';
-import IconDolphin from '@src/assets/icons/IconDolphin.svg?react';
+import IconDolphin from '@src/shared/assets/icons/IconDolphin.svg?react';
 
 export default function PwReissueStep() {
   const navigate = useNavigate();

@@ -1,14 +1,14 @@
 import '@pages/time/TimeCreatePage.css';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import IconArrow from '@src/assets/icons/IconTriangle.svg?react';
-import { ITimeDatesProps } from '@src/types/time/timeProps';
+import IconArrow from '@src/shared/assets/icons/IconTriangle.svg?react';
+import { ITimeDatesProps } from '@src/shared/types/time/timeProps';
 import { useEffect, useRef, useState } from 'react';
 import VoteResultByDate from './VoteResultByDate';
 import { useGetTimeResultQuery } from '@src/state/queries/time';
 import Modal from '@src/components/common/modal/Modal';
-import { MODAL_TYPE } from '@src/types/modalType';
-import { useModal } from '@src/hooks/useModal';
+import { MODAL_TYPE } from '@src/shared/types/modalType';
+import { useModal } from '@src/shared/hooks/useModal';
 
 export default function ClickCalendar({ dates }: ITimeDatesProps) {
   const componentRef = useRef<HTMLDivElement>(null);

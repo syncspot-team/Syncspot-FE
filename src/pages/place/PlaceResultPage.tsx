@@ -1,15 +1,15 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import Button from '@src/components/common/button/Button';
+import { Button } from '@src/shared/ui';
 import Modal from '@src/components/common/modal/Modal';
-import { PATH } from '@src/constants/path';
-import { MODAL_TYPE } from '@src/types/modalType';
+import { PATH } from '@src/shared/constants';
+import { MODAL_TYPE } from '@src/shared/types/modalType';
 import RecreateVoteModal from '@src/components/common/modal/RecreateVoteModal';
-import { useModal } from '@src/hooks/useModal';
+import { useModal } from '@src/shared/hooks/useModal';
 import { useGetPlaceVoteRoomCheckQuery } from '@src/state/queries/place/useGetPlaceVoteRoomCheckQuery';
 import { useGetPlaceVoteResultQuery } from '@src/state/queries/place/useGetPlaceVoteResultQuery';
 import SomethingWrongErrorPage from '@src/pages/error/SomethingWrongErrorPage';
-import { PlaceVoteResultDataType } from '@src/types/place/placeVoteResultResponseType';
-import IconDolphin from '@src/assets/icons/IconDolphin.svg?react';
+import { PlaceVoteResultDataType } from '@src/shared/types/place/placeVoteResultResponseType';
+import IconDolphin from '@src/shared/assets/icons/IconDolphin.svg?react';
 
 export default function PlaceResultPage() {
   const { modalType, openModal, closeModal } = useModal();

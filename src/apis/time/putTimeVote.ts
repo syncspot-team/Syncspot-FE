@@ -1,9 +1,9 @@
-import { API } from '@src/constants/api';
+import { API } from '@src/shared/constants';
 import {
   ITimeVoteRequest,
   ITimeVoteResponse,
-} from '@src/types/time/timeVoteType';
-import getAPIResponseData from '@src/utils/getAPIResponseData';
+} from '@src/shared/types/time/timeVoteType';
+import { getAPIResponseData } from '@src/shared/utils';
 
 export const putTimeVote = async ({ roomId, dateTime }: ITimeVoteRequest) => {
   return getAPIResponseData<ITimeVoteResponse, ITimeVoteRequest>({

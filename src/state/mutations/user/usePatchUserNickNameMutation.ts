@@ -4,7 +4,7 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import { patchUserNickName } from '@src/apis/users/patchUserNickName';
-import { IModifyUserNicknameRequest } from '@src/types/users/modifyUserNicknameRequestType';
+import { IModifyUserNicknameRequest } from '@src/shared/types/users/modifyUserNicknameRequestType';
 import { USER_QUERY_KEY } from '@src/state/queries/users/key';
 
 export const usePatchUserNickNameMutation = (

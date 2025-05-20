@@ -1,6 +1,6 @@
 import { deleteUserFromRoom } from '@src/apis/onboarding/deleteUserFromRoom';
 import { ROOM_QUERY_KEY } from '@src/state/queries/header/key';
-import { IDeleteUserFromRoomRequest } from '@src/types/onboarding/deleteUserFromRoomRequestType';
+import { IDeleteUserFromRoomRequest } from '@src/shared/types/onboarding/deleteUserFromRoomRequestType';
 import {
   useMutation,
   UseMutationOptions,

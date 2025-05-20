@@ -1,6 +1,6 @@
-import getAPIResponseData from '@src/utils/getAPIResponseData';
-import { API } from '@src/constants/api';
-import { ISignUpRequestEmailVerificationType } from '@src/types/auth/SignUpVerificationType';
+import { getAPIResponseData } from '@src/shared/utils';
+import { API } from '@src/shared/constants';
+import { ISignUpRequestEmailVerificationType } from '@src/shared/types/auth/SignUpVerificationType';
 
 export const postRequestEmailVerification = async (
   requestEmailVerificationPayload: ISignUpRequestEmailVerificationType,

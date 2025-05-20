@@ -8,8 +8,8 @@ import { postTimeRoom } from '@src/apis/time/postTimeRoom';
 import {
   ITimeRoomRequest,
   ITimeRoomResponse,
-} from '@src/types/time/timeRoomType';
-import { PATH } from '@src/constants/path';
+} from '@src/shared/types/time/timeRoomType';
+import { PATH } from '@src/shared/constants';
 import { ROOM_QUERY_KEY } from '@src/state/queries/header/key';
 
 export const usePostTimeRoomMutation = (

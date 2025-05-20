@@ -1,8 +1,8 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
-import Button from '@src/components/common/button/Button';
-import { mergeClassNames } from '@src/utils/mergeClassNames';
-import { PATH } from '@src/constants/path';
+import { Button } from '@src/shared/ui';
+import { mergeClassNames } from '@src/shared/utils';
+import { PATH } from '@src/shared/constants';
 import { ROOM_QUERY_KEY } from '@src/state/queries/header/key';
 import { useLocationContext } from '@src/components/location/LocationEnterPage/LocationContext';
 

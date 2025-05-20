@@ -1,7 +1,7 @@
-import { API } from '@src/constants/api';
-import { ICreateRoomRequest } from '@src/types/onboarding/createRoomRequestType';
-import { ICreateRoomResponse } from '@src/types/onboarding/createRoomResponseType';
-import getAPIResponseData from '@src/utils/getAPIResponseData';
+import { API } from '@src/shared/constants';
+import { ICreateRoomRequest } from '@src/shared/types/onboarding/createRoomRequestType';
+import { ICreateRoomResponse } from '@src/shared/types/onboarding/createRoomResponseType';
+import { getAPIResponseData } from '@src/shared/utils';
 
 export const postCreateRoom = async (createRoomPayload: ICreateRoomRequest) => {
   return getAPIResponseData<ICreateRoomResponse, ICreateRoomRequest>({

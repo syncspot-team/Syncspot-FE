@@ -1,7 +1,7 @@
-import { IVoteResultByDate } from '@src/types/time/timeProps';
+import { IVoteResultByDate } from '@src/shared/types/time/timeProps';
 import { DATE_FORMATS, formatStringDate } from '../utils/formatDate';
 import { formatStringTime } from '../utils/formatTime';
-import { mergeClassNames } from '@src/utils/mergeClassNames';
+import { mergeClassNames } from '@src/shared/utils';
 
 export default function VoteResultByDate({
   clickedDate,

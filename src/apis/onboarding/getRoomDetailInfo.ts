@@ -1,6 +1,6 @@
-import { API } from '@src/constants/api';
-import { IGetRoomDetailInfoResponseType } from '@src/types/onboarding/getRoomDetailInfoResponseType';
-import getAPIResponseData from '@src/utils/getAPIResponseData';
+import { API } from '@src/shared/constants';
+import { IGetRoomDetailInfoResponseType } from '@src/shared/types/onboarding/getRoomDetailInfoResponseType';
+import { getAPIResponseData } from '@src/shared/utils';
 
 export const getRoomDetailInfo = async (roomId: string) => {
   return getAPIResponseData<IGetRoomDetailInfoResponseType, void>({

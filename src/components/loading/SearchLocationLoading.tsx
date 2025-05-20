@@ -1,4 +1,4 @@
-import LottieSearchLocation from '@src/assets/lotties/LottieSeachLocation.json';
+import LottieSearchLocation from '@src/shared/assets/lotties/LottieSeachLocation.json';
 import Lottie from 'lottie-react';
 
 export default function SearchLocationLoading() {

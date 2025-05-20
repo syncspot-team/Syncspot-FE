@@ -1,7 +1,7 @@
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { getPlaceVoteRoomCheck } from '@src/apis/place/getPlaceVoteRoomCheck';
 
-import { IPlaceVoteRoomCheckResponseType } from '@src/types/place/placeVoteRoomCheckResponseType';
+import { IPlaceVoteRoomCheckResponseType } from '@src/shared/types/place/placeVoteRoomCheckResponseType';
 
 import { ROOM_QUERY_KEY } from './key';
 import { useRoomStore } from '@src/state/store/roomStore';

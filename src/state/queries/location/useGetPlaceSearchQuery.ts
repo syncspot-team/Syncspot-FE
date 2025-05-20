@@ -1,7 +1,7 @@
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { LOCATION_KEY } from './key';
 import { getPlaceSearch } from '@src/apis/location/getPlaceSearch';
-import { IPlaceSearchResponseType } from '@src/types/location/placeSearchResponseType';
+import { IPlaceSearchResponseType } from '@src/shared/types/location/placeSearchResponseType';
 import { useParams } from 'react-router-dom';
 
 export const useGetPlaceSearchQuery = (

@@ -1,16 +1,16 @@
-import { ISignUpFormValues } from '@src/types/auth/SignUpRequestType';
+import { ISignUpFormValues } from '@src/shared/types/auth/SignUpRequestType';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Input } from '@src/components/common/input/Input';
-import Button from '@src/components/common/button/Button';
+import { Input } from '@src/shared/ui';
+import { Button } from '@src/shared/ui';
 import { useSignUpMutation } from '@src/state/mutations/auth/useSignUpMutation';
 import KakaoLocationPicker from '@src/components/common/kakao/KakaoLocationPicker';
 import { ISelectedLocation } from '@src/components/common/kakao/types';
-import { signupSchema } from '@src/types/auth/SignUpSchema';
+import { signupSchema } from '@src/shared/types/auth/SignUpSchema';
 import { SignUpDefaultValues } from '@src/components/auth/constants';
-import { useEffect, useState } from 'react';
-import CustomToast from '@src/components/common/toast/customToast';
-import { TOAST_TYPE } from '@src/types/toastType';
+import React, { useEffect, useState } from 'react';
+import { CustomToast } from '@src/shared/ui';
+import { TOAST_TYPE } from '@src/shared/types/toastType';
 import { useRequestEmailVerificationMutation } from '@src/state/mutations/auth/useRequestEmailVerificationMutation';
 import { useConfirmEmailVerificationMutation } from '@src/state/mutations/auth/useConfirmEmailVerificationMutation';
 

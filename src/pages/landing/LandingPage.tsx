@@ -1,8 +1,8 @@
-import IconRightHalfArrow from '@src/assets/icons/IconRightHalfArrow.svg?react';
+import IconRightHalfArrow from '@src/shared/assets/icons/IconRightHalfArrow.svg?react';
 import { useNavigate } from 'react-router-dom';
-import { PATH } from '@src/constants/path';
+import { PATH } from '@src/shared/constants';
 import { motion } from 'motion/react';
-import LandingBackgroundImage from '@src/assets/images/LandingBackgroundImage.webp';
+import LandingBackgroundImage from '@src/shared/assets/images/LandingBackgroundImage.webp';
 
 export default function LandingPage() {
   const navigate = useNavigate();

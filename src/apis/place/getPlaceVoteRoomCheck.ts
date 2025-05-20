@@ -1,6 +1,6 @@
-import { API } from '@src/constants/api';
-import { IPlaceVoteRoomCheckResponseType } from '@src/types/place/placeVoteRoomCheckResponseType';
-import getAPIResponseData from '@src/utils/getAPIResponseData';
+import { API } from '@src/shared/constants';
+import { IPlaceVoteRoomCheckResponseType } from '@src/shared/types/place/placeVoteRoomCheckResponseType';
+import { getAPIResponseData } from '@src/shared/utils';
 
 export const getPlaceVoteRoomCheck = async (roomId: string) => {
   return getAPIResponseData<IPlaceVoteRoomCheckResponseType, void>({

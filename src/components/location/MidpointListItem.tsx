@@ -1,7 +1,7 @@
-import IconRightHalfArrow from '@src/assets/icons/IconRightHalfArrow.svg?react';
+import IconRightHalfArrow from '@src/shared/assets/icons/IconRightHalfArrow.svg?react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { IMidpointDataResponseType } from '@src/types/location/midpointSearchResponseType';
-import { PATH } from '@src/constants/path';
+import { IMidpointDataResponseType } from '@src/shared/types/location/midpointSearchResponseType';
+import { PATH } from '@src/shared/constants';
 import AddressDisplay from './AddressDisplay';
 
 interface IMidpointListItemProps {

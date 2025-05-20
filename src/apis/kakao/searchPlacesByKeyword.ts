@@ -1,5 +1,5 @@
 import { kakaoInstance } from '@src/apis/kakaoInstance';
-import { KakaoKeywordSearchResponse } from '@src/types/kakao/searchPlacesByKeywordResponseType';
+import { KakaoKeywordSearchResponse } from '@src/shared/types/kakao/searchPlacesByKeywordResponseType';
 
 export const searchPlacesByKeyword = async (query: string) => {
   try {

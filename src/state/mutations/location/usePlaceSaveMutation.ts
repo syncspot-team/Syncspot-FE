@@ -4,9 +4,9 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import { postPlaceSave } from '@src/apis/location/postPlaceSave';
-import { IPlaceSaveRequestType } from '@src/types/location/placeSaveRequestType';
+import { IPlaceSaveRequestType } from '@src/shared/types/location/placeSaveRequestType';
 import { LOCATION_KEY } from '@src/state/queries/location/key';
-import { IPlaceSaveResponseType } from '@src/types/location/placeSaveResponseType';
+import { IPlaceSaveResponseType } from '@src/shared/types/location/placeSaveResponseType';
 import { useParams } from 'react-router-dom';
 
 interface IPlaceSaveRequest {

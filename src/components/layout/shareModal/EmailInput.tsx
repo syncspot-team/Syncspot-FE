@@ -1,10 +1,11 @@
-import { Input } from '@src/components/common/input/Input';
-import { useEmailShare } from '@src/hooks/share/useEmailShare';
-import { mergeClassNames } from '@src/utils/mergeClassNames';
-import { useState } from 'react';
+import { Input } from '@src/shared/ui';
+import { useEmailShare } from '@src/shared/hooks/share/useEmailShare';
+import { mergeClassNames } from '@src/shared/utils';
+import React, { useState } from 'react';
 
 interface IEmailInputProps {
   url: string;
+  // eslint-disable-next-line no-unused-vars
   onClick: (event: React.MouseEvent<HTMLDivElement>) => void;
 }
 

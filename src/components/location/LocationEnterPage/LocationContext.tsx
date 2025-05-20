@@ -1,10 +1,10 @@
 import React, { createContext, useContext, ReactNode, useRef } from 'react';
 import { ISelectedLocation } from '@src/components/common/kakao/types';
-import { useLocationData } from '@src/hooks/location/useLocationData';
-import { useLocationForm } from '@src/hooks/location/useLocationForm';
-import { useLocationMutations } from '@src/hooks/location/useLocationMutations';
-import { useLocationInitialization } from '@src/hooks/location/useLocationInitialization';
-import { useAutoScroll } from '@src/hooks/location/useAutoScroll';
+import { useLocationData } from '@src/shared/hooks/location/useLocationData';
+import { useLocationForm } from '@src/shared/hooks/location/useLocationForm';
+import { useLocationMutations } from '@src/shared/hooks/location/useLocationMutations';
+import { useLocationInitialization } from '@src/shared/hooks/location/useLocationInitialization';
+import { useAutoScroll } from '@src/shared/hooks/location/useAutoScroll';
 
 interface ILocationField {
   id: string;

@@ -1,4 +1,4 @@
-import IconArrow from '@src/assets/icons/IconTriangle.svg?react';
+import IconArrow from '@src/shared/assets/icons/IconTriangle.svg?react';
 
 interface IPaginationProps {
   currentPage: number;

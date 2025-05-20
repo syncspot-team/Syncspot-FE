@@ -1,10 +1,10 @@
 import { useRoomStore } from '@src/state/store/roomStore';
 import { useState } from 'react';
-import { ONBOARDING_FUNCTION_TYPE } from '@src/types/onboarding/onboardingFunctionType';
+import { ONBOARDING_FUNCTION_TYPE } from '@src/shared/types/onboarding/onboardingFunctionType';
 import { useNavigate } from 'react-router-dom';
-import { PATH } from '@src/constants/path';
+import { PATH } from '@src/shared/constants';
 import FunctionOption from './FunctionOption';
-import Button from '@src/components/common/button/Button';
+import { Button } from '@src/shared/ui';
 
 interface IOnBoardingFunctionSelectProps {
   selectedRoomId: string | null;

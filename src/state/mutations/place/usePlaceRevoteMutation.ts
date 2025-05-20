@@ -1,6 +1,6 @@
 import { putPlaceRevote } from '@src/apis/place/putPlaceRevote';
 import { PLACE_VOTE_ROOM_KEY } from '@src/state/queries/place/key';
-import { IPlaceRevoteRequestType } from '@src/types/place/placeRevoteRequestType';
+import { IPlaceRevoteRequestType } from '@src/shared/types/place/placeRevoteRequestType';
 import {
   useMutation,
   UseMutationOptions,

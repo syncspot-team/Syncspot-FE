@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import Button from '@src/components/common/button/Button';
-import { IRoom } from '@src/types/header/joinRoomResponseType';
+import { Button } from '@src/shared/ui';
+import { IRoom } from '@src/shared/types/header/joinRoomResponseType';
 import { useGetRoomDetailInfoQuery } from '@src/state/queries/onboarding/useGetRoomDetailInfoQuery';
 import { usePatchRoomNameMutation } from '@src/state/mutations/onboarding/usePatchRoomNameMutation';
 import { usePatchRoomMemoMutation } from '@src/state/mutations/onboarding/usePatchRoomMemoMutation';
 import EditableField from '@src/components/onboarding/modal/EditableField';
 import { useDeleteUserFromRoomMutation } from '@src/state/mutations/onboarding/useDeleteUserFromRoomMutation';
-import CustomToast from '../toast/customToast';
+import CustomToast from '../../../shared/ui/toast/customToast';
 
 interface IRoomDetailInfoModalProps {
   room: IRoom;

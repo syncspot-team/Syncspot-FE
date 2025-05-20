@@ -8,8 +8,8 @@ import { putTimeVote } from '@src/apis/time/putTimeVote';
 import {
   ITimeVoteRequest,
   ITimeVoteResponse,
-} from '@src/types/time/timeVoteType';
-import { PATH } from '@src/constants/path';
+} from '@src/shared/types/time/timeVoteType';
+import { PATH } from '@src/shared/constants';
 import { TIME_KEY } from '@src/state/queries/time/key';
 
 export const usePutTimeVoteMutation = (

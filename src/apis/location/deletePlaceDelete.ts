@@ -1,5 +1,5 @@
-import { API } from '@src/constants/api';
-import getAPIResponseData from '@src/utils/getAPIResponseData';
+import { API } from '@src/shared/constants';
+import { getAPIResponseData } from '@src/shared/utils';
 
 export const deletePlaceDelete = async (placeId: number) => {
   return getAPIResponseData<void, void>({

@@ -1,5 +1,5 @@
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { IPlaceSearchResponseType } from '@src/types/location/placeSearchResponseType';
+import { IPlaceSearchResponseType } from '@src/shared/types/location/placeSearchResponseType';
 import { useRoomStore } from '@src/state/store/roomStore';
 import { ROOM_QUERY_KEY } from './key';
 import { getPlaceSearch } from '@src/apis/location/getPlaceSearch';

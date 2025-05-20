@@ -1,5 +1,5 @@
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { ITimeDatesResponseType } from '@src/types/time/timeDatesResponseType';
+import { ITimeDatesResponseType } from '@src/shared/types/time/timeDatesResponseType';
 import { getTimeDates } from '@src/apis/time/getTimeDates';
 import { ROOM_QUERY_KEY } from './key';
 import { useRoomStore } from '@src/state/store/roomStore';

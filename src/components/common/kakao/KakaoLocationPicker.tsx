@@ -2,11 +2,11 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { searchAddressInfo } from '@src/apis/kakao/searchAddressInfo';
 import { Place, ISelectedLocation } from '@src/components/common/kakao/types';
-import { useDebounce } from '@src/hooks/useDebounce';
+import { useDebounce } from '@src/shared/hooks/useDebounce';
 import { searchPlacesByKeyword } from '@src/apis/kakao/searchPlacesByKeyword';
-import { Input } from '@src/components/common/input/Input';
-import CustomToast from '@src/components/common/toast/customToast';
-import { TOAST_TYPE } from '@src/types/toastType';
+import { Input } from '@src/shared/ui';
+import { CustomToast } from '@src/shared/ui';
+import { TOAST_TYPE } from '@src/shared/types/toastType';
 
 const NO_RESULTS_MESSAGE = '검색 결과가 존재하지 않습니다';
 

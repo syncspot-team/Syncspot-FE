@@ -3,23 +3,23 @@ import KakaoLocationPicker from '@src/components/common/kakao/KakaoLocationPicke
 import { ISelectedLocation } from '@src/components/common/kakao/types';
 import KakaoMap from '@src/components/common/kakao/KakaoMap';
 import { useEffect, useRef, useState } from 'react';
-import IconXmark from '@src/assets/icons/IconXmark.svg?react';
-import Button from '@src/components/common/button/Button';
+import IconXmark from '@src/shared/assets/icons/IconXmark.svg?react';
+import { Button } from '@src/shared/ui';
 import { useMidpointSearchQuery } from '@src/state/queries/location/useMidpointSearchQuery';
 import { useGetPlaceVoteRoomCheckQuery } from '@src/state/queries/place/useGetPlaceVoteRoomCheckQuery';
 import { usePlaceVoteRoomCreateMutation } from '@src/state/mutations/place/usePlaceVoteRoomCreateMutation';
 import { usePlaceVoteRoomUpdateMutation } from '@src/state/mutations/place/usePlaceVoteRoomUpdateMutation';
-import { IPlaceVoteRoomCheckResponseCandidate } from '@src/types/place/placeVoteRoomCheckResponseType';
-import { IMidpointDataResponseType } from '@src/types/location/midpointSearchResponseType';
-import { TOAST_TYPE } from '@src/types/toastType';
-import CustomToast from '@src/components/common/toast/customToast';
+import { IPlaceVoteRoomCheckResponseCandidate } from '@src/shared/types/place/placeVoteRoomCheckResponseType';
+import { IMidpointDataResponseType } from '@src/shared/types/location/midpointSearchResponseType';
+import { TOAST_TYPE } from '@src/shared/types/toastType';
+import { CustomToast } from '@src/shared/ui';
 import { useGetPlaceSearchQuery } from '@src/state/queries/location/useGetPlaceSearchQuery';
 import { useNavigate, useParams } from 'react-router-dom';
-import { PATH } from '@src/constants/path';
+import { PATH } from '@src/shared/constants';
 import PlaceCreateErrorPage from '@src/components/place/PlaceCreateErrorPage';
 import { Loading } from '@src/components/loading/Loading';
 import BottomSheet from '@src/components/common/bottomSheet/BottomSheet';
-import ShareButton from '@src/components/layout/header/ShareButton';
+import ShareButton from '@src/widgets/header/ui/ShareButton';
 
 interface ILocationFormItem
   extends Omit<IPlaceVoteRoomCheckResponseCandidate, 'id'> {

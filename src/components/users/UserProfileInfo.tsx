@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Input } from '@src/components/common/input/Input';
+import { Input } from '@src/shared/ui';
 import { useGetUserInfoQuery } from '@src/state/queries/users/useGetUserInfoQuery';
 import { usePatchUserAddressMutation } from '@src/state/mutations/user/usePatchUserAddressMutation';
 import { usePatchUserNickNameMutation } from '@src/state/mutations/user/usePatchUserNickNameMutation';
 import KakaoLocationPicker from '@src/components/common/kakao/KakaoLocationPicker';
 import { ISelectedLocation } from '../common/kakao/types';
-import { IModifyUserAddressRequest } from '@src/types/users/modifyUserAddressRequestType';
+import { IModifyUserAddressRequest } from '@src/shared/types/users/modifyUserAddressRequestType';
 
 interface IProfileFormData {
   nickname: string;

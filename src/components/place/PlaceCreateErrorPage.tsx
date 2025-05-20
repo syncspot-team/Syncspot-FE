@@ -1,6 +1,6 @@
-import IconDolphin from '@src/assets/icons/IconDolphin.svg?react';
+import IconDolphin from '@src/shared/assets/icons/IconDolphin.svg?react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { PATH } from '@src/constants/path';
+import { PATH } from '@src/shared/constants';
 
 export default function PlaceCreateErrorPage() {
   const { roomId } = useParams();
