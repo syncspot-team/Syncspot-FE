@@ -1,4 +1,4 @@
-import { IMenuItem } from '@src/types/header/menuItemType';
+import { IMenuItem } from '@src/shared/types/header/menuItemType';
 
 interface IDesktopSubMenuProps {
   subMenus: IMenuItem[];

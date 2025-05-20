@@ -1,13 +1,13 @@
-import IconDropdown from '@src/assets/icons/IconDropdown.svg?react';
-import { PATH } from '@src/constants/path';
-import { useClickOutside } from '@src/hooks/useClickOutside';
+import IconDropdown from '@src/shared/assets/icons/IconDropdown.svg?react';
+import { PATH } from '@src/shared/constants';
+import { useClickOutside } from '@src/shared/hooks/useClickOutside';
 import { useGetJoinRoomQuery } from '@src/state/queries/header/useGetJoinRoomQuery';
 import { useRoomStore } from '@src/state/store/roomStore';
-import { OnboardingStepType } from '@src/types/onboarding/onboardingStepType';
+import { OnboardingStepType } from '@src/shared/types/onboarding/onboardingStepType';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import RoomListItem from './RoomListItem';
-import { IRoom } from '@src/types/header/joinRoomResponseType';
+import { IRoom } from '@src/shared/types/header/joinRoomResponseType';
 import { Loading } from '@src/components/loading/Loading';
 
 export default function RoomList() {

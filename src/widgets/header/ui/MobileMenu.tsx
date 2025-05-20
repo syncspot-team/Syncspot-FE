@@ -1,13 +1,13 @@
 import { useRef, useState } from 'react';
-import IconHamburgerMenu from '@src/assets/icons/IconHamburgerMenu.svg?react';
-import IconHeaderXmark from '@src/assets/icons/IconHeaderXmark.svg?react';
-import { useClickOutside } from '@src/hooks/useClickOutside';
-import { useResponsiveClose } from '@src/hooks/useResponsiveClose';
+import IconHamburgerMenu from '@src/shared/assets/icons/IconHamburgerMenu.svg?react';
+import IconHeaderXmark from '@src/shared/assets/icons/IconHeaderXmark.svg?react';
+import { useClickOutside } from '@src/shared/hooks/useClickOutside';
+import { useResponsiveClose } from '@src/shared/hooks/useResponsiveClose';
 import MobileMenuList from './MobileMenuList';
-import IconMainLogo from '@src/assets/icons/IconMainLogo.svg?react';
-import IconMobileMenuClose from '@src/assets/icons/IconMobileMenuClose.svg?react';
+import IconMainLogo from '@src/shared/assets/icons/IconMainLogo.svg?react';
+import IconMobileMenuClose from '@src/shared/assets/icons/IconMobileMenuClose.svg?react';
 import ShareButton from './ShareButton';
-import { renderShareButton } from '@src/utils/renderShareButton';
+import { renderShareButton } from '@src/shared/utils';
 import { useLocation } from 'react-router-dom';
 
 export default function MobileMenu() {

@@ -1,5 +1,5 @@
-import IconMainLogo from '@src/assets/icons/IconMainLogo.svg?react';
-import { PATH } from '@src/constants/path';
+import IconMainLogo from '@src/shared/assets/icons/IconMainLogo.svg?react';
+import { PATH } from '@src/shared/constants';
 import { useNavigate } from 'react-router-dom';
 
 export default function MainLogo() {
