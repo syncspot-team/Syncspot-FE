@@ -1,6 +1,6 @@
-import { API } from '@src/shared/constants';
-import { ISignUpRequest } from '@src/shared/types/auth/SignUpRequestType';
-import { getAPIResponseData } from '@src/shared/utils';
+import { API } from '@shared/constants';
+import { ISignUpRequest } from '@shared/types/auth/SignUpRequestType';
+import { getAPIResponseData } from '@shared/utils';
 
 export const postSignUp = async (signUpPayload: ISignUpRequest) => {
   return getAPIResponseData<void, ISignUpRequest>({

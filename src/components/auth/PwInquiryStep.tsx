@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Input } from '@src/shared/ui';
-import { PwInquiryStepType } from '@src/shared/types/auth/PwInquiryStepType';
+import { Input } from '@shared/ui';
+import { PwInquiryStepType } from '@shared/types/auth/PwInquiryStepType';
 import { usePwReissueMutation } from '@src/state/mutations/auth/usePwReissueMutation';
 import { usePwReissueEmailVerificationMutation } from '@src/state/mutations/auth/usePwReissueEmailVerificationMutation';
 

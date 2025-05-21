@@ -1,6 +1,6 @@
 import { getPlaceVoteResult } from '@src/apis/place/getPlaceVoteResult';
 import { PLACE_VOTE_ROOM_KEY } from '@src/state/queries/place/key';
-import { PlaceVoteResultResponseType } from '@src/shared/types/place/placeVoteResultResponseType';
+import { PlaceVoteResultResponseType } from '@shared/types/place/placeVoteResultResponseType';
 import { UseQueryOptions, useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 

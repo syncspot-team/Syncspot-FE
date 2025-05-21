@@ -1,11 +1,11 @@
 import { postSignIn } from '@src/apis/auth/postSignIn';
-import { ISignInRequest } from '@src/shared/types/auth/SignInRequestType';
-import { ISignInResponse } from '@src/shared/types/auth/SignInResponseType';
+import { ISignInRequest } from '@shared/types/auth/SignInRequestType';
+import { ISignInResponse } from '@shared/types/auth/SignInResponseType';
 import { useMutation, UseMutationOptions } from '@tanstack/react-query';
-import { CustomToast } from '@src/shared/ui';
-import { TOAST_TYPE } from '@src/shared/types/toastType';
+import { CustomToast } from '@shared/ui';
+import { TOAST_TYPE } from '@shared/types/toastType';
 import { useLoginStore } from '@src/state/store/loginStore';
-import { PATH } from '@src/shared/constants';
+import { PATH } from '@shared/constants';
 import { useNavigate } from 'react-router-dom';
 
 export const useSignInMutation = (

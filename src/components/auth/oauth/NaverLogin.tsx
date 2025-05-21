@@ -1,6 +1,6 @@
 import { Loading } from '@src/components/loading/Loading';
-import { PATH } from '@src/shared/constants';
-import SomethingWrongErrorPage from '@src/pages/error/SomethingWrongErrorPage';
+import { PATH } from '@shared/constants';
+import SomethingWrongErrorPage from '@pages/error/SomethingWrongErrorPage';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';

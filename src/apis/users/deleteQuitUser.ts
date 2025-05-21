@@ -1,6 +1,6 @@
-import { API } from '@src/shared/constants';
-import { IQuitUserRequestType } from '@src/shared/types/users/quitUserRequestType';
-import { getAPIResponseData } from '@src/shared/utils';
+import { API } from '@shared/constants';
+import { IQuitUserRequestType } from '@shared/types/users/quitUserRequestType';
+import { getAPIResponseData } from '@shared/utils';
 
 export const deleteQuitUser = async (quitUserPayload: IQuitUserRequestType) => {
   return getAPIResponseData<void, IQuitUserRequestType>({

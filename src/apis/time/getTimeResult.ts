@@ -1,6 +1,6 @@
-import { API } from '@src/shared/constants';
-import { ITimeResultResponseType } from '@src/shared/types/time/timeResultType';
-import { getAPIResponseData } from '@src/shared/utils';
+import { API } from '@shared/constants';
+import { ITimeResultResponseType } from '@shared/types/time/timeResultType';
+import { getAPIResponseData } from '@shared/utils';
 
 export const getTimeResult = async (roomId: string) => {
   return getAPIResponseData<ITimeResultResponseType, void>({

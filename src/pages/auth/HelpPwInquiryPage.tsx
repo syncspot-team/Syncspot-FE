@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { PwInquiryStepType } from '@src/shared/types/auth/PwInquiryStepType';
+import { PwInquiryStepType } from '@shared/types/auth/PwInquiryStepType';
 import PwReissueStep from '@src/components/auth/PwReissueStep';
 import PwInquiryStep from '@src/components/auth/PwInquiryStep';
 

@@ -8,24 +8,24 @@ import {
 } from 'react-router-dom';
 import { useGetRecommendPlaceSearchQuery } from '@src/state/queries/location/useGetRecommendPlaceSearchQuery';
 import { useMidpointSearchQuery } from '@src/state/queries/location/useMidpointSearchQuery';
-import { IMidpointDataResponseType } from '@src/shared/types/location/midpointSearchResponseType';
-import { PATH } from '@src/shared/constants';
+import { IMidpointDataResponseType } from '@shared/types/location/midpointSearchResponseType';
+import { PATH } from '@shared/constants';
 import PlaceTypeFilter, {
   PLACE_STANDARDS,
   PLACE_STANDARDS_TYPE,
 } from '@src/components/location/PlaceTypeFilter';
 import PlaceList from '@src/components/location/PlaceList';
-import { useCoordinates } from '@src/shared/hooks/location/useCoordinates';
+import { useCoordinates } from '@shared/hooks/location/useCoordinates';
 import { useGetPlaceSearchQuery } from '@src/state/queries/location/useGetPlaceSearchQuery';
 import LocationEnterErrorPage from '@src/components/location/LocationEnterErrorPage';
 import BottomSheet from '@src/components/common/bottomSheet/BottomSheet';
-import IconLeftArrow from '@src/shared/assets/icons/IconLeftArrow.svg?react';
-import IconRightArrow from '@src/shared/assets/icons/IconRightArrow.svg?react';
-import { IPlaceContent } from '@src/shared/types/location/recommendPlaceSearchResponseType';
-import IconLinkPin from '@src/shared/assets/icons/IconLinkPin.svg?react';
-import IconStudy from '@src/shared/assets/icons/IconStudy.svg?react';
-import IconCafe from '@src/shared/assets/icons/IconCafe.svg?react';
-import IconRestaurant from '@src/shared/assets/icons/IconRestaurant.svg?react';
+import IconLeftArrow from '@assets/icons/IconLeftArrow.svg?react';
+import IconRightArrow from '@assets/icons/IconRightArrow.svg?react';
+import { IPlaceContent } from '@shared/types/location/recommendPlaceSearchResponseType';
+import IconLinkPin from '@assets/icons/IconLinkPin.svg?react';
+import IconStudy from '@assets/icons/IconStudy.svg?react';
+import IconCafe from '@assets/icons/IconCafe.svg?react';
+import IconRestaurant from '@assets/icons/IconRestaurant.svg?react';
 import SearchLocationLoading from '@src/components/loading/SearchLocationLoading';
 import LocationRecommendationsSkeleton from '@src/components/skeleton/LocationRecommendationsSkeleton';
 

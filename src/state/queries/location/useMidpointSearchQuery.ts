@@ -2,7 +2,7 @@ import { getMidpointSearch } from '@src/apis/location/getMidpointSearch';
 import { LOCATION_KEY } from './key';
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
-import { IMidpointSearchResponseType } from '@src/shared/types/location/midpointSearchResponseType';
+import { IMidpointSearchResponseType } from '@shared/types/location/midpointSearchResponseType';
 
 export const useMidpointSearchQuery = (
   options?: Omit<

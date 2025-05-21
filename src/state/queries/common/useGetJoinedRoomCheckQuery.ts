@@ -1,7 +1,7 @@
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { COMMON_KEY } from './key';
 import { getJoinedRoomCheck } from '@src/apis/common/getJoinedRoomCheck';
-import { IJoinedRoomCheckResponseType } from '@src/shared/types/common/joinedRoomCheckResponseType';
+import { IJoinedRoomCheckResponseType } from '@shared/types/common/joinedRoomCheckResponseType';
 
 export const useGetJoinedRoomCheckQuery = (
   roomId: string,

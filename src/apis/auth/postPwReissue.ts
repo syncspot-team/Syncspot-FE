@@ -1,6 +1,6 @@
-import { API } from '@src/shared/constants';
-import { IPwReissueRequestType } from '@src/shared/types/auth/PwReissueRequestType';
-import { getAPIResponseData } from '@src/shared/utils';
+import { API } from '@shared/constants';
+import { IPwReissueRequestType } from '@shared/types/auth/PwReissueRequestType';
+import { getAPIResponseData } from '@shared/utils';
 
 export const postPwReissue = async (
   pwReissueRequestPayload: IPwReissueRequestType,

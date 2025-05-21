@@ -1,6 +1,6 @@
-import IconStudy from '@src/shared/assets/icons/IconStudy.svg?react';
-import IconCafe from '@src/shared/assets/icons/IconCafe.svg?react';
-import IconRestaurant from '@src/shared/assets/icons/IconRestaurant.svg?react';
+import IconStudy from '@assets/icons/IconStudy.svg?react';
+import IconCafe from '@assets/icons/IconCafe.svg?react';
+import IconRestaurant from '@assets/icons/IconRestaurant.svg?react';
 import { PLACE_STANDARDS } from '../PlaceTypeFilter';
 
 export const SEQUENCE = ['첫', '두', '세', '네', '다섯'] as const;

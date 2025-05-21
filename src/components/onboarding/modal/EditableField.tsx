@@ -1,5 +1,5 @@
-import { Input } from '@src/shared/ui';
-import IconEditPen from '@src/shared/assets/icons/IconEditPen.svg?react';
+import { Input } from '@shared/ui';
+import IconEditPen from '@assets/icons/IconEditPen.svg?react';
 
 interface IEditableFieldProps {
   isEditing: boolean;

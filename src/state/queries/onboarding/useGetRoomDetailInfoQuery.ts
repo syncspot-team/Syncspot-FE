@@ -1,6 +1,6 @@
 import { getRoomDetailInfo } from '@src/apis/onboarding/getRoomDetailInfo';
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { IGetRoomDetailInfoResponseType } from '@src/shared/types/onboarding/getRoomDetailInfoResponseType';
+import { IGetRoomDetailInfoResponseType } from '@shared/types/onboarding/getRoomDetailInfoResponseType';
 import { ONBOARDING_QUERY_KEY } from './key';
 
 export const useGetRoomDetailInfoQuery = (

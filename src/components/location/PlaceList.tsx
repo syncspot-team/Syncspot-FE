@@ -1,4 +1,4 @@
-import { IPlaceContent } from '@src/shared/types/location/recommendPlaceSearchResponseType';
+import { IPlaceContent } from '@shared/types/location/recommendPlaceSearchResponseType';
 import PlaceItem from './PlaceItem';
 import Pagination from './Pagination';
 

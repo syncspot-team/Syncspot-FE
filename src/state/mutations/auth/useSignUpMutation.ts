@@ -1,8 +1,8 @@
 import { postSignUp } from '@src/apis/auth/postSignUp';
-import { CustomToast } from '@src/shared/ui';
-import { PATH } from '@src/shared/constants';
-import { ISignUpRequest } from '@src/shared/types/auth/SignUpRequestType';
-import { TOAST_TYPE } from '@src/shared/types/toastType';
+import { CustomToast } from '@shared/ui';
+import { PATH } from '@shared/constants';
+import { ISignUpRequest } from '@shared/types/auth/SignUpRequestType';
+import { TOAST_TYPE } from '@shared/types/toastType';
 import { useMutation, UseMutationOptions } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 

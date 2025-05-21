@@ -2,7 +2,7 @@ import { useState, useRef, ChangeEvent, useEffect } from 'react';
 import { useGetUserProfileImageQuery } from '@src/state/queries/users/useGetUserProfileImageQuery';
 import { getUserPresignedUrl } from '@src/apis/users/getUserPresignedUrl';
 import axios from 'axios';
-import { CustomToast } from '@src/shared/ui';
+import { CustomToast } from '@shared/ui';
 
 export default function UserProfileImage() {
   const [profileImage, setProfileImage] = useState('/favicon.svg');

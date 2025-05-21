@@ -1,9 +1,9 @@
-import { API } from '@src/shared/constants';
-import { getAPIResponseData } from '@src/shared/utils';
+import { API } from '@shared/constants';
+import { getAPIResponseData } from '@shared/utils';
 import {
   IPatchRoomNameRequestPayloadType,
   IPatchRoomNameRequestType,
-} from '@src/shared/types/onboarding/patchRoomNameRequestType';
+} from '@shared/types/onboarding/patchRoomNameRequestType';
 
 export const patchRoomName = async ({
   roomId,

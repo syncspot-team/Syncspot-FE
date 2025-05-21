@@ -1,6 +1,6 @@
 import React, { ButtonHTMLAttributes } from 'react';
 import { cva, VariantProps } from 'class-variance-authority';
-import { mergeClassNames } from '@src/shared/utils';
+import { mergeClassNames } from '@shared/utils';
 
 export const ButtonVariants = cva(
   `

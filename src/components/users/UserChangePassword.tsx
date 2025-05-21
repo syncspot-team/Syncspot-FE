@@ -4,7 +4,7 @@ import { useModifyPasswordMutation } from '@src/state/mutations/user/useModifyPa
 import CustomToast from '../../shared/ui/toast/customToast';
 import Button from '../../shared/ui/button/Button';
 import { useNavigate } from 'react-router-dom';
-import { PATH } from '@src/shared/constants';
+import { PATH } from '@shared/constants';
 
 interface IPasswordFormData {
   password: string;

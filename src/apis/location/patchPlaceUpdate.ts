@@ -1,6 +1,6 @@
-import { API } from '@src/shared/constants';
-import { IPlaceUpdateRequestType } from '@src/shared/types/location/placeUpdateRequestType';
-import { getAPIResponseData } from '@src/shared/utils';
+import { API } from '@shared/constants';
+import { IPlaceUpdateRequestType } from '@shared/types/location/placeUpdateRequestType';
+import { getAPIResponseData } from '@shared/utils';
 
 export const patchPlaceUpdate = async (
   roomId: string,

@@ -1,4 +1,4 @@
-import { ITimeSelectBoxProps } from '@src/shared/types/time/timeProps';
+import { ITimeSelectBoxProps } from '@shared/types/time/timeProps';
 import { useEffect, useState } from 'react';
 import { Select } from './timeSelect';
 

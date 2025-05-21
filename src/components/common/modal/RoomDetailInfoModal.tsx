@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Button } from '@src/shared/ui';
-import { IRoom } from '@src/shared/types/header/joinRoomResponseType';
+import { Button } from '@shared/ui';
+import { IRoom } from '@shared/types/header/joinRoomResponseType';
 import { useGetRoomDetailInfoQuery } from '@src/state/queries/onboarding/useGetRoomDetailInfoQuery';
 import { usePatchRoomNameMutation } from '@src/state/mutations/onboarding/usePatchRoomNameMutation';
 import { usePatchRoomMemoMutation } from '@src/state/mutations/onboarding/usePatchRoomMemoMutation';

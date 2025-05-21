@@ -1,9 +1,9 @@
-import { OnboardingStepType } from '@src/shared/types/onboarding/onboardingStepType';
+import { OnboardingStepType } from '@shared/types/onboarding/onboardingStepType';
 import { useForm } from 'react-hook-form';
 import { useCreateRoomMutation } from '@src/state/mutations/onboarding/useCreateRoomMutation';
-import { ICreateRoomRequest } from '@src/shared/types/onboarding/createRoomRequestType';
-import { Button } from '@src/shared/ui';
-import { Input } from '@src/shared/ui';
+import { ICreateRoomRequest } from '@shared/types/onboarding/createRoomRequestType';
+import { Button } from '@shared/ui';
+import { Input } from '@shared/ui';
 import { useSaveUserToRoomMutation } from '@src/state/mutations/onboarding/useSaveUserToRoomMutation';
 
 interface IOnBoardingCreateProps {

@@ -1,9 +1,9 @@
-import IconLinkPin from '@src/shared/assets/icons/IconLinkPin.svg?react';
-import IconStudy from '@src/shared/assets/icons/IconStudy.svg?react';
-import IconCafe from '@src/shared/assets/icons/IconCafe.svg?react';
-import IconRestaurant from '@src/shared/assets/icons/IconRestaurant.svg?react';
+import IconLinkPin from '@assets/icons/IconLinkPin.svg?react';
+import IconStudy from '@assets/icons/IconStudy.svg?react';
+import IconCafe from '@assets/icons/IconCafe.svg?react';
+import IconRestaurant from '@assets/icons/IconRestaurant.svg?react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { IPlaceContent } from '@src/shared/types/location/recommendPlaceSearchResponseType';
+import { IPlaceContent } from '@shared/types/location/recommendPlaceSearchResponseType';
 import AddressDisplay from './AddressDisplay';
 
 interface IPlaceItemProps {

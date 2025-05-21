@@ -1,4 +1,4 @@
-import IconEmail from '@src/shared/assets/icons/IconEmail.svg?react';
+import IconEmail from '@assets/icons/IconEmail.svg?react';
 
 export default function EmailButton() {
   return (

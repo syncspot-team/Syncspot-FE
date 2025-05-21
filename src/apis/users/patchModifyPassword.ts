@@ -1,6 +1,6 @@
-import { API } from '@src/shared/constants';
-import { IModifyPasswordRequestType } from '@src/shared/types/users/modifyPasswordRequestType';
-import { getAPIResponseData } from '@src/shared/utils';
+import { API } from '@shared/constants';
+import { IModifyPasswordRequestType } from '@shared/types/users/modifyPasswordRequestType';
+import { getAPIResponseData } from '@shared/utils';
 
 export const patchModifyPassword = async (
   modifyPasswordPayload: IModifyPasswordRequestType,

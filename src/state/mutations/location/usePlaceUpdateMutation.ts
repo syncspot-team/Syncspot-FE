@@ -4,7 +4,7 @@ import {
   UseMutationOptions,
   useQueryClient,
 } from '@tanstack/react-query';
-import { IPlaceUpdateRequestType } from '@src/shared/types/location/placeUpdateRequestType';
+import { IPlaceUpdateRequestType } from '@shared/types/location/placeUpdateRequestType';
 import { LOCATION_KEY } from '@src/state/queries/location/key';
 import { useParams } from 'react-router-dom';
 

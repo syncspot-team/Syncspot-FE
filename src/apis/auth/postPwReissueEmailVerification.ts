@@ -1,6 +1,6 @@
-import { API } from '@src/shared/constants';
-import { IPwReissueEmailVerificationRequestType } from '@src/shared/types/auth/PwReissueEmailVerificationRequestType';
-import { getAPIResponseData } from '@src/shared/utils';
+import { API } from '@shared/constants';
+import { IPwReissueEmailVerificationRequestType } from '@shared/types/auth/PwReissueEmailVerificationRequestType';
+import { getAPIResponseData } from '@shared/utils';
 
 export const postPwReissueEmailVerification = async (
   pwReissueEmailVerificationRequestPayload: IPwReissueEmailVerificationRequestType,

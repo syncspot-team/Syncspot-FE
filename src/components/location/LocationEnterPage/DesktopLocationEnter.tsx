@@ -1,5 +1,5 @@
 import KakaoMap from '@src/components/common/kakao/KakaoMap';
-import ShareButton from '@src/widgets/header/ui/ShareButton';
+import ShareButton from '@widgets/header/ui/ShareButton';
 import LocationActionButtons from '@src/components/location/LocationEnterPage/LocationActionButtons';
 import FriendLocationList from '@src/components/location/LocationEnterPage/FriendLocationList';
 import MyLocationList from '@src/components/location/LocationEnterPage/MyLocationList';

@@ -1,4 +1,4 @@
-import LottieGlobalLoading from '@src/shared/assets/lotties/LottieGlobalLoading.json';
+import LottieGlobalLoading from '@assets/lotties/LottieGlobalLoading.json';
 import Lottie from 'lottie-react';
 
 export const GlobalLoading = () => {

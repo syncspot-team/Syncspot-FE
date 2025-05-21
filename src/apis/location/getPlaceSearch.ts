@@ -1,6 +1,6 @@
-import { API } from '@src/shared/constants';
-import { IPlaceSearchResponseType } from '@src/shared/types/location/placeSearchResponseType';
-import { getAPIResponseData } from '@src/shared/utils';
+import { API } from '@shared/constants';
+import { IPlaceSearchResponseType } from '@shared/types/location/placeSearchResponseType';
+import { getAPIResponseData } from '@shared/utils';
 
 export const getPlaceSearch = async (roomId: string) => {
   return getAPIResponseData<IPlaceSearchResponseType, void>({

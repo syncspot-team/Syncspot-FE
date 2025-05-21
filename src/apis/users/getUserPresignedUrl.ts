@@ -1,6 +1,6 @@
-import { API } from '@src/shared/constants';
-import { IGetUserPresignedUrlResponse } from '@src/shared/types/users/getUserPresignedUrlResponseType';
-import { getAPIResponseData } from '@src/shared/utils';
+import { API } from '@shared/constants';
+import { IGetUserPresignedUrlResponse } from '@shared/types/users/getUserPresignedUrlResponseType';
+import { getAPIResponseData } from '@shared/utils';
 
 export const getUserPresignedUrl = async (filename: string) => {
   return getAPIResponseData<IGetUserPresignedUrlResponse, void>({

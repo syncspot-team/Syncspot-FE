@@ -1,4 +1,4 @@
-import { IMenuItem } from '@src/shared/types/header/menuItemType';
+import { IMenuItem } from '@shared/types/header/menuItemType';
 
 interface IMobileSubMenuProps {
   subMenus: IMenuItem[];

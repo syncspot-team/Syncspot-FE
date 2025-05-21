@@ -1,8 +1,8 @@
-import IconOauthKakao from '@src/shared/assets/icons/IconOauthKakao.svg?react';
-import { useShareKakao } from '@src/shared/hooks/share/useKakaoShare';
+import IconOauthKakao from '@assets/icons/IconOauthKakao.svg?react';
+import { useShareKakao } from '@shared/hooks/share/useKakaoShare';
 
-import { SHARE_TYPE, ShareType } from '@src/shared/types/shareType';
-import { PATH } from '@src/shared/constants';
+import { SHARE_TYPE, ShareType } from '@shared/types/shareType';
+import { PATH } from '@shared/constants';
 
 const DEFAULT_ROOM_ID = 'defaultRoomId';
 

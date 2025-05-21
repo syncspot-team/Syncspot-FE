@@ -7,10 +7,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import {
   ITimeRoomRequest,
   ITimeRoomResponse,
-} from '@src/shared/types/time/timeRoomType';
+} from '@shared/types/time/timeRoomType';
 import { putTimeRoom } from '@src/apis/time/putTimeRoom';
 import { TIME_KEY } from '@src/state/queries/time/key';
-import { PATH } from '@src/shared/constants';
+import { PATH } from '@shared/constants';
 
 export const usePutTimeRoomMutation = (
   options?: UseMutationOptions<ITimeRoomResponse, Error, ITimeRoomRequest>,

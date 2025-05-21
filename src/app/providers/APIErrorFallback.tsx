@@ -1,9 +1,9 @@
 import { FallbackProps } from 'react-error-boundary';
 import { isAxiosError } from 'axios';
-import { getErrorData } from '@src/shared/utils';
-import ErrorPage from '@src/pages/error/ErrorPage';
+import { getErrorData } from '@shared/utils';
+import ErrorPage from '@pages/error/ErrorPage';
 import { Navigate } from 'react-router-dom';
-import { PATH } from '@src/shared/constants';
+import { PATH } from '@shared/constants';
 
 export default function APIErrorFallback({
   error,

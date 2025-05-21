@@ -1,8 +1,8 @@
-import IconShare from '@src/shared/assets/icons/IconShare.svg?react';
+import IconShare from '@assets/icons/IconShare.svg?react';
 import Modal from '@src/components/common/modal/Modal';
 import ShareMeetingModal from '@src/components/common/modal/ShareMeetingModal';
-import { useModal } from '@src/shared/hooks/useModal';
-import { MODAL_TYPE } from '@src/shared/types/modalType';
+import { useModal } from '@shared/hooks/useModal';
+import { MODAL_TYPE } from '@shared/types/modalType';
 
 interface IShareButtonProps {
   onShareClick?: () => void;

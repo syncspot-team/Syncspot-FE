@@ -1,4 +1,4 @@
-import IconShareBox from '@src/shared/assets/icons/IconShareBox.svg?react';
+import IconShareBox from '@assets/icons/IconShareBox.svg?react';
 import { useState } from 'react';
 import KakaoShare from '@src/components/layout/shareModal/Kakao';
 import EmailButton from '@src/components/layout/shareModal/EmailButton';

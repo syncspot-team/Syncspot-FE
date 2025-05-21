@@ -1,5 +1,5 @@
 import { postPwReissue } from '@src/apis/auth/postPwReissue';
-import { IPwReissueRequestType } from '@src/shared/types/auth/PwReissueRequestType';
+import { IPwReissueRequestType } from '@shared/types/auth/PwReissueRequestType';
 import { useMutation, UseMutationOptions } from '@tanstack/react-query';
 
 export const usePwReissueMutation = (

@@ -1,6 +1,6 @@
 import { postPlaceVoteRoomCreate } from '@src/apis/place/postPlaceVoteRoomCreate';
 import { ROOM_QUERY_KEY } from '@src/state/queries/header/key';
-import { IPlaceVoteRoomCreateRequestType } from '@src/shared/types/place/placeVoteRoomCreateRequestType';
+import { IPlaceVoteRoomCreateRequestType } from '@shared/types/place/placeVoteRoomCreateRequestType';
 import {
   useMutation,
   UseMutationOptions,

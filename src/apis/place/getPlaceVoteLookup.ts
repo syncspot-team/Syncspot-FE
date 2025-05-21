@@ -1,6 +1,6 @@
-import { API } from '@src/shared/constants';
-import { IPlaceVoteLookupResponseType } from '@src/shared/types/place/placeVoteLookupResponseType';
-import { getAPIResponseData } from '@src/shared/utils';
+import { API } from '@shared/constants';
+import { IPlaceVoteLookupResponseType } from '@shared/types/place/placeVoteLookupResponseType';
+import { getAPIResponseData } from '@shared/utils';
 
 export const getPlaceVoteLookup = async (roomId: string) => {
   return getAPIResponseData<IPlaceVoteLookupResponseType, void>({

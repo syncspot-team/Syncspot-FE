@@ -1,5 +1,5 @@
-import { PATH } from '@src/shared/constants';
-import IconUser from '@src/shared/assets/icons/IconUser.svg?react';
+import { PATH } from '@shared/constants';
+import IconUser from '@assets/icons/IconUser.svg?react';
 import { useNavigate } from 'react-router-dom';
 import { useLoginStore } from '@src/state/store/loginStore';
 

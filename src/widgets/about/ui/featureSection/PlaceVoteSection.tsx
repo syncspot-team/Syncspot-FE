@@ -1,8 +1,8 @@
-import IconAboutPlaceSearch from '@src/shared/assets/icons/IconAboutPlaceSearch.png';
-import IconRightHalfArrow from '@src/shared/assets/icons/IconRightHalfArrow.svg?react';
-import IconAboutPlaceVote from '@src/shared/assets/icons/IconMobilePlaceVote.svg?react';
+import IconAboutPlaceSearch from '@assets/icons/IconAboutPlaceSearch.png';
+import IconRightHalfArrow from '@assets/icons/IconRightHalfArrow.svg?react';
+import IconAboutPlaceVote from '@assets/icons/IconMobilePlaceVote.svg?react';
 import { Link } from 'react-router-dom';
-import { PATH } from '@src/shared/constants';
+import { PATH } from '@shared/constants';
 
 export default function PlaceVoteSection({
   isMobile = false,

@@ -1,5 +1,5 @@
 import { postRequestEmailVerification } from '@src/apis/auth/postRequestEmailVerification';
-import { ISignUpRequestEmailVerificationType } from '@src/shared/types/auth/SignUpVerificationType';
+import { ISignUpRequestEmailVerificationType } from '@shared/types/auth/SignUpVerificationType';
 import { useMutation, UseMutationOptions } from '@tanstack/react-query';
 
 export const useRequestEmailVerificationMutation = (

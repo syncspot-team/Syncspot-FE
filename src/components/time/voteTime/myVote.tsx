@@ -1,4 +1,4 @@
-import { IMyVoteProps, IVotes } from '@src/shared/types/time/timeProps';
+import { IMyVoteProps, IVotes } from '@shared/types/time/timeProps';
 import DatePicker from './datePicker';
 import Button from '../../../shared/ui/button/Button';
 import {
@@ -7,10 +7,10 @@ import {
 } from '@src/state/mutations/time';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { ITimeVoteRequest } from '@src/shared/types/time/timeVoteType';
+import { ITimeVoteRequest } from '@shared/types/time/timeVoteType';
 import { DATE_FORMATS, formatStringDate } from '../utils/formatDate';
 import { useGetTimeVotedQuery } from '@src/state/queries/time';
-import { CustomToast } from '@src/shared/ui';
+import { CustomToast } from '@shared/ui';
 
 export default function MyVote({ dates, bottomSheetHeight }: IMyVoteProps) {
   //투표여부 myVotes

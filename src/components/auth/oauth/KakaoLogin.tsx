@@ -1,10 +1,10 @@
 import { Loading } from '@src/components/loading/Loading';
-import { PATH } from '@src/shared/constants';
+import { PATH } from '@shared/constants';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLoginStore } from '@src/state/store/loginStore';
-import SomethingWrongErrorPage from '@src/pages/error/SomethingWrongErrorPage';
+import SomethingWrongErrorPage from '@pages/error/SomethingWrongErrorPage';
 
 export default function KakaoLogin() {
   const { login } = useLoginStore();

@@ -1,6 +1,6 @@
 import { useMutation, UseMutationOptions } from '@tanstack/react-query';
 import { deleteQuitUser } from '@src/apis/users/deleteQuitUser';
-import { IQuitUserRequestType } from '@src/shared/types/users/quitUserRequestType';
+import { IQuitUserRequestType } from '@shared/types/users/quitUserRequestType';
 
 export const useQuitUserMutation = (
   options?: UseMutationOptions<any, Error, IQuitUserRequestType>,

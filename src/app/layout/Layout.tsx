@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '@src/widgets/header/ui/Header';
+import Header from '@widgets/header/ui/Header';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

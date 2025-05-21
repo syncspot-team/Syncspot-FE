@@ -1,14 +1,14 @@
-import IconWarningTriangle from '@src/shared/assets/icons/IconWarningTriangle.svg?react';
+import IconWarningTriangle from '@assets/icons/IconWarningTriangle.svg?react';
 import Button from '../../shared/ui/button/Button';
 import { useState } from 'react';
-import { CustomToast } from '@src/shared/ui';
-import { TOAST_TYPE } from '@src/shared/types/toastType';
-import { PATH } from '@src/shared/constants';
+import { CustomToast } from '@shared/ui';
+import { TOAST_TYPE } from '@shared/types/toastType';
+import { PATH } from '@shared/constants';
 import { useNavigate } from 'react-router-dom';
 import { useQuitUserMutation } from '@src/state/mutations/user/useQuitUserMutation';
 import { useLoginStore } from '@src/state/store/loginStore';
-import { useModal } from '@src/shared/hooks/useModal';
-import { MODAL_TYPE } from '@src/shared/types/modalType';
+import { useModal } from '@shared/hooks/useModal';
+import { MODAL_TYPE } from '@shared/types/modalType';
 import QuitModal from '../common/modal/QuitModal';
 import Modal from '../common/modal/Modal';
 

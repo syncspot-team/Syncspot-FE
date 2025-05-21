@@ -1,6 +1,6 @@
-import { API } from '@src/shared/constants';
-import { IModifyUserNicknameRequest } from '@src/shared/types/users/modifyUserNicknameRequestType';
-import { getAPIResponseData } from '@src/shared/utils';
+import { API } from '@shared/constants';
+import { IModifyUserNicknameRequest } from '@shared/types/users/modifyUserNicknameRequestType';
+import { getAPIResponseData } from '@shared/utils';
 
 export const patchUserNickName = async (
   modifyUserNicknamePayload: IModifyUserNicknameRequest,

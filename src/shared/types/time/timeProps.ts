@@ -1,4 +1,4 @@
-import { IMemberAvailability } from '@src/shared/types/time/timeResultType';
+import { IMemberAvailability } from '@shared/types/time/timeResultType';
 
 export interface ITimeDatesProps {
   dates: Date[];

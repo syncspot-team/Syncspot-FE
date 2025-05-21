@@ -1,4 +1,4 @@
-import { ISignUpFormValues } from '@src/shared/types/auth/SignUpRequestType';
+import { ISignUpFormValues } from '@shared/types/auth/SignUpRequestType';
 
 export const SignUpDefaultValues: ISignUpFormValues = {
   name: '',

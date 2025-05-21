@@ -1,6 +1,6 @@
-import { Input } from '@src/shared/ui';
-import { useEmailShare } from '@src/shared/hooks/share/useEmailShare';
-import { mergeClassNames } from '@src/shared/utils';
+import { Input } from '@shared/ui';
+import { useEmailShare } from '@shared/hooks/share/useEmailShare';
+import { mergeClassNames } from '@shared/utils';
 import React, { useState } from 'react';
 
 interface IEmailInputProps {

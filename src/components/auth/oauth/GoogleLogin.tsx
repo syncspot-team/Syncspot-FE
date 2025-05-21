@@ -2,9 +2,9 @@ import { Loading } from '@src/components/loading/Loading';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useLoginStore } from '@src/state/store/loginStore';
-import { PATH } from '@src/shared/constants';
+import { PATH } from '@shared/constants';
 import { useNavigate } from 'react-router-dom';
-import SomethingWrongErrorPage from '@src/pages/error/SomethingWrongErrorPage';
+import SomethingWrongErrorPage from '@pages/error/SomethingWrongErrorPage';
 
 export default function GoogleLogin() {
   const { login } = useLoginStore();

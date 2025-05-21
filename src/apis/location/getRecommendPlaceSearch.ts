@@ -1,6 +1,6 @@
-import { API } from '@src/shared/constants';
-import { IRecommendPlaceSearchResponseType } from '@src/shared/types/location/recommendPlaceSearchResponseType';
-import { getAPIResponseData } from '@src/shared/utils';
+import { API } from '@shared/constants';
+import { IRecommendPlaceSearchResponseType } from '@shared/types/location/recommendPlaceSearchResponseType';
+import { getAPIResponseData } from '@shared/utils';
 
 export const getRecommendPlaceSearch = async (
   addressLat: number,

@@ -1,11 +1,11 @@
-import IconAboutMap from '@src/shared/assets/icons/IconAboutMap.svg?react';
-import IconAboutIphone from '@src/shared/assets/icons/IconAboutIphone.png';
-import IconRightHalfArrow from '@src/shared/assets/icons/IconRightHalfArrow.svg?react';
-import IconMobileMidpoint from '@src/shared/assets/icons/IconMobileMidpoint.png';
-import IconBubbleOne from '@src/shared/assets/icons/IconBubbleOne.svg?react';
-import IconBubbleTwo from '@src/shared/assets/icons/IconBubbleTwo.svg?react';
-import IconAboutSyncspot from '@src/shared/assets/icons/IconAboutSyncspot.svg?react';
-import { CustomToast } from '@src/shared/ui';
+import IconAboutMap from '@assets/icons/IconAboutMap.svg?react';
+import IconAboutIphone from '@assets/icons/IconAboutIphone.png';
+import IconRightHalfArrow from '@assets/icons/IconRightHalfArrow.svg?react';
+import IconMobileMidpoint from '@assets/icons/IconMobileMidpoint.png';
+import IconBubbleOne from '@assets/icons/IconBubbleOne.svg?react';
+import IconBubbleTwo from '@assets/icons/IconBubbleTwo.svg?react';
+import IconAboutSyncspot from '@assets/icons/IconAboutSyncspot.svg?react';
+import { CustomToast } from '@shared/ui';
 
 export default function MidpointSection({
   isMobile = false,

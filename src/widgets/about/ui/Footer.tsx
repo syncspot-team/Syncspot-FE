@@ -1,6 +1,6 @@
-import IconAboutInstagram from '@src/shared/assets/icons/IconAboutInstagram.svg?react';
-import IconGithub from '@src/shared/assets/icons/IconGithub.svg?react';
-import IconSmallDolphin from '@src/shared/assets/icons/IconSmallDolphin.svg?react';
+import IconAboutInstagram from '@assets/icons/IconAboutInstagram.svg?react';
+import IconGithub from '@assets/icons/IconGithub.svg?react';
+import IconSmallDolphin from '@assets/icons/IconSmallDolphin.svg?react';
 import {
   MOBILE_TAB_OPTIONS,
   MobileTabOption,
@@ -8,8 +8,8 @@ import {
   SOCIAL_LINKS,
   TeamMember,
   SocialLink,
-} from '@src/widgets/about/model';
-import { mergeClassNames } from '@src/shared/utils';
+} from '@widgets/about/model';
+import { mergeClassNames } from '@shared/utils';
 
 //entities 분리가능 조건에 해당하지만, api 사용 X 핵심 도메인 기능 X 재사용성 낮음으로 분리하지 않음
 function TeamMemberCard({ role, name, school }: TeamMember) {

@@ -1,5 +1,5 @@
 import { getMidpointTimeSearch } from '@src/apis/location/getMidpointTimeSearch';
-import { IMidpointTimeSearchResponseType } from '@src/shared/types/location/midpointTimeSearchResponseType';
+import { IMidpointTimeSearchResponseType } from '@shared/types/location/midpointTimeSearchResponseType';
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { LOCATION_KEY } from './key';

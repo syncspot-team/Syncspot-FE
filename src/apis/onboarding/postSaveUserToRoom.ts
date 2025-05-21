@@ -1,5 +1,5 @@
-import { API } from '@src/shared/constants';
-import { getAPIResponseData } from '@src/shared/utils';
+import { API } from '@shared/constants';
+import { getAPIResponseData } from '@shared/utils';
 
 interface IPostSaveUserToRoomProps {
   roomId: string;

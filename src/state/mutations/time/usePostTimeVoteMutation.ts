@@ -7,10 +7,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import {
   ITimeVoteRequest,
   ITimeVoteResponse,
-} from '@src/shared/types/time/timeVoteType';
+} from '@shared/types/time/timeVoteType';
 import { postTimeVote } from '@src/apis/time/postTimeVote';
 import { TIME_KEY } from '@src/state/queries/time/key';
-import { PATH } from '@src/shared/constants';
+import { PATH } from '@shared/constants';
 import { ROOM_QUERY_KEY } from '@src/state/queries/header/key';
 
 export const usePostTimeVoteMutation = (

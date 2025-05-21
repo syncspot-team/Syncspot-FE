@@ -1,7 +1,7 @@
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { getUserProfileImage } from '@src/apis/users/getUserProfileImage';
 import { USER_QUERY_KEY } from './key';
-import { IGetUserProfileImageResponse } from '@src/shared/types/users/getUserProfileImageResponseType';
+import { IGetUserProfileImageResponse } from '@shared/types/users/getUserProfileImageResponseType';
 
 export const useGetUserProfileImageQuery = (
   options?: Omit<

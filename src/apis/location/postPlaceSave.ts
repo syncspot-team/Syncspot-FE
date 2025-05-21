@@ -1,7 +1,7 @@
-import { API } from '@src/shared/constants';
-import { IPlaceSaveRequestType } from '@src/shared/types/location/placeSaveRequestType';
-import { IPlaceSaveResponseType } from '@src/shared/types/location/placeSaveResponseType';
-import { getAPIResponseData } from '@src/shared/utils';
+import { API } from '@shared/constants';
+import { IPlaceSaveRequestType } from '@shared/types/location/placeSaveRequestType';
+import { IPlaceSaveResponseType } from '@shared/types/location/placeSaveResponseType';
+import { getAPIResponseData } from '@shared/utils';
 
 export const postPlaceSave = async (
   roomId: string,

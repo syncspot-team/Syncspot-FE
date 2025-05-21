@@ -5,7 +5,7 @@ import { useState } from 'react';
 import MyLocationList from '@src/components/location/LocationEnterPage/MyLocationList';
 import FriendLocationList from '@src/components/location/LocationEnterPage/FriendLocationList';
 import { useLocationContext } from '@src/components/location/LocationEnterPage/LocationContext';
-import ShareButton from '@src/widgets/header/ui/ShareButton';
+import ShareButton from '@widgets/header/ui/ShareButton';
 
 export default function MobileLocationEnter() {
   const [bottomSheetHeight, setBottomSheetHeight] = useState(500);

@@ -1,5 +1,5 @@
 import React, { forwardRef, Ref } from 'react';
-import { mergeClassNames } from '@src/shared/utils';
+import { mergeClassNames } from '@shared/utils';
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
 

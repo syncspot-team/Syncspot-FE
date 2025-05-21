@@ -1,6 +1,6 @@
-import { API } from '@src/shared/constants';
-import { IGetUserProfileImageResponse } from '@src/shared/types/users/getUserProfileImageResponseType';
-import { getAPIResponseData } from '@src/shared/utils';
+import { API } from '@shared/constants';
+import { IGetUserProfileImageResponse } from '@shared/types/users/getUserProfileImageResponseType';
+import { getAPIResponseData } from '@shared/utils';
 
 export const getUserProfileImage = async () => {
   return getAPIResponseData<IGetUserProfileImageResponse, void>({

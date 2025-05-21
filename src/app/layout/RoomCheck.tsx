@@ -5,7 +5,7 @@ import { useSaveUserToRoomMutation } from '@src/state/mutations/onboarding/useSa
 import { useQueryClient } from '@tanstack/react-query';
 import { ROOM_QUERY_KEY } from '@src/state/queries/header/key';
 import { Loading } from '@src/components/loading/Loading';
-import SomethingWrongErrorPage from '@src/pages/error/SomethingWrongErrorPage';
+import SomethingWrongErrorPage from '@pages/error/SomethingWrongErrorPage';
 
 interface RoomCheckProps {
   children: React.ReactNode;

@@ -1,5 +1,5 @@
-import IconDropdown from '@src/shared/assets/icons/IconDropdown.svg?react';
-import IconXmark from '@src/shared/assets/icons/IconXmark.svg?react';
+import IconDropdown from '@assets/icons/IconDropdown.svg?react';
+import IconXmark from '@assets/icons/IconXmark.svg?react';
 import { useState, useRef, useEffect } from 'react';
 
 interface IAddressPopupProps {

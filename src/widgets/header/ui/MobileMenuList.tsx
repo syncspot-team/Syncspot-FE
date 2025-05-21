@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { useMenuItems } from '@src/shared/hooks/header/useMenuItems';
-import { IMenuItem } from '@src/shared/types/header/menuItemType';
+import { useMenuItems } from '@shared/hooks/header/useMenuItems';
+import { IMenuItem } from '@shared/types/header/menuItemType';
 import MobileSubMenu from './MobileSubMenu';
-import IconDropdown from '@src/shared/assets/icons/IconDropdown.svg?react';
-import IconMenuAccount from '@src/shared/assets/icons/IconMenuAccount.svg?react';
-import IconMenuMidpoint from '@src/shared/assets/icons/IconMenuMidpoint.svg?react';
-import IconMenuPlace from '@src/shared/assets/icons/IconMenuPlace.svg?react';
-import IconMenuTime from '@src/shared/assets/icons/IconMenuTime.svg?react';
-import IconService from '@src/shared/assets/icons/IconMenuService.svg?react';
+import IconDropdown from '@assets/icons/IconDropdown.svg?react';
+import IconMenuAccount from '@assets/icons/IconMenuAccount.svg?react';
+import IconMenuMidpoint from '@assets/icons/IconMenuMidpoint.svg?react';
+import IconMenuPlace from '@assets/icons/IconMenuPlace.svg?react';
+import IconMenuTime from '@assets/icons/IconMenuTime.svg?react';
+import IconService from '@assets/icons/IconMenuService.svg?react';
 import { sideMenuItems } from '@src/components/users/constants/sideMenuItems';
 import { useLoginStore } from '@src/state/store/loginStore';
-import IconRightHalfArrow from '@src/shared/assets/icons/IconRightHalfArrow.svg?react';
+import IconRightHalfArrow from '@assets/icons/IconRightHalfArrow.svg?react';
 import { useNavigate } from 'react-router-dom';
-import { PATH } from '@src/shared/constants';
+import { PATH } from '@shared/constants';
 import { useGetUserInfoQuery } from '@src/state/queries/users/useGetUserInfoQuery';
 
 interface IMobileMenuListProps {

@@ -1,8 +1,8 @@
-import IconAboutTimeVote from '@src/shared/assets/icons/IconAboutTimeVote.png';
-import IconRightHalfArrow from '@src/shared/assets/icons/IconRightHalfArrow.svg?react';
-import IconAboutTimeVoteMobile from '@src/shared/assets/icons/IconMobileTimeVote.svg?react';
+import IconAboutTimeVote from '@assets/icons/IconAboutTimeVote.png';
+import IconRightHalfArrow from '@assets/icons/IconRightHalfArrow.svg?react';
+import IconAboutTimeVoteMobile from '@assets/icons/IconMobileTimeVote.svg?react';
 import { Link } from 'react-router-dom';
-import { PATH } from '@src/shared/constants';
+import { PATH } from '@shared/constants';
 
 export default function TimeVoteSection({
   isMobile = false,

@@ -1,6 +1,6 @@
-import { items } from '@src/shared/types/time/GridColor';
+import { items } from '@shared/types/time/GridColor';
 import { getTimeIndex } from '@src/components/time/utils/formatTime';
-import { IMemberAvailability } from '@src/shared/types/time/timeResultType';
+import { IMemberAvailability } from '@shared/types/time/timeResultType';
 
 export const fillGridColors = (nowDateData: IMemberAvailability[]) => {
   const morGridColors = Array(72).fill(items[0].color);

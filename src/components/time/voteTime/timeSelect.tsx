@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import './timeSelect.css';
-import { mergeClassNames } from '@src/shared/utils';
-import IconTimeDropdown from '@src/shared/assets/icons/IconTimeDropdown.svg?react';
+import { mergeClassNames } from '@shared/utils';
+import IconTimeDropdown from '@assets/icons/IconTimeDropdown.svg?react';
 import { formatTime } from '@src/components/time/utils/formatTime';
 
 const SELECT_TYPES = {

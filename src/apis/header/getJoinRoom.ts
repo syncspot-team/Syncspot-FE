@@ -1,6 +1,6 @@
-import { API } from '@src/shared/constants';
-import { IJoinRoomResponse } from '@src/shared/types/header/joinRoomResponseType';
-import { getAPIResponseData } from '@src/shared/utils';
+import { API } from '@shared/constants';
+import { IJoinRoomResponse } from '@shared/types/header/joinRoomResponseType';
+import { getAPIResponseData } from '@shared/utils';
 
 export const getJoinRoom = async () => {
   return getAPIResponseData<IJoinRoomResponse, void>({

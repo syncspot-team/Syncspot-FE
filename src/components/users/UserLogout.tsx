@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { PATH } from '@src/shared/constants';
+import { PATH } from '@shared/constants';
 import Modal from '../common/modal/Modal';
 import { useState } from 'react';
 import { useLoginStore } from '@src/state/store/loginStore';

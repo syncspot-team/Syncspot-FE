@@ -1,4 +1,4 @@
-import { useDeviceType } from '@src/shared/hooks/useDeviceType';
+import { useDeviceType } from '@shared/hooks/useDeviceType';
 import DesktopLocationEnter from '@src/components/location/LocationEnterPage/DesktopLocationEnter';
 import MobileLocationEnter from '@src/components/location/LocationEnterPage/MobileLocationEnter';
 import { LocationProvider } from '@src/components/location/LocationEnterPage/LocationContext';

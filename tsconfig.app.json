@@ -25,7 +25,12 @@
     "baseUrl": ".",
     "paths": {
       "@src/*": ["src/*"],
-      "@pages/*": ["src/pages/*"]
+      "@pages/*": ["src/pages/*"],
+      "@shared/*": ["src/shared/*"],
+      "@assets/*": ["src/shared/assets/*"],
+      "@widgets/*": ["src/widgets/*"],
+      "@features/*": ["src/features/*"],
+      "@entities/*": ["src/entities/*"]
     }
   },
   "include": ["src"]

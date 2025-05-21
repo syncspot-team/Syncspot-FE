@@ -1,5 +1,5 @@
-import IconDolphin from '@src/shared/assets/icons/IconDolphin.svg?react';
-import IconAboutSpot from '@src/shared/assets/icons/IconAboutSpot.png';
+import IconDolphin from '@assets/icons/IconDolphin.svg?react';
+import IconAboutSpot from '@assets/icons/IconAboutSpot.png';
 
 export default function AboutService() {
   return (

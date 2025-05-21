@@ -1,9 +1,9 @@
-import IconEditTabler from '@src/shared/assets/icons/IconEditTabler.svg?react';
-import IconAddressBook from '@src/shared/assets/icons/IconAddressBook.svg?react';
-import IconPassword from '@src/shared/assets/icons/IconPassword.svg?react';
-import IconLogout from '@src/shared/assets/icons/IconLogout.svg?react';
-import IconUserQuit from '@src/shared/assets/icons/IconUserQuit.svg?react';
-import { PATH } from '@src/shared/constants';
+import IconEditTabler from '@assets/icons/IconEditTabler.svg?react';
+import IconAddressBook from '@assets/icons/IconAddressBook.svg?react';
+import IconPassword from '@assets/icons/IconPassword.svg?react';
+import IconLogout from '@assets/icons/IconLogout.svg?react';
+import IconUserQuit from '@assets/icons/IconUserQuit.svg?react';
+import { PATH } from '@shared/constants';
 
 export const sideMenuItems = [
   {

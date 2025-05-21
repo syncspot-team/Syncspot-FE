@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import IconArrow from '@src/shared/assets/icons/IconTriangle.svg?react';
-import { Button } from '@src/shared/ui';
+import IconArrow from '@assets/icons/IconTriangle.svg?react';
+import { Button } from '@shared/ui';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './TimeCreatePage.css';
-import { CustomToast } from '@src/shared/ui';
+import { CustomToast } from '@shared/ui';
 import {
   usePostTimeRoomMutation,
   usePutTimeRoomMutation,

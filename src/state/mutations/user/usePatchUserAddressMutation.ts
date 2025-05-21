@@ -4,7 +4,7 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import { patchUserAddress } from '@src/apis/users/patchUserAddress';
-import { IModifyUserAddressRequest } from '@src/shared/types/users/modifyUserAddressRequestType';
+import { IModifyUserAddressRequest } from '@shared/types/users/modifyUserAddressRequestType';
 import { USER_QUERY_KEY } from '@src/state/queries/users/key';
 
 export const usePatchUserAddressMutation = (

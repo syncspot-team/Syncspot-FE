@@ -1,6 +1,6 @@
-import { API } from '@src/shared/constants';
-import { IMidpointTimeSearchResponseType } from '@src/shared/types/location/midpointTimeSearchResponseType';
-import { getAPIResponseData } from '@src/shared/utils';
+import { API } from '@shared/constants';
+import { IMidpointTimeSearchResponseType } from '@shared/types/location/midpointTimeSearchResponseType';
+import { getAPIResponseData } from '@shared/utils';
 
 export const getMidpointTimeSearch = async (
   roomId: string,

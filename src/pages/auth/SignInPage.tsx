@@ -1,15 +1,15 @@
-import IconOauthKakao from '@src/shared/assets/icons/IconOauthKakao.svg?react';
-import IconOauthNaver from '@src/shared/assets/icons/IconOauthNaver.svg?react';
-import IconOauthGoogle from '@src/shared/assets/icons/IconOauthGoogle.svg?react';
+import IconOauthKakao from '@assets/icons/IconOauthKakao.svg?react';
+import IconOauthNaver from '@assets/icons/IconOauthNaver.svg?react';
+import IconOauthGoogle from '@assets/icons/IconOauthGoogle.svg?react';
 import { useForm } from 'react-hook-form';
-import { ISignInRequest } from '@src/shared/types/auth/SignInRequestType';
+import { ISignInRequest } from '@shared/types/auth/SignInRequestType';
 import { useNavigate } from 'react-router-dom';
-import { PATH } from '@src/shared/constants';
+import { PATH } from '@shared/constants';
 import { useSignInMutation } from '@src/state/mutations/auth/useSignInMutation';
-import { Button } from '@src/shared/ui';
-import { Input } from '@src/shared/ui';
-import { useSocialLogin } from '@src/shared/hooks/useSocialLogin';
-import { OauthProvider } from '@src/shared/types/oauthType';
+import { Button } from '@shared/ui';
+import { Input } from '@shared/ui';
+import { useSocialLogin } from '@shared/hooks/useSocialLogin';
+import { OauthProvider } from '@shared/types/oauthType';
 
 export default function SignInPage() {
   const navigate = useNavigate();

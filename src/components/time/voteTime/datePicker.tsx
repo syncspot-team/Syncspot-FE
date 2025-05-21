@@ -1,7 +1,7 @@
-import { mergeClassNames } from '@src/shared/utils';
+import { mergeClassNames } from '@shared/utils';
 import { useEffect, useState } from 'react';
 import TimeSelectBox from './timeSelectBox';
-import { ITimeDatePickerProps } from '@src/shared/types/time/timeProps';
+import { ITimeDatePickerProps } from '@shared/types/time/timeProps';
 import { DATE_FORMATS, formatStringDate } from '../utils/formatDate';
 
 export default function DatePicker({

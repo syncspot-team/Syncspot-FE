@@ -1,6 +1,6 @@
-import { API } from '@src/shared/constants';
-import { IModifyUserAddressRequest } from '@src/shared/types/users/modifyUserAddressRequestType';
-import { getAPIResponseData } from '@src/shared/utils';
+import { API } from '@shared/constants';
+import { IModifyUserAddressRequest } from '@shared/types/users/modifyUserAddressRequestType';
+import { getAPIResponseData } from '@shared/utils';
 
 export const patchUserAddress = async (
   modifyUserAddressPayload: IModifyUserAddressRequest,

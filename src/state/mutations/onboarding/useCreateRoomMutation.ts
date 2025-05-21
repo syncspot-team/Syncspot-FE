@@ -1,6 +1,6 @@
 import { postCreateRoom } from '@src/apis/onboarding/postCreateRoom';
-import { ICreateRoomRequest } from '@src/shared/types/onboarding/createRoomRequestType';
-import { ICreateRoomResponse } from '@src/shared/types/onboarding/createRoomResponseType';
+import { ICreateRoomRequest } from '@shared/types/onboarding/createRoomRequestType';
+import { ICreateRoomResponse } from '@shared/types/onboarding/createRoomResponseType';
 import { useMutation, UseMutationOptions } from '@tanstack/react-query';
 
 export const useCreateRoomMutation = (

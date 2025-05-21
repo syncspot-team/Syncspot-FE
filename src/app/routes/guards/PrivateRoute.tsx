@@ -1,4 +1,4 @@
-import { PATH } from '@src/shared/constants';
+import { PATH } from '@shared/constants';
 import { useLoginStore } from '@src/state/store/loginStore';
 import { Navigate, Outlet } from 'react-router-dom';
 

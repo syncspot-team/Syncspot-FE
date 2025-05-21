@@ -1,5 +1,5 @@
-import { MOBILE_TAB_OPTIONS, MobileTabOption } from '@src/widgets/about/model';
-import { Button } from '@src/shared/ui';
+import { MOBILE_TAB_OPTIONS, MobileTabOption } from '@widgets/about/model';
+import { Button } from '@shared/ui';
 
 export default function TabNavigation({
   activeTab,

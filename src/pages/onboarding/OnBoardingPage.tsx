@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { OnboardingStepType } from '@src/shared/types/onboarding/onboardingStepType';
+import { OnboardingStepType } from '@shared/types/onboarding/onboardingStepType';
 import OnBoardingCreate from '@src/components/onboarding/OnBoardingCreate';
 import OnBoardingPlan from '@src/components/onboarding/OnBoardingPlan';
 import OnBoardingFunctionSelect from '@src/components/onboarding/OnBoardingFunctionSelect';
-import { PATH } from '@src/shared/constants';
+import { PATH } from '@shared/constants';
 import { useLocation } from 'react-router-dom';
 
 export default function OnBoardingPage() {

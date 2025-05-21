@@ -3,10 +3,10 @@ import { UseFormReset } from 'react-hook-form';
 import {
   ILocation,
   IPlaceSearchResponseType,
-} from '@src/shared/types/location/placeSearchResponseType';
+} from '@shared/types/location/placeSearchResponseType';
 import { usePlaceSaveMutation } from '@src/state/mutations/location/usePlaceSaveMutation';
-import { IGetUserInfoResponse } from '@src/shared/types/users/getUserInfoResponseType';
-import { IPlaceSaveRequestType } from '@src/shared/types/location/placeSaveRequestType';
+import { IGetUserInfoResponse } from '@shared/types/users/getUserInfoResponseType';
+import { IPlaceSaveRequestType } from '@shared/types/location/placeSaveRequestType';
 
 interface ILocationForm {
   myLocations: IPlaceSaveRequestType[];

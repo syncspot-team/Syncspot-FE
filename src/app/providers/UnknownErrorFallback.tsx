@@ -1,9 +1,9 @@
 import { Layout } from '@src/app/layout';
 import Lottie from 'lottie-react';
-import Lottie404 from '@src/shared/assets/lotties/Lottie404.json';
-import { PATH } from '@src/shared/constants';
+import Lottie404 from '@assets/lotties/Lottie404.json';
+import { PATH } from '@shared/constants';
 import { Link } from 'react-router-dom';
-import IconGithub from '@src/shared/assets/icons/IconGithub.png';
+import IconGithub from '@assets/icons/IconGithub.png';
 
 export default function UnknownErrorFallback() {
   const handleGoHome = () => {

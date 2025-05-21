@@ -1,11 +1,11 @@
 import React, { useState, useRef } from 'react';
-import { useClickOutside } from '@src/shared/hooks/useClickOutside';
-import { useMenuItems } from '@src/shared/hooks/header/useMenuItems';
-import { IMenuItem } from '@src/shared/types/header/menuItemType';
+import { useClickOutside } from '@shared/hooks/useClickOutside';
+import { useMenuItems } from '@shared/hooks/header/useMenuItems';
+import { IMenuItem } from '@shared/types/header/menuItemType';
 import DesktopSubMenu from './DesktopSubMenu';
 import AuthButton from './AuthButton';
 import ShareButton from './ShareButton';
-import { renderShareButton } from '@src/shared/utils';
+import { renderShareButton } from '@shared/utils';
 import { useLocation } from 'react-router-dom';
 
 export default function DesktopMenu() {

@@ -1,5 +1,5 @@
 import { postPwReissueEmailVerification } from '@src/apis/auth/postPwReissueEmailVerification';
-import { IPwReissueEmailVerificationRequestType } from '@src/shared/types/auth/PwReissueEmailVerificationRequestType';
+import { IPwReissueEmailVerificationRequestType } from '@shared/types/auth/PwReissueEmailVerificationRequestType';
 import { useMutation, UseMutationOptions } from '@tanstack/react-query';
 
 export const usePwReissueEmailVerificationMutation = (

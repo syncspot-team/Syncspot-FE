@@ -1,4 +1,4 @@
-import { PATH } from '@src/shared/constants';
+import { PATH } from '@shared/constants';
 import { Location } from 'react-router-dom';
 
 export function renderShareButton(

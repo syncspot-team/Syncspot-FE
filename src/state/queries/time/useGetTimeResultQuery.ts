@@ -1,7 +1,7 @@
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { TIME_KEY } from './key';
-import { ITimeResultResponseType } from '@src/shared/types/time/timeResultType';
+import { ITimeResultResponseType } from '@shared/types/time/timeResultType';
 import { getTimeResult } from '@src/apis/time/getTimeResult';
 
 export const useGetTimeResultQuery = (

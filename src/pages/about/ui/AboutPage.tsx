@@ -6,8 +6,8 @@ import {
   PlaceVoteSection,
   TimeVoteSection,
   Footer,
-} from '@src/widgets/about/ui';
-import { MOBILE_TAB_OPTIONS, MobileTabOption } from '@src/widgets/about/model';
+} from '@widgets/about/ui';
+import { MOBILE_TAB_OPTIONS, MobileTabOption } from '@widgets/about/model';
 
 export default function AboutPage() {
   const [activeTab, setActiveTab] = useState<MobileTabOption>(
