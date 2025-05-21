@@ -19,7 +19,7 @@ export const ButtonVariants = cva(
         quit: 'bg-gray-normal enabled:bg-red-normal',
         tab: 'bg-transparent hover:bg-gray-light text-gray-dark',
       },
-      fontsize: {
+      fontSize: {
         default: 'text-content lg:text-menu',
         description: 'text-description',
       },
@@ -30,7 +30,7 @@ export const ButtonVariants = cva(
     },
     defaultVariants: {
       buttonType: 'primary',
-      fontsize: 'default',
+      fontSize: 'default',
       width: 'default',
     },
   },
@@ -48,7 +48,7 @@ interface IButtonProps
 
 export default function Button({
   buttonType,
-  fontsize,
+  fontSize,
   width,
   className,
   children,
@@ -59,7 +59,7 @@ export default function Button({
   return (
     <button
       className={mergeClassNames(
-        ButtonVariants({ buttonType, fontsize, width, className }),
+        ButtonVariants({ buttonType, fontSize, width, className }),
       )}
       onClick={onClick}
       disabled={disabled || isLoading}

@@ -15,7 +15,7 @@ export default function TabNavigation({
         buttonType={
           activeTab === MOBILE_TAB_OPTIONS.SERVICE ? 'primary' : 'tab'
         }
-        fontsize="description"
+        fontSize="description"
         width="tab"
         className="mb-2 font-semibold rounded-lg"
         onClick={() => onTabChange(MOBILE_TAB_OPTIONS.SERVICE)}
@@ -24,7 +24,7 @@ export default function TabNavigation({
       </Button>
       <Button
         buttonType={activeTab === MOBILE_TAB_OPTIONS.TEAM ? 'primary' : 'tab'}
-        fontsize="description"
+        fontSize="description"
         width="tab"
         className="mb-2 font-semibold rounded-lg"
         onClick={() => onTabChange(MOBILE_TAB_OPTIONS.TEAM)}
