@@ -51,6 +51,8 @@
 ### [🚀 FE 정적 배포 경험](https://cllaude-blog.vercel.app/5-deploy/)
 
 ## 다희
+### [💬 카카오톡 Share, 이메일 EmailJS 공유 SDK + SEO 개발일지](https://datdaradanadat.tistory.com/239)
+### [🗂️ FSD 아키텍처 적용을 통한 기능 중심 설계 리팩토링](https://datdaradanadat.tistory.com/243)
 
 # 🍻 팀 '모락 (Morak)'
 
