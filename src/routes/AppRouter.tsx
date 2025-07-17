@@ -35,6 +35,7 @@ import GoogleLogin from '@src/components/auth/oauth/GoogleLogin';
 import Oauth from '@src/components/auth/oauth/Oauth';
 import { SentryErrorBoundary } from '@src/components/error/boundary/SentryErrorBoundary';
 import { sentryCreateBrowserRouter } from '@src/utils/sentryRouterIntegration';
+import InAppBrowserDetect from '@src/components/InAppBrowserDetect';
 
 const createAuthRouter = (routeType: ROUTE_TYPE, children: RouteObject[]) => {
   const authRouter = children.map((child: RouteObject) => ({
@@ -49,15 +50,17 @@ const router = sentryCreateBrowserRouter([
   {
     path: PATH.ROOT,
     element: (
-      <SentryErrorBoundary>
-        <APIErrorBoundary>
-          <Suspense fallback={<GlobalLoading />}>
-            <Layout>
-              <Outlet />
-            </Layout>
-          </Suspense>
-        </APIErrorBoundary>
-      </SentryErrorBoundary>
+      <InAppBrowserDetect>
+        <SentryErrorBoundary>
+          <APIErrorBoundary>
+            <Suspense fallback={<GlobalLoading />}>
+              <Layout>
+                <Outlet />
+              </Layout>
+            </Suspense>
+          </APIErrorBoundary>
+        </SentryErrorBoundary>
+      </InAppBrowserDetect>
     ),
     children: [
       {
