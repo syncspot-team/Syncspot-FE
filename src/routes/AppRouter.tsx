@@ -39,6 +39,7 @@ import NaverLogin from '@src/components/auth/oauth/NaverLogin';
 import GoogleLogin from '@src/components/auth/oauth/GoogleLogin';
 import Oauth from '@src/components/auth/oauth/Oauth';
 import { UnknownErrorBoundary } from '@src/components/error/boundary/UnknownErrorBoundary';
+import InAppBrowserDetect from '@src/components/InAppBrowserDetect';
 
 const createAuthRouter = (routeType: ROUTE_TYPE, children: RouteObject[]) => {
   const authRouter = children.map((child: RouteObject) => ({
@@ -52,15 +53,17 @@ const router = createBrowserRouter([
   {
     path: PATH.ROOT,
     element: (
-      <UnknownErrorBoundary>
-        <APIErrorBoundary>
-          <Suspense fallback={<GlobalLoading />}>
-            <Layout>
-              <Outlet />
-            </Layout>
-          </Suspense>
-        </APIErrorBoundary>
-      </UnknownErrorBoundary>
+      <InAppBrowserDetect>
+        <UnknownErrorBoundary>
+          <APIErrorBoundary>
+            <Suspense fallback={<GlobalLoading />}>
+              <Layout>
+                <Outlet />
+              </Layout>
+            </Suspense>
+          </APIErrorBoundary>
+        </UnknownErrorBoundary>
+      </InAppBrowserDetect>
     ),
     children: [
       {
