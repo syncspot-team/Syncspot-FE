@@ -1,3 +1,4 @@
+import React from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { APIErrorFallback } from './APIErrorFallback';
 import { useQueryErrorResetBoundary } from '@tanstack/react-query';
