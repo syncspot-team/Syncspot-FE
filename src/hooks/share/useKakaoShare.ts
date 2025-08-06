@@ -12,7 +12,7 @@ export function useShareKakao({ descriptionType, url }: IShareKakao) {
       content: {
         title: 'Syncspot | 모두가 편하게 만나는 지름길',
         description: descriptionType,
-        imageUrl: '/ogImage.jpg',
+        imageUrl: 'https://syncspot.kr/ogImage.jpg',
         link: {
           webUrl: url,
         },
